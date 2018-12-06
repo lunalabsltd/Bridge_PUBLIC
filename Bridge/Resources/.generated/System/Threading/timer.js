@@ -93,7 +93,7 @@
                     var myId = this.id;
                     this.timerCallback(this.state);
 
-                    if (System.Nullable.eq(this.id, myId)) {
+                    if (System.Nullable.Bridge.referenceEquals(this.id, myId)) {
                         this.RunTimer(this.period, false);
                     }
                 }

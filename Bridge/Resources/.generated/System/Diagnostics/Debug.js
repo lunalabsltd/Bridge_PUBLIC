@@ -187,7 +187,7 @@
                 GetIndentString: function () {
                     var $t;
                     var indentCount = Bridge.Int.mul(System.Diagnostics.Debug.IndentSize, System.Diagnostics.Debug.IndentLevel);
-                    if (System.Nullable.eq((System.Diagnostics.Debug.s_indentString != null ? System.Diagnostics.Debug.s_indentString.length : null), indentCount)) {
+                    if (System.Nullable.Bridge.referenceEquals((System.Diagnostics.Debug.s_indentString != null ? System.Diagnostics.Debug.s_indentString.length : null), indentCount)) {
                         return System.Diagnostics.Debug.s_indentString;
                     }
                     return ($t = System.String.fromCharCount(32, indentCount), System.Diagnostics.Debug.s_indentString = $t, $t);

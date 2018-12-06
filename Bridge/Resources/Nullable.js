@@ -214,6 +214,9 @@
     };
 
     System.Nullable = nullable;
+    System.Nullable.Bridge = {
+        referenceEquals: nullable.eq
+    };
 
     Bridge.define("System.Nullable$1", function (T) {
         return {

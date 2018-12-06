@@ -3,7 +3,7 @@ namespace System
     [Bridge.Convention(Member = Bridge.ConventionMember.Field | Bridge.ConventionMember.Method, Notation = Bridge.Notation.CamelCase)]
     [Bridge.External]
     [Bridge.Reflectable]
-    public struct Nullable<T> where T : struct
+    public class Nullable<T>
     {
         [Bridge.Template("{0}")]
         public extern Nullable(T value);

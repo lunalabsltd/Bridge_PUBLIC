@@ -22,7 +22,7 @@
             },
             equals: function (o) {
                 var that = Bridge.as(o, System.Text.EncodingInfo);
-                return System.Nullable.eq(this.CodePage, (that != null ? that.CodePage : null));
+                return System.Nullable.Bridge.referenceEquals(this.CodePage, (that != null ? that.CodePage : null));
             }
         }
     });

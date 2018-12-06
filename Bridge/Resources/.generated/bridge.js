@@ -5235,6 +5235,9 @@ Bridge.define("System.ValueType", {
     };
 
     System.Nullable = nullable;
+    System.Nullable.Bridge = {
+        referenceEquals: nullable.eq
+    };
 
     Bridge.define("System.Nullable$1", function (T) {
         return {
@@ -11300,7 +11303,7 @@ Bridge.define("System.ValueType", {
                 GetIndentString: function () {
                     var $t;
                     var indentCount = Bridge.Int.mul(System.Diagnostics.Debug.IndentSize, System.Diagnostics.Debug.IndentLevel);
-                    if (System.Nullable.eq((System.Diagnostics.Debug.s_indentString != null ? System.Diagnostics.Debug.s_indentString.length : null), indentCount)) {
+                    if (System.Nullable.Bridge.referenceEquals((System.Diagnostics.Debug.s_indentString != null ? System.Diagnostics.Debug.s_indentString.length : null), indentCount)) {
                         return System.Diagnostics.Debug.s_indentString;
                     }
                     return ($t = System.String.fromCharCount(32, indentCount), System.Diagnostics.Debug.s_indentString = $t, $t);
@@ -46517,7 +46520,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             },
             equals: function (o) {
                 var that = Bridge.as(o, System.Text.EncodingInfo);
-                return System.Nullable.eq(this.CodePage, (that != null ? that.CodePage : null));
+                return System.Nullable.Bridge.referenceEquals(this.CodePage, (that != null ? that.CodePage : null));
             }
         }
     });
@@ -47486,7 +47489,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     var myId = this.id;
                     this.timerCallback(this.state);
 
-                    if (System.Nullable.eq(this.id, myId)) {
+                    if (System.Nullable.Bridge.referenceEquals(this.id, myId)) {
                         this.RunTimer(this.period, false);
                     }
                 }
