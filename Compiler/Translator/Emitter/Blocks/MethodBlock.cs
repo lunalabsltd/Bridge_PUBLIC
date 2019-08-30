@@ -1,4 +1,5 @@
-﻿using Bridge.Contract;
+﻿using System;
+using Bridge.Contract;
 using Bridge.Contract.Constants;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.TypeSystem;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using ICSharpCode.NRefactory.Semantics;
 using Newtonsoft.Json;
+using Object.Net.Utilities;
 
 namespace Bridge.Translator
 {
@@ -41,7 +43,51 @@ namespace Bridge.Translator
             else
             {
                 this.EmitMethods(this.TypeInfo.InstanceMethods, this.TypeInfo.InstanceProperties, null);
+                this.EmitOverloads( this.TypeInfo.InstanceMethods );
             }
+        }
+        protected virtual void EmitOverloads(Dictionary<string, List<MethodDeclaration>> methods)
+        {
+            var typeDef = this.Emitter.GetTypeDefinition();
+            string name = this.Emitter.Validator.GetCustomTypeName(typeDef, this.Emitter, false);
+            if (name.IsEmpty())
+            {
+                name = BridgeTypes.ToJsName(this.TypeInfo.Type, this.Emitter, asDefinition: true, nomodule: true, ignoreLiteralName: false);
+            }
+
+            Dictionary<string, string> overloads = new Dictionary<string, string>();
+            foreach (var method in methods) {
+                foreach (var declaration in method.Value) {
+                    if (!overloads.ContainsKey(declaration.Name)) {
+                        var overloadName = OverloadsCollection.Create(this.Emitter, declaration).GetOverloadName(declaration.Name);
+                        if (overloadName != null) {
+                            overloads[overloadName] = name + "$" + declaration.Name;
+                        }
+                    }
+                }
+            }
+
+            if (overloads.Count <= 0) {
+                return;
+            }
+
+            this.EnsureComma();
+            this.Write(JS.Fields.OVERLOADS);
+            this.WriteColon();
+            this.WriteOpenBracket();
+            this.WriteNewLine();
+
+            foreach (var overload in overloads) {
+                this.WriteIndent();
+                this.EnsureComma();
+                this.WriteScript(overload.Value);
+                this.WriteComma();
+                this.WriteScript(overload.Key);
+                this.Emitter.Comma = true;
+            }
+
+            this.WriteNewLine();
+            this.WriteCloseBracket();
         }
 
         protected virtual void EmitMethods(Dictionary<string, List<MethodDeclaration>> methods, Dictionary<string, List<EntityDeclaration>> properties, Dictionary<OperatorType, List<OperatorDeclaration>> operators)

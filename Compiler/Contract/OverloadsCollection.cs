@@ -996,6 +996,14 @@ namespace Bridge.Contract
         }
 
         private Dictionary<Tuple<bool, string, bool, bool>, string> overloadName = new Dictionary<Tuple<bool, string, bool, bool>, string>();
+        private Dictionary<string, string> currentOverloads = new Dictionary<string, string>();
+
+        public string GetOverloadName(string name) {
+            if (this.currentOverloads.ContainsKey( name )) {
+                return this.currentOverloads[ name ];
+            }
+            return null;
+        }
 
         public string GetOverloadName(bool skipInterfaceName = false, string prefix = null, bool withoutTypeParams = false, bool isObjectLiteral = false, bool excludeTypeOnly = false)
         {
@@ -1018,6 +1026,9 @@ namespace Bridge.Contract
             {
                 name = this.GetOverloadName(this.Member, skipInterfaceName, prefix, withoutTypeParams, isObjectLiteral, excludeTypeOnly);
                 this.overloadName[key] = name;
+                if (this.Name != name) {
+                    this.currentOverloads[ this.Name ] = name;
+                }
             }
             else if (contains)
             {
