@@ -188,8 +188,8 @@
                     write = true;
                 }
 
-                if ( obj.overloads ) {
-                    config.alias = obj.alias ? obj.alias.concat( obj.overloads ) : obj.overloads;
+                if (obj.overloads) {
+                    config.overloads = obj.overloads;
                     write = true;
                 }
 

@@ -46,48 +46,66 @@ namespace Bridge.Translator
                 this.EmitOverloads( this.TypeInfo.InstanceMethods );
             }
         }
+
+        public virtual string MethodParametersToString(MethodDeclaration member)
+        {
+            StringBuilder sb = new StringBuilder();
+            bool firstItem = true;
+                foreach (var p in member.Parameters)
+                {
+                    if (firstItem)
+                    {
+                        firstItem = false;
+                    }
+                    else
+                    {
+                        sb.Append( ", " );
+                    }
+                    sb.Append(p.Type.ToString());
+                }
+
+            return "(" + sb.ToString() + ")";
+        }
         protected virtual void EmitOverloads(Dictionary<string, List<MethodDeclaration>> methods)
         {
-            var typeDef = this.Emitter.GetTypeDefinition();
-            string name = this.Emitter.Validator.GetCustomTypeName(typeDef, this.Emitter, false);
-            if (name.IsEmpty())
-            {
-                name = BridgeTypes.ToJsName(this.TypeInfo.Type, this.Emitter, asDefinition: true, nomodule: true, ignoreLiteralName: false);
-            }
-
             Dictionary<string, string> overloads = new Dictionary<string, string>();
-            foreach (var method in methods) {
-                foreach (var declaration in method.Value) {
-                    if (!overloads.ContainsKey(declaration.Name)) {
-                        var overloadName = OverloadsCollection.Create(this.Emitter, declaration).GetOverloadName(declaration.Name);
-                        if (overloadName != null) {
-                            overloads[overloadName] = name + "$" + declaration.Name;
+            foreach (var method in methods)
+            {
+                foreach (var declaration in method.Value)
+                {
+                    if (!overloads.ContainsKey(declaration.Name))
+                    {
+                        var overloadCollection = OverloadsCollection.Create(this.Emitter, declaration);
+                        string overloadName = overloadCollection.GetOverloadName(declaration.Name);
+                        if (overloadName != null)
+                        {
+                            overloads[overloadName] = declaration.Name + MethodParametersToString(declaration);
                         }
                     }
                 }
             }
 
-            if (overloads.Count <= 0) {
+            if (overloads.Count <= 0)
+            {
                 return;
             }
 
             this.EnsureComma();
             this.Write(JS.Fields.OVERLOADS);
             this.WriteColon();
-            this.WriteOpenBracket();
-            this.WriteNewLine();
+            this.BeginBlock();
 
-            foreach (var overload in overloads) {
-                this.WriteIndent();
+            foreach (var overload in overloads)
+            {
                 this.EnsureComma();
                 this.WriteScript(overload.Value);
-                this.WriteComma();
+                this.WriteColon();
                 this.WriteScript(overload.Key);
                 this.Emitter.Comma = true;
             }
 
             this.WriteNewLine();
-            this.WriteCloseBracket();
+            this.EndBlock();
         }
 
         protected virtual void EmitMethods(Dictionary<string, List<MethodDeclaration>> methods, Dictionary<string, List<EntityDeclaration>> properties, Dictionary<OperatorType, List<OperatorDeclaration>> operators)
