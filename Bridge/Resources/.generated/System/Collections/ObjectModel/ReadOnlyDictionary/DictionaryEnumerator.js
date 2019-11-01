@@ -1,3 +1,4 @@
+    //System.Collections.ObjectModel.ReadOnlyDictionary$2.DictionaryEnumerator start.
     Bridge.define("System.Collections.ObjectModel.ReadOnlyDictionary$2.DictionaryEnumerator", function (TKey, TValue) { return {
         inherits: [System.Collections.IDictionaryEnumerator],
         $kind: "nested struct",
@@ -51,12 +52,18 @@
             }
         },
         methods: {
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.DictionaryEnumerator.moveNext start.
             moveNext: function () {
                 return this._enumerator.System$Collections$IEnumerator$moveNext();
             },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.DictionaryEnumerator.moveNext end.
+
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.DictionaryEnumerator.reset start.
             reset: function () {
                 this._enumerator.System$Collections$IEnumerator$reset();
             },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.DictionaryEnumerator.reset end.
+
             getHashCode: function () {
                 var h = Bridge.addHash([9276503029, this._dictionary, this._enumerator]);
                 return h;
@@ -75,3 +82,4 @@
             }
         }
     }; });
+    //System.Collections.ObjectModel.ReadOnlyDictionary$2.DictionaryEnumerator end.

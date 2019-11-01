@@ -1,3 +1,4 @@
+    //System.Threading.Tasks.TaskCanceledException start.
     Bridge.define("System.Threading.Tasks.TaskCanceledException", {
         inherits: [System.OperationCanceledException],
         fields: {
@@ -30,3 +31,4 @@
             }
         }
     });
+    //System.Threading.Tasks.TaskCanceledException end.

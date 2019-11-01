@@ -1,3 +1,4 @@
+    //System.Text.UnicodeEncoding start.
     Bridge.define("System.Text.UnicodeEncoding", {
         inherits: [System.Text.Encoding],
         fields: {
@@ -34,6 +35,7 @@
             }
         },
         methods: {
+            //System.Text.UnicodeEncoding.Encode$3 start.
             Encode$3: function (s, outputBytes, outputIndex, writtenBytes) {
                 var hasBuffer = outputBytes != null;
                 var recorded = 0;
@@ -137,6 +139,9 @@
 
                 return outputBytes;
             },
+            //System.Text.UnicodeEncoding.Encode$3 end.
+
+            //System.Text.UnicodeEncoding.Decode$2 start.
             Decode$2: function (bytes, index, count, chars, charIndex) {
                 var position = index;
                 var result = "";
@@ -205,6 +210,9 @@
 
                 return result;
             },
+            //System.Text.UnicodeEncoding.Decode$2 end.
+
+            //System.Text.UnicodeEncoding.GetMaxByteCount start.
             GetMaxByteCount: function (charCount) {
                 if (charCount < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("charCount");
@@ -219,6 +227,9 @@
 
                 return System.Int64.clip32(byteCount);
             },
+            //System.Text.UnicodeEncoding.GetMaxByteCount end.
+
+            //System.Text.UnicodeEncoding.GetMaxCharCount start.
             GetMaxCharCount: function (byteCount) {
                 if (byteCount < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("byteCount");
@@ -231,7 +242,10 @@
                 }
 
                 return System.Int64.clip32(charCount);
-            }
+            },
+            //System.Text.UnicodeEncoding.GetMaxCharCount end.
+
+
         }
     });
 
@@ -245,3 +259,4 @@
             return ((((ch & 255) << 8) | (((ch >> 8)) & 255)) & 65535);
         }
     });
+    //System.Text.UnicodeEncoding end.

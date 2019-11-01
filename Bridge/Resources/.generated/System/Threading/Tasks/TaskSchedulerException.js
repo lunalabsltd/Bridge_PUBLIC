@@ -1,3 +1,4 @@
+    //System.Threading.Tasks.TaskSchedulerException start.
     Bridge.define("System.Threading.Tasks.TaskSchedulerException", {
         inherits: [System.Exception],
         ctors: {
@@ -19,3 +20,4 @@
             }
         }
     });
+    //System.Threading.Tasks.TaskSchedulerException end.

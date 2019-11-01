@@ -1,3 +1,4 @@
+    //System.Globalization.CalendarId start.
     Bridge.define("System.Globalization.CalendarId", {
         $kind: "enum",
         statics: {
@@ -31,3 +32,4 @@
         },
         $utype: System.UInt16
     });
+    //System.Globalization.CalendarId end.

@@ -1,3 +1,4 @@
+    //System.InvalidProgramException start.
     Bridge.define("System.InvalidProgramException", {
         inherits: [System.SystemException],
         ctors: {
@@ -18,3 +19,4 @@
             }
         }
     });
+    //System.InvalidProgramException end.

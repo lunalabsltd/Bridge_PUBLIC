@@ -1,3 +1,4 @@
+    //System.SystemException start.
     Bridge.define("System.SystemException", {
         inherits: [System.Exception],
         ctors: {
@@ -18,3 +19,4 @@
             }
         }
     });
+    //System.SystemException end.

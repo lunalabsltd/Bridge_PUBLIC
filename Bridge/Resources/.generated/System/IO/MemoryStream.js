@@ -1,3 +1,4 @@
+    //System.IO.MemoryStream start.
     Bridge.define("System.IO.MemoryStream", {
         inherits: [System.IO.Stream],
         statics: {
@@ -168,11 +169,15 @@
             }
         },
         methods: {
+            //System.IO.MemoryStream.EnsureWriteable start.
             EnsureWriteable: function () {
                 if (!this.CanWrite) {
                     System.IO.__Error.WriteNotSupported();
                 }
             },
+            //System.IO.MemoryStream.EnsureWriteable end.
+
+            //System.IO.MemoryStream.Dispose$1 start.
             Dispose$1: function (disposing) {
                 try {
                     if (disposing) {
@@ -184,6 +189,9 @@
                     System.IO.Stream.prototype.Dispose$1.call(this, disposing);
                 }
             },
+            //System.IO.MemoryStream.Dispose$1 end.
+
+            //System.IO.MemoryStream.EnsureCapacity start.
             EnsureCapacity: function (value) {
                 if (value < 0) {
                     throw new System.IO.IOException.$ctor1("IO.IO_StreamTooLong");
@@ -205,13 +213,22 @@
                 }
                 return false;
             },
+            //System.IO.MemoryStream.EnsureCapacity end.
+
+            //System.IO.MemoryStream.Flush start.
             Flush: function () { },
+            //System.IO.MemoryStream.Flush end.
+
+            //System.IO.MemoryStream.GetBuffer start.
             GetBuffer: function () {
                 if (!this._exposable) {
                     throw new System.Exception("UnauthorizedAccess_MemStreamBuffer");
                 }
                 return this._buffer;
             },
+            //System.IO.MemoryStream.GetBuffer end.
+
+            //System.IO.MemoryStream.TryGetBuffer start.
             TryGetBuffer: function (buffer) {
                 if (!this._exposable) {
                     buffer.v = Bridge.getDefaultValue(System.ArraySegment);
@@ -221,15 +238,24 @@
                 buffer.v = new System.ArraySegment(this._buffer, this._origin, (((this._length - this._origin) | 0)));
                 return true;
             },
+            //System.IO.MemoryStream.TryGetBuffer end.
+
+            //System.IO.MemoryStream.InternalGetBuffer start.
             InternalGetBuffer: function () {
                 return this._buffer;
             },
+            //System.IO.MemoryStream.InternalGetBuffer end.
+
+            //System.IO.MemoryStream.InternalGetPosition start.
             InternalGetPosition: function () {
                 if (!this._isOpen) {
                     System.IO.__Error.StreamIsClosed();
                 }
                 return this._position;
             },
+            //System.IO.MemoryStream.InternalGetPosition end.
+
+            //System.IO.MemoryStream.InternalReadInt32 start.
             InternalReadInt32: function () {
                 if (!this._isOpen) {
                     System.IO.__Error.StreamIsClosed();
@@ -242,6 +268,9 @@
                 }
                 return this._buffer[System.Array.index(((pos - 4) | 0), this._buffer)] | this._buffer[System.Array.index(((pos - 3) | 0), this._buffer)] << 8 | this._buffer[System.Array.index(((pos - 2) | 0), this._buffer)] << 16 | this._buffer[System.Array.index(((pos - 1) | 0), this._buffer)] << 24;
             },
+            //System.IO.MemoryStream.InternalReadInt32 end.
+
+            //System.IO.MemoryStream.InternalEmulateRead start.
             InternalEmulateRead: function (count) {
                 if (!this._isOpen) {
                     System.IO.__Error.StreamIsClosed();
@@ -258,6 +287,9 @@
                 this._position = (this._position + n) | 0;
                 return n;
             },
+            //System.IO.MemoryStream.InternalEmulateRead end.
+
+            //System.IO.MemoryStream.Read start.
             Read: function (buffer, offset, count) {
                 if (buffer == null) {
                     throw new System.ArgumentNullException.$ctor3("buffer", "ArgumentNull_Buffer");
@@ -297,6 +329,9 @@
 
                 return n;
             },
+            //System.IO.MemoryStream.Read end.
+
+            //System.IO.MemoryStream.ReadByte start.
             ReadByte: function () {
                 if (!this._isOpen) {
                     System.IO.__Error.StreamIsClosed();
@@ -308,6 +343,9 @@
 
                 return this._buffer[System.Array.index(Bridge.identity(this._position, ((this._position = (this._position + 1) | 0))), this._buffer)];
             },
+            //System.IO.MemoryStream.ReadByte end.
+
+            //System.IO.MemoryStream.Seek start.
             Seek: function (offset, loc) {
                 if (!this._isOpen) {
                     System.IO.__Error.StreamIsClosed();
@@ -350,6 +388,9 @@
 
                 return System.Int64(this._position);
             },
+            //System.IO.MemoryStream.Seek end.
+
+            //System.IO.MemoryStream.SetLength start.
             SetLength: function (value) {
                 if (value.lt(System.Int64(0)) || value.gt(System.Int64(2147483647))) {
                     throw new System.ArgumentOutOfRangeException.$ctor4("value", "ArgumentOutOfRange_StreamLength");
@@ -371,11 +412,17 @@
                 }
 
             },
+            //System.IO.MemoryStream.SetLength end.
+
+            //System.IO.MemoryStream.ToArray start.
             ToArray: function () {
                 var copy = System.Array.init(((this._length - this._origin) | 0), 0, System.Byte);
                 System.Array.copy(this._buffer, this._origin, copy, 0, ((this._length - this._origin) | 0));
                 return copy;
             },
+            //System.IO.MemoryStream.ToArray end.
+
+            //System.IO.MemoryStream.Write start.
             Write: function (buffer, offset, count) {
                 if (buffer == null) {
                     throw new System.ArgumentNullException.$ctor3("buffer", "ArgumentNull_Buffer");
@@ -424,6 +471,9 @@
                 this._position = i;
 
             },
+            //System.IO.MemoryStream.Write end.
+
+            //System.IO.MemoryStream.WriteByte start.
             WriteByte: function (value) {
                 if (!this._isOpen) {
                     System.IO.__Error.StreamIsClosed();
@@ -447,6 +497,9 @@
                 this._buffer[System.Array.index(Bridge.identity(this._position, ((this._position = (this._position + 1) | 0))), this._buffer)] = value;
 
             },
+            //System.IO.MemoryStream.WriteByte end.
+
+            //System.IO.MemoryStream.WriteTo start.
             WriteTo: function (stream) {
                 if (stream == null) {
                     throw new System.ArgumentNullException.$ctor3("stream", "ArgumentNull_Stream");
@@ -456,6 +509,10 @@
                     System.IO.__Error.StreamIsClosed();
                 }
                 stream.Write(this._buffer, this._origin, ((this._length - this._origin) | 0));
-            }
+            },
+            //System.IO.MemoryStream.WriteTo end.
+
+
         }
     });
+    //System.IO.MemoryStream end.

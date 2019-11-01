@@ -46,11 +46,13 @@ namespace Bridge.Translator
 
         protected override void DoEmit()
         {
-            XmlToJsDoc.EmitComment(this, this.Emitter.Translator.EmitNode);
             string globalTarget = BridgeTypes.GetGlobalTarget(this.TypeInfo.Type.GetDefinition(), this.TypeInfo.TypeDeclaration);
 
             if (globalTarget != null)
             {
+                this.EnsureNewLine();
+                XmlToJsDoc.EmitComment(this, this.Emitter.Translator.EmitNode);
+
                 this.CheckGlobalClass();
                 this.Emitter.NamedFunctions = new Dictionary<string, string>();
                 this.WriteTopInitMethods();
@@ -78,6 +80,18 @@ namespace Bridge.Translator
             }
             else
             {
+                var name = Helpers.GetClassName(this.Emitter.GetTypeDefinition());
+                if (!this.Emitter.BridgeTypes.IsUsed(name))
+                {
+                    return;
+                }
+
+                this.EnsureNewLine();
+                this.Write(string.Format("//{0} start.", name));
+                this.WriteNewLine();
+
+                XmlToJsDoc.EmitComment(this, this.Emitter.Translator.EmitNode);
+
                 this.EmitClassHeader();
 
                 this.Emitter.NamedFunctions = new Dictionary<string, string>();
@@ -100,7 +114,10 @@ namespace Bridge.Translator
                     {
                         if (!entryPoint.Body.IsNull)
                         {
+                            this.Emitter.IsStaticBlock = true;
                             this.Emitter.VisitMethodDeclaration(entryPoint);
+                            this.EnsureComma();
+                            this.EnsureEndingComment();
                         }
                     }
 
@@ -109,6 +126,9 @@ namespace Bridge.Translator
                 }
 
                 this.EmitClassEnd();
+
+                this.Write(string.Format("//{0} end.", name));
+                this.WriteNewLine();
             }
         }
 

@@ -1,3 +1,4 @@
+    //System.Threading.Timer start.
     Bridge.define("System.Threading.Timer", {
         inherits: [System.IDisposable],
         statics: {
@@ -54,6 +55,7 @@
             }
         },
         methods: {
+            //System.Threading.Timer.TimerSetup start.
             TimerSetup: function (callback, state, dueTime, period) {
                 if (this.disposed) {
                     throw new System.InvalidOperationException.$ctor1(System.Threading.Timer.EXC_DISPOSED);
@@ -84,6 +86,9 @@
 
                 return this.RunTimer(this.dueTime);
             },
+            //System.Threading.Timer.TimerSetup end.
+
+            //System.Threading.Timer.HandleCallback start.
             HandleCallback: function () {
                 if (this.disposed) {
                     return;
@@ -98,6 +103,9 @@
                     }
                 }
             },
+            //System.Threading.Timer.HandleCallback end.
+
+            //System.Threading.Timer.RunTimer start.
             RunTimer: function (period, checkDispose) {
                 if (checkDispose === void 0) { checkDispose = true; }
                 if (checkDispose && this.disposed) {
@@ -112,31 +120,56 @@
 
                 return false;
             },
+            //System.Threading.Timer.RunTimer end.
+
+            //System.Threading.Timer.Change start.
             Change: function (dueTime, period) {
                 return this.ChangeTimer(System.Int64(dueTime), System.Int64(period));
             },
+            //System.Threading.Timer.Change end.
+
+            //System.Threading.Timer.Change$2 start.
             Change$2: function (dueTime, period) {
                 return this.ChangeTimer(Bridge.Int.clip64(dueTime.getTotalMilliseconds()), Bridge.Int.clip64(period.getTotalMilliseconds()));
             },
+            //System.Threading.Timer.Change$2 end.
+
+            //System.Threading.Timer.Change$3 start.
             Change$3: function (dueTime, period) {
                 return this.ChangeTimer(System.Int64(dueTime), System.Int64(period));
             },
+            //System.Threading.Timer.Change$3 end.
+
+            //System.Threading.Timer.Change$1 start.
             Change$1: function (dueTime, period) {
                 return this.ChangeTimer(dueTime, period);
             },
+            //System.Threading.Timer.Change$1 end.
+
+            //System.Threading.Timer.ChangeTimer start.
             ChangeTimer: function (dueTime, period) {
                 this.ClearTimeout();
                 return this.TimerSetup(this.timerCallback, this.state, dueTime, period);
             },
+            //System.Threading.Timer.ChangeTimer end.
+
+            //System.Threading.Timer.ClearTimeout start.
             ClearTimeout: function () {
                 if (System.Nullable.hasValue(this.id)) {
                     Bridge.global.clearTimeout(System.Nullable.getValue(this.id));
                     this.id = null;
                 }
             },
+            //System.Threading.Timer.ClearTimeout end.
+
+            //System.Threading.Timer.Dispose start.
             Dispose: function () {
                 this.ClearTimeout();
                 this.disposed = true;
-            }
+            },
+            //System.Threading.Timer.Dispose end.
+
+
         }
     });
+    //System.Threading.Timer end.

@@ -1,3 +1,4 @@
+    //System.Collections.Generic.TreeRotation start.
     Bridge.define("System.Collections.Generic.TreeRotation", {
         $kind: "enum",
         statics: {
@@ -9,3 +10,4 @@
             }
         }
     });
+    //System.Collections.Generic.TreeRotation end.

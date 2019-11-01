@@ -1,3 +1,4 @@
+    //System.Reflection.Module start.
     Bridge.define("System.Reflection.Module", {
         inherits: [System.Reflection.ICustomAttributeProvider,System.Runtime.Serialization.ISerializable],
         statics: {
@@ -14,6 +15,7 @@
                 }
             },
             methods: {
+                //System.Reflection.Module.FilterTypeNameImpl:static start.
                 FilterTypeNameImpl: function (cls, filterCriteria) {
                     if (filterCriteria == null || !(Bridge.is(filterCriteria, System.String))) {
                         throw new System.Reflection.InvalidFilterCriteriaException.$ctor1("A String must be provided for the filter criteria.");
@@ -28,6 +30,9 @@
 
                     return System.String.equals(Bridge.Reflection.getTypeName(cls), str);
                 },
+                //System.Reflection.Module.FilterTypeNameImpl:static end.
+
+                //System.Reflection.Module.FilterTypeNameIgnoreCaseImpl:static start.
                 FilterTypeNameIgnoreCaseImpl: function (cls, filterCriteria) {
                     var $t;
                     if (filterCriteria == null || !(Bridge.is(filterCriteria, System.String))) {
@@ -47,6 +52,8 @@
                     }
                     return (System.String.compare(str, Bridge.Reflection.getTypeName(cls), 5) === 0);
                 },
+                //System.Reflection.Module.FilterTypeNameIgnoreCaseImpl:static end.
+
                 op_Equality: function (left, right) {
                     if (Bridge.referenceEquals(left, right)) {
                         return true;
@@ -111,18 +118,31 @@
             }
         },
         methods: {
+            //System.Reflection.Module.IsResource start.
             IsResource: function () {
                 throw System.NotImplemented.ByDesign;
             },
+            //System.Reflection.Module.IsResource end.
+
+            //System.Reflection.Module.IsDefined start.
             IsDefined: function (attributeType, inherit) {
                 throw System.NotImplemented.ByDesign;
             },
+            //System.Reflection.Module.IsDefined end.
+
+            //System.Reflection.Module.GetCustomAttributes start.
             GetCustomAttributes: function (inherit) {
                 throw System.NotImplemented.ByDesign;
             },
+            //System.Reflection.Module.GetCustomAttributes end.
+
+            //System.Reflection.Module.GetCustomAttributes$1 start.
             GetCustomAttributes$1: function (attributeType, inherit) {
                 throw System.NotImplemented.ByDesign;
             },
+            //System.Reflection.Module.GetCustomAttributes$1 end.
+
+            //System.Reflection.Module.GetMethod start.
             GetMethod: function (name) {
                 if (name == null) {
                     throw new System.ArgumentNullException.$ctor1("name");
@@ -130,9 +150,15 @@
 
                 return this.GetMethodImpl(name, System.Reflection.Module.DefaultLookup, null, 3, null, null);
             },
+            //System.Reflection.Module.GetMethod end.
+
+            //System.Reflection.Module.GetMethod$2 start.
             GetMethod$2: function (name, types) {
                 return this.GetMethod$1(name, System.Reflection.Module.DefaultLookup, null, 3, types, null);
             },
+            //System.Reflection.Module.GetMethod$2 end.
+
+            //System.Reflection.Module.GetMethod$1 start.
             GetMethod$1: function (name, bindingAttr, binder, callConvention, types, modifiers) {
                 if (name == null) {
                     throw new System.ArgumentNullException.$ctor1("name");
@@ -147,39 +173,75 @@
                 }
                 return this.GetMethodImpl(name, bindingAttr, binder, callConvention, types, modifiers);
             },
+            //System.Reflection.Module.GetMethod$1 end.
+
+            //System.Reflection.Module.GetMethodImpl start.
             GetMethodImpl: function (name, bindingAttr, binder, callConvention, types, modifiers) {
                 throw System.NotImplemented.ByDesign;
             },
+            //System.Reflection.Module.GetMethodImpl end.
+
+            //System.Reflection.Module.GetMethods start.
             GetMethods: function () {
                 return this.GetMethods$1(System.Reflection.Module.DefaultLookup);
             },
+            //System.Reflection.Module.GetMethods end.
+
+            //System.Reflection.Module.GetMethods$1 start.
             GetMethods$1: function (bindingFlags) {
                 throw System.NotImplemented.ByDesign;
             },
+            //System.Reflection.Module.GetMethods$1 end.
+
+            //System.Reflection.Module.GetField start.
             GetField: function (name) {
                 return this.GetField$1(name, System.Reflection.Module.DefaultLookup);
             },
+            //System.Reflection.Module.GetField end.
+
+            //System.Reflection.Module.GetField$1 start.
             GetField$1: function (name, bindingAttr) {
                 throw System.NotImplemented.ByDesign;
             },
+            //System.Reflection.Module.GetField$1 end.
+
+            //System.Reflection.Module.GetFields start.
             GetFields: function () {
                 return this.GetFields$1(System.Reflection.Module.DefaultLookup);
             },
+            //System.Reflection.Module.GetFields end.
+
+            //System.Reflection.Module.GetFields$1 start.
             GetFields$1: function (bindingFlags) {
                 throw System.NotImplemented.ByDesign;
             },
+            //System.Reflection.Module.GetFields$1 end.
+
+            //System.Reflection.Module.GetTypes start.
             GetTypes: function () {
                 throw System.NotImplemented.ByDesign;
             },
+            //System.Reflection.Module.GetTypes end.
+
+            //System.Reflection.Module.GetType start.
             GetType: function (className) {
                 return this.GetType$2(className, false, false);
             },
+            //System.Reflection.Module.GetType end.
+
+            //System.Reflection.Module.GetType$1 start.
             GetType$1: function (className, ignoreCase) {
                 return this.GetType$2(className, false, ignoreCase);
             },
+            //System.Reflection.Module.GetType$1 end.
+
+            //System.Reflection.Module.GetType$2 start.
             GetType$2: function (className, throwOnError, ignoreCase) {
                 throw System.NotImplemented.ByDesign;
             },
+            //System.Reflection.Module.GetType$2 end.
+
+            //System.Reflection.Module.FindTypes start.
             FindTypes: function (filter, filterCriteria) {
                 var c = this.GetTypes();
                 var cnt = 0;
@@ -203,44 +265,87 @@
                 }
                 return ret;
             },
+            //System.Reflection.Module.FindTypes end.
+
+            //System.Reflection.Module.ResolveField start.
             ResolveField: function (metadataToken) {
                 return this.ResolveField$1(metadataToken, null, null);
             },
+            //System.Reflection.Module.ResolveField end.
+
+            //System.Reflection.Module.ResolveField$1 start.
             ResolveField$1: function (metadataToken, genericTypeArguments, genericMethodArguments) {
                 throw System.NotImplemented.ByDesign;
             },
+            //System.Reflection.Module.ResolveField$1 end.
+
+            //System.Reflection.Module.ResolveMember start.
             ResolveMember: function (metadataToken) {
                 return this.ResolveMember$1(metadataToken, null, null);
             },
+            //System.Reflection.Module.ResolveMember end.
+
+            //System.Reflection.Module.ResolveMember$1 start.
             ResolveMember$1: function (metadataToken, genericTypeArguments, genericMethodArguments) {
                 throw System.NotImplemented.ByDesign;
             },
+            //System.Reflection.Module.ResolveMember$1 end.
+
+            //System.Reflection.Module.ResolveMethod start.
             ResolveMethod: function (metadataToken) {
                 return this.ResolveMethod$1(metadataToken, null, null);
             },
+            //System.Reflection.Module.ResolveMethod end.
+
+            //System.Reflection.Module.ResolveMethod$1 start.
             ResolveMethod$1: function (metadataToken, genericTypeArguments, genericMethodArguments) {
                 throw System.NotImplemented.ByDesign;
             },
+            //System.Reflection.Module.ResolveMethod$1 end.
+
+            //System.Reflection.Module.ResolveSignature start.
             ResolveSignature: function (metadataToken) {
                 throw System.NotImplemented.ByDesign;
             },
+            //System.Reflection.Module.ResolveSignature end.
+
+            //System.Reflection.Module.ResolveString start.
             ResolveString: function (metadataToken) {
                 throw System.NotImplemented.ByDesign;
             },
+            //System.Reflection.Module.ResolveString end.
+
+            //System.Reflection.Module.ResolveType start.
             ResolveType: function (metadataToken) {
                 return this.ResolveType$1(metadataToken, null, null);
             },
+            //System.Reflection.Module.ResolveType end.
+
+            //System.Reflection.Module.ResolveType$1 start.
             ResolveType$1: function (metadataToken, genericTypeArguments, genericMethodArguments) {
                 throw System.NotImplemented.ByDesign;
             },
+            //System.Reflection.Module.ResolveType$1 end.
+
+            //System.Reflection.Module.equals start.
             equals: function (o) {
                 return Bridge.equals(this, o);
             },
+            //System.Reflection.Module.equals end.
+
+            //System.Reflection.Module.getHashCode start.
             getHashCode: function () {
                 return Bridge.getHashCode(this);
             },
+            //System.Reflection.Module.getHashCode end.
+
+            //System.Reflection.Module.toString start.
             toString: function () {
                 return this.ScopeName;
-            }
+            },
+            //System.Reflection.Module.toString end.
+
+
         }
     });
+    //System.Reflection.Module end.

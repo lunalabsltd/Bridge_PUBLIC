@@ -1,3 +1,4 @@
+    //System.StringComparison start.
     Bridge.define("System.StringComparison", {
         $kind: "enum",
         statics: {
@@ -11,3 +12,4 @@
             }
         }
     });
+    //System.StringComparison end.

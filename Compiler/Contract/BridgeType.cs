@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Bridge.Contract.Dependencies;
 using ArrayType = ICSharpCode.NRefactory.TypeSystem.ArrayType;
 using ByReferenceType = ICSharpCode.NRefactory.TypeSystem.ByReferenceType;
 
@@ -62,6 +63,8 @@ namespace Bridge.Contract
         private Dictionary<IType, BridgeType> byType = new Dictionary<IType, BridgeType>();
         private Dictionary<TypeReference, BridgeType> byTypeRef = new Dictionary<TypeReference, BridgeType>();
         private Dictionary<ITypeInfo, BridgeType> byTypeInfo = new Dictionary<ITypeInfo, BridgeType>();
+        private Manager dependenciesManager;
+
         public void InitItems(IEmitter emitter)
         {
             var logger = emitter.Log;
@@ -89,6 +92,21 @@ namespace Bridge.Contract
             }
 
             logger.Trace("Initializing items for Bridge types done");
+        }
+
+        public void BuildDependenciesGraph()
+        {
+            dependenciesManager = new Manager(this, this.Emitter);
+            dependenciesManager.Build();
+        }
+
+        public bool IsUsed(string typeName)
+        {
+            if (dependenciesManager == null)
+            {
+                throw new InvalidOperationException("Uninitialized dependencies");
+            }
+            return dependenciesManager.IsUsed(typeName);
         }
 
         public IEmitter Emitter

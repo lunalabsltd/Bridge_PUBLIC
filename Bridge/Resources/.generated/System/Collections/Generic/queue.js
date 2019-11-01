@@ -1,3 +1,4 @@
+    //System.Collections.Generic.Queue$1 start.
     Bridge.define("System.Collections.Generic.Queue$1", function (T) { return {
         inherits: [System.Collections.Generic.IEnumerable$1(T),System.Collections.ICollection,System.Collections.Generic.IReadOnlyCollection$1(T)],
         statics: {
@@ -89,6 +90,7 @@
             }
         },
         methods: {
+            //System.Collections.Generic.Queue$1.copyTo start.
             copyTo: function (array, index) {
                 if (array == null) {
                     throw new System.ArgumentNullException.$ctor1("array");
@@ -120,6 +122,9 @@
                     System.Array.copy(this._array, 0, array, ((((index + this._array.length) | 0) - this._head) | 0), numToCopy);
                 }
             },
+            //System.Collections.Generic.Queue$1.copyTo end.
+
+            //System.Collections.Generic.Queue$1.CopyTo start.
             CopyTo: function (array, arrayIndex) {
                 if (array == null) {
                     throw new System.ArgumentNullException.$ctor1("array");
@@ -146,6 +151,9 @@
                     System.Array.copy(this._array, 0, array, ((((arrayIndex + this._array.length) | 0) - this._head) | 0), numToCopy);
                 }
             },
+            //System.Collections.Generic.Queue$1.CopyTo end.
+
+            //System.Collections.Generic.Queue$1.Clear start.
             Clear: function () {
                 if (this._head < this._tail) {
                     System.Array.fill(this._array, function () {
@@ -165,6 +173,9 @@
                 this._size = 0;
                 this._version = (this._version + 1) | 0;
             },
+            //System.Collections.Generic.Queue$1.Clear end.
+
+            //System.Collections.Generic.Queue$1.Enqueue start.
             Enqueue: function (item) {
                 if (this._size === this._array.length) {
                     var newcapacity = (Bridge.Int.div(Bridge.Int.mul(this._array.length, System.Collections.Generic.Queue$1(T).GrowFactor), 100)) | 0;
@@ -179,15 +190,27 @@
                 this._size = (this._size + 1) | 0;
                 this._version = (this._version + 1) | 0;
             },
+            //System.Collections.Generic.Queue$1.Enqueue end.
+
+            //System.Collections.Generic.Queue$1.GetEnumerator start.
             GetEnumerator: function () {
                 return new (System.Collections.Generic.Queue$1.Enumerator(T)).$ctor1(this);
             },
+            //System.Collections.Generic.Queue$1.GetEnumerator end.
+
+            //System.Collections.Generic.Queue$1.System$Collections$Generic$IEnumerable$1$GetEnumerator start.
             System$Collections$Generic$IEnumerable$1$GetEnumerator: function () {
                 return new (System.Collections.Generic.Queue$1.Enumerator(T)).$ctor1(this).$clone();
             },
+            //System.Collections.Generic.Queue$1.System$Collections$Generic$IEnumerable$1$GetEnumerator end.
+
+            //System.Collections.Generic.Queue$1.System$Collections$IEnumerable$GetEnumerator start.
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return new (System.Collections.Generic.Queue$1.Enumerator(T)).$ctor1(this).$clone();
             },
+            //System.Collections.Generic.Queue$1.System$Collections$IEnumerable$GetEnumerator end.
+
+            //System.Collections.Generic.Queue$1.Dequeue start.
             Dequeue: function () {
                 if (this._size === 0) {
                     throw new System.InvalidOperationException.$ctor1("Queue empty.");
@@ -200,6 +223,9 @@
                 this._version = (this._version + 1) | 0;
                 return removed;
             },
+            //System.Collections.Generic.Queue$1.Dequeue end.
+
+            //System.Collections.Generic.Queue$1.Peek start.
             Peek: function () {
                 if (this._size === 0) {
                     throw new System.InvalidOperationException.$ctor1("Queue empty.");
@@ -207,6 +233,9 @@
 
                 return this._array[System.Array.index(this._head, this._array)];
             },
+            //System.Collections.Generic.Queue$1.Peek end.
+
+            //System.Collections.Generic.Queue$1.Contains start.
             Contains: function (item) {
                 var index = this._head;
                 var count = this._size;
@@ -225,9 +254,15 @@
 
                 return false;
             },
+            //System.Collections.Generic.Queue$1.Contains end.
+
+            //System.Collections.Generic.Queue$1.GetElement start.
             GetElement: function (i) {
                 return this._array[System.Array.index((((this._head + i) | 0)) % this._array.length, this._array)];
             },
+            //System.Collections.Generic.Queue$1.GetElement end.
+
+            //System.Collections.Generic.Queue$1.ToArray start.
             ToArray: function () {
                 var arr = System.Array.init(this._size, function (){
                     return Bridge.getDefaultValue(T);
@@ -245,6 +280,9 @@
 
                 return arr;
             },
+            //System.Collections.Generic.Queue$1.ToArray end.
+
+            //System.Collections.Generic.Queue$1.SetCapacity start.
             SetCapacity: function (capacity) {
                 var newarray = System.Array.init(capacity, function (){
                     return Bridge.getDefaultValue(T);
@@ -263,15 +301,25 @@
                 this._tail = (this._size === capacity) ? 0 : this._size;
                 this._version = (this._version + 1) | 0;
             },
+            //System.Collections.Generic.Queue$1.SetCapacity end.
+
+            //System.Collections.Generic.Queue$1.MoveNext start.
             MoveNext: function (index) {
                 var tmp = (index + 1) | 0;
                 return (tmp === this._array.length) ? 0 : tmp;
             },
+            //System.Collections.Generic.Queue$1.MoveNext end.
+
+            //System.Collections.Generic.Queue$1.TrimExcess start.
             TrimExcess: function () {
                 var threshold = Bridge.Int.clip32(this._array.length * 0.9);
                 if (this._size < threshold) {
                     this.SetCapacity(this._size);
                 }
-            }
+            },
+            //System.Collections.Generic.Queue$1.TrimExcess end.
+
+
         }
     }; });
+    //System.Collections.Generic.Queue$1 end.

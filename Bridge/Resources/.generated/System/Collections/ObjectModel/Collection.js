@@ -1,10 +1,15 @@
+    //System.Collections.ObjectModel.Collection$1 start.
     Bridge.define("System.Collections.ObjectModel.Collection$1", function (T) { return {
         inherits: [System.Collections.Generic.IList$1(T),System.Collections.IList,System.Collections.Generic.IReadOnlyList$1(T)],
         statics: {
             methods: {
+                //System.Collections.ObjectModel.Collection$1.IsCompatibleObject:static start.
                 IsCompatibleObject: function (value) {
                     return ((Bridge.is(value, T)) || (value == null && Bridge.getDefaultValue(T) == null));
-                }
+                },
+                //System.Collections.ObjectModel.Collection$1.IsCompatibleObject:static end.
+
+
             }
         },
         fields: {
@@ -126,6 +131,7 @@
                     }
                 }
             },
+            //System.Collections.ObjectModel.Collection$1.add start.
             add: function (item) {
                 if (System.Array.getIsReadOnly(this.items, T)) {
                     System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_ReadOnlyCollection);
@@ -134,6 +140,9 @@
                 var index = System.Array.getCount(this.items, T);
                 this.InsertItem(index, item);
             },
+            //System.Collections.ObjectModel.Collection$1.add end.
+
+            //System.Collections.ObjectModel.Collection$1.System$Collections$IList$add start.
             System$Collections$IList$add: function (value) {
                 if (System.Array.getIsReadOnly(this.items, T)) {
                     System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_ReadOnlyCollection);
@@ -153,6 +162,9 @@
 
                 return ((this.Count - 1) | 0);
             },
+            //System.Collections.ObjectModel.Collection$1.System$Collections$IList$add end.
+
+            //System.Collections.ObjectModel.Collection$1.clear start.
             clear: function () {
                 if (System.Array.getIsReadOnly(this.items, T)) {
                     System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_ReadOnlyCollection);
@@ -160,9 +172,15 @@
 
                 this.ClearItems();
             },
+            //System.Collections.ObjectModel.Collection$1.clear end.
+
+            //System.Collections.ObjectModel.Collection$1.copyTo start.
             copyTo: function (array, index) {
                 System.Array.copyTo(this.items, array, index, T);
             },
+            //System.Collections.ObjectModel.Collection$1.copyTo end.
+
+            //System.Collections.ObjectModel.Collection$1.System$Collections$ICollection$copyTo start.
             System$Collections$ICollection$copyTo: function (array, index) {
                 if (array == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.array);
@@ -214,30 +232,51 @@
                     }
                 }
             },
+            //System.Collections.ObjectModel.Collection$1.System$Collections$ICollection$copyTo end.
+
+            //System.Collections.ObjectModel.Collection$1.contains start.
             contains: function (item) {
                 return System.Array.contains(this.items, item, T);
             },
+            //System.Collections.ObjectModel.Collection$1.contains end.
+
+            //System.Collections.ObjectModel.Collection$1.System$Collections$IList$contains start.
             System$Collections$IList$contains: function (value) {
                 if (System.Collections.ObjectModel.Collection$1(T).IsCompatibleObject(value)) {
                     return this.contains(Bridge.cast(Bridge.unbox(value, T), T));
                 }
                 return false;
             },
+            //System.Collections.ObjectModel.Collection$1.System$Collections$IList$contains end.
+
+            //System.Collections.ObjectModel.Collection$1.GetEnumerator start.
             GetEnumerator: function () {
                 return Bridge.getEnumerator(this.items, T);
             },
+            //System.Collections.ObjectModel.Collection$1.GetEnumerator end.
+
+            //System.Collections.ObjectModel.Collection$1.System$Collections$IEnumerable$GetEnumerator start.
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return Bridge.getEnumerator(Bridge.cast(this.items, System.Collections.IEnumerable));
             },
+            //System.Collections.ObjectModel.Collection$1.System$Collections$IEnumerable$GetEnumerator end.
+
+            //System.Collections.ObjectModel.Collection$1.indexOf start.
             indexOf: function (item) {
                 return System.Array.indexOf(this.items, item, 0, null, T);
             },
+            //System.Collections.ObjectModel.Collection$1.indexOf end.
+
+            //System.Collections.ObjectModel.Collection$1.System$Collections$IList$indexOf start.
             System$Collections$IList$indexOf: function (value) {
                 if (System.Collections.ObjectModel.Collection$1(T).IsCompatibleObject(value)) {
                     return this.indexOf(Bridge.cast(Bridge.unbox(value, T), T));
                 }
                 return -1;
             },
+            //System.Collections.ObjectModel.Collection$1.System$Collections$IList$indexOf end.
+
+            //System.Collections.ObjectModel.Collection$1.insert start.
             insert: function (index, item) {
                 if (System.Array.getIsReadOnly(this.items, T)) {
                     System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_ReadOnlyCollection);
@@ -249,6 +288,9 @@
 
                 this.InsertItem(index, item);
             },
+            //System.Collections.ObjectModel.Collection$1.insert end.
+
+            //System.Collections.ObjectModel.Collection$1.System$Collections$IList$insert start.
             System$Collections$IList$insert: function (index, value) {
                 if (System.Array.getIsReadOnly(this.items, T)) {
                     System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_ReadOnlyCollection);
@@ -266,6 +308,9 @@
                     }
                 }
             },
+            //System.Collections.ObjectModel.Collection$1.System$Collections$IList$insert end.
+
+            //System.Collections.ObjectModel.Collection$1.remove start.
             remove: function (item) {
                 if (System.Array.getIsReadOnly(this.items, T)) {
                     System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_ReadOnlyCollection);
@@ -278,6 +323,9 @@
                 this.RemoveItem(index);
                 return true;
             },
+            //System.Collections.ObjectModel.Collection$1.remove end.
+
+            //System.Collections.ObjectModel.Collection$1.System$Collections$IList$remove start.
             System$Collections$IList$remove: function (value) {
                 if (System.Array.getIsReadOnly(this.items, T)) {
                     System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_ReadOnlyCollection);
@@ -287,6 +335,9 @@
                     this.remove(Bridge.cast(Bridge.unbox(value, T), T));
                 }
             },
+            //System.Collections.ObjectModel.Collection$1.System$Collections$IList$remove end.
+
+            //System.Collections.ObjectModel.Collection$1.removeAt start.
             removeAt: function (index) {
                 if (System.Array.getIsReadOnly(this.items, T)) {
                     System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_ReadOnlyCollection);
@@ -298,17 +349,33 @@
 
                 this.RemoveItem(index);
             },
+            //System.Collections.ObjectModel.Collection$1.removeAt end.
+
+            //System.Collections.ObjectModel.Collection$1.ClearItems start.
             ClearItems: function () {
                 System.Array.clear(this.items, T);
             },
+            //System.Collections.ObjectModel.Collection$1.ClearItems end.
+
+            //System.Collections.ObjectModel.Collection$1.InsertItem start.
             InsertItem: function (index, item) {
                 System.Array.insert(this.items, index, item, T);
             },
+            //System.Collections.ObjectModel.Collection$1.InsertItem end.
+
+            //System.Collections.ObjectModel.Collection$1.RemoveItem start.
             RemoveItem: function (index) {
                 System.Array.removeAt(this.items, index, T);
             },
+            //System.Collections.ObjectModel.Collection$1.RemoveItem end.
+
+            //System.Collections.ObjectModel.Collection$1.SetItem start.
             SetItem: function (index, item) {
                 System.Array.setItem(this.items, index, item, T);
-            }
+            },
+            //System.Collections.ObjectModel.Collection$1.SetItem end.
+
+
         }
     }; });
+    //System.Collections.ObjectModel.Collection$1 end.

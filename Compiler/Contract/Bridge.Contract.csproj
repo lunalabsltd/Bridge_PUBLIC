@@ -84,6 +84,7 @@
     </Compile>
     <Compile Include="AbstractPlugin.cs" />
     <Compile Include="BridgeType.cs" />
+    <Compile Include="Config\DeadCodeConfig.cs" />
     <Compile Include="Config\StringBoolJsonConverter.cs" />
     <Compile Include="Config\NamedFunctionMode.cs" />
     <Compile Include="Config\HtmlConfig.cs" />
@@ -93,6 +94,9 @@
     <Compile Include="Config\VersionContext.cs" />
     <Compile Include="Constants\Messages.cs" />
     <Compile Include="BridgeResourceInfo.cs" />
+    <Compile Include="Dependencies\Graph.cs" />
+    <Compile Include="Dependencies\Node.cs" />
+    <Compile Include="Dependencies\Manager.cs" />
     <Compile Include="Rule\Rules.cs" />
     <Compile Include="TranslatorOutput.cs" />
     <Compile Include="TypeComparer.cs" />

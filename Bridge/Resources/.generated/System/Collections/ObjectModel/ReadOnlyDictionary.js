@@ -1,3 +1,4 @@
+    //System.Collections.ObjectModel.ReadOnlyDictionary$2 start.
     Bridge.define("System.Collections.ObjectModel.ReadOnlyDictionary$2", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IDictionary$2(TKey,TValue),System.Collections.IDictionary,System.Collections.Generic.IReadOnlyDictionary$2(TKey,TValue)],
         statics: {
@@ -10,12 +11,16 @@
                 }
             },
             methods: {
+                //System.Collections.ObjectModel.ReadOnlyDictionary$2.IsCompatibleKey:static start.
                 IsCompatibleKey: function (key) {
                     if (key == null) {
                         throw new System.ArgumentNullException.$ctor1("key");
                     }
                     return Bridge.is(key, TKey);
-                }
+                },
+                //System.Collections.ObjectModel.ReadOnlyDictionary$2.IsCompatibleKey:static end.
+
+
             }
         },
         fields: {
@@ -159,39 +164,73 @@
             System$Collections$IDictionary$setItem: function (key, value) {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.containsKey start.
             containsKey: function (key) {
                 return this.m_dictionary["System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$containsKey"](key);
             },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.containsKey end.
+
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.tryGetValue start.
             tryGetValue: function (key, value) {
                 return this.m_dictionary["System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$tryGetValue"](key, value);
             },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.tryGetValue end.
+
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$IDictionary$2$add start.
             System$Collections$Generic$IDictionary$2$add: function (key, value) {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$IDictionary$2$add end.
+
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$add start.
             System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$add: function (item) {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$add end.
+
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$IDictionary$add start.
             System$Collections$IDictionary$add: function (key, value) {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$IDictionary$add end.
+
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$IDictionary$2$remove start.
             System$Collections$Generic$IDictionary$2$remove: function (key) {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$IDictionary$2$remove end.
+
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$remove start.
             System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$remove: function (item) {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$remove end.
+
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$IDictionary$remove start.
             System$Collections$IDictionary$remove: function (key) {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$IDictionary$remove end.
+
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$contains start.
             System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$contains: function (item) {
                 return System.Array.contains(this.m_dictionary, item, System.Collections.Generic.KeyValuePair$2(TKey,TValue));
             },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$contains end.
+
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$IDictionary$contains start.
             System$Collections$IDictionary$contains: function (key) {
                 return System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).IsCompatibleKey(key) && this.containsKey(Bridge.cast(Bridge.unbox(key, TKey), TKey));
             },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$IDictionary$contains end.
+
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$copyTo start.
             System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$copyTo: function (array, arrayIndex) {
                 System.Array.copyTo(this.m_dictionary, array, arrayIndex, System.Collections.Generic.KeyValuePair$2(TKey,TValue));
             },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$copyTo end.
+
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$ICollection$copyTo start.
             System$Collections$ICollection$copyTo: function (array, index) {
                 var $t, $t1;
                 if (array == null) {
@@ -260,24 +299,43 @@
                     }
                 }
             },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$ICollection$copyTo end.
+
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$clear start.
             System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$clear: function () {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$clear end.
+
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$IDictionary$clear start.
             System$Collections$IDictionary$clear: function () {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$IDictionary$clear end.
+
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.GetEnumerator start.
             GetEnumerator: function () {
                 return Bridge.getEnumerator(this.m_dictionary, System.Collections.Generic.KeyValuePair$2(TKey,TValue));
             },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.GetEnumerator end.
+
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$IEnumerable$GetEnumerator start.
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return Bridge.getEnumerator(Bridge.cast(this.m_dictionary, System.Collections.IEnumerable));
             },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$IEnumerable$GetEnumerator end.
+
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$IDictionary$GetEnumerator start.
             System$Collections$IDictionary$GetEnumerator: function () {
                 var d = Bridge.as(this.m_dictionary, System.Collections.IDictionary);
                 if (d != null) {
                     return d.System$Collections$IDictionary$GetEnumerator();
                 }
                 return new (System.Collections.ObjectModel.ReadOnlyDictionary$2.DictionaryEnumerator(TKey,TValue)).$ctor1(this.m_dictionary).$clone();
-            }
+            },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$IDictionary$GetEnumerator end.
+
+
         }
     }; });
+    //System.Collections.ObjectModel.ReadOnlyDictionary$2 end.

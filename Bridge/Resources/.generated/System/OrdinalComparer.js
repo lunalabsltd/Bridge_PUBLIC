@@ -1,3 +1,4 @@
+    //System.OrdinalComparer start.
     Bridge.define("System.OrdinalComparer", {
         inherits: [System.StringComparer],
         fields: {
@@ -16,6 +17,7 @@
             }
         },
         methods: {
+            //System.OrdinalComparer.compare start.
             compare: function (x, y) {
                 if (Bridge.referenceEquals(x, y)) {
                     return 0;
@@ -33,6 +35,9 @@
 
                 return System.String.compare(x, y, false);
             },
+            //System.OrdinalComparer.compare end.
+
+            //System.OrdinalComparer.equals2 start.
             equals2: function (x, y) {
                 if (Bridge.referenceEquals(x, y)) {
                     return true;
@@ -49,6 +54,9 @@
                 }
                 return System.String.equals(x, y);
             },
+            //System.OrdinalComparer.equals2 end.
+
+            //System.OrdinalComparer.equals start.
             equals: function (obj) {
                 var comparer = Bridge.as(obj, System.OrdinalComparer);
                 if (comparer == null) {
@@ -56,6 +64,9 @@
                 }
                 return (this._ignoreCase === comparer._ignoreCase);
             },
+            //System.OrdinalComparer.equals end.
+
+            //System.OrdinalComparer.getHashCode2 start.
             getHashCode2: function (obj) {
                 if (obj == null) {
                     throw new System.ArgumentNullException.$ctor1("obj");
@@ -67,10 +78,17 @@
 
                 return Bridge.getHashCode(obj);
             },
+            //System.OrdinalComparer.getHashCode2 end.
+
+            //System.OrdinalComparer.getHashCode start.
             getHashCode: function () {
                 var name = "OrdinalComparer";
                 var hashCode = Bridge.getHashCode(name);
                 return this._ignoreCase ? (~hashCode) : hashCode;
-            }
+            },
+            //System.OrdinalComparer.getHashCode end.
+
+
         }
     });
+    //System.OrdinalComparer end.

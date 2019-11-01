@@ -25,6 +25,7 @@ namespace Bridge.Translator
             this.Report = new ReportConfig();
             this.Rules = new CompilerRule();
             this.IgnoreDuplicateTypes = false;
+            this.DeadCode = new DeadCodeConfig();
         }
 
         /// <summary>
@@ -351,6 +352,11 @@ namespace Bridge.Translator
         {
             get;
             set;
+        }
+
+        public DeadCodeConfig DeadCode
+        {
+            get; set;
         }
     }
 }

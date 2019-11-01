@@ -1,3 +1,4 @@
+    //System.Collections.SortedList.KeyList start.
     Bridge.define("System.Collections.SortedList.KeyList", {
         inherits: [System.Collections.IList],
         $kind: "nested class",
@@ -62,15 +63,25 @@
             setItem: function (index, value) {
                 throw new System.NotSupportedException.ctor();
             },
+            //System.Collections.SortedList.KeyList.add start.
             add: function (key) {
                 throw new System.NotSupportedException.ctor();
             },
+            //System.Collections.SortedList.KeyList.add end.
+
+            //System.Collections.SortedList.KeyList.clear start.
             clear: function () {
                 throw new System.NotSupportedException.ctor();
             },
+            //System.Collections.SortedList.KeyList.clear end.
+
+            //System.Collections.SortedList.KeyList.contains start.
             contains: function (key) {
                 return this.sortedList.contains(key);
             },
+            //System.Collections.SortedList.KeyList.contains end.
+
+            //System.Collections.SortedList.KeyList.copyTo start.
             copyTo: function (array, arrayIndex) {
                 if (array != null && System.Array.getRank(array) !== 1) {
                     throw new System.ArgumentException.ctor();
@@ -78,12 +89,21 @@
 
                 System.Array.copy(this.sortedList.keys, 0, array, arrayIndex, this.sortedList.Count);
             },
+            //System.Collections.SortedList.KeyList.copyTo end.
+
+            //System.Collections.SortedList.KeyList.insert start.
             insert: function (index, value) {
                 throw new System.NotSupportedException.ctor();
             },
+            //System.Collections.SortedList.KeyList.insert end.
+
+            //System.Collections.SortedList.KeyList.GetEnumerator start.
             GetEnumerator: function () {
                 return new System.Collections.SortedList.SortedListEnumerator(this.sortedList, 0, this.sortedList.Count, System.Collections.SortedList.SortedListEnumerator.Keys);
             },
+            //System.Collections.SortedList.KeyList.GetEnumerator end.
+
+            //System.Collections.SortedList.KeyList.indexOf start.
             indexOf: function (key) {
                 if (key == null) {
                     throw new System.ArgumentNullException.$ctor1("key");
@@ -95,11 +115,21 @@
                 }
                 return -1;
             },
+            //System.Collections.SortedList.KeyList.indexOf end.
+
+            //System.Collections.SortedList.KeyList.remove start.
             remove: function (key) {
                 throw new System.NotSupportedException.ctor();
             },
+            //System.Collections.SortedList.KeyList.remove end.
+
+            //System.Collections.SortedList.KeyList.removeAt start.
             removeAt: function (index) {
                 throw new System.NotSupportedException.ctor();
-            }
+            },
+            //System.Collections.SortedList.KeyList.removeAt end.
+
+
         }
     });
+    //System.Collections.SortedList.KeyList end.

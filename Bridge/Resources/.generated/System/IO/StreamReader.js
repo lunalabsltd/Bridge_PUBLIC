@@ -1,3 +1,4 @@
+    //System.IO.StreamReader start.
     Bridge.define("System.IO.StreamReader", {
         inherits: [System.IO.TextReader],
         statics: {
@@ -135,6 +136,7 @@
             }
         },
         methods: {
+            //System.IO.StreamReader.Init$1 start.
             Init$1: function (stream, encoding, detectEncodingFromByteOrderMarks, bufferSize, leaveOpen) {
                 this.stream = stream;
                 this.encoding = encoding;
@@ -150,13 +152,22 @@
                 this._isBlocked = false;
                 this._closable = !leaveOpen;
             },
+            //System.IO.StreamReader.Init$1 end.
+
+            //System.IO.StreamReader.Init start.
             Init: function (stream) {
                 this.stream = stream;
                 this._closable = true;
             },
+            //System.IO.StreamReader.Init end.
+
+            //System.IO.StreamReader.Close start.
             Close: function () {
                 this.Dispose$1(true);
             },
+            //System.IO.StreamReader.Close end.
+
+            //System.IO.StreamReader.Dispose$1 start.
             Dispose$1: function (disposing) {
                 try {
                     if (!this.LeaveOpen && disposing && (this.stream != null)) {
@@ -174,6 +185,9 @@
                     }
                 }
             },
+            //System.IO.StreamReader.Dispose$1 end.
+
+            //System.IO.StreamReader.DiscardBufferedData start.
             DiscardBufferedData: function () {
 
                 this.byteLen = 0;
@@ -181,6 +195,9 @@
                 this.charPos = 0;
                 this._isBlocked = false;
             },
+            //System.IO.StreamReader.DiscardBufferedData end.
+
+            //System.IO.StreamReader.Peek start.
             Peek: function () {
                 if (this.stream == null) {
                     System.IO.__Error.ReaderClosed();
@@ -193,6 +210,9 @@
                 }
                 return this.charBuffer[System.Array.index(this.charPos, this.charBuffer)];
             },
+            //System.IO.StreamReader.Peek end.
+
+            //System.IO.StreamReader.Read start.
             Read: function () {
                 if (this.stream == null) {
                     System.IO.__Error.ReaderClosed();
@@ -208,6 +228,9 @@
                 this.charPos = (this.charPos + 1) | 0;
                 return result;
             },
+            //System.IO.StreamReader.Read end.
+
+            //System.IO.StreamReader.Read$1 start.
             Read$1: function (buffer, index, count) {
                 if (buffer == null) {
                     throw new System.ArgumentNullException.$ctor1("buffer");
@@ -250,6 +273,9 @@
 
                 return charsRead;
             },
+            //System.IO.StreamReader.Read$1 end.
+
+            //System.IO.StreamReader.ReadToEndAsync start.
             ReadToEndAsync: function () {
                 var $step = 0,
                     $task1, 
@@ -315,6 +341,9 @@
                 $asyncBody();
                 return $tcs.task;
             },
+            //System.IO.StreamReader.ReadToEndAsync end.
+
+            //System.IO.StreamReader.ReadToEnd start.
             ReadToEnd: function () {
                 if (this.stream == null) {
                     System.IO.__Error.ReaderClosed();
@@ -328,6 +357,9 @@
                 } while (this.charLen > 0);
                 return sb.toString();
             },
+            //System.IO.StreamReader.ReadToEnd end.
+
+            //System.IO.StreamReader.ReadBlock start.
             ReadBlock: function (buffer, index, count) {
                 if (buffer == null) {
                     throw new System.ArgumentNullException.$ctor1("buffer");
@@ -345,10 +377,16 @@
 
                 return System.IO.TextReader.prototype.ReadBlock.call(this, buffer, index, count);
             },
+            //System.IO.StreamReader.ReadBlock end.
+
+            //System.IO.StreamReader.CompressBuffer start.
             CompressBuffer: function (n) {
                 System.Array.copy(this.byteBuffer, n, this.byteBuffer, 0, ((this.byteLen - n) | 0));
                 this.byteLen = (this.byteLen - n) | 0;
             },
+            //System.IO.StreamReader.CompressBuffer end.
+
+            //System.IO.StreamReader.DetectEncoding start.
             DetectEncoding: function () {
                 if (this.byteLen < 2) {
                     return;
@@ -387,9 +425,15 @@
                     this.charBuffer = System.Array.init(this._maxCharsPerBuffer, 0, System.Char);
                 }
             },
+            //System.IO.StreamReader.DetectEncoding end.
+
+            //System.IO.StreamReader.IsPreamble start.
             IsPreamble: function () {
                 return false;
             },
+            //System.IO.StreamReader.IsPreamble end.
+
+            //System.IO.StreamReader.ReadBuffer start.
             ReadBuffer: function () {
                 this.charLen = 0;
                 this.charPos = 0;
@@ -416,6 +460,9 @@
                 } while (this.charLen === 0);
                 return this.charLen;
             },
+            //System.IO.StreamReader.ReadBuffer end.
+
+            //System.IO.StreamReader.ReadBuffer$1 start.
             ReadBuffer$1: function (userBuffer, userOffset, desiredChars, readToUserBuffer) {
                 this.charLen = 0;
                 this.charPos = 0;
@@ -461,6 +508,9 @@
 
                 return charsRead;
             },
+            //System.IO.StreamReader.ReadBuffer$1 end.
+
+            //System.IO.StreamReader.ReadLine start.
             ReadLine: function () {
                 if (this.stream == null) {
                     System.IO.__Error.ReaderClosed();
@@ -502,6 +552,10 @@
                     sb.append(System.String.fromCharArray(this.charBuffer, this.charPos, i));
                 } while (this.ReadBuffer() > 0);
                 return sb.toString();
-            }
+            },
+            //System.IO.StreamReader.ReadLine end.
+
+
         }
     });
+    //System.IO.StreamReader end.

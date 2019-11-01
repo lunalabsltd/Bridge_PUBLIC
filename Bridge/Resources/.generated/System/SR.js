@@ -1,3 +1,4 @@
+    //System.SR start.
     Bridge.define("System.SR", {
         statics: {
             fields: {
@@ -16,12 +17,19 @@
                 }
             },
             methods: {
+                //System.SR.UsingResourceKeys:static start.
                 UsingResourceKeys: function () {
                     return false;
                 },
+                //System.SR.UsingResourceKeys:static end.
+
+                //System.SR.GetResourceString:static start.
                 GetResourceString: function (resourceKey) {
                     return System.SR.GetResourceString$1(resourceKey, "");
                 },
+                //System.SR.GetResourceString:static end.
+
+                //System.SR.GetResourceString$1:static start.
                 GetResourceString$1: function (resourceKey, defaultString) {
                     var resourceString = null;
                     try {
@@ -40,6 +48,9 @@
 
                     return resourceString;
                 },
+                //System.SR.GetResourceString$1:static end.
+
+                //System.SR.InternalGetResourceString:static start.
                 InternalGetResourceString: function (key) {
                     if (key == null || key.length === 0) {
                         return key;
@@ -57,6 +68,9 @@
 
 
                 },
+                //System.SR.InternalGetResourceString:static end.
+
+                //System.SR.Format$3:static start.
                 Format$3: function (resourceFormat, args) {
                     if (args === void 0) { args = []; }
                     if (args != null) {
@@ -69,6 +83,9 @@
 
                     return resourceFormat;
                 },
+                //System.SR.Format$3:static end.
+
+                //System.SR.Format:static start.
                 Format: function (resourceFormat, p1) {
                     if (System.SR.UsingResourceKeys()) {
                         return [resourceFormat, p1].join(", ");
@@ -76,6 +93,9 @@
 
                     return System.String.format(resourceFormat, [p1]);
                 },
+                //System.SR.Format:static end.
+
+                //System.SR.Format$1:static start.
                 Format$1: function (resourceFormat, p1, p2) {
                     if (System.SR.UsingResourceKeys()) {
                         return [resourceFormat, p1, p2].join(", ");
@@ -83,12 +103,19 @@
 
                     return System.String.format(resourceFormat, p1, p2);
                 },
+                //System.SR.Format$1:static end.
+
+                //System.SR.Format$2:static start.
                 Format$2: function (resourceFormat, p1, p2, p3) {
                     if (System.SR.UsingResourceKeys()) {
                         return [resourceFormat, p1, p2, p3].join(", ");
                     }
                     return System.String.format(resourceFormat, p1, p2, p3);
-                }
+                },
+                //System.SR.Format$2:static end.
+
+
             }
         }
     });
+    //System.SR end.

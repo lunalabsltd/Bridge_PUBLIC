@@ -1,7 +1,9 @@
+    //System.IO.FileStream start.
     Bridge.define("System.IO.FileStream", {
         inherits: [System.IO.Stream],
         statics: {
             methods: {
+                //System.IO.FileStream.FromFile:static start.
                 FromFile: function (file) {
                     var completer = new System.Threading.Tasks.TaskCompletionSource();
                     var fileReader = new FileReader();
@@ -15,6 +17,9 @@
 
                     return completer.task;
                 },
+                //System.IO.FileStream.FromFile:static end.
+
+                //System.IO.FileStream.ReadBytes:static start.
                 ReadBytes: function (path) {
                     if (Bridge.isNode) {
                         var fs = require("fs");
@@ -37,6 +42,9 @@
                         return resultArray.buffer;
                     }
                 },
+                //System.IO.FileStream.ReadBytes:static end.
+
+                //System.IO.FileStream.ReadBytesAsync:static start.
                 ReadBytesAsync: function (path) {
                     var tcs = new System.Threading.Tasks.TaskCompletionSource();
 
@@ -75,7 +83,10 @@
                     }
 
                     return tcs.task;
-                }
+                },
+                //System.IO.FileStream.ReadBytesAsync:static end.
+
+
             }
         },
         fields: {
@@ -129,16 +140,29 @@
             }
         },
         methods: {
+            //System.IO.FileStream.Flush start.
             Flush: function () { },
+            //System.IO.FileStream.Flush end.
+
+            //System.IO.FileStream.Seek start.
             Seek: function (offset, origin) {
                 throw new System.NotImplementedException.ctor();
             },
+            //System.IO.FileStream.Seek end.
+
+            //System.IO.FileStream.SetLength start.
             SetLength: function (value) {
                 throw new System.NotImplementedException.ctor();
             },
+            //System.IO.FileStream.SetLength end.
+
+            //System.IO.FileStream.Write start.
             Write: function (buffer, offset, count) {
                 throw new System.NotImplementedException.ctor();
             },
+            //System.IO.FileStream.Write end.
+
+            //System.IO.FileStream.GetInternalBuffer start.
             GetInternalBuffer: function () {
                 if (this._buffer == null) {
                     this._buffer = System.IO.FileStream.ReadBytes(this.name);
@@ -147,6 +171,9 @@
 
                 return this._buffer;
             },
+            //System.IO.FileStream.GetInternalBuffer end.
+
+            //System.IO.FileStream.EnsureBufferAsync start.
             EnsureBufferAsync: function () {
                 var $step = 0,
                     $task1, 
@@ -202,6 +229,9 @@
                 $asyncBody();
                 return $tcs.task;
             },
+            //System.IO.FileStream.EnsureBufferAsync end.
+
+            //System.IO.FileStream.Read start.
             Read: function (buffer, offset, count) {
                 if (buffer == null) {
                     throw new System.ArgumentNullException.$ctor1("buffer");
@@ -246,6 +276,10 @@
                 }
                 this.Position = this.Position.add(num);
                 return System.Int64.clip32(num);
-            }
+            },
+            //System.IO.FileStream.Read end.
+
+
         }
     });
+    //System.IO.FileStream end.

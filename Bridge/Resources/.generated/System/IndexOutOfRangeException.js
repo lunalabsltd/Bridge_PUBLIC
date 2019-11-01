@@ -1,3 +1,4 @@
+    //System.IndexOutOfRangeException start.
     Bridge.define("System.IndexOutOfRangeException", {
         inherits: [System.SystemException],
         ctors: {
@@ -18,3 +19,4 @@
             }
         }
     });
+    //System.IndexOutOfRangeException end.

@@ -1,3 +1,4 @@
+    //System.Globalization.DaylightTimeStruct start.
     Bridge.define("System.Globalization.DaylightTimeStruct", {
         $kind: "struct",
         statics: {
@@ -46,3 +47,4 @@
             }
         }
     });
+    //System.Globalization.DaylightTimeStruct end.

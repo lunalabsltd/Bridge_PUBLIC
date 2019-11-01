@@ -1,3 +1,4 @@
+    //System.Collections.Generic.HashSet$1 start.
     Bridge.define("System.Collections.Generic.HashSet$1", function (T) { return {
         inherits: [System.Collections.Generic.ICollection$1(T),System.Collections.Generic.ISet$1(T),System.Collections.Generic.IReadOnlyCollection$1(T)],
         statics: {
@@ -12,6 +13,7 @@
                 }
             },
             methods: {
+                //System.Collections.Generic.HashSet$1.HashSetEquals:static start.
                 HashSetEquals: function (set1, set2, comparer) {
                     var $t, $t1, $t2;
                     if (set1 == null) {
@@ -69,9 +71,15 @@
                         return true;
                     }
                 },
+                //System.Collections.Generic.HashSet$1.HashSetEquals:static end.
+
+                //System.Collections.Generic.HashSet$1.AreEqualityComparersEqual:static start.
                 AreEqualityComparersEqual: function (set1, set2) {
                     return Bridge.equals(set1.Comparer, set2.Comparer);
-                }
+                },
+                //System.Collections.Generic.HashSet$1.AreEqualityComparersEqual:static end.
+
+
             }
         },
         fields: {
@@ -158,12 +166,19 @@
             }
         },
         methods: {
+            //System.Collections.Generic.HashSet$1.System$Collections$Generic$ICollection$1$add start.
             System$Collections$Generic$ICollection$1$add: function (item) {
                 this.AddIfNotPresent(item);
             },
+            //System.Collections.Generic.HashSet$1.System$Collections$Generic$ICollection$1$add end.
+
+            //System.Collections.Generic.HashSet$1.add start.
             add: function (item) {
                 return this.AddIfNotPresent(item);
             },
+            //System.Collections.Generic.HashSet$1.add end.
+
+            //System.Collections.Generic.HashSet$1.clear start.
             clear: function () {
                 if (this._lastIndex > 0) {
                     for (var i = 0; i < this._lastIndex; i = (i + 1) | 0) {
@@ -180,7 +195,13 @@
                 }
                 this._version = (this._version + 1) | 0;
             },
+            //System.Collections.Generic.HashSet$1.clear end.
+
+            //System.Collections.Generic.HashSet$1.ArrayClear start.
             ArrayClear: function (array, index, length) { },
+            //System.Collections.Generic.HashSet$1.ArrayClear end.
+
+            //System.Collections.Generic.HashSet$1.contains start.
             contains: function (item) {
                 if (this._buckets != null) {
                     var hashCode = this.InternalGetHashCode(item);
@@ -192,12 +213,21 @@
                 }
                 return false;
             },
+            //System.Collections.Generic.HashSet$1.contains end.
+
+            //System.Collections.Generic.HashSet$1.copyTo start.
             copyTo: function (array, arrayIndex) {
                 this.CopyTo$1(array, arrayIndex, this._count);
             },
+            //System.Collections.Generic.HashSet$1.copyTo end.
+
+            //System.Collections.Generic.HashSet$1.CopyTo start.
             CopyTo: function (array) {
                 this.CopyTo$1(array, 0, this._count);
             },
+            //System.Collections.Generic.HashSet$1.CopyTo end.
+
+            //System.Collections.Generic.HashSet$1.CopyTo$1 start.
             CopyTo$1: function (array, arrayIndex, count) {
                 if (array == null) {
                     throw new System.ArgumentNullException.$ctor1("array");
@@ -219,6 +249,9 @@
                     }
                 }
             },
+            //System.Collections.Generic.HashSet$1.CopyTo$1 end.
+
+            //System.Collections.Generic.HashSet$1.remove start.
             remove: function (item) {
                 if (this._buckets != null) {
                     var hashCode = this.InternalGetHashCode(item);
@@ -248,15 +281,27 @@
                 }
                 return false;
             },
+            //System.Collections.Generic.HashSet$1.remove end.
+
+            //System.Collections.Generic.HashSet$1.GetEnumerator start.
             GetEnumerator: function () {
                 return new (System.Collections.Generic.HashSet$1.Enumerator(T)).$ctor1(this);
             },
+            //System.Collections.Generic.HashSet$1.GetEnumerator end.
+
+            //System.Collections.Generic.HashSet$1.System$Collections$Generic$IEnumerable$1$GetEnumerator start.
             System$Collections$Generic$IEnumerable$1$GetEnumerator: function () {
                 return new (System.Collections.Generic.HashSet$1.Enumerator(T)).$ctor1(this).$clone();
             },
+            //System.Collections.Generic.HashSet$1.System$Collections$Generic$IEnumerable$1$GetEnumerator end.
+
+            //System.Collections.Generic.HashSet$1.System$Collections$IEnumerable$GetEnumerator start.
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return new (System.Collections.Generic.HashSet$1.Enumerator(T)).$ctor1(this).$clone();
             },
+            //System.Collections.Generic.HashSet$1.System$Collections$IEnumerable$GetEnumerator end.
+
+            //System.Collections.Generic.HashSet$1.unionWith start.
             unionWith: function (other) {
                 var $t;
                 if (other == null) {
@@ -274,6 +319,9 @@
                     }
                 }
             },
+            //System.Collections.Generic.HashSet$1.unionWith end.
+
+            //System.Collections.Generic.HashSet$1.intersectWith start.
             intersectWith: function (other) {
                 if (other == null) {
                     throw new System.ArgumentNullException.$ctor1("other");
@@ -295,6 +343,9 @@
                 }
                 this.IntersectWithEnumerable(other);
             },
+            //System.Collections.Generic.HashSet$1.intersectWith end.
+
+            //System.Collections.Generic.HashSet$1.exceptWith start.
             exceptWith: function (other) {
                 var $t;
                 if (other == null) {
@@ -319,6 +370,9 @@
                     }
                 }
             },
+            //System.Collections.Generic.HashSet$1.exceptWith end.
+
+            //System.Collections.Generic.HashSet$1.symmetricExceptWith start.
             symmetricExceptWith: function (other) {
                 if (other == null) {
                     throw new System.ArgumentNullException.$ctor1("other");
@@ -338,6 +392,9 @@
                     this.SymmetricExceptWithEnumerable(other);
                 }
             },
+            //System.Collections.Generic.HashSet$1.symmetricExceptWith end.
+
+            //System.Collections.Generic.HashSet$1.isSubsetOf start.
             isSubsetOf: function (other) {
                 if (other == null) {
                     throw new System.ArgumentNullException.$ctor1("other");
@@ -356,6 +413,9 @@
                     return (result.uniqueCount === this._count && result.unfoundCount >= 0);
                 }
             },
+            //System.Collections.Generic.HashSet$1.isSubsetOf end.
+
+            //System.Collections.Generic.HashSet$1.isProperSubsetOf start.
             isProperSubsetOf: function (other) {
                 if (other == null) {
                     throw new System.ArgumentNullException.$ctor1("other");
@@ -376,6 +436,9 @@
                 var result = this.CheckUniqueAndUnfoundElements(other, false);
                 return (result.uniqueCount === this._count && result.unfoundCount > 0);
             },
+            //System.Collections.Generic.HashSet$1.isProperSubsetOf end.
+
+            //System.Collections.Generic.HashSet$1.isSupersetOf start.
             isSupersetOf: function (other) {
                 if (other == null) {
                     throw new System.ArgumentNullException.$ctor1("other");
@@ -394,6 +457,9 @@
                 }
                 return this.ContainsAllElements(other);
             },
+            //System.Collections.Generic.HashSet$1.isSupersetOf end.
+
+            //System.Collections.Generic.HashSet$1.isProperSupersetOf start.
             isProperSupersetOf: function (other) {
                 if (other == null) {
                     throw new System.ArgumentNullException.$ctor1("other");
@@ -417,6 +483,9 @@
                 var result = this.CheckUniqueAndUnfoundElements(other, true);
                 return (result.uniqueCount < this._count && result.unfoundCount === 0);
             },
+            //System.Collections.Generic.HashSet$1.isProperSupersetOf end.
+
+            //System.Collections.Generic.HashSet$1.overlaps start.
             overlaps: function (other) {
                 var $t;
                 if (other == null) {
@@ -440,6 +509,9 @@
                 }
                 return false;
             },
+            //System.Collections.Generic.HashSet$1.overlaps end.
+
+            //System.Collections.Generic.HashSet$1.setEquals start.
             setEquals: function (other) {
                 if (other == null) {
                     throw new System.ArgumentNullException.$ctor1("other");
@@ -461,6 +533,9 @@
                     return (result.uniqueCount === this._count && result.unfoundCount === 0);
                 }
             },
+            //System.Collections.Generic.HashSet$1.setEquals end.
+
+            //System.Collections.Generic.HashSet$1.RemoveWhere start.
             RemoveWhere: function (match) {
                 if (Bridge.staticEquals(match, null)) {
                     throw new System.ArgumentNullException.$ctor1("match");
@@ -478,6 +553,9 @@
                 }
                 return numRemoved;
             },
+            //System.Collections.Generic.HashSet$1.RemoveWhere end.
+
+            //System.Collections.Generic.HashSet$1.TrimExcess start.
             TrimExcess: function () {
                 if (this._count === 0) {
                     this._buckets = null;
@@ -505,6 +583,9 @@
                     this._freeList = -1;
                 }
             },
+            //System.Collections.Generic.HashSet$1.TrimExcess end.
+
+            //System.Collections.Generic.HashSet$1.Initialize start.
             Initialize: function (capacity) {
                 var size = System.Collections.HashHelpers.GetPrime(capacity);
                 this._buckets = System.Array.init(size, 0, System.Int32);
@@ -512,6 +593,9 @@
                     return new (System.Collections.Generic.HashSet$1.Slot(T))();
                 }, System.Collections.Generic.HashSet$1.Slot(T));
             },
+            //System.Collections.Generic.HashSet$1.Initialize end.
+
+            //System.Collections.Generic.HashSet$1.IncreaseCapacity start.
             IncreaseCapacity: function () {
                 var newSize = System.Collections.HashHelpers.ExpandPrime(this._count);
                 if (newSize <= this._count) {
@@ -519,6 +603,9 @@
                 }
                 this.SetCapacity(newSize, false);
             },
+            //System.Collections.Generic.HashSet$1.IncreaseCapacity end.
+
+            //System.Collections.Generic.HashSet$1.SetCapacity start.
             SetCapacity: function (newSize, forceNewHashCodes) {
                 var newSlots = System.Array.init(newSize, function (){
                     return new (System.Collections.Generic.HashSet$1.Slot(T))();
@@ -544,6 +631,9 @@
                 this._slots = newSlots;
                 this._buckets = newBuckets;
             },
+            //System.Collections.Generic.HashSet$1.SetCapacity end.
+
+            //System.Collections.Generic.HashSet$1.AddIfNotPresent start.
             AddIfNotPresent: function (value) {
                 if (this._buckets == null) {
                     this.Initialize(0);
@@ -575,6 +665,9 @@
                 this._version = (this._version + 1) | 0;
                 return true;
             },
+            //System.Collections.Generic.HashSet$1.AddIfNotPresent end.
+
+            //System.Collections.Generic.HashSet$1.ContainsAllElements start.
             ContainsAllElements: function (other) {
                 var $t;
                 $t = Bridge.getEnumerator(other, T);
@@ -592,6 +685,9 @@
                 }
                 return true;
             },
+            //System.Collections.Generic.HashSet$1.ContainsAllElements end.
+
+            //System.Collections.Generic.HashSet$1.IsSubsetOfHashSetWithSameEC start.
             IsSubsetOfHashSetWithSameEC: function (other) {
                 var $t;
                 $t = Bridge.getEnumerator(this);
@@ -609,6 +705,9 @@
                 }
                 return true;
             },
+            //System.Collections.Generic.HashSet$1.IsSubsetOfHashSetWithSameEC end.
+
+            //System.Collections.Generic.HashSet$1.IntersectWithHashSetWithSameEC start.
             IntersectWithHashSetWithSameEC: function (other) {
                 for (var i = 0; i < this._lastIndex; i = (i + 1) | 0) {
                     if (this._slots[System.Array.index(i, this._slots)].hashCode >= 0) {
@@ -619,6 +718,9 @@
                     }
                 }
             },
+            //System.Collections.Generic.HashSet$1.IntersectWithHashSetWithSameEC end.
+
+            //System.Collections.Generic.HashSet$1.IntersectWithEnumerable start.
             IntersectWithEnumerable: function (other) {
                 var $t;
                 var originalLastIndex = this._lastIndex;
@@ -646,6 +748,9 @@
                     }
                 }
             },
+            //System.Collections.Generic.HashSet$1.IntersectWithEnumerable end.
+
+            //System.Collections.Generic.HashSet$1.InternalIndexOf start.
             InternalIndexOf: function (item) {
                 var hashCode = this.InternalGetHashCode(item);
                 for (var i = (this._buckets[System.Array.index(hashCode % this._buckets.length, this._buckets)] - 1) | 0; i >= 0; i = this._slots[System.Array.index(i, this._slots)].next) {
@@ -655,6 +760,9 @@
                 }
                 return -1;
             },
+            //System.Collections.Generic.HashSet$1.InternalIndexOf end.
+
+            //System.Collections.Generic.HashSet$1.SymmetricExceptWithUniqueHashSet start.
             SymmetricExceptWithUniqueHashSet: function (other) {
                 var $t;
                 $t = Bridge.getEnumerator(other);
@@ -671,6 +779,9 @@
                     }
                 }
             },
+            //System.Collections.Generic.HashSet$1.SymmetricExceptWithUniqueHashSet end.
+
+            //System.Collections.Generic.HashSet$1.SymmetricExceptWithEnumerable start.
             SymmetricExceptWithEnumerable: function (other) {
                 var $t;
                 var originalLastIndex = this._lastIndex;
@@ -706,6 +817,9 @@
                     }
                 }
             },
+            //System.Collections.Generic.HashSet$1.SymmetricExceptWithEnumerable end.
+
+            //System.Collections.Generic.HashSet$1.AddOrGetLocation start.
             AddOrGetLocation: function (value, location) {
                 var hashCode = this.InternalGetHashCode(value);
                 var bucket = hashCode % this._buckets.length;
@@ -736,6 +850,9 @@
                 location.v = index;
                 return true;
             },
+            //System.Collections.Generic.HashSet$1.AddOrGetLocation end.
+
+            //System.Collections.Generic.HashSet$1.CheckUniqueAndUnfoundElements start.
             CheckUniqueAndUnfoundElements: function (other, returnIfUnfound) {
                 var $t, $t1;
                 var result = new (System.Collections.Generic.HashSet$1.ElementCount(T))();
@@ -790,6 +907,9 @@
                 result.unfoundCount = unfoundCount;
                 return result.$clone();
             },
+            //System.Collections.Generic.HashSet$1.CheckUniqueAndUnfoundElements end.
+
+            //System.Collections.Generic.HashSet$1.ToArray start.
             ToArray: function () {
                 var newArray = System.Array.init(this.Count, function (){
                     return Bridge.getDefaultValue(T);
@@ -797,11 +917,18 @@
                 this.CopyTo(newArray);
                 return newArray;
             },
+            //System.Collections.Generic.HashSet$1.ToArray end.
+
+            //System.Collections.Generic.HashSet$1.InternalGetHashCode start.
             InternalGetHashCode: function (item) {
                 if (item == null) {
                     return 0;
                 }
                 return this._comparer[Bridge.geti(this._comparer, "System$Collections$Generic$IEqualityComparer$1$" + Bridge.getTypeAlias(T) + "$getHashCode2", "System$Collections$Generic$IEqualityComparer$1$getHashCode2")](item) & System.Collections.Generic.HashSet$1(T).Lower31BitMask;
-            }
+            },
+            //System.Collections.Generic.HashSet$1.InternalGetHashCode end.
+
+
         }
     }; });
+    //System.Collections.Generic.HashSet$1 end.

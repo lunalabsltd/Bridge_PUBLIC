@@ -1,3 +1,4 @@
+    //System.Runtime.Serialization.SerializationInfoEnumerator start.
     Bridge.define("System.Runtime.Serialization.SerializationInfoEnumerator", {
         inherits: [System.Collections.IEnumerator],
         fields: {
@@ -65,6 +66,7 @@
             }
         },
         methods: {
+            //System.Runtime.Serialization.SerializationInfoEnumerator.moveNext start.
             moveNext: function () {
                 if (this._currItem < this._numItems) {
                     this._currItem = (this._currItem + 1) | 0;
@@ -75,9 +77,16 @@
 
                 return this._current;
             },
+            //System.Runtime.Serialization.SerializationInfoEnumerator.moveNext end.
+
+            //System.Runtime.Serialization.SerializationInfoEnumerator.reset start.
             reset: function () {
                 this._currItem = -1;
                 this._current = false;
-            }
+            },
+            //System.Runtime.Serialization.SerializationInfoEnumerator.reset end.
+
+
         }
     });
+    //System.Runtime.Serialization.SerializationInfoEnumerator end.

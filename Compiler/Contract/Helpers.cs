@@ -1367,6 +1367,26 @@ namespace Bridge.Contract
             return JS.Reserved.StaticNames.Any(n => String.Equals(name, n, ignoreCase ? StringComparison.InvariantCultureIgnoreCase : StringComparison.InvariantCulture));
         }
 
+        public static string GetClassName(TypeDefinition type)
+        {
+            return type.FullName.Replace("/", ".").Replace("`", "$");
+        }
+
+        public static string GetMemberName(IMember member, IEmitter emitter)
+        {
+            var name = OverloadsCollection.Create(emitter, member).GetOverloadName();
+            if (member.IsStatic)
+            {
+                name += ":static";
+            }
+            return name;
+        }
+
+        public static string GetMemberName(IMember member, TypeDefinition type, IEmitter emitter)
+        {
+            return GetClassName(type) + "." + GetMemberName(member, emitter);
+        }
+
         public static string GetFunctionName(NamedFunctionMode mode, IMember member, IEmitter emitter, bool isSetter = false)
         {
             var overloads = OverloadsCollection.Create(emitter, member, isSetter);

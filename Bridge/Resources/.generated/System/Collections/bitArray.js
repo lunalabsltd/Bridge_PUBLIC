@@ -1,3 +1,4 @@
+    //System.Collections.BitArray start.
     Bridge.define("System.Collections.BitArray", {
         inherits: [System.Collections.ICollection,System.ICloneable],
         statics: {
@@ -16,9 +17,13 @@
                 }
             },
             methods: {
+                //System.Collections.BitArray.GetArrayLength:static start.
                 GetArrayLength: function (n, div) {
                     return n > 0 ? ((((((Bridge.Int.div((((n - 1) | 0)), div)) | 0)) + 1) | 0)) : 0;
-                }
+                },
+                //System.Collections.BitArray.GetArrayLength:static end.
+
+
             }
         },
         fields: {
@@ -196,6 +201,7 @@
             setItem: function (index, value) {
                 this.Set(index, value);
             },
+            //System.Collections.BitArray.copyTo start.
             copyTo: function (array, index) {
                 if (array == null) {
                     throw new System.ArgumentNullException.$ctor1("array");
@@ -234,6 +240,9 @@
                     throw new System.ArgumentException.$ctor1("Only supported array types for CopyTo on BitArrays are Boolean[], Int32[] and Byte[].");
                 }
             },
+            //System.Collections.BitArray.copyTo end.
+
+            //System.Collections.BitArray.Get start.
             Get: function (index) {
                 if (index < 0 || index >= this.Length) {
                     throw new System.ArgumentOutOfRangeException.$ctor4("index", "Index was out of range. Must be non-negative and less than the size of the collection.");
@@ -241,6 +250,9 @@
 
                 return (this.m_array[System.Array.index(((Bridge.Int.div(index, 32)) | 0), this.m_array)] & (1 << (index % 32))) !== 0;
             },
+            //System.Collections.BitArray.Get end.
+
+            //System.Collections.BitArray.Set start.
             Set: function (index, value) {
                 var $t, $t1;
                 if (index < 0 || index >= this.Length) {
@@ -255,6 +267,9 @@
 
                 this._version = (this._version + 1) | 0;
             },
+            //System.Collections.BitArray.Set end.
+
+            //System.Collections.BitArray.SetAll start.
             SetAll: function (value) {
                 var fillValue = value ? (-1) : 0;
                 var ints = System.Collections.BitArray.GetArrayLength(this.m_length, System.Collections.BitArray.BitsPerInt32);
@@ -264,6 +279,9 @@
 
                 this._version = (this._version + 1) | 0;
             },
+            //System.Collections.BitArray.SetAll end.
+
+            //System.Collections.BitArray.And start.
             And: function (value) {
                 if (value == null) {
                     throw new System.ArgumentNullException.$ctor1("value");
@@ -280,6 +298,9 @@
                 this._version = (this._version + 1) | 0;
                 return this;
             },
+            //System.Collections.BitArray.And end.
+
+            //System.Collections.BitArray.Or start.
             Or: function (value) {
                 if (value == null) {
                     throw new System.ArgumentNullException.$ctor1("value");
@@ -296,6 +317,9 @@
                 this._version = (this._version + 1) | 0;
                 return this;
             },
+            //System.Collections.BitArray.Or end.
+
+            //System.Collections.BitArray.Xor start.
             Xor: function (value) {
                 if (value == null) {
                     throw new System.ArgumentNullException.$ctor1("value");
@@ -312,6 +336,9 @@
                 this._version = (this._version + 1) | 0;
                 return this;
             },
+            //System.Collections.BitArray.Xor end.
+
+            //System.Collections.BitArray.Not start.
             Not: function () {
                 var ints = System.Collections.BitArray.GetArrayLength(this.m_length, System.Collections.BitArray.BitsPerInt32);
                 for (var i = 0; i < ints; i = (i + 1) | 0) {
@@ -321,14 +348,24 @@
                 this._version = (this._version + 1) | 0;
                 return this;
             },
+            //System.Collections.BitArray.Not end.
+
+            //System.Collections.BitArray.clone start.
             clone: function () {
                 var bitArray = new System.Collections.BitArray.$ctor5(this.m_array);
                 bitArray._version = this._version;
                 bitArray.m_length = this.m_length;
                 return bitArray;
             },
+            //System.Collections.BitArray.clone end.
+
+            //System.Collections.BitArray.GetEnumerator start.
             GetEnumerator: function () {
                 return new System.Collections.BitArray.BitArrayEnumeratorSimple(this);
-            }
+            },
+            //System.Collections.BitArray.GetEnumerator end.
+
+
         }
     });
+    //System.Collections.BitArray end.

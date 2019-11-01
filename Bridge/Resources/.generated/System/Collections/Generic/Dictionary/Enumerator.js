@@ -1,3 +1,4 @@
+    //System.Collections.Generic.Dictionary$2.Enumerator start.
     Bridge.define("System.Collections.Generic.Dictionary$2.Enumerator", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(System.Collections.Generic.KeyValuePair$2(TKey,TValue)),System.Collections.IDictionaryEnumerator],
         $kind: "nested struct",
@@ -92,6 +93,7 @@
             }
         },
         methods: {
+            //System.Collections.Generic.Dictionary$2.Enumerator.moveNext start.
             moveNext: function () {
                 var $t, $t1, $t2;
                 if (this.version !== this.dictionary.version) {
@@ -111,7 +113,13 @@
                 this.current = new (System.Collections.Generic.KeyValuePair$2(TKey,TValue)).ctor();
                 return false;
             },
+            //System.Collections.Generic.Dictionary$2.Enumerator.moveNext end.
+
+            //System.Collections.Generic.Dictionary$2.Enumerator.Dispose start.
             Dispose: function () { },
+            //System.Collections.Generic.Dictionary$2.Enumerator.Dispose end.
+
+            //System.Collections.Generic.Dictionary$2.Enumerator.System$Collections$IEnumerator$reset start.
             System$Collections$IEnumerator$reset: function () {
                 if (this.version !== this.dictionary.version) {
                     System.ThrowHelper.ThrowInvalidOperationException(System.ExceptionResource.InvalidOperation_EnumFailedVersion);
@@ -120,6 +128,8 @@
                 this.index = 0;
                 this.current = new (System.Collections.Generic.KeyValuePair$2(TKey,TValue)).ctor();
             },
+            //System.Collections.Generic.Dictionary$2.Enumerator.System$Collections$IEnumerator$reset end.
+
             getHashCode: function () {
                 var h = Bridge.addHash([3788985113, this.dictionary, this.version, this.index, this.current, this.getEnumeratorRetType]);
                 return h;
@@ -141,3 +151,4 @@
             }
         }
     }; });
+    //System.Collections.Generic.Dictionary$2.Enumerator end.

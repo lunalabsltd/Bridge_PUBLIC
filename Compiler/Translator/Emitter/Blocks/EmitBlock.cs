@@ -310,7 +310,7 @@ namespace Bridge.Translator
 
                 if (this.Emitter.Output.Length > 0)
                 {
-                    this.WriteNewLine();
+                    this.Emitter.NewLine = true;
                 }
 
                 tmpBuffer.Length = 0;
@@ -451,10 +451,17 @@ namespace Bridge.Translator
                     pos = this.Emitter.Output.Length;
                     this.Write(";");
                     this.WriteNewLine();
+                    this.WriteNewLine();
                 }
 
                 foreach (var meta in metas)
                 {
+                    var name = Helpers.GetClassName(this.Emitter.BridgeTypes.Get(meta.Key).TypeDefinition);
+                    if (!this.Emitter.BridgeTypes.IsUsed(name))
+                    {
+                        continue;
+                    }
+
                     var metaData = meta.Value;
                     string typeArgs = "";
 
@@ -476,7 +483,12 @@ namespace Bridge.Translator
                         typeArgs = arr_sb.ToString();
                     }
 
+                    this.Write(string.Format("//{0} start.", name));
+                    this.WriteNewLine();
                     this.Write(string.Format("$m(\"{0}\", function ({2}) {{ return {1}; }}, $n);", MetadataUtils.GetTypeName(meta.Key, this.Emitter, false, true, false), metaData.ToString(Formatting.None), typeArgs));
+                    this.WriteNewLine();
+                    this.Write(string.Format("//{0} end.", name));
+                    this.WriteNewLine();
                     this.WriteNewLine();
                 }
 

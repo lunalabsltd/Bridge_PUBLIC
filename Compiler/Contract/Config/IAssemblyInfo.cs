@@ -233,5 +233,10 @@ namespace Bridge.Contract
             get;
             set;
         }
+
+        DeadCodeConfig DeadCode
+        {
+            get; set;
+        }
     }
  }

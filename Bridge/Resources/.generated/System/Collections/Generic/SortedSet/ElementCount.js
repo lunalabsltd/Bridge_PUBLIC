@@ -1,3 +1,4 @@
+    //System.Collections.Generic.SortedSet$1.ElementCount start.
     Bridge.define("System.Collections.Generic.SortedSet$1.ElementCount", function (T) { return {
         $kind: "nested struct",
         statics: {
@@ -33,3 +34,4 @@
             }
         }
     }; });
+    //System.Collections.Generic.SortedSet$1.ElementCount end.

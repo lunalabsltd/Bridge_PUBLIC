@@ -1,3 +1,4 @@
+    //System.Reflection.MemberTypes start.
     Bridge.define("System.Reflection.MemberTypes", {
         $kind: "enum",
         statics: {
@@ -15,3 +16,4 @@
         },
         $flags: true
     });
+    //System.Reflection.MemberTypes end.

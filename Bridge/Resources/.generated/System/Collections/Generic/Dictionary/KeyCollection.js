@@ -1,3 +1,4 @@
+    //System.Collections.Generic.Dictionary$2.KeyCollection start.
     Bridge.define("System.Collections.Generic.Dictionary$2.KeyCollection", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.ICollection$1(TKey),System.Collections.ICollection,System.Collections.Generic.IReadOnlyCollection$1(TKey)],
         $kind: "nested class",
@@ -48,15 +49,25 @@
             }
         },
         methods: {
+            //System.Collections.Generic.Dictionary$2.KeyCollection.GetEnumerator start.
             GetEnumerator: function () {
                 return new (System.Collections.Generic.Dictionary$2.KeyCollection.Enumerator(TKey,TValue)).$ctor1(this.dictionary);
             },
+            //System.Collections.Generic.Dictionary$2.KeyCollection.GetEnumerator end.
+
+            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$Generic$IEnumerable$1$GetEnumerator start.
             System$Collections$Generic$IEnumerable$1$GetEnumerator: function () {
                 return new (System.Collections.Generic.Dictionary$2.KeyCollection.Enumerator(TKey,TValue)).$ctor1(this.dictionary).$clone();
             },
+            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$Generic$IEnumerable$1$GetEnumerator end.
+
+            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$IEnumerable$GetEnumerator start.
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return new (System.Collections.Generic.Dictionary$2.KeyCollection.Enumerator(TKey,TValue)).$ctor1(this.dictionary).$clone();
             },
+            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$IEnumerable$GetEnumerator end.
+
+            //System.Collections.Generic.Dictionary$2.KeyCollection.copyTo start.
             copyTo: function (array, index) {
                 if (array == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.array);
@@ -78,6 +89,9 @@
                     }
                 }
             },
+            //System.Collections.Generic.Dictionary$2.KeyCollection.copyTo end.
+
+            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$ICollection$copyTo start.
             System$Collections$ICollection$copyTo: function (array, index) {
                 if (array == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.array);
@@ -126,18 +140,34 @@
                     }
                 }
             },
+            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$ICollection$copyTo end.
+
+            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$Generic$ICollection$1$add start.
             System$Collections$Generic$ICollection$1$add: function (item) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_KeyCollectionSet);
             },
+            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$Generic$ICollection$1$add end.
+
+            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$Generic$ICollection$1$clear start.
             System$Collections$Generic$ICollection$1$clear: function () {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_KeyCollectionSet);
             },
+            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$Generic$ICollection$1$clear end.
+
+            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$Generic$ICollection$1$contains start.
             System$Collections$Generic$ICollection$1$contains: function (item) {
                 return this.dictionary.containsKey(item);
             },
+            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$Generic$ICollection$1$contains end.
+
+            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$Generic$ICollection$1$remove start.
             System$Collections$Generic$ICollection$1$remove: function (item) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_KeyCollectionSet);
                 return false;
-            }
+            },
+            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$Generic$ICollection$1$remove end.
+
+
         }
     }; });
+    //System.Collections.Generic.Dictionary$2.KeyCollection end.

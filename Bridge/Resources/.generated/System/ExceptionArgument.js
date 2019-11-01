@@ -1,3 +1,4 @@
+    //System.ExceptionArgument start.
     Bridge.define("System.ExceptionArgument", {
         $kind: "enum",
         statics: {
@@ -86,3 +87,4 @@
             }
         }
     });
+    //System.ExceptionArgument end.

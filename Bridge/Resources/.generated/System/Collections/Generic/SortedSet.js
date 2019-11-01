@@ -1,3 +1,4 @@
+    //System.Collections.Generic.SortedSet$1 start.
     Bridge.define("System.Collections.Generic.SortedSet$1", function (T) { return {
         inherits: [System.Collections.Generic.ISet$1(T),System.Collections.Generic.ICollection$1(T),System.Collections.ICollection,System.Collections.Generic.IReadOnlyCollection$1(T)],
         statics: {
@@ -36,38 +37,63 @@
                 }
             },
             methods: {
+                //System.Collections.Generic.SortedSet$1.GetSibling:static start.
                 GetSibling: function (node, parent) {
                     if (Bridge.referenceEquals(parent.Left, node)) {
                         return parent.Right;
                     }
                     return parent.Left;
                 },
+                //System.Collections.Generic.SortedSet$1.GetSibling:static end.
+
+                //System.Collections.Generic.SortedSet$1.Is2Node:static start.
                 Is2Node: function (node) {
                     return System.Collections.Generic.SortedSet$1(T).IsBlack(node) && System.Collections.Generic.SortedSet$1(T).IsNullOrBlack(node.Left) && System.Collections.Generic.SortedSet$1(T).IsNullOrBlack(node.Right);
                 },
+                //System.Collections.Generic.SortedSet$1.Is2Node:static end.
+
+                //System.Collections.Generic.SortedSet$1.Is4Node:static start.
                 Is4Node: function (node) {
                     return System.Collections.Generic.SortedSet$1(T).IsRed(node.Left) && System.Collections.Generic.SortedSet$1(T).IsRed(node.Right);
                 },
+                //System.Collections.Generic.SortedSet$1.Is4Node:static end.
+
+                //System.Collections.Generic.SortedSet$1.IsBlack:static start.
                 IsBlack: function (node) {
                     return (node != null && !node.IsRed);
                 },
+                //System.Collections.Generic.SortedSet$1.IsBlack:static end.
+
+                //System.Collections.Generic.SortedSet$1.IsNullOrBlack:static start.
                 IsNullOrBlack: function (node) {
                     return (node == null || !node.IsRed);
                 },
+                //System.Collections.Generic.SortedSet$1.IsNullOrBlack:static end.
+
+                //System.Collections.Generic.SortedSet$1.IsRed:static start.
                 IsRed: function (node) {
                     return (node != null && node.IsRed);
                 },
+                //System.Collections.Generic.SortedSet$1.IsRed:static end.
+
+                //System.Collections.Generic.SortedSet$1.Merge2Nodes:static start.
                 Merge2Nodes: function (parent, child1, child2) {
                     parent.IsRed = false;
                     child1.IsRed = true;
                     child2.IsRed = true;
                 },
+                //System.Collections.Generic.SortedSet$1.Merge2Nodes:static end.
+
+                //System.Collections.Generic.SortedSet$1.RotateLeft:static start.
                 RotateLeft: function (node) {
                     var x = node.Right;
                     node.Right = x.Left;
                     x.Left = node;
                     return x;
                 },
+                //System.Collections.Generic.SortedSet$1.RotateLeft:static end.
+
+                //System.Collections.Generic.SortedSet$1.RotateLeftRight:static start.
                 RotateLeftRight: function (node) {
                     var child = node.Left;
                     var grandChild = child.Right;
@@ -78,12 +104,18 @@
                     grandChild.Left = child;
                     return grandChild;
                 },
+                //System.Collections.Generic.SortedSet$1.RotateLeftRight:static end.
+
+                //System.Collections.Generic.SortedSet$1.RotateRight:static start.
                 RotateRight: function (node) {
                     var x = node.Left;
                     node.Left = x.Right;
                     x.Right = node;
                     return x;
                 },
+                //System.Collections.Generic.SortedSet$1.RotateRight:static end.
+
+                //System.Collections.Generic.SortedSet$1.RotateRightLeft:static start.
                 RotateRightLeft: function (node) {
                     var child = node.Right;
                     var grandChild = child.Left;
@@ -94,6 +126,9 @@
                     grandChild.Right = child;
                     return grandChild;
                 },
+                //System.Collections.Generic.SortedSet$1.RotateRightLeft:static end.
+
+                //System.Collections.Generic.SortedSet$1.RotationNeeded:static start.
                 RotationNeeded: function (parent, current, sibling) {
                     if (System.Collections.Generic.SortedSet$1(T).IsRed(sibling.Left)) {
                         if (Bridge.referenceEquals(parent.Left, current)) {
@@ -107,12 +142,21 @@
                         return System.Collections.Generic.TreeRotation.LeftRightRotation;
                     }
                 },
+                //System.Collections.Generic.SortedSet$1.RotationNeeded:static end.
+
+                //System.Collections.Generic.SortedSet$1.CreateSetComparer:static start.
                 CreateSetComparer: function () {
                     return new (System.Collections.Generic.SortedSetEqualityComparer$1(T)).ctor();
                 },
+                //System.Collections.Generic.SortedSet$1.CreateSetComparer:static end.
+
+                //System.Collections.Generic.SortedSet$1.CreateSetComparer$1:static start.
                 CreateSetComparer$1: function (memberEqualityComparer) {
                     return new (System.Collections.Generic.SortedSetEqualityComparer$1(T)).$ctor3(memberEqualityComparer);
                 },
+                //System.Collections.Generic.SortedSet$1.CreateSetComparer$1:static end.
+
+                //System.Collections.Generic.SortedSet$1.SortedSetEquals:static start.
                 SortedSetEquals: function (set1, set2, comparer) {
                     var $t, $t1;
                     if (set1 == null) {
@@ -161,14 +205,23 @@
                     }
 
                 },
+                //System.Collections.Generic.SortedSet$1.SortedSetEquals:static end.
+
+                //System.Collections.Generic.SortedSet$1.AreComparersEqual:static start.
                 AreComparersEqual: function (set1, set2) {
                     return Bridge.equals(set1.Comparer, set2.Comparer);
                 },
+                //System.Collections.Generic.SortedSet$1.AreComparersEqual:static end.
+
+                //System.Collections.Generic.SortedSet$1.Split4Node:static start.
                 Split4Node: function (node) {
                     node.IsRed = true;
                     node.Left.IsRed = false;
                     node.Right.IsRed = false;
                 },
+                //System.Collections.Generic.SortedSet$1.Split4Node:static end.
+
+                //System.Collections.Generic.SortedSet$1.ConstructRootFromSortedArray:static start.
                 ConstructRootFromSortedArray: function (arr, startIndex, endIndex, redNode) {
 
 
@@ -213,6 +266,9 @@
                     return root;
 
                 },
+                //System.Collections.Generic.SortedSet$1.ConstructRootFromSortedArray:static end.
+
+                //System.Collections.Generic.SortedSet$1.log2:static start.
                 log2: function (value) {
                     var c = 0;
                     while (value > 0) {
@@ -220,7 +276,10 @@
                         value = value >> 1;
                     }
                     return c;
-                }
+                },
+                //System.Collections.Generic.SortedSet$1.log2:static end.
+
+
             }
         },
         fields: {
@@ -384,6 +443,7 @@
             }
         },
         methods: {
+            //System.Collections.Generic.SortedSet$1.AddAllElements start.
             AddAllElements: function (collection) {
                 var $t;
 
@@ -401,6 +461,9 @@
                     }
                 }
             },
+            //System.Collections.Generic.SortedSet$1.AddAllElements end.
+
+            //System.Collections.Generic.SortedSet$1.RemoveAllElements start.
             RemoveAllElements: function (collection) {
                 var $t;
                 var min = this.Min;
@@ -419,6 +482,9 @@
                     }
                 }
             },
+            //System.Collections.Generic.SortedSet$1.RemoveAllElements end.
+
+            //System.Collections.Generic.SortedSet$1.ContainsAllElements start.
             ContainsAllElements: function (collection) {
                 var $t;
                 $t = Bridge.getEnumerator(collection, T);
@@ -436,9 +502,15 @@
                 }
                 return true;
             },
+            //System.Collections.Generic.SortedSet$1.ContainsAllElements end.
+
+            //System.Collections.Generic.SortedSet$1.InOrderTreeWalk start.
             InOrderTreeWalk: function (action) {
                 return this.InOrderTreeWalk$1(action, false);
             },
+            //System.Collections.Generic.SortedSet$1.InOrderTreeWalk end.
+
+            //System.Collections.Generic.SortedSet$1.InOrderTreeWalk$1 start.
             InOrderTreeWalk$1: function (action, reverse) {
                 if (this.root == null) {
                     return true;
@@ -464,6 +536,9 @@
                 }
                 return true;
             },
+            //System.Collections.Generic.SortedSet$1.InOrderTreeWalk$1 end.
+
+            //System.Collections.Generic.SortedSet$1.BreadthFirstTreeWalk start.
             BreadthFirstTreeWalk: function (action) {
                 if (this.root == null) {
                     return true;
@@ -488,17 +563,32 @@
                 }
                 return true;
             },
+            //System.Collections.Generic.SortedSet$1.BreadthFirstTreeWalk end.
+
+            //System.Collections.Generic.SortedSet$1.VersionCheck start.
             VersionCheck: function () { },
+            //System.Collections.Generic.SortedSet$1.VersionCheck end.
+
+            //System.Collections.Generic.SortedSet$1.IsWithinRange start.
             IsWithinRange: function (item) {
                 return true;
 
             },
+            //System.Collections.Generic.SortedSet$1.IsWithinRange end.
+
+            //System.Collections.Generic.SortedSet$1.add start.
             add: function (item) {
                 return this.AddIfNotPresent(item);
             },
+            //System.Collections.Generic.SortedSet$1.add end.
+
+            //System.Collections.Generic.SortedSet$1.System$Collections$Generic$ICollection$1$add start.
             System$Collections$Generic$ICollection$1$add: function (item) {
                 this.AddIfNotPresent(item);
             },
+            //System.Collections.Generic.SortedSet$1.System$Collections$Generic$ICollection$1$add end.
+
+            //System.Collections.Generic.SortedSet$1.AddIfNotPresent start.
             AddIfNotPresent: function (item) {
                 if (this.root == null) {
                     this.root = new (System.Collections.Generic.SortedSet$1.Node(T)).$ctor1(item, false);
@@ -550,9 +640,15 @@
                 this.count = (this.count + 1) | 0;
                 return true;
             },
+            //System.Collections.Generic.SortedSet$1.AddIfNotPresent end.
+
+            //System.Collections.Generic.SortedSet$1.remove start.
             remove: function (item) {
                 return this.DoRemove(item);
             },
+            //System.Collections.Generic.SortedSet$1.remove end.
+
+            //System.Collections.Generic.SortedSet$1.DoRemove start.
             DoRemove: function (item) {
 
                 if (this.root == null) {
@@ -654,21 +750,36 @@
                 }
                 return foundMatch;
             },
+            //System.Collections.Generic.SortedSet$1.DoRemove end.
+
+            //System.Collections.Generic.SortedSet$1.clear start.
             clear: function () {
                 this.root = null;
                 this.count = 0;
                 this.version = (this.version + 1) | 0;
             },
+            //System.Collections.Generic.SortedSet$1.clear end.
+
+            //System.Collections.Generic.SortedSet$1.contains start.
             contains: function (item) {
 
                 return this.FindNode(item) != null;
             },
+            //System.Collections.Generic.SortedSet$1.contains end.
+
+            //System.Collections.Generic.SortedSet$1.CopyTo start.
             CopyTo: function (array) {
                 this.CopyTo$1(array, 0, this.Count);
             },
+            //System.Collections.Generic.SortedSet$1.CopyTo end.
+
+            //System.Collections.Generic.SortedSet$1.copyTo start.
             copyTo: function (array, index) {
                 this.CopyTo$1(array, index, this.Count);
             },
+            //System.Collections.Generic.SortedSet$1.copyTo end.
+
+            //System.Collections.Generic.SortedSet$1.CopyTo$1 start.
             CopyTo$1: function (array, index, count) {
                 if (array == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.array);
@@ -696,6 +807,9 @@
                     }
                 });
             },
+            //System.Collections.Generic.SortedSet$1.CopyTo$1 end.
+
+            //System.Collections.Generic.SortedSet$1.System$Collections$ICollection$copyTo start.
             System$Collections$ICollection$copyTo: function (array, index) {
                 if (array == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.array);
@@ -741,15 +855,27 @@
                     }
                 }
             },
+            //System.Collections.Generic.SortedSet$1.System$Collections$ICollection$copyTo end.
+
+            //System.Collections.Generic.SortedSet$1.GetEnumerator start.
             GetEnumerator: function () {
                 return new (System.Collections.Generic.SortedSet$1.Enumerator(T)).$ctor1(this);
             },
+            //System.Collections.Generic.SortedSet$1.GetEnumerator end.
+
+            //System.Collections.Generic.SortedSet$1.System$Collections$Generic$IEnumerable$1$GetEnumerator start.
             System$Collections$Generic$IEnumerable$1$GetEnumerator: function () {
                 return new (System.Collections.Generic.SortedSet$1.Enumerator(T)).$ctor1(this).$clone();
             },
+            //System.Collections.Generic.SortedSet$1.System$Collections$Generic$IEnumerable$1$GetEnumerator end.
+
+            //System.Collections.Generic.SortedSet$1.System$Collections$IEnumerable$GetEnumerator start.
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return new (System.Collections.Generic.SortedSet$1.Enumerator(T)).$ctor1(this).$clone();
             },
+            //System.Collections.Generic.SortedSet$1.System$Collections$IEnumerable$GetEnumerator end.
+
+            //System.Collections.Generic.SortedSet$1.InsertionBalance start.
             InsertionBalance: function (current, parent, grandParent, greatGrandParent) {
                 var parentIsOnRight = (Bridge.referenceEquals(grandParent.Right, parent.v));
                 var currentIsOnRight = (Bridge.referenceEquals(parent.v.Right, current));
@@ -766,6 +892,9 @@
 
                 this.ReplaceChildOfNodeOrRoot(greatGrandParent, grandParent, newChildOfGreatGrandParent);
             },
+            //System.Collections.Generic.SortedSet$1.InsertionBalance end.
+
+            //System.Collections.Generic.SortedSet$1.ReplaceChildOfNodeOrRoot start.
             ReplaceChildOfNodeOrRoot: function (parent, child, newChild) {
                 if (parent != null) {
                     if (Bridge.referenceEquals(parent.Left, child)) {
@@ -777,6 +906,9 @@
                     this.root = newChild;
                 }
             },
+            //System.Collections.Generic.SortedSet$1.ReplaceChildOfNodeOrRoot end.
+
+            //System.Collections.Generic.SortedSet$1.ReplaceNode start.
             ReplaceNode: function (match, parentOfMatch, succesor, parentOfSuccesor) {
                 if (Bridge.referenceEquals(succesor, match)) {
                     succesor = match.Left;
@@ -800,6 +932,9 @@
                 this.ReplaceChildOfNodeOrRoot(parentOfMatch, match, succesor);
 
             },
+            //System.Collections.Generic.SortedSet$1.ReplaceNode end.
+
+            //System.Collections.Generic.SortedSet$1.FindNode start.
             FindNode: function (item) {
                 var current = this.root;
                 while (current != null) {
@@ -813,6 +948,9 @@
 
                 return null;
             },
+            //System.Collections.Generic.SortedSet$1.FindNode end.
+
+            //System.Collections.Generic.SortedSet$1.InternalIndexOf start.
             InternalIndexOf: function (item) {
                 var current = this.root;
                 var count = 0;
@@ -827,9 +965,15 @@
                 }
                 return -1;
             },
+            //System.Collections.Generic.SortedSet$1.InternalIndexOf end.
+
+            //System.Collections.Generic.SortedSet$1.FindRange start.
             FindRange: function (from, to) {
                 return this.FindRange$1(from, to, true, true);
             },
+            //System.Collections.Generic.SortedSet$1.FindRange end.
+
+            //System.Collections.Generic.SortedSet$1.FindRange$1 start.
             FindRange$1: function (from, to, lowerBoundActive, upperBoundActive) {
                 var current = this.root;
                 while (current != null) {
@@ -846,9 +990,15 @@
 
                 return null;
             },
+            //System.Collections.Generic.SortedSet$1.FindRange$1 end.
+
+            //System.Collections.Generic.SortedSet$1.UpdateVersion start.
             UpdateVersion: function () {
                 this.version = (this.version + 1) | 0;
             },
+            //System.Collections.Generic.SortedSet$1.UpdateVersion end.
+
+            //System.Collections.Generic.SortedSet$1.ToArray start.
             ToArray: function () {
                 var newArray = System.Array.init(this.Count, function (){
                     return Bridge.getDefaultValue(T);
@@ -856,6 +1006,9 @@
                 this.CopyTo(newArray);
                 return newArray;
             },
+            //System.Collections.Generic.SortedSet$1.ToArray end.
+
+            //System.Collections.Generic.SortedSet$1.unionWith start.
             unionWith: function (other) {
                 var $t;
                 if (other == null) {
@@ -919,6 +1072,9 @@
                     this.AddAllElements(other);
                 }
             },
+            //System.Collections.Generic.SortedSet$1.unionWith end.
+
+            //System.Collections.Generic.SortedSet$1.intersectWith start.
             intersectWith: function (other) {
                 var $t, $t1;
                 if (other == null) {
@@ -971,6 +1127,9 @@
                     this.IntersectWithEnumerable(other);
                 }
             },
+            //System.Collections.Generic.SortedSet$1.intersectWith end.
+
+            //System.Collections.Generic.SortedSet$1.IntersectWithEnumerable start.
             IntersectWithEnumerable: function (other) {
                 var $t;
                 var toSave = new (System.Collections.Generic.List$1(T)).$ctor2(this.Count);
@@ -992,6 +1151,9 @@
                 this.AddAllElements(toSave);
 
             },
+            //System.Collections.Generic.SortedSet$1.IntersectWithEnumerable end.
+
+            //System.Collections.Generic.SortedSet$1.exceptWith start.
             exceptWith: function (other) {
                 var $t;
                 if (other == null) {
@@ -1036,6 +1198,9 @@
                     this.RemoveAllElements(other);
                 }
             },
+            //System.Collections.Generic.SortedSet$1.exceptWith end.
+
+            //System.Collections.Generic.SortedSet$1.symmetricExceptWith start.
             symmetricExceptWith: function (other) {
                 if (other == null) {
                     throw new System.ArgumentNullException.$ctor1("other");
@@ -1065,6 +1230,9 @@
                     this.SymmetricExceptWithSameEC(elements);
                 }
             },
+            //System.Collections.Generic.SortedSet$1.symmetricExceptWith end.
+
+            //System.Collections.Generic.SortedSet$1.SymmetricExceptWithSameEC$1 start.
             SymmetricExceptWithSameEC$1: function (other) {
                 var $t;
                 $t = Bridge.getEnumerator(other, T);
@@ -1083,6 +1251,9 @@
                     }
                 }
             },
+            //System.Collections.Generic.SortedSet$1.SymmetricExceptWithSameEC$1 end.
+
+            //System.Collections.Generic.SortedSet$1.SymmetricExceptWithSameEC start.
             SymmetricExceptWithSameEC: function (other) {
                 if (other.length === 0) {
                     return;
@@ -1103,6 +1274,9 @@
                     last = other[System.Array.index(i, other)];
                 }
             },
+            //System.Collections.Generic.SortedSet$1.SymmetricExceptWithSameEC end.
+
+            //System.Collections.Generic.SortedSet$1.isSubsetOf start.
             isSubsetOf: function (other) {
                 if (other == null) {
                     throw new System.ArgumentNullException.$ctor1("other");
@@ -1125,6 +1299,9 @@
                     return (result.uniqueCount === this.Count && result.unfoundCount >= 0);
                 }
             },
+            //System.Collections.Generic.SortedSet$1.isSubsetOf end.
+
+            //System.Collections.Generic.SortedSet$1.IsSubsetOfSortedSetWithSameEC start.
             IsSubsetOfSortedSetWithSameEC: function (asSorted) {
                 var $t;
                 var prunedOther = asSorted.GetViewBetween(this.Min, this.Max);
@@ -1144,6 +1321,9 @@
                 return true;
 
             },
+            //System.Collections.Generic.SortedSet$1.IsSubsetOfSortedSetWithSameEC end.
+
+            //System.Collections.Generic.SortedSet$1.isProperSubsetOf start.
             isProperSubsetOf: function (other) {
                 if (other == null) {
                     throw new System.ArgumentNullException.$ctor1("other");
@@ -1174,6 +1354,9 @@
                 var result = this.CheckUniqueAndUnfoundElements(other, false);
                 return (result.uniqueCount === this.Count && result.unfoundCount > 0);
             },
+            //System.Collections.Generic.SortedSet$1.isProperSubsetOf end.
+
+            //System.Collections.Generic.SortedSet$1.isSupersetOf start.
             isSupersetOf: function (other) {
                 var $t;
                 if (other == null) {
@@ -1213,6 +1396,9 @@
                 }
                 return this.ContainsAllElements(other);
             },
+            //System.Collections.Generic.SortedSet$1.isSupersetOf end.
+
+            //System.Collections.Generic.SortedSet$1.isProperSupersetOf start.
             isProperSupersetOf: function (other) {
                 var $t;
                 if (other == null) {
@@ -1260,6 +1446,9 @@
                 var result = this.CheckUniqueAndUnfoundElements(other, true);
                 return (result.uniqueCount < this.Count && result.unfoundCount === 0);
             },
+            //System.Collections.Generic.SortedSet$1.isProperSupersetOf end.
+
+            //System.Collections.Generic.SortedSet$1.setEquals start.
             setEquals: function (other) {
                 var $t;
                 if (other == null) {
@@ -1290,6 +1479,9 @@
                 var result = this.CheckUniqueAndUnfoundElements(other, true);
                 return (result.uniqueCount === this.Count && result.unfoundCount === 0);
             },
+            //System.Collections.Generic.SortedSet$1.setEquals end.
+
+            //System.Collections.Generic.SortedSet$1.overlaps start.
             overlaps: function (other) {
                 var $t;
                 if (other == null) {
@@ -1329,6 +1521,9 @@
                 }
                 return false;
             },
+            //System.Collections.Generic.SortedSet$1.overlaps end.
+
+            //System.Collections.Generic.SortedSet$1.CheckUniqueAndUnfoundElements start.
             CheckUniqueAndUnfoundElements: function (other, returnIfUnfound) {
                 var $t, $t1;
                 var result = new (System.Collections.Generic.SortedSet$1.ElementCount(T))();
@@ -1390,6 +1585,9 @@
                 result.unfoundCount = unfoundCount;
                 return result.$clone();
             },
+            //System.Collections.Generic.SortedSet$1.CheckUniqueAndUnfoundElements end.
+
+            //System.Collections.Generic.SortedSet$1.RemoveWhere start.
             RemoveWhere: function (match) {
                 if (Bridge.staticEquals(match, null)) {
                     throw new System.ArgumentNullException.$ctor1("match");
@@ -1412,6 +1610,9 @@
                 return actuallyRemoved;
 
             },
+            //System.Collections.Generic.SortedSet$1.RemoveWhere end.
+
+            //System.Collections.Generic.SortedSet$1.Reverse start.
             Reverse: function () {
                 return new (Bridge.GeneratorEnumerable$1(T))(Bridge.fn.bind(this, function ()  {
                     var $step = 0,
@@ -1463,6 +1664,9 @@
                     return $enumerator;
                 }));
             },
+            //System.Collections.Generic.SortedSet$1.Reverse end.
+
+            //System.Collections.Generic.SortedSet$1.GetViewBetween start.
             GetViewBetween: function (lowerValue, upperValue) {
                 var $t;
                 if (($t = this.Comparer)[Bridge.geti($t, "System$Collections$Generic$IComparer$1$" + Bridge.getTypeAlias(T) + "$compare", "System$Collections$Generic$IComparer$1$compare")](lowerValue, upperValue) > 0) {
@@ -1470,6 +1674,9 @@
                 }
                 return new (System.Collections.Generic.SortedSet$1.TreeSubSet(T)).$ctor1(this, lowerValue, upperValue, true, true);
             },
+            //System.Collections.Generic.SortedSet$1.GetViewBetween end.
+
+            //System.Collections.Generic.SortedSet$1.TryGetValue start.
             TryGetValue: function (equalValue, actualValue) {
                 var node = this.FindNode(equalValue);
                 if (node != null) {
@@ -1478,6 +1685,10 @@
                 }
                 actualValue.v = Bridge.getDefaultValue(T);
                 return false;
-            }
+            },
+            //System.Collections.Generic.SortedSet$1.TryGetValue end.
+
+
         }
     }; });
+    //System.Collections.Generic.SortedSet$1 end.

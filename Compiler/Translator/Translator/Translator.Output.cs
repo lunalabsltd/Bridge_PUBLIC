@@ -460,7 +460,54 @@ namespace Bridge.Translator
 
             ExtractedScripts.Add(GetExtractedResourceName(currentAssembly, resource.Name));
 
+            if (FileHelper.IsJS(fileName) && content.String != null)
+            {
+                content = this.RemoveUnusedCode(content.String, assembly.Modules.SelectMany(module => module.Types));
+            }
+
             Emitter.AddOutputItem(this.Outputs.References, fileName, content, TranslatorOutputKind.Reference, location: outputPath, assembly: currentAssembly);
+        }
+
+        private string RemoveUnusedCode(string js, IEnumerable<TypeDefinition> types)
+        {
+            if (!this.AssemblyInfo.DeadCode.EliminateClasses)
+            {
+                return js;
+            }
+            foreach (var type in types)
+            {
+                if (type.HasNestedTypes)
+                {
+                    js = this.RemoveUnusedCode(js, type.NestedTypes);
+                }
+                var name = Helpers.GetClassName(type);
+                if (this.BridgeTypes.IsUsed(name))
+                {
+                    continue;
+                }
+                js = this.RemoveUnusedClass(js, name); // Removing class definition.
+                js = this.RemoveUnusedClass(js, name); // Removing class metadata.
+            }
+            return js;
+        }
+
+        private string RemoveUnusedClass(string js, string name)
+        {
+            var start = string.Format("//{0} start.", name);
+            var startIndex = js.IndexOf(start, StringComparison.InvariantCulture);
+            while (startIndex > 0 && js[startIndex - 1] == ' ') // Finding line start.
+            {
+                --startIndex;
+            }
+            if (startIndex < 0)
+            {
+                return js;
+            }
+            var end = string.Format("//{0} end.", name);
+            var endIndex = js.IndexOf(end, startIndex + start.Length, StringComparison.InvariantCulture);
+            return endIndex > startIndex ?
+                js.Remove(startIndex, endIndex - startIndex + end.Length + 2) : // 2 -- two new lines.
+                js;
         }
 
         private Tuple<byte[], string> ReadEmbeddedResource(AssemblyDefinition assembly, string resourceName, bool readAsString, Func<string, string> preHandler = null)

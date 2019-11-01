@@ -1,3 +1,4 @@
+    //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection start.
     Bridge.define("System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.ICollection$1(TValue),System.Collections.ICollection,System.Collections.Generic.IReadOnlyCollection$1(TValue)],
         $kind: "nested class",
@@ -48,29 +49,55 @@
             }
         },
         methods: {
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.System$Collections$Generic$ICollection$1$add start.
             System$Collections$Generic$ICollection$1$add: function (item) {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.System$Collections$Generic$ICollection$1$add end.
+
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.System$Collections$Generic$ICollection$1$clear start.
             System$Collections$Generic$ICollection$1$clear: function () {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.System$Collections$Generic$ICollection$1$clear end.
+
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.System$Collections$Generic$ICollection$1$contains start.
             System$Collections$Generic$ICollection$1$contains: function (item) {
                 return System.Array.contains(this._collection, item, TValue);
             },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.System$Collections$Generic$ICollection$1$contains end.
+
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.copyTo start.
             copyTo: function (array, arrayIndex) {
                 System.Array.copyTo(this._collection, array, arrayIndex, TValue);
             },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.copyTo end.
+
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.System$Collections$ICollection$copyTo start.
             System$Collections$ICollection$copyTo: function (array, index) {
                 System.Collections.ObjectModel.ReadOnlyDictionaryHelpers.CopyToNonGenericICollectionHelper(TValue, this._collection, array, index);
             },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.System$Collections$ICollection$copyTo end.
+
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.System$Collections$Generic$ICollection$1$remove start.
             System$Collections$Generic$ICollection$1$remove: function (item) {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.System$Collections$Generic$ICollection$1$remove end.
+
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.GetEnumerator start.
             GetEnumerator: function () {
                 return Bridge.getEnumerator(this._collection, TValue);
             },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.GetEnumerator end.
+
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.System$Collections$IEnumerable$GetEnumerator start.
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return Bridge.getEnumerator(Bridge.cast(this._collection, System.Collections.IEnumerable));
-            }
+            },
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.System$Collections$IEnumerable$GetEnumerator end.
+
+
         }
     }; });
+    //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection end.

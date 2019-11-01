@@ -1,3 +1,4 @@
+    //System.Reflection.InvalidFilterCriteriaException start.
     Bridge.define("System.Reflection.InvalidFilterCriteriaException", {
         inherits: [System.ApplicationException],
         ctors: {
@@ -14,3 +15,4 @@
             }
         }
     });
+    //System.Reflection.InvalidFilterCriteriaException end.

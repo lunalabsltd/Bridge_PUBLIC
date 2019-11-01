@@ -1,3 +1,4 @@
+    //System.Collections.Generic.SortedList$2.SortedListValueEnumerator start.
     Bridge.define("System.Collections.Generic.SortedList$2.SortedListValueEnumerator", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(TValue),System.Collections.IEnumerator],
         $kind: "nested class",
@@ -36,10 +37,14 @@
             }
         },
         methods: {
+            //System.Collections.Generic.SortedList$2.SortedListValueEnumerator.Dispose start.
             Dispose: function () {
                 this.index = 0;
                 this.currentValue = Bridge.getDefaultValue(TValue);
             },
+            //System.Collections.Generic.SortedList$2.SortedListValueEnumerator.Dispose end.
+
+            //System.Collections.Generic.SortedList$2.SortedListValueEnumerator.moveNext start.
             moveNext: function () {
                 var $t;
                 if (this.version !== this._sortedList.version) {
@@ -56,12 +61,19 @@
                 this.currentValue = Bridge.getDefaultValue(TValue);
                 return false;
             },
+            //System.Collections.Generic.SortedList$2.SortedListValueEnumerator.moveNext end.
+
+            //System.Collections.Generic.SortedList$2.SortedListValueEnumerator.System$Collections$IEnumerator$reset start.
             System$Collections$IEnumerator$reset: function () {
                 if (this.version !== this._sortedList.version) {
                     System.ThrowHelper.ThrowInvalidOperationException(System.ExceptionResource.InvalidOperation_EnumFailedVersion);
                 }
                 this.index = 0;
                 this.currentValue = Bridge.getDefaultValue(TValue);
-            }
+            },
+            //System.Collections.Generic.SortedList$2.SortedListValueEnumerator.System$Collections$IEnumerator$reset end.
+
+
         }
     }; });
+    //System.Collections.Generic.SortedList$2.SortedListValueEnumerator end.

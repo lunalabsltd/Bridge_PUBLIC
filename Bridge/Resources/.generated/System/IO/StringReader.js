@@ -1,3 +1,4 @@
+    //System.IO.StringReader start.
     Bridge.define("System.IO.StringReader", {
         inherits: [System.IO.TextReader],
         fields: {
@@ -17,15 +18,22 @@
             }
         },
         methods: {
+            //System.IO.StringReader.Close start.
             Close: function () {
                 this.Dispose$1(true);
             },
+            //System.IO.StringReader.Close end.
+
+            //System.IO.StringReader.Dispose$1 start.
             Dispose$1: function (disposing) {
                 this._s = null;
                 this._pos = 0;
                 this._length = 0;
                 System.IO.TextReader.prototype.Dispose$1.call(this, disposing);
             },
+            //System.IO.StringReader.Dispose$1 end.
+
+            //System.IO.StringReader.Peek start.
             Peek: function () {
                 if (this._s == null) {
                     System.IO.__Error.ReaderClosed();
@@ -35,6 +43,9 @@
                 }
                 return this._s.charCodeAt(this._pos);
             },
+            //System.IO.StringReader.Peek end.
+
+            //System.IO.StringReader.Read start.
             Read: function () {
                 if (this._s == null) {
                     System.IO.__Error.ReaderClosed();
@@ -44,6 +55,9 @@
                 }
                 return this._s.charCodeAt(Bridge.identity(this._pos, ((this._pos = (this._pos + 1) | 0))));
             },
+            //System.IO.StringReader.Read end.
+
+            //System.IO.StringReader.Read$1 start.
             Read$1: function (buffer, index, count) {
                 if (buffer == null) {
                     throw new System.ArgumentNullException.$ctor1("buffer");
@@ -71,6 +85,9 @@
                 }
                 return n;
             },
+            //System.IO.StringReader.Read$1 end.
+
+            //System.IO.StringReader.ReadToEnd start.
             ReadToEnd: function () {
                 if (this._s == null) {
                     System.IO.__Error.ReaderClosed();
@@ -84,6 +101,9 @@
                 this._pos = this._length;
                 return s;
             },
+            //System.IO.StringReader.ReadToEnd end.
+
+            //System.IO.StringReader.ReadLine start.
             ReadLine: function () {
                 if (this._s == null) {
                     System.IO.__Error.ReaderClosed();
@@ -107,6 +127,10 @@
                     return result1;
                 }
                 return null;
-            }
+            },
+            //System.IO.StringReader.ReadLine end.
+
+
         }
     });
+    //System.IO.StringReader end.

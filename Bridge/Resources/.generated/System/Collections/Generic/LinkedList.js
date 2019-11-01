@@ -1,3 +1,4 @@
+    //System.Collections.Generic.LinkedList$1 start.
     Bridge.define("System.Collections.Generic.LinkedList$1", function (T) { return {
         inherits: [System.Collections.Generic.ICollection$1(T),System.Collections.ICollection,System.Collections.Generic.IReadOnlyCollection$1(T)],
         statics: {
@@ -88,21 +89,31 @@
             }
         },
         methods: {
+            //System.Collections.Generic.LinkedList$1.System$Collections$Generic$ICollection$1$add start.
             System$Collections$Generic$ICollection$1$add: function (value) {
                 this.AddLast(value);
             },
+            //System.Collections.Generic.LinkedList$1.System$Collections$Generic$ICollection$1$add end.
+
+            //System.Collections.Generic.LinkedList$1.AddAfter start.
             AddAfter: function (node, value) {
                 this.ValidateNode(node);
                 var result = new (System.Collections.Generic.LinkedListNode$1(T)).$ctor1(node.list, value);
                 this.InternalInsertNodeBefore(node.next, result);
                 return result;
             },
+            //System.Collections.Generic.LinkedList$1.AddAfter end.
+
+            //System.Collections.Generic.LinkedList$1.AddAfter$1 start.
             AddAfter$1: function (node, newNode) {
                 this.ValidateNode(node);
                 this.ValidateNewNode(newNode);
                 this.InternalInsertNodeBefore(node.next, newNode);
                 newNode.list = this;
             },
+            //System.Collections.Generic.LinkedList$1.AddAfter$1 end.
+
+            //System.Collections.Generic.LinkedList$1.AddBefore start.
             AddBefore: function (node, value) {
                 this.ValidateNode(node);
                 var result = new (System.Collections.Generic.LinkedListNode$1(T)).$ctor1(node.list, value);
@@ -112,6 +123,9 @@
                 }
                 return result;
             },
+            //System.Collections.Generic.LinkedList$1.AddBefore end.
+
+            //System.Collections.Generic.LinkedList$1.AddBefore$1 start.
             AddBefore$1: function (node, newNode) {
                 this.ValidateNode(node);
                 this.ValidateNewNode(newNode);
@@ -121,6 +135,9 @@
                     this.head = newNode;
                 }
             },
+            //System.Collections.Generic.LinkedList$1.AddBefore$1 end.
+
+            //System.Collections.Generic.LinkedList$1.AddFirst start.
             AddFirst: function (value) {
                 var result = new (System.Collections.Generic.LinkedListNode$1(T)).$ctor1(this, value);
                 if (this.head == null) {
@@ -131,6 +148,9 @@
                 }
                 return result;
             },
+            //System.Collections.Generic.LinkedList$1.AddFirst end.
+
+            //System.Collections.Generic.LinkedList$1.AddFirst$1 start.
             AddFirst$1: function (node) {
                 this.ValidateNewNode(node);
 
@@ -142,6 +162,9 @@
                 }
                 node.list = this;
             },
+            //System.Collections.Generic.LinkedList$1.AddFirst$1 end.
+
+            //System.Collections.Generic.LinkedList$1.AddLast start.
             AddLast: function (value) {
                 var result = new (System.Collections.Generic.LinkedListNode$1(T)).$ctor1(this, value);
                 if (this.head == null) {
@@ -151,6 +174,9 @@
                 }
                 return result;
             },
+            //System.Collections.Generic.LinkedList$1.AddLast end.
+
+            //System.Collections.Generic.LinkedList$1.AddLast$1 start.
             AddLast$1: function (node) {
                 this.ValidateNewNode(node);
 
@@ -161,6 +187,9 @@
                 }
                 node.list = this;
             },
+            //System.Collections.Generic.LinkedList$1.AddLast$1 end.
+
+            //System.Collections.Generic.LinkedList$1.clear start.
             clear: function () {
                 var current = this.head;
                 while (current != null) {
@@ -173,9 +202,15 @@
                 this.count = 0;
                 this.version = (this.version + 1) | 0;
             },
+            //System.Collections.Generic.LinkedList$1.clear end.
+
+            //System.Collections.Generic.LinkedList$1.contains start.
             contains: function (value) {
                 return this.Find(value) != null;
             },
+            //System.Collections.Generic.LinkedList$1.contains end.
+
+            //System.Collections.Generic.LinkedList$1.copyTo start.
             copyTo: function (array, index) {
                 if (array == null) {
                     throw new System.ArgumentNullException.$ctor1("array");
@@ -197,6 +232,9 @@
                     } while (!Bridge.referenceEquals(node, this.head));
                 }
             },
+            //System.Collections.Generic.LinkedList$1.copyTo end.
+
+            //System.Collections.Generic.LinkedList$1.System$Collections$ICollection$copyTo start.
             System$Collections$ICollection$copyTo: function (array, index) {
                 if (array == null) {
                     throw new System.ArgumentNullException.$ctor1("array");
@@ -250,6 +288,9 @@
                     }
                 }
             },
+            //System.Collections.Generic.LinkedList$1.System$Collections$ICollection$copyTo end.
+
+            //System.Collections.Generic.LinkedList$1.Find start.
             Find: function (value) {
                 var node = this.head;
                 var c = System.Collections.Generic.EqualityComparer$1(T).def;
@@ -272,6 +313,9 @@
                 }
                 return null;
             },
+            //System.Collections.Generic.LinkedList$1.Find end.
+
+            //System.Collections.Generic.LinkedList$1.FindLast start.
             FindLast: function (value) {
                 if (this.head == null) {
                     return null;
@@ -300,15 +344,27 @@
                 }
                 return null;
             },
+            //System.Collections.Generic.LinkedList$1.FindLast end.
+
+            //System.Collections.Generic.LinkedList$1.GetEnumerator start.
             GetEnumerator: function () {
                 return new (System.Collections.Generic.LinkedList$1.Enumerator(T)).$ctor1(this);
             },
+            //System.Collections.Generic.LinkedList$1.GetEnumerator end.
+
+            //System.Collections.Generic.LinkedList$1.System$Collections$Generic$IEnumerable$1$GetEnumerator start.
             System$Collections$Generic$IEnumerable$1$GetEnumerator: function () {
                 return this.GetEnumerator().$clone();
             },
+            //System.Collections.Generic.LinkedList$1.System$Collections$Generic$IEnumerable$1$GetEnumerator end.
+
+            //System.Collections.Generic.LinkedList$1.System$Collections$IEnumerable$GetEnumerator start.
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return this.GetEnumerator().$clone();
             },
+            //System.Collections.Generic.LinkedList$1.System$Collections$IEnumerable$GetEnumerator end.
+
+            //System.Collections.Generic.LinkedList$1.remove start.
             remove: function (value) {
                 var node = this.Find(value);
                 if (node != null) {
@@ -317,22 +373,34 @@
                 }
                 return false;
             },
+            //System.Collections.Generic.LinkedList$1.remove end.
+
+            //System.Collections.Generic.LinkedList$1.Remove start.
             Remove: function (node) {
                 this.ValidateNode(node);
                 this.InternalRemoveNode(node);
             },
+            //System.Collections.Generic.LinkedList$1.Remove end.
+
+            //System.Collections.Generic.LinkedList$1.RemoveFirst start.
             RemoveFirst: function () {
                 if (this.head == null) {
                     throw new System.InvalidOperationException.ctor();
                 }
                 this.InternalRemoveNode(this.head);
             },
+            //System.Collections.Generic.LinkedList$1.RemoveFirst end.
+
+            //System.Collections.Generic.LinkedList$1.RemoveLast start.
             RemoveLast: function () {
                 if (this.head == null) {
                     throw new System.InvalidOperationException.ctor();
                 }
                 this.InternalRemoveNode(this.head.prev);
             },
+            //System.Collections.Generic.LinkedList$1.RemoveLast end.
+
+            //System.Collections.Generic.LinkedList$1.InternalInsertNodeBefore start.
             InternalInsertNodeBefore: function (node, newNode) {
                 newNode.next = node;
                 newNode.prev = node.prev;
@@ -341,6 +409,9 @@
                 this.version = (this.version + 1) | 0;
                 this.count = (this.count + 1) | 0;
             },
+            //System.Collections.Generic.LinkedList$1.InternalInsertNodeBefore end.
+
+            //System.Collections.Generic.LinkedList$1.InternalInsertNodeToEmptyList start.
             InternalInsertNodeToEmptyList: function (newNode) {
                 newNode.next = newNode;
                 newNode.prev = newNode;
@@ -348,6 +419,9 @@
                 this.version = (this.version + 1) | 0;
                 this.count = (this.count + 1) | 0;
             },
+            //System.Collections.Generic.LinkedList$1.InternalInsertNodeToEmptyList end.
+
+            //System.Collections.Generic.LinkedList$1.InternalRemoveNode start.
             InternalRemoveNode: function (node) {
                 if (Bridge.referenceEquals(node.next, node)) {
                     this.head = null;
@@ -362,6 +436,9 @@
                 this.count = (this.count - 1) | 0;
                 this.version = (this.version + 1) | 0;
             },
+            //System.Collections.Generic.LinkedList$1.InternalRemoveNode end.
+
+            //System.Collections.Generic.LinkedList$1.ValidateNewNode start.
             ValidateNewNode: function (node) {
                 if (node == null) {
                     throw new System.ArgumentNullException.$ctor1("node");
@@ -371,6 +448,9 @@
                     throw new System.InvalidOperationException.ctor();
                 }
             },
+            //System.Collections.Generic.LinkedList$1.ValidateNewNode end.
+
+            //System.Collections.Generic.LinkedList$1.ValidateNode start.
             ValidateNode: function (node) {
                 if (node == null) {
                     throw new System.ArgumentNullException.$ctor1("node");
@@ -379,6 +459,10 @@
                 if (!Bridge.referenceEquals(node.list, this)) {
                     throw new System.InvalidOperationException.ctor();
                 }
-            }
+            },
+            //System.Collections.Generic.LinkedList$1.ValidateNode end.
+
+
         }
     }; });
+    //System.Collections.Generic.LinkedList$1 end.

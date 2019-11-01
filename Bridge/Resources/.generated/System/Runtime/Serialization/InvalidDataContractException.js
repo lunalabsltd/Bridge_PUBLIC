@@ -1,3 +1,4 @@
+    //System.Runtime.Serialization.InvalidDataContractException start.
     Bridge.define("System.Runtime.Serialization.InvalidDataContractException", {
         inherits: [System.Exception],
         ctors: {
@@ -15,3 +16,4 @@
             }
         }
     });
+    //System.Runtime.Serialization.InvalidDataContractException end.

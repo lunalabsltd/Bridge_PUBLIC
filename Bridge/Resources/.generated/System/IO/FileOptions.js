@@ -1,3 +1,4 @@
+    //System.IO.FileOptions start.
     Bridge.define("System.IO.FileOptions", {
         $kind: "enum",
         statics: {
@@ -13,3 +14,4 @@
         },
         $flags: true
     });
+    //System.IO.FileOptions end.

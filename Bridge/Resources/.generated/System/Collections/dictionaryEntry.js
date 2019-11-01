@@ -1,3 +1,4 @@
+    //System.Collections.DictionaryEntry start.
     Bridge.define("System.Collections.DictionaryEntry", {
         $kind: "struct",
         statics: {
@@ -56,3 +57,4 @@
             }
         }
     });
+    //System.Collections.DictionaryEntry end.

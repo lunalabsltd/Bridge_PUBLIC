@@ -1,3 +1,4 @@
+    //System.IO.EndOfStreamException start.
     Bridge.define("System.IO.EndOfStreamException", {
         inherits: [System.IO.IOException],
         ctors: {
@@ -15,3 +16,4 @@
             }
         }
     });
+    //System.IO.EndOfStreamException end.

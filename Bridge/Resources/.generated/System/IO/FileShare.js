@@ -1,3 +1,4 @@
+    //System.IO.FileShare start.
     Bridge.define("System.IO.FileShare", {
         $kind: "enum",
         statics: {
@@ -12,3 +13,4 @@
         },
         $flags: true
     });
+    //System.IO.FileShare end.

@@ -1,3 +1,4 @@
+    //System.DateTimeOffset start.
     Bridge.define("System.DateTimeOffset", {
         inherits: function () { return [System.IComparable,System.IFormattable,System.Runtime.Serialization.ISerializable,System.Runtime.Serialization.IDeserializationCallback,System.IComparable$1(System.DateTimeOffset),System.IEquatable$1(System.DateTimeOffset)]; },
         $kind: "struct",
@@ -37,15 +38,25 @@
                 }
             },
             methods: {
+                //System.DateTimeOffset.Compare:static start.
                 Compare: function (first, second) {
                     return Bridge.compare(first.UtcDateTime, second.UtcDateTime);
                 },
+                //System.DateTimeOffset.Compare:static end.
+
+                //System.DateTimeOffset.Equals:static start.
                 Equals: function (first, second) {
                     return Bridge.equalsT(first.UtcDateTime, second.UtcDateTime);
                 },
+                //System.DateTimeOffset.Equals:static end.
+
+                //System.DateTimeOffset.FromFileTime:static start.
                 FromFileTime: function (fileTime) {
                     return new System.DateTimeOffset.$ctor1(System.DateTime.FromFileTime(fileTime));
                 },
+                //System.DateTimeOffset.FromFileTime:static end.
+
+                //System.DateTimeOffset.FromUnixTimeSeconds:static start.
                 FromUnixTimeSeconds: function (seconds) {
                     var MinSeconds = System.Int64([-2006054656,-15]);
                     var MaxSeconds = System.Int64([-769665,58]);
@@ -57,6 +68,9 @@
                     var ticks = seconds.mul(System.Int64(10000000)).add(System.DateTimeOffset.UnixEpochTicks);
                     return new System.DateTimeOffset.$ctor5(ticks, System.TimeSpan.zero);
                 },
+                //System.DateTimeOffset.FromUnixTimeSeconds:static end.
+
+                //System.DateTimeOffset.FromUnixTimeMilliseconds:static start.
                 FromUnixTimeMilliseconds: function (milliseconds) {
                     var MinMilliseconds = System.Int64([-304928768,-14468]);
                     var MaxMilliseconds = System.Int64([-769664001,58999]);
@@ -68,23 +82,41 @@
                     var ticks = milliseconds.mul(System.Int64(10000)).add(System.DateTimeOffset.UnixEpochTicks);
                     return new System.DateTimeOffset.$ctor5(ticks, System.TimeSpan.zero);
                 },
+                //System.DateTimeOffset.FromUnixTimeMilliseconds:static end.
+
+                //System.DateTimeOffset.Parse:static start.
                 Parse: function (input) {
                     var offset = { };
                     var dateResult = System.DateTimeParse.Parse$1(input, System.Globalization.DateTimeFormatInfo.currentInfo, 0, offset);
                     return new System.DateTimeOffset.$ctor5(System.DateTime.getTicks(dateResult), offset.v);
                 },
+                //System.DateTimeOffset.Parse:static end.
+
+                //System.DateTimeOffset.Parse$1:static start.
                 Parse$1: function (input, formatProvider) {
                     return System.DateTimeOffset.Parse$2(input, formatProvider, 0);
                 },
+                //System.DateTimeOffset.Parse$1:static end.
+
+                //System.DateTimeOffset.Parse$2:static start.
                 Parse$2: function (input, formatProvider, styles) {
                     throw System.NotImplemented.ByDesign;
                 },
+                //System.DateTimeOffset.Parse$2:static end.
+
+                //System.DateTimeOffset.ParseExact:static start.
                 ParseExact: function (input, format, formatProvider) {
                     return System.DateTimeOffset.ParseExact$1(input, format, formatProvider, 0);
                 },
+                //System.DateTimeOffset.ParseExact:static end.
+
+                //System.DateTimeOffset.ParseExact$1:static start.
                 ParseExact$1: function (input, format, formatProvider, styles) {
                     throw System.NotImplemented.ByDesign;
                 },
+                //System.DateTimeOffset.ParseExact$1:static end.
+
+                //System.DateTimeOffset.TryParse:static start.
                 TryParse: function (input, result) {
                     var offset = { };
                     var dateResult = { };
@@ -92,6 +124,9 @@
                     result.v = new System.DateTimeOffset.$ctor5(System.DateTime.getTicks(dateResult.v), offset.v);
                     return parsed;
                 },
+                //System.DateTimeOffset.TryParse:static end.
+
+                //System.DateTimeOffset.ValidateOffset:static start.
                 ValidateOffset: function (offset) {
                     var ticks = offset.getTicks();
                     if (ticks.mod(System.Int64(600000000)).ne(System.Int64(0))) {
@@ -102,6 +137,9 @@
                     }
                     return System.Int64.clip16(offset.getTicks().div(System.Int64(600000000)));
                 },
+                //System.DateTimeOffset.ValidateOffset:static end.
+
+                //System.DateTimeOffset.ValidateDate:static start.
                 ValidateDate: function (dateTime, offset) {
                     var utcTicks = System.DateTime.getTicks(dateTime).sub(offset.getTicks());
                     if (utcTicks.lt(System.DateTime.getMinTicks()) || utcTicks.gt(System.DateTime.getMaxTicks())) {
@@ -109,6 +147,8 @@
                     }
                     return System.DateTime.create$2(utcTicks, 0);
                 },
+                //System.DateTimeOffset.ValidateDate:static end.
+
                 op_Implicit: function (dateTime) {
                     return new System.DateTimeOffset.$ctor1(dateTime);
                 },
@@ -281,36 +321,67 @@
             }
         },
         methods: {
+            //System.DateTimeOffset.ToOffset start.
             ToOffset: function (offset) {
                 return new System.DateTimeOffset.$ctor5(System.DateTime.getTicks((System.DateTime.adddt(this.m_dateTime, offset))), offset);
             },
+            //System.DateTimeOffset.ToOffset end.
+
+            //System.DateTimeOffset.Add start.
             Add: function (timeSpan) {
                 return new System.DateTimeOffset.$ctor2(System.DateTime.add(this.ClockDateTime, timeSpan), this.Offset);
             },
+            //System.DateTimeOffset.Add end.
+
+            //System.DateTimeOffset.AddDays start.
             AddDays: function (days) {
                 return new System.DateTimeOffset.$ctor2(System.DateTime.addDays(this.ClockDateTime, days), this.Offset);
             },
+            //System.DateTimeOffset.AddDays end.
+
+            //System.DateTimeOffset.AddHours start.
             AddHours: function (hours) {
                 return new System.DateTimeOffset.$ctor2(System.DateTime.addHours(this.ClockDateTime, hours), this.Offset);
             },
+            //System.DateTimeOffset.AddHours end.
+
+            //System.DateTimeOffset.AddMilliseconds start.
             AddMilliseconds: function (milliseconds) {
                 return new System.DateTimeOffset.$ctor2(System.DateTime.addMilliseconds(this.ClockDateTime, milliseconds), this.Offset);
             },
+            //System.DateTimeOffset.AddMilliseconds end.
+
+            //System.DateTimeOffset.AddMinutes start.
             AddMinutes: function (minutes) {
                 return new System.DateTimeOffset.$ctor2(System.DateTime.addMinutes(this.ClockDateTime, minutes), this.Offset);
             },
+            //System.DateTimeOffset.AddMinutes end.
+
+            //System.DateTimeOffset.AddMonths start.
             AddMonths: function (months) {
                 return new System.DateTimeOffset.$ctor2(System.DateTime.addMonths(this.ClockDateTime, months), this.Offset);
             },
+            //System.DateTimeOffset.AddMonths end.
+
+            //System.DateTimeOffset.AddSeconds start.
             AddSeconds: function (seconds) {
                 return new System.DateTimeOffset.$ctor2(System.DateTime.addSeconds(this.ClockDateTime, seconds), this.Offset);
             },
+            //System.DateTimeOffset.AddSeconds end.
+
+            //System.DateTimeOffset.AddTicks start.
             AddTicks: function (ticks) {
                 return new System.DateTimeOffset.$ctor2(System.DateTime.addTicks(this.ClockDateTime, ticks), this.Offset);
             },
+            //System.DateTimeOffset.AddTicks end.
+
+            //System.DateTimeOffset.AddYears start.
             AddYears: function (years) {
                 return new System.DateTimeOffset.$ctor2(System.DateTime.addYears(this.ClockDateTime, years), this.Offset);
             },
+            //System.DateTimeOffset.AddYears end.
+
+            //System.DateTimeOffset.System$IComparable$compareTo start.
             System$IComparable$compareTo: function (obj) {
                 if (obj == null) {
                     return 1;
@@ -329,6 +400,9 @@
                 }
                 return 0;
             },
+            //System.DateTimeOffset.System$IComparable$compareTo end.
+
+            //System.DateTimeOffset.compareTo start.
             compareTo: function (other) {
                 var otherUtc = other.UtcDateTime;
                 var utc = this.UtcDateTime;
@@ -340,18 +414,30 @@
                 }
                 return 0;
             },
+            //System.DateTimeOffset.compareTo end.
+
+            //System.DateTimeOffset.equals start.
             equals: function (obj) {
                 if (Bridge.is(obj, System.DateTimeOffset)) {
                     return Bridge.equalsT(this.UtcDateTime, System.Nullable.getValue(Bridge.cast(Bridge.unbox(obj, System.DateTimeOffset), System.DateTimeOffset)).UtcDateTime);
                 }
                 return false;
             },
+            //System.DateTimeOffset.equals end.
+
+            //System.DateTimeOffset.equalsT start.
             equalsT: function (other) {
                 return Bridge.equalsT(this.UtcDateTime, other.UtcDateTime);
             },
+            //System.DateTimeOffset.equalsT end.
+
+            //System.DateTimeOffset.EqualsExact start.
             EqualsExact: function (other) {
                 return (Bridge.equals(this.ClockDateTime, other.ClockDateTime) && System.TimeSpan.eq(this.Offset, other.Offset) && System.DateTime.getKind(this.ClockDateTime) === System.DateTime.getKind(other.ClockDateTime));
             },
+            //System.DateTimeOffset.EqualsExact end.
+
+            //System.DateTimeOffset.System$Runtime$Serialization$IDeserializationCallback$OnDeserialization start.
             System$Runtime$Serialization$IDeserializationCallback$OnDeserialization: function (sender) {
                 try {
                     this.m_offsetMinutes = System.DateTimeOffset.ValidateOffset(this.Offset);
@@ -367,51 +453,92 @@
                     }
                 }
             },
+            //System.DateTimeOffset.System$Runtime$Serialization$IDeserializationCallback$OnDeserialization end.
+
+            //System.DateTimeOffset.getHashCode start.
             getHashCode: function () {
                 return Bridge.getHashCode(this.UtcDateTime);
             },
+            //System.DateTimeOffset.getHashCode end.
+
+            //System.DateTimeOffset.Subtract$1 start.
             Subtract$1: function (value) {
                 return System.DateTime.subdd(this.UtcDateTime, value.UtcDateTime);
             },
+            //System.DateTimeOffset.Subtract$1 end.
+
+            //System.DateTimeOffset.Subtract start.
             Subtract: function (value) {
                 return new System.DateTimeOffset.$ctor2(System.DateTime.subtract(this.ClockDateTime, value), this.Offset);
             },
+            //System.DateTimeOffset.Subtract end.
+
+            //System.DateTimeOffset.ToFileTime start.
             ToFileTime: function () {
                 return System.DateTime.ToFileTime(this.UtcDateTime);
             },
+            //System.DateTimeOffset.ToFileTime end.
+
+            //System.DateTimeOffset.ToUnixTimeSeconds start.
             ToUnixTimeSeconds: function () {
                 var seconds = System.DateTime.getTicks(this.UtcDateTime).div(System.Int64(10000000));
                 return seconds.sub(System.DateTimeOffset.UnixEpochSeconds);
             },
+            //System.DateTimeOffset.ToUnixTimeSeconds end.
+
+            //System.DateTimeOffset.ToUnixTimeMilliseconds start.
             ToUnixTimeMilliseconds: function () {
                 var milliseconds = System.DateTime.getTicks(this.UtcDateTime).div(System.Int64(10000));
                 return milliseconds.sub(System.DateTimeOffset.UnixEpochMilliseconds);
             },
+            //System.DateTimeOffset.ToUnixTimeMilliseconds end.
+
+            //System.DateTimeOffset.ToLocalTime start.
             ToLocalTime: function () {
                 return this.ToLocalTime$1(false);
             },
+            //System.DateTimeOffset.ToLocalTime end.
+
+            //System.DateTimeOffset.ToLocalTime$1 start.
             ToLocalTime$1: function (throwOnOverflow) {
                 return new System.DateTimeOffset.$ctor1(System.DateTime.toLocalTime(this.UtcDateTime, throwOnOverflow));
             },
+            //System.DateTimeOffset.ToLocalTime$1 end.
+
+            //System.DateTimeOffset.toString start.
             toString: function () {
                 return System.DateTime.format(System.DateTime.specifyKind(this.ClockDateTime, 2));
 
             },
+            //System.DateTimeOffset.toString end.
+
+            //System.DateTimeOffset.ToString$1 start.
             ToString$1: function (format) {
                 return System.DateTime.format(System.DateTime.specifyKind(this.ClockDateTime, 2), format);
 
             },
+            //System.DateTimeOffset.ToString$1 end.
+
+            //System.DateTimeOffset.ToString start.
             ToString: function (formatProvider) {
                 return System.DateTime.format(System.DateTime.specifyKind(this.ClockDateTime, 2), null, formatProvider);
 
             },
+            //System.DateTimeOffset.ToString end.
+
+            //System.DateTimeOffset.format start.
             format: function (format, formatProvider) {
                 return System.DateTime.format(System.DateTime.specifyKind(this.ClockDateTime, 2), format, formatProvider);
 
             },
+            //System.DateTimeOffset.format end.
+
+            //System.DateTimeOffset.ToUniversalTime start.
             ToUniversalTime: function () {
                 return new System.DateTimeOffset.$ctor1(this.UtcDateTime);
             },
+            //System.DateTimeOffset.ToUniversalTime end.
+
             $clone: function (to) {
                 var s = to || new System.DateTimeOffset();
                 s.m_dateTime = this.m_dateTime;
@@ -420,3 +547,4 @@
             }
         }
     });
+    //System.DateTimeOffset end.

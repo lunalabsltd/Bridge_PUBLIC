@@ -1,3 +1,4 @@
+    //System.Collections.Generic.LinkedListNode$1 start.
     Bridge.define("System.Collections.Generic.LinkedListNode$1", function (T) { return {
         fields: {
             list: null,
@@ -42,10 +43,15 @@
             }
         },
         methods: {
+            //System.Collections.Generic.LinkedListNode$1.Invalidate start.
             Invalidate: function () {
                 this.list = null;
                 this.next = null;
                 this.prev = null;
-            }
+            },
+            //System.Collections.Generic.LinkedListNode$1.Invalidate end.
+
+
         }
     }; });
+    //System.Collections.Generic.LinkedListNode$1 end.

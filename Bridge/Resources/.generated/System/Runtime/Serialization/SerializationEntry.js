@@ -1,3 +1,4 @@
+    //System.Runtime.Serialization.SerializationEntry start.
     Bridge.define("System.Runtime.Serialization.SerializationEntry", {
         $kind: "struct",
         statics: {
@@ -58,3 +59,4 @@
             }
         }
     });
+    //System.Runtime.Serialization.SerializationEntry end.

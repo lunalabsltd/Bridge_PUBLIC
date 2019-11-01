@@ -1,3 +1,4 @@
+    //System.Guid start.
     Bridge.define("System.Guid", {
         inherits: function () { return [System.IEquatable$1(System.Guid),System.IComparable$1(System.Guid),System.IFormattable]; },
         $kind: "struct",
@@ -23,21 +24,34 @@
                 }
             },
             methods: {
+                //System.Guid.Parse:static start.
                 Parse: function (input) {
                     return System.Guid.ParseExact(input, null);
                 },
+                //System.Guid.Parse:static end.
+
+                //System.Guid.ParseExact:static start.
                 ParseExact: function (input, format) {
                     var r = new System.Guid.ctor();
                     r.ParseInternal(input, format, true);
                     return r;
                 },
+                //System.Guid.ParseExact:static end.
+
+                //System.Guid.TryParse:static start.
                 TryParse: function (input, result) {
                     return System.Guid.TryParseExact(input, null, result);
                 },
+                //System.Guid.TryParse:static end.
+
+                //System.Guid.TryParseExact:static start.
                 TryParseExact: function (input, format, result) {
                     result.v = new System.Guid.ctor();
                     return result.v.ParseInternal(input, format, false);
                 },
+                //System.Guid.TryParseExact:static end.
+
+                //System.Guid.NewGuid:static start.
                 NewGuid: function () {
                     var a = System.Array.init(16, 0, System.Byte);
 
@@ -48,6 +62,9 @@
 
                     return new System.Guid.$ctor1(a);
                 },
+                //System.Guid.NewGuid:static end.
+
+                //System.Guid.ToHex$1:static start.
                 ToHex$1: function (x, precision) {
                     var result = x.toString(16);
                     precision = (precision - result.length) | 0;
@@ -58,6 +75,9 @@
 
                     return result;
                 },
+                //System.Guid.ToHex$1:static end.
+
+                //System.Guid.ToHex:static start.
                 ToHex: function (x) {
                     var result = x.toString(16);
 
@@ -67,6 +87,8 @@
 
                     return result;
                 },
+                //System.Guid.ToHex:static end.
+
                 op_Equality: function (a, b) {
                     if (Bridge.referenceEquals(a, null)) {
                         return Bridge.referenceEquals(b, null);
@@ -182,9 +204,13 @@
             }
         },
         methods: {
+            //System.Guid.getHashCode start.
             getHashCode: function () {
                 return this._a ^ ((this._b << 16) | (this._c & 65535)) ^ ((this._f << 24) | this._k);
             },
+            //System.Guid.getHashCode end.
+
+            //System.Guid.equals start.
             equals: function (o) {
                 if (!(Bridge.is(o, System.Guid))) {
                     return false;
@@ -192,6 +218,9 @@
 
                 return this.equalsT(System.Nullable.getValue(Bridge.cast(Bridge.unbox(o, System.Guid), System.Guid)));
             },
+            //System.Guid.equals end.
+
+            //System.Guid.equalsT start.
             equalsT: function (o) {
                 if ((this._a !== o._a) || (this._b !== o._b) || (this._c !== o._c) || (this._d !== o._d) || (this._e !== o._e) || (this._f !== o._f) || (this._g !== o._g) || (this._h !== o._h) || (this._i !== o._i) || (this._j !== o._j) || (this._k !== o._k)) {
                     return false;
@@ -199,18 +228,33 @@
 
                 return true;
             },
+            //System.Guid.equalsT end.
+
+            //System.Guid.compareTo start.
             compareTo: function (value) {
                 return System.String.compare(this.toString(), value.toString());
             },
+            //System.Guid.compareTo end.
+
+            //System.Guid.toString start.
             toString: function () {
                 return this.Format(null);
             },
+            //System.Guid.toString end.
+
+            //System.Guid.ToString start.
             ToString: function (format) {
                 return this.Format(format);
             },
+            //System.Guid.ToString end.
+
+            //System.Guid.format start.
             format: function (format, formatProvider) {
                 return this.Format(format);
             },
+            //System.Guid.format end.
+
+            //System.Guid.ToByteArray start.
             ToByteArray: function () {
                 var g = System.Array.init(16, 0, System.Byte);
 
@@ -233,6 +277,9 @@
 
                 return g;
             },
+            //System.Guid.ToByteArray end.
+
+            //System.Guid.ParseInternal start.
             ParseInternal: function (input, format, check) {
                 var r = null;
 
@@ -302,6 +349,9 @@
 
                 return false;
             },
+            //System.Guid.ParseInternal end.
+
+            //System.Guid.Format start.
             Format: function (format) {
                 var s = (System.Guid.ToHex$1((this._a >>> 0), 8) || "") + (System.Guid.ToHex$1((this._b & 65535), 4) || "") + (System.Guid.ToHex$1((this._c & 65535), 4) || "");
                 s = (s || "") + ((System.Array.init([this._d, this._e, this._f, this._g, this._h, this._i, this._j, this._k], System.Byte)).map(System.Guid.ToHex).join("") || "");
@@ -329,6 +379,9 @@
                         return s;
                 }
             },
+            //System.Guid.Format end.
+
+            //System.Guid.FromString start.
             FromString: function (s) {
                 if (System.String.isNullOrEmpty(s)) {
                     return;
@@ -354,9 +407,15 @@
                 this._j = r[System.Array.index(6, r)];
                 this._k = r[System.Array.index(7, r)];
             },
+            //System.Guid.FromString end.
+
+            //System.Guid.toJSON start.
             toJSON: function () {
                 return this.toString();
             },
+            //System.Guid.toJSON end.
+
             $clone: function (to) { return this; }
         }
     });
+    //System.Guid end.
