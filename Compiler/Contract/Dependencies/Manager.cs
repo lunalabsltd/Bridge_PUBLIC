@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
@@ -48,24 +50,27 @@ namespace Bridge.Contract.Dependencies
 
             foreach (var method in type.Methods)
             {
+                this.AddDependencies(name, method.CustomAttributes);
+
                 if (!method.HasBody)
                 {
                     continue;
                 }
-                foreach (var instruction in method.Body.Instructions)
+
+                var calls = method.Body.Instructions.Select(this.GetMethodDefinition).Where(c => c != null);
+
+                foreach (var call in calls)
                 {
-                    var callee = this.GetMethodDefinition(instruction);
-                    if (callee != null)
-                    {
-                        AddDependency(name, callee.DeclaringType);
-                    }
+                    this.AddDependency(name, call.DeclaringType);
                 }
             }
-            foreach (var attribute in type.CustomAttributes)
+            foreach (var field in type.Fields)
             {
-                AddDependency(name, attribute.AttributeType);
+                this.AddDependency(name, field.FieldType);
+                this.AddDependencies(name, field.CustomAttributes);
             }
-            AddDependency(name, type.BaseType);
+            this.AddDependencies(name, type.CustomAttributes);
+            this.AddDependency(name, type.BaseType);
         }
 
         private MethodDefinition GetMethodDefinition(Instruction instruction)
@@ -98,12 +103,20 @@ namespace Bridge.Contract.Dependencies
             return method;
         }
 
+        private void AddDependencies(string name, IEnumerable<CustomAttribute> attributes)
+        {
+            foreach (var attribute in attributes)
+            {
+                this.AddDependency(name, attribute.AttributeType);
+            }
+        }
+
         private void AddDependency(string name, TypeReference reference)
         {
             var type = this.Resolve(reference);
             if (type != null)
             {
-                AddDependency(name, type);
+                this.AddDependency(name, type);
             }
         }
 
