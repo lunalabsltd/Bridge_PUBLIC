@@ -33,6 +33,10 @@ namespace Bridge.Contract.Dependencies
             {
                 return false;
             }
+            if (root.IsUsed)
+            {
+                return true;
+            }
             var queue = new Queue<Node>();
             root.IsUsed = true;
             queue.Enqueue(root);

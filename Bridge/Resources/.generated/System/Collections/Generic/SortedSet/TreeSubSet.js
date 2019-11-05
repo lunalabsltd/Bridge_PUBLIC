@@ -1,4 +1,4 @@
-    //System.Collections.Generic.SortedSet$1.TreeSubSet start.
+    //System.Collections.Generic.SortedSet$1+TreeSubSet start.
     Bridge.define("System.Collections.Generic.SortedSet$1.TreeSubSet", function (T) { return {
         inherits: [System.Collections.Generic.SortedSet$1(T)],
         $kind: "nested class",
@@ -34,7 +34,7 @@
             }
         },
         methods: {
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.AddIfNotPresent start.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.AddIfNotPresent start.
             AddIfNotPresent: function (item) {
 
                 if (!this.IsWithinRange(item)) {
@@ -46,16 +46,16 @@
 
                 return ret;
             },
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.AddIfNotPresent end.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.AddIfNotPresent end.
 
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.contains start.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.contains start.
             contains: function (item) {
                 this.VersionCheck();
                 return System.Collections.Generic.SortedSet$1(T).prototype.contains.call(this, item);
             },
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.contains end.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.contains end.
 
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.DoRemove start.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.DoRemove start.
             DoRemove: function (item) {
 
                 if (!this.IsWithinRange(item)) {
@@ -66,9 +66,9 @@
                 this.VersionCheck();
                 return ret;
             },
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.DoRemove end.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.DoRemove end.
 
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.clear start.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.clear start.
             clear: function () {
 
 
@@ -89,9 +89,9 @@
                 this.count = 0;
                 this.version = this.underlying.version;
             },
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.clear end.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.clear end.
 
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.IsWithinRange start.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.IsWithinRange start.
             IsWithinRange: function (item) {
                 var $t, $t1;
 
@@ -105,9 +105,9 @@
                 }
                 return true;
             },
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.IsWithinRange end.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.IsWithinRange end.
 
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.InOrderTreeWalk$1 start.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.InOrderTreeWalk$1 start.
             InOrderTreeWalk$1: function (action, reverse) {
                 var $t, $t1;
                 this.VersionCheck();
@@ -149,9 +149,9 @@
                 }
                 return true;
             },
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.InOrderTreeWalk$1 end.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.InOrderTreeWalk$1 end.
 
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.BreadthFirstTreeWalk start.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.BreadthFirstTreeWalk start.
             BreadthFirstTreeWalk: function (action) {
                 var $t, $t1;
                 this.VersionCheck();
@@ -180,9 +180,9 @@
                 }
                 return true;
             },
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.BreadthFirstTreeWalk end.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.BreadthFirstTreeWalk end.
 
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.FindNode start.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.FindNode start.
             FindNode: function (item) {
 
                 if (!this.IsWithinRange(item)) {
@@ -191,9 +191,9 @@
                 this.VersionCheck();
                 return System.Collections.Generic.SortedSet$1(T).prototype.FindNode.call(this, item);
             },
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.FindNode end.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.FindNode end.
 
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.InternalIndexOf start.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.InternalIndexOf start.
             InternalIndexOf: function (item) {
                 var $t, $t1;
                 var count = -1;
@@ -213,15 +213,15 @@
                 }
                 return -1;
             },
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.InternalIndexOf end.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.InternalIndexOf end.
 
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.VersionCheck start.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.VersionCheck start.
             VersionCheck: function () {
                 this.VersionCheckImpl();
             },
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.VersionCheck end.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.VersionCheck end.
 
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.VersionCheckImpl start.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.VersionCheckImpl start.
             VersionCheckImpl: function () {
                 if (this.version !== this.underlying.version) {
                     this.root = this.underlying.FindRange$1(this.min, this.max, this.lBoundActive, this.uBoundActive);
@@ -230,9 +230,9 @@
                     this.InOrderTreeWalk(Bridge.fn.bind(this, $asm.$.System.Collections.Generic.SortedSet$1.TreeSubSet.f1));
                 }
             },
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.VersionCheckImpl end.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.VersionCheckImpl end.
 
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.GetViewBetween start.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.GetViewBetween start.
             GetViewBetween: function (lowerValue, upperValue) {
                 var $t, $t1;
 
@@ -245,9 +245,9 @@
                 var ret = Bridge.cast(this.underlying.GetViewBetween(lowerValue, upperValue), System.Collections.Generic.SortedSet$1.TreeSubSet(T));
                 return ret;
             },
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.GetViewBetween end.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.GetViewBetween end.
 
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.IntersectWithEnumerable start.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.IntersectWithEnumerable start.
             IntersectWithEnumerable: function (other) {
                 var $t;
 
@@ -269,7 +269,7 @@
                 this.clear();
                 this.AddAllElements(toSave);
             },
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.IntersectWithEnumerable end.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.IntersectWithEnumerable end.
 
 
         }
@@ -283,4 +283,4 @@
             return true;
         }
     });
-    //System.Collections.Generic.SortedSet$1.TreeSubSet end.
+    //System.Collections.Generic.SortedSet$1+TreeSubSet end.

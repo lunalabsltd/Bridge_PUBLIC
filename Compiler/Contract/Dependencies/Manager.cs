@@ -50,57 +50,91 @@ namespace Bridge.Contract.Dependencies
 
             foreach (var method in type.Methods)
             {
-                this.AddDependencies(name, method.CustomAttributes);
-
-                if (!method.HasBody)
-                {
-                    continue;
-                }
-
-                var calls = method.Body.Instructions.Select(this.GetMethodDefinition).Where(c => c != null);
-
-                foreach (var call in calls)
-                {
-                    this.AddDependency(name, call.DeclaringType);
-                }
+                this.AddDependency(name, method);
+            }
+            foreach (var property in type.Properties)
+            {
+                this.AddDependency(name, property.GetMethod);
+                this.AddDependency(name, property.SetMethod);
+                this.AddDependencies(name, property.CustomAttributes);
             }
             foreach (var field in type.Fields)
             {
                 this.AddDependency(name, field.FieldType);
                 this.AddDependencies(name, field.CustomAttributes);
             }
+            foreach (var face in type.Interfaces)
+            {
+                this.AddDependency(name, face);
+            }
             this.AddDependencies(name, type.CustomAttributes);
             this.AddDependency(name, type.BaseType);
         }
 
-        private MethodDefinition GetMethodDefinition(Instruction instruction)
+        private void AddDependency(string name, MethodDefinition method)
         {
-            if (!(instruction.OpCode == OpCodes.Call ||
-                  instruction.OpCode == OpCodes.Newobj ||
-                  instruction.OpCode == OpCodes.Callvirt))
+            if (method == null)
+            {
+                return;
+            }
+
+            this.AddDependencies(name, method.CustomAttributes);
+            this.AddDependency(name, method.ReturnType);
+
+            foreach (var param in method.Parameters)
+            {
+                this.AddDependency(name, param.ParameterType);
+                this.AddDependencies(name, param.CustomAttributes);
+            }
+
+            if (!method.HasBody)
+            {
+                return;
+            }
+
+            var calls = method.Body.Instructions.Select(this.GetMemberDefinition).Where(c => c != null);
+
+            foreach (var call in calls)
+            {
+                this.AddDependency(name, call.DeclaringType);
+            }
+        }
+
+        private IMemberDefinition GetMemberDefinition(Instruction instruction)
+        {
+            if (instruction.Operand == null)
             {
                 return null;
             }
-            MethodDefinition method = null;
-            if (instruction.Operand is MethodReference reference)
+            if (instruction.Operand is MethodReference methodRef)
             {
                 try
                 {
-                    method = reference.Resolve();
+                    return methodRef.Resolve();
                 }
                 catch (NotSupportedException)
                 {
                 }
             }
-            else
+            else if (instruction.Operand is FieldReference fieldRef)
             {
-                method = instruction.Operand as MethodDefinition;
+                try
+                {
+                    return fieldRef.Resolve();
+                }
+                catch (NotSupportedException)
+                {
+                }
             }
-            if (method == null)
+            if (instruction.Operand is MethodDefinition method)
             {
-                this.logger.Warn(string.Format("Can't resolve method reference: {0}", instruction.Operand));
+                return method;
             }
-            return method;
+            if (instruction.Operand is FieldDefinition field)
+            {
+                return field;
+            }
+            return null;
         }
 
         private void AddDependencies(string name, IEnumerable<CustomAttribute> attributes)
@@ -124,15 +158,17 @@ namespace Bridge.Contract.Dependencies
         {
             var used = Helpers.GetClassName(type);
             this.classDependencies.AddDependency(name, used);
-
-            this.logger.Trace(string.Format("Added dependency: {0} -> {1}", name, used));
         }
 
         private TypeDefinition Resolve(TypeReference reference)
         {
+            if (reference == null)
+            {
+                return null;
+            }
             try
             {
-                return reference?.Resolve();
+                return reference.Resolve();
             }
             catch (NotSupportedException)
             {

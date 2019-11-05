@@ -11768,7 +11768,7 @@ Bridge.define("System.Type", {
 
     // @source DebugAssertException.js
 
-    //System.Diagnostics.Debug.DebugAssertException start.
+    //System.Diagnostics.Debug+DebugAssertException start.
     Bridge.define("System.Diagnostics.Debug.DebugAssertException", {
         inherits: [System.Exception],
         $kind: "nested class",
@@ -11779,7 +11779,7 @@ Bridge.define("System.Type", {
             }
         }
     });
-    //System.Diagnostics.Debug.DebugAssertException end.
+    //System.Diagnostics.Debug+DebugAssertException end.
 
     // @source Debug.js
 
@@ -15063,7 +15063,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
     // @source KeyList.js
 
-    //System.Collections.SortedList.KeyList start.
+    //System.Collections.SortedList+KeyList start.
     Bridge.define("System.Collections.SortedList.KeyList", {
         inherits: [System.Collections.IList],
         $kind: "nested class",
@@ -15128,25 +15128,25 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             setItem: function (index, value) {
                 throw new System.NotSupportedException.ctor();
             },
-            //System.Collections.SortedList.KeyList.add start.
+            //System.Collections.SortedList+KeyList.add start.
             add: function (key) {
                 throw new System.NotSupportedException.ctor();
             },
-            //System.Collections.SortedList.KeyList.add end.
+            //System.Collections.SortedList+KeyList.add end.
 
-            //System.Collections.SortedList.KeyList.clear start.
+            //System.Collections.SortedList+KeyList.clear start.
             clear: function () {
                 throw new System.NotSupportedException.ctor();
             },
-            //System.Collections.SortedList.KeyList.clear end.
+            //System.Collections.SortedList+KeyList.clear end.
 
-            //System.Collections.SortedList.KeyList.contains start.
+            //System.Collections.SortedList+KeyList.contains start.
             contains: function (key) {
                 return this.sortedList.contains(key);
             },
-            //System.Collections.SortedList.KeyList.contains end.
+            //System.Collections.SortedList+KeyList.contains end.
 
-            //System.Collections.SortedList.KeyList.copyTo start.
+            //System.Collections.SortedList+KeyList.copyTo start.
             copyTo: function (array, arrayIndex) {
                 if (array != null && System.Array.getRank(array) !== 1) {
                     throw new System.ArgumentException.ctor();
@@ -15154,21 +15154,21 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 System.Array.copy(this.sortedList.keys, 0, array, arrayIndex, this.sortedList.Count);
             },
-            //System.Collections.SortedList.KeyList.copyTo end.
+            //System.Collections.SortedList+KeyList.copyTo end.
 
-            //System.Collections.SortedList.KeyList.insert start.
+            //System.Collections.SortedList+KeyList.insert start.
             insert: function (index, value) {
                 throw new System.NotSupportedException.ctor();
             },
-            //System.Collections.SortedList.KeyList.insert end.
+            //System.Collections.SortedList+KeyList.insert end.
 
-            //System.Collections.SortedList.KeyList.GetEnumerator start.
+            //System.Collections.SortedList+KeyList.GetEnumerator start.
             GetEnumerator: function () {
                 return new System.Collections.SortedList.SortedListEnumerator(this.sortedList, 0, this.sortedList.Count, System.Collections.SortedList.SortedListEnumerator.Keys);
             },
-            //System.Collections.SortedList.KeyList.GetEnumerator end.
+            //System.Collections.SortedList+KeyList.GetEnumerator end.
 
-            //System.Collections.SortedList.KeyList.indexOf start.
+            //System.Collections.SortedList+KeyList.indexOf start.
             indexOf: function (key) {
                 if (key == null) {
                     throw new System.ArgumentNullException.$ctor1("key");
@@ -15180,28 +15180,28 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return -1;
             },
-            //System.Collections.SortedList.KeyList.indexOf end.
+            //System.Collections.SortedList+KeyList.indexOf end.
 
-            //System.Collections.SortedList.KeyList.remove start.
+            //System.Collections.SortedList+KeyList.remove start.
             remove: function (key) {
                 throw new System.NotSupportedException.ctor();
             },
-            //System.Collections.SortedList.KeyList.remove end.
+            //System.Collections.SortedList+KeyList.remove end.
 
-            //System.Collections.SortedList.KeyList.removeAt start.
+            //System.Collections.SortedList+KeyList.removeAt start.
             removeAt: function (index) {
                 throw new System.NotSupportedException.ctor();
             },
-            //System.Collections.SortedList.KeyList.removeAt end.
+            //System.Collections.SortedList+KeyList.removeAt end.
 
 
         }
     });
-    //System.Collections.SortedList.KeyList end.
+    //System.Collections.SortedList+KeyList end.
 
     // @source SortedListDebugView.js
 
-    //System.Collections.SortedList.SortedListDebugView start.
+    //System.Collections.SortedList+SortedListDebugView start.
     Bridge.define("System.Collections.SortedList.SortedListDebugView", {
         $kind: "nested class",
         fields: {
@@ -15225,11 +15225,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
-    //System.Collections.SortedList.SortedListDebugView end.
+    //System.Collections.SortedList+SortedListDebugView end.
 
     // @source SortedListEnumerator.js
 
-    //System.Collections.SortedList.SortedListEnumerator start.
+    //System.Collections.SortedList+SortedListEnumerator start.
     Bridge.define("System.Collections.SortedList.SortedListEnumerator", {
         inherits: [System.Collections.IDictionaryEnumerator,System.ICloneable],
         $kind: "nested class",
@@ -15332,13 +15332,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.Collections.SortedList.SortedListEnumerator.clone start.
+            //System.Collections.SortedList+SortedListEnumerator.clone start.
             clone: function () {
                 return Bridge.clone(this);
             },
-            //System.Collections.SortedList.SortedListEnumerator.clone end.
+            //System.Collections.SortedList+SortedListEnumerator.clone end.
 
-            //System.Collections.SortedList.SortedListEnumerator.moveNext start.
+            //System.Collections.SortedList+SortedListEnumerator.moveNext start.
             moveNext: function () {
                 var $t, $t1;
                 if (this.version !== this.sortedList.version) {
@@ -15356,9 +15356,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.current = false;
                 return false;
             },
-            //System.Collections.SortedList.SortedListEnumerator.moveNext end.
+            //System.Collections.SortedList+SortedListEnumerator.moveNext end.
 
-            //System.Collections.SortedList.SortedListEnumerator.reset start.
+            //System.Collections.SortedList+SortedListEnumerator.reset start.
             reset: function () {
                 if (this.version !== this.sortedList.version) {
                     throw new System.InvalidOperationException.ctor();
@@ -15368,16 +15368,16 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.key = null;
                 this.value = null;
             },
-            //System.Collections.SortedList.SortedListEnumerator.reset end.
+            //System.Collections.SortedList+SortedListEnumerator.reset end.
 
 
         }
     });
-    //System.Collections.SortedList.SortedListEnumerator end.
+    //System.Collections.SortedList+SortedListEnumerator end.
 
     // @source SyncSortedList.js
 
-    //System.Collections.SortedList.SyncSortedList start.
+    //System.Collections.SortedList+SyncSortedList start.
     Bridge.define("System.Collections.SortedList.SyncSortedList", {
         inherits: [System.Collections.SortedList],
         $kind: "nested class",
@@ -15461,115 +15461,115 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this._list.setItem(key, value);
                 }
             },
-            //System.Collections.SortedList.SyncSortedList.add start.
+            //System.Collections.SortedList+SyncSortedList.add start.
             add: function (key, value) {
                 this._root;
                 {
                     this._list.add(key, value);
                 }
             },
-            //System.Collections.SortedList.SyncSortedList.add end.
+            //System.Collections.SortedList+SyncSortedList.add end.
 
-            //System.Collections.SortedList.SyncSortedList.clear start.
+            //System.Collections.SortedList+SyncSortedList.clear start.
             clear: function () {
                 this._root;
                 {
                     this._list.clear();
                 }
             },
-            //System.Collections.SortedList.SyncSortedList.clear end.
+            //System.Collections.SortedList+SyncSortedList.clear end.
 
-            //System.Collections.SortedList.SyncSortedList.clone start.
+            //System.Collections.SortedList+SyncSortedList.clone start.
             clone: function () {
                 this._root;
                 {
                     return this._list.clone();
                 }
             },
-            //System.Collections.SortedList.SyncSortedList.clone end.
+            //System.Collections.SortedList+SyncSortedList.clone end.
 
-            //System.Collections.SortedList.SyncSortedList.contains start.
+            //System.Collections.SortedList+SyncSortedList.contains start.
             contains: function (key) {
                 this._root;
                 {
                     return this._list.contains(key);
                 }
             },
-            //System.Collections.SortedList.SyncSortedList.contains end.
+            //System.Collections.SortedList+SyncSortedList.contains end.
 
-            //System.Collections.SortedList.SyncSortedList.ContainsKey start.
+            //System.Collections.SortedList+SyncSortedList.ContainsKey start.
             ContainsKey: function (key) {
                 this._root;
                 {
                     return this._list.ContainsKey(key);
                 }
             },
-            //System.Collections.SortedList.SyncSortedList.ContainsKey end.
+            //System.Collections.SortedList+SyncSortedList.ContainsKey end.
 
-            //System.Collections.SortedList.SyncSortedList.ContainsValue start.
+            //System.Collections.SortedList+SyncSortedList.ContainsValue start.
             ContainsValue: function (key) {
                 this._root;
                 {
                     return this._list.ContainsValue(key);
                 }
             },
-            //System.Collections.SortedList.SyncSortedList.ContainsValue end.
+            //System.Collections.SortedList+SyncSortedList.ContainsValue end.
 
-            //System.Collections.SortedList.SyncSortedList.copyTo start.
+            //System.Collections.SortedList+SyncSortedList.copyTo start.
             copyTo: function (array, index) {
                 this._root;
                 {
                     this._list.copyTo(array, index);
                 }
             },
-            //System.Collections.SortedList.SyncSortedList.copyTo end.
+            //System.Collections.SortedList+SyncSortedList.copyTo end.
 
-            //System.Collections.SortedList.SyncSortedList.GetByIndex start.
+            //System.Collections.SortedList+SyncSortedList.GetByIndex start.
             GetByIndex: function (index) {
                 this._root;
                 {
                     return this._list.GetByIndex(index);
                 }
             },
-            //System.Collections.SortedList.SyncSortedList.GetByIndex end.
+            //System.Collections.SortedList+SyncSortedList.GetByIndex end.
 
-            //System.Collections.SortedList.SyncSortedList.GetEnumerator start.
+            //System.Collections.SortedList+SyncSortedList.GetEnumerator start.
             GetEnumerator: function () {
                 this._root;
                 {
                     return this._list.GetEnumerator();
                 }
             },
-            //System.Collections.SortedList.SyncSortedList.GetEnumerator end.
+            //System.Collections.SortedList+SyncSortedList.GetEnumerator end.
 
-            //System.Collections.SortedList.SyncSortedList.GetKey start.
+            //System.Collections.SortedList+SyncSortedList.GetKey start.
             GetKey: function (index) {
                 this._root;
                 {
                     return this._list.GetKey(index);
                 }
             },
-            //System.Collections.SortedList.SyncSortedList.GetKey end.
+            //System.Collections.SortedList+SyncSortedList.GetKey end.
 
-            //System.Collections.SortedList.SyncSortedList.GetKeyList start.
+            //System.Collections.SortedList+SyncSortedList.GetKeyList start.
             GetKeyList: function () {
                 this._root;
                 {
                     return this._list.GetKeyList();
                 }
             },
-            //System.Collections.SortedList.SyncSortedList.GetKeyList end.
+            //System.Collections.SortedList+SyncSortedList.GetKeyList end.
 
-            //System.Collections.SortedList.SyncSortedList.GetValueList start.
+            //System.Collections.SortedList+SyncSortedList.GetValueList start.
             GetValueList: function () {
                 this._root;
                 {
                     return this._list.GetValueList();
                 }
             },
-            //System.Collections.SortedList.SyncSortedList.GetValueList end.
+            //System.Collections.SortedList+SyncSortedList.GetValueList end.
 
-            //System.Collections.SortedList.SyncSortedList.IndexOfKey start.
+            //System.Collections.SortedList+SyncSortedList.IndexOfKey start.
             IndexOfKey: function (key) {
                 if (key == null) {
                     throw new System.ArgumentNullException.$ctor1("key");
@@ -15577,67 +15577,67 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return this._list.IndexOfKey(key);
             },
-            //System.Collections.SortedList.SyncSortedList.IndexOfKey end.
+            //System.Collections.SortedList+SyncSortedList.IndexOfKey end.
 
-            //System.Collections.SortedList.SyncSortedList.IndexOfValue start.
+            //System.Collections.SortedList+SyncSortedList.IndexOfValue start.
             IndexOfValue: function (value) {
                 this._root;
                 {
                     return this._list.IndexOfValue(value);
                 }
             },
-            //System.Collections.SortedList.SyncSortedList.IndexOfValue end.
+            //System.Collections.SortedList+SyncSortedList.IndexOfValue end.
 
-            //System.Collections.SortedList.SyncSortedList.RemoveAt start.
+            //System.Collections.SortedList+SyncSortedList.RemoveAt start.
             RemoveAt: function (index) {
                 this._root;
                 {
                     this._list.RemoveAt(index);
                 }
             },
-            //System.Collections.SortedList.SyncSortedList.RemoveAt end.
+            //System.Collections.SortedList+SyncSortedList.RemoveAt end.
 
-            //System.Collections.SortedList.SyncSortedList.remove start.
+            //System.Collections.SortedList+SyncSortedList.remove start.
             remove: function (key) {
                 this._root;
                 {
                     this._list.remove(key);
                 }
             },
-            //System.Collections.SortedList.SyncSortedList.remove end.
+            //System.Collections.SortedList+SyncSortedList.remove end.
 
-            //System.Collections.SortedList.SyncSortedList.SetByIndex start.
+            //System.Collections.SortedList+SyncSortedList.SetByIndex start.
             SetByIndex: function (index, value) {
                 this._root;
                 {
                     this._list.SetByIndex(index, value);
                 }
             },
-            //System.Collections.SortedList.SyncSortedList.SetByIndex end.
+            //System.Collections.SortedList+SyncSortedList.SetByIndex end.
 
-            //System.Collections.SortedList.SyncSortedList.ToKeyValuePairsArray start.
+            //System.Collections.SortedList+SyncSortedList.ToKeyValuePairsArray start.
             ToKeyValuePairsArray: function () {
                 return this._list.ToKeyValuePairsArray();
             },
-            //System.Collections.SortedList.SyncSortedList.ToKeyValuePairsArray end.
+            //System.Collections.SortedList+SyncSortedList.ToKeyValuePairsArray end.
 
-            //System.Collections.SortedList.SyncSortedList.TrimToSize start.
+            //System.Collections.SortedList+SyncSortedList.TrimToSize start.
             TrimToSize: function () {
                 this._root;
                 {
                     this._list.TrimToSize();
                 }
             },
-            //System.Collections.SortedList.SyncSortedList.TrimToSize end.
+            //System.Collections.SortedList+SyncSortedList.TrimToSize end.
 
 
         }
     });
-    //System.Collections.SortedList.SyncSortedList end.
+    //System.Collections.SortedList+SyncSortedList end.
 
     // @source ValueList.js
 
-    //System.Collections.SortedList.ValueList start.
+    //System.Collections.SortedList+ValueList start.
     Bridge.define("System.Collections.SortedList.ValueList", {
         inherits: [System.Collections.IList],
         $kind: "nested class",
@@ -15702,25 +15702,25 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             setItem: function (index, value) {
                 throw new System.NotSupportedException.ctor();
             },
-            //System.Collections.SortedList.ValueList.add start.
+            //System.Collections.SortedList+ValueList.add start.
             add: function (key) {
                 throw new System.NotSupportedException.ctor();
             },
-            //System.Collections.SortedList.ValueList.add end.
+            //System.Collections.SortedList+ValueList.add end.
 
-            //System.Collections.SortedList.ValueList.clear start.
+            //System.Collections.SortedList+ValueList.clear start.
             clear: function () {
                 throw new System.NotSupportedException.ctor();
             },
-            //System.Collections.SortedList.ValueList.clear end.
+            //System.Collections.SortedList+ValueList.clear end.
 
-            //System.Collections.SortedList.ValueList.contains start.
+            //System.Collections.SortedList+ValueList.contains start.
             contains: function (value) {
                 return this.sortedList.ContainsValue(value);
             },
-            //System.Collections.SortedList.ValueList.contains end.
+            //System.Collections.SortedList+ValueList.contains end.
 
-            //System.Collections.SortedList.ValueList.copyTo start.
+            //System.Collections.SortedList+ValueList.copyTo start.
             copyTo: function (array, arrayIndex) {
                 if (array != null && System.Array.getRank(array) !== 1) {
                     throw new System.ArgumentException.ctor();
@@ -15728,42 +15728,42 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 System.Array.copy(this.sortedList.values, 0, array, arrayIndex, this.sortedList.Count);
             },
-            //System.Collections.SortedList.ValueList.copyTo end.
+            //System.Collections.SortedList+ValueList.copyTo end.
 
-            //System.Collections.SortedList.ValueList.insert start.
+            //System.Collections.SortedList+ValueList.insert start.
             insert: function (index, value) {
                 throw new System.NotSupportedException.ctor();
             },
-            //System.Collections.SortedList.ValueList.insert end.
+            //System.Collections.SortedList+ValueList.insert end.
 
-            //System.Collections.SortedList.ValueList.GetEnumerator start.
+            //System.Collections.SortedList+ValueList.GetEnumerator start.
             GetEnumerator: function () {
                 return new System.Collections.SortedList.SortedListEnumerator(this.sortedList, 0, this.sortedList.Count, System.Collections.SortedList.SortedListEnumerator.Values);
             },
-            //System.Collections.SortedList.ValueList.GetEnumerator end.
+            //System.Collections.SortedList+ValueList.GetEnumerator end.
 
-            //System.Collections.SortedList.ValueList.indexOf start.
+            //System.Collections.SortedList+ValueList.indexOf start.
             indexOf: function (value) {
                 return System.Array.indexOfT(this.sortedList.values, value, 0, this.sortedList.Count);
             },
-            //System.Collections.SortedList.ValueList.indexOf end.
+            //System.Collections.SortedList+ValueList.indexOf end.
 
-            //System.Collections.SortedList.ValueList.remove start.
+            //System.Collections.SortedList+ValueList.remove start.
             remove: function (value) {
                 throw new System.NotSupportedException.ctor();
             },
-            //System.Collections.SortedList.ValueList.remove end.
+            //System.Collections.SortedList+ValueList.remove end.
 
-            //System.Collections.SortedList.ValueList.removeAt start.
+            //System.Collections.SortedList+ValueList.removeAt start.
             removeAt: function (index) {
                 throw new System.NotSupportedException.ctor();
             },
-            //System.Collections.SortedList.ValueList.removeAt end.
+            //System.Collections.SortedList+ValueList.removeAt end.
 
 
         }
     });
-    //System.Collections.SortedList.ValueList end.
+    //System.Collections.SortedList+ValueList end.
 
     // @source SortedList.js
 
@@ -16398,7 +16398,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
     // @source Enumerator.js
 
-    //System.Collections.Generic.SortedList$2.Enumerator start.
+    //System.Collections.Generic.SortedList$2+Enumerator start.
     Bridge.define("System.Collections.Generic.SortedList$2.Enumerator", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(System.Collections.Generic.KeyValuePair$2(TKey,TValue)),System.Collections.IDictionaryEnumerator],
         $kind: "nested struct",
@@ -16492,15 +16492,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.Collections.Generic.SortedList$2.Enumerator.Dispose start.
+            //System.Collections.Generic.SortedList$2+Enumerator.Dispose start.
             Dispose: function () {
                 this.index = 0;
                 this.key = Bridge.getDefaultValue(TKey);
                 this.value = Bridge.getDefaultValue(TValue);
             },
-            //System.Collections.Generic.SortedList$2.Enumerator.Dispose end.
+            //System.Collections.Generic.SortedList$2+Enumerator.Dispose end.
 
-            //System.Collections.Generic.SortedList$2.Enumerator.moveNext start.
+            //System.Collections.Generic.SortedList$2+Enumerator.moveNext start.
             moveNext: function () {
                 var $t, $t1;
                 if (this.version !== this._sortedList.version) {
@@ -16519,9 +16519,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.value = Bridge.getDefaultValue(TValue);
                 return false;
             },
-            //System.Collections.Generic.SortedList$2.Enumerator.moveNext end.
+            //System.Collections.Generic.SortedList$2+Enumerator.moveNext end.
 
-            //System.Collections.Generic.SortedList$2.Enumerator.System$Collections$IEnumerator$reset start.
+            //System.Collections.Generic.SortedList$2+Enumerator.System$Collections$IEnumerator$reset start.
             System$Collections$IEnumerator$reset: function () {
                 if (this.version !== this._sortedList.version) {
                     System.ThrowHelper.ThrowInvalidOperationException(System.ExceptionResource.InvalidOperation_EnumFailedVersion);
@@ -16531,7 +16531,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.key = Bridge.getDefaultValue(TKey);
                 this.value = Bridge.getDefaultValue(TValue);
             },
-            //System.Collections.Generic.SortedList$2.Enumerator.System$Collections$IEnumerator$reset end.
+            //System.Collections.Generic.SortedList$2+Enumerator.System$Collections$IEnumerator$reset end.
 
             getHashCode: function () {
                 var h = Bridge.addHash([3788985113, this._sortedList, this.key, this.value, this.index, this.version, this.getEnumeratorRetType]);
@@ -16555,11 +16555,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
-    //System.Collections.Generic.SortedList$2.Enumerator end.
+    //System.Collections.Generic.SortedList$2+Enumerator end.
 
     // @source KeyList.js
 
-    //System.Collections.Generic.SortedList$2.KeyList start.
+    //System.Collections.Generic.SortedList$2+KeyList start.
     Bridge.define("System.Collections.Generic.SortedList$2.KeyList", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IList$1(TKey),System.Collections.ICollection],
         $kind: "nested class",
@@ -16617,31 +16617,31 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             setItem: function (index, value) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_KeyCollectionSet);
             },
-            //System.Collections.Generic.SortedList$2.KeyList.add start.
+            //System.Collections.Generic.SortedList$2+KeyList.add start.
             add: function (key) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
             },
-            //System.Collections.Generic.SortedList$2.KeyList.add end.
+            //System.Collections.Generic.SortedList$2+KeyList.add end.
 
-            //System.Collections.Generic.SortedList$2.KeyList.clear start.
+            //System.Collections.Generic.SortedList$2+KeyList.clear start.
             clear: function () {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
             },
-            //System.Collections.Generic.SortedList$2.KeyList.clear end.
+            //System.Collections.Generic.SortedList$2+KeyList.clear end.
 
-            //System.Collections.Generic.SortedList$2.KeyList.contains start.
+            //System.Collections.Generic.SortedList$2+KeyList.contains start.
             contains: function (key) {
                 return this._dict.containsKey(key);
             },
-            //System.Collections.Generic.SortedList$2.KeyList.contains end.
+            //System.Collections.Generic.SortedList$2+KeyList.contains end.
 
-            //System.Collections.Generic.SortedList$2.KeyList.copyTo start.
+            //System.Collections.Generic.SortedList$2+KeyList.copyTo start.
             copyTo: function (array, arrayIndex) {
                 System.Array.copy(this._dict.keys, 0, array, arrayIndex, this._dict.Count);
             },
-            //System.Collections.Generic.SortedList$2.KeyList.copyTo end.
+            //System.Collections.Generic.SortedList$2+KeyList.copyTo end.
 
-            //System.Collections.Generic.SortedList$2.KeyList.System$Collections$ICollection$copyTo start.
+            //System.Collections.Generic.SortedList$2+KeyList.System$Collections$ICollection$copyTo start.
             System$Collections$ICollection$copyTo: function (array, arrayIndex) {
                 if (array != null && System.Array.getRank(array) !== 1) {
                     System.ThrowHelper.ThrowArgumentException(System.ExceptionResource.Arg_RankMultiDimNotSupported);
@@ -16658,27 +16658,27 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
-            //System.Collections.Generic.SortedList$2.KeyList.System$Collections$ICollection$copyTo end.
+            //System.Collections.Generic.SortedList$2+KeyList.System$Collections$ICollection$copyTo end.
 
-            //System.Collections.Generic.SortedList$2.KeyList.insert start.
+            //System.Collections.Generic.SortedList$2+KeyList.insert start.
             insert: function (index, value) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
             },
-            //System.Collections.Generic.SortedList$2.KeyList.insert end.
+            //System.Collections.Generic.SortedList$2+KeyList.insert end.
 
-            //System.Collections.Generic.SortedList$2.KeyList.GetEnumerator start.
+            //System.Collections.Generic.SortedList$2+KeyList.GetEnumerator start.
             GetEnumerator: function () {
                 return new (System.Collections.Generic.SortedList$2.SortedListKeyEnumerator(TKey,TValue))(this._dict);
             },
-            //System.Collections.Generic.SortedList$2.KeyList.GetEnumerator end.
+            //System.Collections.Generic.SortedList$2+KeyList.GetEnumerator end.
 
-            //System.Collections.Generic.SortedList$2.KeyList.System$Collections$IEnumerable$GetEnumerator start.
+            //System.Collections.Generic.SortedList$2+KeyList.System$Collections$IEnumerable$GetEnumerator start.
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return new (System.Collections.Generic.SortedList$2.SortedListKeyEnumerator(TKey,TValue))(this._dict);
             },
-            //System.Collections.Generic.SortedList$2.KeyList.System$Collections$IEnumerable$GetEnumerator end.
+            //System.Collections.Generic.SortedList$2+KeyList.System$Collections$IEnumerable$GetEnumerator end.
 
-            //System.Collections.Generic.SortedList$2.KeyList.indexOf start.
+            //System.Collections.Generic.SortedList$2+KeyList.indexOf start.
             indexOf: function (key) {
                 if (key == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.key);
@@ -16690,29 +16690,29 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return -1;
             },
-            //System.Collections.Generic.SortedList$2.KeyList.indexOf end.
+            //System.Collections.Generic.SortedList$2+KeyList.indexOf end.
 
-            //System.Collections.Generic.SortedList$2.KeyList.remove start.
+            //System.Collections.Generic.SortedList$2+KeyList.remove start.
             remove: function (key) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
                 return false;
             },
-            //System.Collections.Generic.SortedList$2.KeyList.remove end.
+            //System.Collections.Generic.SortedList$2+KeyList.remove end.
 
-            //System.Collections.Generic.SortedList$2.KeyList.removeAt start.
+            //System.Collections.Generic.SortedList$2+KeyList.removeAt start.
             removeAt: function (index) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
             },
-            //System.Collections.Generic.SortedList$2.KeyList.removeAt end.
+            //System.Collections.Generic.SortedList$2+KeyList.removeAt end.
 
 
         }
     }; });
-    //System.Collections.Generic.SortedList$2.KeyList end.
+    //System.Collections.Generic.SortedList$2+KeyList end.
 
     // @source SortedListKeyEnumerator.js
 
-    //System.Collections.Generic.SortedList$2.SortedListKeyEnumerator start.
+    //System.Collections.Generic.SortedList$2+SortedListKeyEnumerator start.
     Bridge.define("System.Collections.Generic.SortedList$2.SortedListKeyEnumerator", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(TKey),System.Collections.IEnumerator],
         $kind: "nested class",
@@ -16751,14 +16751,14 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.Collections.Generic.SortedList$2.SortedListKeyEnumerator.Dispose start.
+            //System.Collections.Generic.SortedList$2+SortedListKeyEnumerator.Dispose start.
             Dispose: function () {
                 this.index = 0;
                 this.currentKey = Bridge.getDefaultValue(TKey);
             },
-            //System.Collections.Generic.SortedList$2.SortedListKeyEnumerator.Dispose end.
+            //System.Collections.Generic.SortedList$2+SortedListKeyEnumerator.Dispose end.
 
-            //System.Collections.Generic.SortedList$2.SortedListKeyEnumerator.moveNext start.
+            //System.Collections.Generic.SortedList$2+SortedListKeyEnumerator.moveNext start.
             moveNext: function () {
                 var $t;
                 if (this.version !== this._sortedList.version) {
@@ -16775,9 +16775,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.currentKey = Bridge.getDefaultValue(TKey);
                 return false;
             },
-            //System.Collections.Generic.SortedList$2.SortedListKeyEnumerator.moveNext end.
+            //System.Collections.Generic.SortedList$2+SortedListKeyEnumerator.moveNext end.
 
-            //System.Collections.Generic.SortedList$2.SortedListKeyEnumerator.System$Collections$IEnumerator$reset start.
+            //System.Collections.Generic.SortedList$2+SortedListKeyEnumerator.System$Collections$IEnumerator$reset start.
             System$Collections$IEnumerator$reset: function () {
                 if (this.version !== this._sortedList.version) {
                     System.ThrowHelper.ThrowInvalidOperationException(System.ExceptionResource.InvalidOperation_EnumFailedVersion);
@@ -16785,16 +16785,16 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.index = 0;
                 this.currentKey = Bridge.getDefaultValue(TKey);
             },
-            //System.Collections.Generic.SortedList$2.SortedListKeyEnumerator.System$Collections$IEnumerator$reset end.
+            //System.Collections.Generic.SortedList$2+SortedListKeyEnumerator.System$Collections$IEnumerator$reset end.
 
 
         }
     }; });
-    //System.Collections.Generic.SortedList$2.SortedListKeyEnumerator end.
+    //System.Collections.Generic.SortedList$2+SortedListKeyEnumerator end.
 
     // @source SortedListValueEnumerator.js
 
-    //System.Collections.Generic.SortedList$2.SortedListValueEnumerator start.
+    //System.Collections.Generic.SortedList$2+SortedListValueEnumerator start.
     Bridge.define("System.Collections.Generic.SortedList$2.SortedListValueEnumerator", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(TValue),System.Collections.IEnumerator],
         $kind: "nested class",
@@ -16833,14 +16833,14 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.Collections.Generic.SortedList$2.SortedListValueEnumerator.Dispose start.
+            //System.Collections.Generic.SortedList$2+SortedListValueEnumerator.Dispose start.
             Dispose: function () {
                 this.index = 0;
                 this.currentValue = Bridge.getDefaultValue(TValue);
             },
-            //System.Collections.Generic.SortedList$2.SortedListValueEnumerator.Dispose end.
+            //System.Collections.Generic.SortedList$2+SortedListValueEnumerator.Dispose end.
 
-            //System.Collections.Generic.SortedList$2.SortedListValueEnumerator.moveNext start.
+            //System.Collections.Generic.SortedList$2+SortedListValueEnumerator.moveNext start.
             moveNext: function () {
                 var $t;
                 if (this.version !== this._sortedList.version) {
@@ -16857,9 +16857,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.currentValue = Bridge.getDefaultValue(TValue);
                 return false;
             },
-            //System.Collections.Generic.SortedList$2.SortedListValueEnumerator.moveNext end.
+            //System.Collections.Generic.SortedList$2+SortedListValueEnumerator.moveNext end.
 
-            //System.Collections.Generic.SortedList$2.SortedListValueEnumerator.System$Collections$IEnumerator$reset start.
+            //System.Collections.Generic.SortedList$2+SortedListValueEnumerator.System$Collections$IEnumerator$reset start.
             System$Collections$IEnumerator$reset: function () {
                 if (this.version !== this._sortedList.version) {
                     System.ThrowHelper.ThrowInvalidOperationException(System.ExceptionResource.InvalidOperation_EnumFailedVersion);
@@ -16867,16 +16867,16 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.index = 0;
                 this.currentValue = Bridge.getDefaultValue(TValue);
             },
-            //System.Collections.Generic.SortedList$2.SortedListValueEnumerator.System$Collections$IEnumerator$reset end.
+            //System.Collections.Generic.SortedList$2+SortedListValueEnumerator.System$Collections$IEnumerator$reset end.
 
 
         }
     }; });
-    //System.Collections.Generic.SortedList$2.SortedListValueEnumerator end.
+    //System.Collections.Generic.SortedList$2+SortedListValueEnumerator end.
 
     // @source ValueList.js
 
-    //System.Collections.Generic.SortedList$2.ValueList start.
+    //System.Collections.Generic.SortedList$2+ValueList start.
     Bridge.define("System.Collections.Generic.SortedList$2.ValueList", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IList$1(TValue),System.Collections.ICollection],
         $kind: "nested class",
@@ -16934,31 +16934,31 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             setItem: function (index, value) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
             },
-            //System.Collections.Generic.SortedList$2.ValueList.add start.
+            //System.Collections.Generic.SortedList$2+ValueList.add start.
             add: function (key) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
             },
-            //System.Collections.Generic.SortedList$2.ValueList.add end.
+            //System.Collections.Generic.SortedList$2+ValueList.add end.
 
-            //System.Collections.Generic.SortedList$2.ValueList.clear start.
+            //System.Collections.Generic.SortedList$2+ValueList.clear start.
             clear: function () {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
             },
-            //System.Collections.Generic.SortedList$2.ValueList.clear end.
+            //System.Collections.Generic.SortedList$2+ValueList.clear end.
 
-            //System.Collections.Generic.SortedList$2.ValueList.contains start.
+            //System.Collections.Generic.SortedList$2+ValueList.contains start.
             contains: function (value) {
                 return this._dict.ContainsValue(value);
             },
-            //System.Collections.Generic.SortedList$2.ValueList.contains end.
+            //System.Collections.Generic.SortedList$2+ValueList.contains end.
 
-            //System.Collections.Generic.SortedList$2.ValueList.copyTo start.
+            //System.Collections.Generic.SortedList$2+ValueList.copyTo start.
             copyTo: function (array, arrayIndex) {
                 System.Array.copy(this._dict.values, 0, array, arrayIndex, this._dict.Count);
             },
-            //System.Collections.Generic.SortedList$2.ValueList.copyTo end.
+            //System.Collections.Generic.SortedList$2+ValueList.copyTo end.
 
-            //System.Collections.Generic.SortedList$2.ValueList.System$Collections$ICollection$copyTo start.
+            //System.Collections.Generic.SortedList$2+ValueList.System$Collections$ICollection$copyTo start.
             System$Collections$ICollection$copyTo: function (array, arrayIndex) {
                 if (array != null && System.Array.getRank(array) !== 1) {
                     System.ThrowHelper.ThrowArgumentException(System.ExceptionResource.Arg_RankMultiDimNotSupported);
@@ -16975,49 +16975,49 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
-            //System.Collections.Generic.SortedList$2.ValueList.System$Collections$ICollection$copyTo end.
+            //System.Collections.Generic.SortedList$2+ValueList.System$Collections$ICollection$copyTo end.
 
-            //System.Collections.Generic.SortedList$2.ValueList.insert start.
+            //System.Collections.Generic.SortedList$2+ValueList.insert start.
             insert: function (index, value) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
             },
-            //System.Collections.Generic.SortedList$2.ValueList.insert end.
+            //System.Collections.Generic.SortedList$2+ValueList.insert end.
 
-            //System.Collections.Generic.SortedList$2.ValueList.GetEnumerator start.
+            //System.Collections.Generic.SortedList$2+ValueList.GetEnumerator start.
             GetEnumerator: function () {
                 return new (System.Collections.Generic.SortedList$2.SortedListValueEnumerator(TKey,TValue))(this._dict);
             },
-            //System.Collections.Generic.SortedList$2.ValueList.GetEnumerator end.
+            //System.Collections.Generic.SortedList$2+ValueList.GetEnumerator end.
 
-            //System.Collections.Generic.SortedList$2.ValueList.System$Collections$IEnumerable$GetEnumerator start.
+            //System.Collections.Generic.SortedList$2+ValueList.System$Collections$IEnumerable$GetEnumerator start.
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return new (System.Collections.Generic.SortedList$2.SortedListValueEnumerator(TKey,TValue))(this._dict);
             },
-            //System.Collections.Generic.SortedList$2.ValueList.System$Collections$IEnumerable$GetEnumerator end.
+            //System.Collections.Generic.SortedList$2+ValueList.System$Collections$IEnumerable$GetEnumerator end.
 
-            //System.Collections.Generic.SortedList$2.ValueList.indexOf start.
+            //System.Collections.Generic.SortedList$2+ValueList.indexOf start.
             indexOf: function (value) {
                 return System.Array.indexOfT(this._dict.values, value, 0, this._dict.Count);
             },
-            //System.Collections.Generic.SortedList$2.ValueList.indexOf end.
+            //System.Collections.Generic.SortedList$2+ValueList.indexOf end.
 
-            //System.Collections.Generic.SortedList$2.ValueList.remove start.
+            //System.Collections.Generic.SortedList$2+ValueList.remove start.
             remove: function (value) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
                 return false;
             },
-            //System.Collections.Generic.SortedList$2.ValueList.remove end.
+            //System.Collections.Generic.SortedList$2+ValueList.remove end.
 
-            //System.Collections.Generic.SortedList$2.ValueList.removeAt start.
+            //System.Collections.Generic.SortedList$2+ValueList.removeAt start.
             removeAt: function (index) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
             },
-            //System.Collections.Generic.SortedList$2.ValueList.removeAt end.
+            //System.Collections.Generic.SortedList$2+ValueList.removeAt end.
 
 
         }
     }; });
-    //System.Collections.Generic.SortedList$2.ValueList end.
+    //System.Collections.Generic.SortedList$2+ValueList end.
 
     // @source SortedSet.js
 
@@ -18804,7 +18804,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
     // @source ElementCount.js
 
-    //System.Collections.Generic.SortedSet$1.ElementCount start.
+    //System.Collections.Generic.SortedSet$1+ElementCount start.
     Bridge.define("System.Collections.Generic.SortedSet$1.ElementCount", function (T) { return {
         $kind: "nested struct",
         statics: {
@@ -18840,11 +18840,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
-    //System.Collections.Generic.SortedSet$1.ElementCount end.
+    //System.Collections.Generic.SortedSet$1+ElementCount end.
 
     // @source Enumerator.js
 
-    //System.Collections.Generic.SortedSet$1.Enumerator start.
+    //System.Collections.Generic.SortedSet$1+Enumerator start.
     Bridge.define("System.Collections.Generic.SortedSet$1.Enumerator", function (T) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(T),System.Collections.IEnumerator],
         $kind: "nested struct",
@@ -18929,7 +18929,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.Collections.Generic.SortedSet$1.Enumerator.Intialize start.
+            //System.Collections.Generic.SortedSet$1+Enumerator.Intialize start.
             Intialize: function () {
 
                 this.current = null;
@@ -18948,9 +18948,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
-            //System.Collections.Generic.SortedSet$1.Enumerator.Intialize end.
+            //System.Collections.Generic.SortedSet$1+Enumerator.Intialize end.
 
-            //System.Collections.Generic.SortedSet$1.Enumerator.moveNext start.
+            //System.Collections.Generic.SortedSet$1+Enumerator.moveNext start.
             moveNext: function () {
 
                 this.tree.VersionCheck();
@@ -18981,13 +18981,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return true;
             },
-            //System.Collections.Generic.SortedSet$1.Enumerator.moveNext end.
+            //System.Collections.Generic.SortedSet$1+Enumerator.moveNext end.
 
-            //System.Collections.Generic.SortedSet$1.Enumerator.Dispose start.
+            //System.Collections.Generic.SortedSet$1+Enumerator.Dispose start.
             Dispose: function () { },
-            //System.Collections.Generic.SortedSet$1.Enumerator.Dispose end.
+            //System.Collections.Generic.SortedSet$1+Enumerator.Dispose end.
 
-            //System.Collections.Generic.SortedSet$1.Enumerator.Reset start.
+            //System.Collections.Generic.SortedSet$1+Enumerator.Reset start.
             Reset: function () {
                 if (this.version !== this.tree.version) {
                     System.ThrowHelper.ThrowInvalidOperationException(System.ExceptionResource.InvalidOperation_EnumFailedVersion);
@@ -18996,13 +18996,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.stack.Clear();
                 this.Intialize();
             },
-            //System.Collections.Generic.SortedSet$1.Enumerator.Reset end.
+            //System.Collections.Generic.SortedSet$1+Enumerator.Reset end.
 
-            //System.Collections.Generic.SortedSet$1.Enumerator.System$Collections$IEnumerator$reset start.
+            //System.Collections.Generic.SortedSet$1+Enumerator.System$Collections$IEnumerator$reset start.
             System$Collections$IEnumerator$reset: function () {
                 this.Reset();
             },
-            //System.Collections.Generic.SortedSet$1.Enumerator.System$Collections$IEnumerator$reset end.
+            //System.Collections.Generic.SortedSet$1+Enumerator.System$Collections$IEnumerator$reset end.
 
             getHashCode: function () {
                 var h = Bridge.addHash([3788985113, this.tree, this.version, this.stack, this.current, this.reverse]);
@@ -19025,11 +19025,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
-    //System.Collections.Generic.SortedSet$1.Enumerator end.
+    //System.Collections.Generic.SortedSet$1+Enumerator end.
 
     // @source Node.js
 
-    //System.Collections.Generic.SortedSet$1.Node start.
+    //System.Collections.Generic.SortedSet$1+Node start.
     Bridge.define("System.Collections.Generic.SortedSet$1.Node", function (T) { return {
         $kind: "nested class",
         fields: {
@@ -19051,11 +19051,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
-    //System.Collections.Generic.SortedSet$1.Node end.
+    //System.Collections.Generic.SortedSet$1+Node end.
 
     // @source TreeSubSet.js
 
-    //System.Collections.Generic.SortedSet$1.TreeSubSet start.
+    //System.Collections.Generic.SortedSet$1+TreeSubSet start.
     Bridge.define("System.Collections.Generic.SortedSet$1.TreeSubSet", function (T) { return {
         inherits: [System.Collections.Generic.SortedSet$1(T)],
         $kind: "nested class",
@@ -19091,7 +19091,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.AddIfNotPresent start.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.AddIfNotPresent start.
             AddIfNotPresent: function (item) {
 
                 if (!this.IsWithinRange(item)) {
@@ -19103,16 +19103,16 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return ret;
             },
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.AddIfNotPresent end.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.AddIfNotPresent end.
 
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.contains start.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.contains start.
             contains: function (item) {
                 this.VersionCheck();
                 return System.Collections.Generic.SortedSet$1(T).prototype.contains.call(this, item);
             },
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.contains end.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.contains end.
 
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.DoRemove start.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.DoRemove start.
             DoRemove: function (item) {
 
                 if (!this.IsWithinRange(item)) {
@@ -19123,9 +19123,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.VersionCheck();
                 return ret;
             },
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.DoRemove end.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.DoRemove end.
 
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.clear start.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.clear start.
             clear: function () {
 
 
@@ -19146,9 +19146,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.count = 0;
                 this.version = this.underlying.version;
             },
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.clear end.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.clear end.
 
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.IsWithinRange start.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.IsWithinRange start.
             IsWithinRange: function (item) {
                 var $t, $t1;
 
@@ -19162,9 +19162,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return true;
             },
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.IsWithinRange end.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.IsWithinRange end.
 
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.InOrderTreeWalk$1 start.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.InOrderTreeWalk$1 start.
             InOrderTreeWalk$1: function (action, reverse) {
                 var $t, $t1;
                 this.VersionCheck();
@@ -19206,9 +19206,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return true;
             },
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.InOrderTreeWalk$1 end.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.InOrderTreeWalk$1 end.
 
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.BreadthFirstTreeWalk start.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.BreadthFirstTreeWalk start.
             BreadthFirstTreeWalk: function (action) {
                 var $t, $t1;
                 this.VersionCheck();
@@ -19237,9 +19237,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return true;
             },
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.BreadthFirstTreeWalk end.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.BreadthFirstTreeWalk end.
 
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.FindNode start.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.FindNode start.
             FindNode: function (item) {
 
                 if (!this.IsWithinRange(item)) {
@@ -19248,9 +19248,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.VersionCheck();
                 return System.Collections.Generic.SortedSet$1(T).prototype.FindNode.call(this, item);
             },
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.FindNode end.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.FindNode end.
 
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.InternalIndexOf start.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.InternalIndexOf start.
             InternalIndexOf: function (item) {
                 var $t, $t1;
                 var count = -1;
@@ -19270,15 +19270,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return -1;
             },
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.InternalIndexOf end.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.InternalIndexOf end.
 
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.VersionCheck start.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.VersionCheck start.
             VersionCheck: function () {
                 this.VersionCheckImpl();
             },
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.VersionCheck end.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.VersionCheck end.
 
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.VersionCheckImpl start.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.VersionCheckImpl start.
             VersionCheckImpl: function () {
                 if (this.version !== this.underlying.version) {
                     this.root = this.underlying.FindRange$1(this.min, this.max, this.lBoundActive, this.uBoundActive);
@@ -19287,9 +19287,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this.InOrderTreeWalk(Bridge.fn.bind(this, $asm.$.System.Collections.Generic.SortedSet$1.TreeSubSet.f1));
                 }
             },
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.VersionCheckImpl end.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.VersionCheckImpl end.
 
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.GetViewBetween start.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.GetViewBetween start.
             GetViewBetween: function (lowerValue, upperValue) {
                 var $t, $t1;
 
@@ -19302,9 +19302,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 var ret = Bridge.cast(this.underlying.GetViewBetween(lowerValue, upperValue), System.Collections.Generic.SortedSet$1.TreeSubSet(T));
                 return ret;
             },
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.GetViewBetween end.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.GetViewBetween end.
 
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.IntersectWithEnumerable start.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.IntersectWithEnumerable start.
             IntersectWithEnumerable: function (other) {
                 var $t;
 
@@ -19326,7 +19326,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.clear();
                 this.AddAllElements(toSave);
             },
-            //System.Collections.Generic.SortedSet$1.TreeSubSet.IntersectWithEnumerable end.
+            //System.Collections.Generic.SortedSet$1+TreeSubSet.IntersectWithEnumerable end.
 
 
         }
@@ -19340,7 +19340,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             return true;
         }
     });
-    //System.Collections.Generic.SortedSet$1.TreeSubSet end.
+    //System.Collections.Generic.SortedSet$1+TreeSubSet end.
 
     // @source LinkedList.js
 
@@ -19875,7 +19875,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
     // @source Enumerator.js
 
-    //System.Collections.Generic.LinkedList$1.Enumerator start.
+    //System.Collections.Generic.LinkedList$1+Enumerator start.
     Bridge.define("System.Collections.Generic.LinkedList$1.Enumerator", function (T) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(T),System.Collections.IEnumerator],
         $kind: "nested struct",
@@ -19940,7 +19940,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.Collections.Generic.LinkedList$1.Enumerator.moveNext start.
+            //System.Collections.Generic.LinkedList$1+Enumerator.moveNext start.
             moveNext: function () {
                 if (this.version !== this.list.version) {
                     throw new System.InvalidOperationException.ctor();
@@ -19959,9 +19959,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return true;
             },
-            //System.Collections.Generic.LinkedList$1.Enumerator.moveNext end.
+            //System.Collections.Generic.LinkedList$1+Enumerator.moveNext end.
 
-            //System.Collections.Generic.LinkedList$1.Enumerator.System$Collections$IEnumerator$reset start.
+            //System.Collections.Generic.LinkedList$1+Enumerator.System$Collections$IEnumerator$reset start.
             System$Collections$IEnumerator$reset: function () {
                 if (this.version !== this.list.version) {
                     throw new System.InvalidOperationException.ctor();
@@ -19971,11 +19971,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.node = this.list.head;
                 this.index = 0;
             },
-            //System.Collections.Generic.LinkedList$1.Enumerator.System$Collections$IEnumerator$reset end.
+            //System.Collections.Generic.LinkedList$1+Enumerator.System$Collections$IEnumerator$reset end.
 
-            //System.Collections.Generic.LinkedList$1.Enumerator.Dispose start.
+            //System.Collections.Generic.LinkedList$1+Enumerator.Dispose start.
             Dispose: function () { },
-            //System.Collections.Generic.LinkedList$1.Enumerator.Dispose end.
+            //System.Collections.Generic.LinkedList$1+Enumerator.Dispose end.
 
             getHashCode: function () {
                 var h = Bridge.addHash([3788985113, this.list, this.node, this.version, this.current, this.index]);
@@ -19998,7 +19998,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
-    //System.Collections.Generic.LinkedList$1.Enumerator end.
+    //System.Collections.Generic.LinkedList$1+Enumerator end.
 
     // @source TreeRotation.js
 
@@ -20756,7 +20756,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
     // @source Entry.js
 
-    //System.Collections.Generic.Dictionary$2.Entry start.
+    //System.Collections.Generic.Dictionary$2+Entry start.
     Bridge.define("System.Collections.Generic.Dictionary$2.Entry", function (TKey, TValue) { return {
         $kind: "nested struct",
         statics: {
@@ -20796,11 +20796,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
-    //System.Collections.Generic.Dictionary$2.Entry end.
+    //System.Collections.Generic.Dictionary$2+Entry end.
 
     // @source Enumerator.js
 
-    //System.Collections.Generic.Dictionary$2.Enumerator start.
+    //System.Collections.Generic.Dictionary$2+Enumerator start.
     Bridge.define("System.Collections.Generic.Dictionary$2.Enumerator", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(System.Collections.Generic.KeyValuePair$2(TKey,TValue)),System.Collections.IDictionaryEnumerator],
         $kind: "nested struct",
@@ -20895,7 +20895,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.Collections.Generic.Dictionary$2.Enumerator.moveNext start.
+            //System.Collections.Generic.Dictionary$2+Enumerator.moveNext start.
             moveNext: function () {
                 var $t, $t1, $t2;
                 if (this.version !== this.dictionary.version) {
@@ -20915,13 +20915,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.current = new (System.Collections.Generic.KeyValuePair$2(TKey,TValue)).ctor();
                 return false;
             },
-            //System.Collections.Generic.Dictionary$2.Enumerator.moveNext end.
+            //System.Collections.Generic.Dictionary$2+Enumerator.moveNext end.
 
-            //System.Collections.Generic.Dictionary$2.Enumerator.Dispose start.
+            //System.Collections.Generic.Dictionary$2+Enumerator.Dispose start.
             Dispose: function () { },
-            //System.Collections.Generic.Dictionary$2.Enumerator.Dispose end.
+            //System.Collections.Generic.Dictionary$2+Enumerator.Dispose end.
 
-            //System.Collections.Generic.Dictionary$2.Enumerator.System$Collections$IEnumerator$reset start.
+            //System.Collections.Generic.Dictionary$2+Enumerator.System$Collections$IEnumerator$reset start.
             System$Collections$IEnumerator$reset: function () {
                 if (this.version !== this.dictionary.version) {
                     System.ThrowHelper.ThrowInvalidOperationException(System.ExceptionResource.InvalidOperation_EnumFailedVersion);
@@ -20930,7 +20930,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.index = 0;
                 this.current = new (System.Collections.Generic.KeyValuePair$2(TKey,TValue)).ctor();
             },
-            //System.Collections.Generic.Dictionary$2.Enumerator.System$Collections$IEnumerator$reset end.
+            //System.Collections.Generic.Dictionary$2+Enumerator.System$Collections$IEnumerator$reset end.
 
             getHashCode: function () {
                 var h = Bridge.addHash([3788985113, this.dictionary, this.version, this.index, this.current, this.getEnumeratorRetType]);
@@ -20953,11 +20953,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
-    //System.Collections.Generic.Dictionary$2.Enumerator end.
+    //System.Collections.Generic.Dictionary$2+Enumerator end.
 
     // @source KeyCollection.js
 
-    //System.Collections.Generic.Dictionary$2.KeyCollection start.
+    //System.Collections.Generic.Dictionary$2+KeyCollection start.
     Bridge.define("System.Collections.Generic.Dictionary$2.KeyCollection", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.ICollection$1(TKey),System.Collections.ICollection,System.Collections.Generic.IReadOnlyCollection$1(TKey)],
         $kind: "nested class",
@@ -21008,25 +21008,25 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.Collections.Generic.Dictionary$2.KeyCollection.GetEnumerator start.
+            //System.Collections.Generic.Dictionary$2+KeyCollection.GetEnumerator start.
             GetEnumerator: function () {
                 return new (System.Collections.Generic.Dictionary$2.KeyCollection.Enumerator(TKey,TValue)).$ctor1(this.dictionary);
             },
-            //System.Collections.Generic.Dictionary$2.KeyCollection.GetEnumerator end.
+            //System.Collections.Generic.Dictionary$2+KeyCollection.GetEnumerator end.
 
-            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$Generic$IEnumerable$1$GetEnumerator start.
+            //System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$Generic$IEnumerable$1$GetEnumerator start.
             System$Collections$Generic$IEnumerable$1$GetEnumerator: function () {
                 return new (System.Collections.Generic.Dictionary$2.KeyCollection.Enumerator(TKey,TValue)).$ctor1(this.dictionary).$clone();
             },
-            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$Generic$IEnumerable$1$GetEnumerator end.
+            //System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$Generic$IEnumerable$1$GetEnumerator end.
 
-            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$IEnumerable$GetEnumerator start.
+            //System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$IEnumerable$GetEnumerator start.
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return new (System.Collections.Generic.Dictionary$2.KeyCollection.Enumerator(TKey,TValue)).$ctor1(this.dictionary).$clone();
             },
-            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$IEnumerable$GetEnumerator end.
+            //System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$IEnumerable$GetEnumerator end.
 
-            //System.Collections.Generic.Dictionary$2.KeyCollection.copyTo start.
+            //System.Collections.Generic.Dictionary$2+KeyCollection.copyTo start.
             copyTo: function (array, index) {
                 if (array == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.array);
@@ -21048,9 +21048,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
-            //System.Collections.Generic.Dictionary$2.KeyCollection.copyTo end.
+            //System.Collections.Generic.Dictionary$2+KeyCollection.copyTo end.
 
-            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$ICollection$copyTo start.
+            //System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$ICollection$copyTo start.
             System$Collections$ICollection$copyTo: function (array, index) {
                 if (array == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.array);
@@ -21099,41 +21099,41 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
-            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$ICollection$copyTo end.
+            //System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$ICollection$copyTo end.
 
-            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$Generic$ICollection$1$add start.
+            //System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$add start.
             System$Collections$Generic$ICollection$1$add: function (item) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_KeyCollectionSet);
             },
-            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$Generic$ICollection$1$add end.
+            //System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$add end.
 
-            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$Generic$ICollection$1$clear start.
+            //System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$clear start.
             System$Collections$Generic$ICollection$1$clear: function () {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_KeyCollectionSet);
             },
-            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$Generic$ICollection$1$clear end.
+            //System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$clear end.
 
-            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$Generic$ICollection$1$contains start.
+            //System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$contains start.
             System$Collections$Generic$ICollection$1$contains: function (item) {
                 return this.dictionary.containsKey(item);
             },
-            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$Generic$ICollection$1$contains end.
+            //System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$contains end.
 
-            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$Generic$ICollection$1$remove start.
+            //System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$remove start.
             System$Collections$Generic$ICollection$1$remove: function (item) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_KeyCollectionSet);
                 return false;
             },
-            //System.Collections.Generic.Dictionary$2.KeyCollection.System$Collections$Generic$ICollection$1$remove end.
+            //System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$remove end.
 
 
         }
     }; });
-    //System.Collections.Generic.Dictionary$2.KeyCollection end.
+    //System.Collections.Generic.Dictionary$2+KeyCollection end.
 
     // @source Enumerator.js
 
-    //System.Collections.Generic.Dictionary$2.KeyCollection.Enumerator start.
+    //System.Collections.Generic.Dictionary$2+KeyCollection+Enumerator start.
     Bridge.define("System.Collections.Generic.Dictionary$2.KeyCollection.Enumerator", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(TKey),System.Collections.IEnumerator],
         $kind: "nested struct",
@@ -21182,11 +21182,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.Collections.Generic.Dictionary$2.KeyCollection.Enumerator.Dispose start.
+            //System.Collections.Generic.Dictionary$2+KeyCollection+Enumerator.Dispose start.
             Dispose: function () { },
-            //System.Collections.Generic.Dictionary$2.KeyCollection.Enumerator.Dispose end.
+            //System.Collections.Generic.Dictionary$2+KeyCollection+Enumerator.Dispose end.
 
-            //System.Collections.Generic.Dictionary$2.KeyCollection.Enumerator.moveNext start.
+            //System.Collections.Generic.Dictionary$2+KeyCollection+Enumerator.moveNext start.
             moveNext: function () {
                 var $t, $t1;
                 if (this.version !== this.dictionary.version) {
@@ -21206,9 +21206,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.currentKey = Bridge.getDefaultValue(TKey);
                 return false;
             },
-            //System.Collections.Generic.Dictionary$2.KeyCollection.Enumerator.moveNext end.
+            //System.Collections.Generic.Dictionary$2+KeyCollection+Enumerator.moveNext end.
 
-            //System.Collections.Generic.Dictionary$2.KeyCollection.Enumerator.System$Collections$IEnumerator$reset start.
+            //System.Collections.Generic.Dictionary$2+KeyCollection+Enumerator.System$Collections$IEnumerator$reset start.
             System$Collections$IEnumerator$reset: function () {
                 if (this.version !== this.dictionary.version) {
                     System.ThrowHelper.ThrowInvalidOperationException(System.ExceptionResource.InvalidOperation_EnumFailedVersion);
@@ -21217,7 +21217,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.index = 0;
                 this.currentKey = Bridge.getDefaultValue(TKey);
             },
-            //System.Collections.Generic.Dictionary$2.KeyCollection.Enumerator.System$Collections$IEnumerator$reset end.
+            //System.Collections.Generic.Dictionary$2+KeyCollection+Enumerator.System$Collections$IEnumerator$reset end.
 
             getHashCode: function () {
                 var h = Bridge.addHash([3788985113, this.dictionary, this.index, this.version, this.currentKey]);
@@ -21239,11 +21239,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
-    //System.Collections.Generic.Dictionary$2.KeyCollection.Enumerator end.
+    //System.Collections.Generic.Dictionary$2+KeyCollection+Enumerator end.
 
     // @source ValueCollection.js
 
-    //System.Collections.Generic.Dictionary$2.ValueCollection start.
+    //System.Collections.Generic.Dictionary$2+ValueCollection start.
     Bridge.define("System.Collections.Generic.Dictionary$2.ValueCollection", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.ICollection$1(TValue),System.Collections.ICollection,System.Collections.Generic.IReadOnlyCollection$1(TValue)],
         $kind: "nested class",
@@ -21294,25 +21294,25 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.Collections.Generic.Dictionary$2.ValueCollection.GetEnumerator start.
+            //System.Collections.Generic.Dictionary$2+ValueCollection.GetEnumerator start.
             GetEnumerator: function () {
                 return new (System.Collections.Generic.Dictionary$2.ValueCollection.Enumerator(TKey,TValue)).$ctor1(this.dictionary);
             },
-            //System.Collections.Generic.Dictionary$2.ValueCollection.GetEnumerator end.
+            //System.Collections.Generic.Dictionary$2+ValueCollection.GetEnumerator end.
 
-            //System.Collections.Generic.Dictionary$2.ValueCollection.System$Collections$Generic$IEnumerable$1$GetEnumerator start.
+            //System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$Generic$IEnumerable$1$GetEnumerator start.
             System$Collections$Generic$IEnumerable$1$GetEnumerator: function () {
                 return new (System.Collections.Generic.Dictionary$2.ValueCollection.Enumerator(TKey,TValue)).$ctor1(this.dictionary).$clone();
             },
-            //System.Collections.Generic.Dictionary$2.ValueCollection.System$Collections$Generic$IEnumerable$1$GetEnumerator end.
+            //System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$Generic$IEnumerable$1$GetEnumerator end.
 
-            //System.Collections.Generic.Dictionary$2.ValueCollection.System$Collections$IEnumerable$GetEnumerator start.
+            //System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$IEnumerable$GetEnumerator start.
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return new (System.Collections.Generic.Dictionary$2.ValueCollection.Enumerator(TKey,TValue)).$ctor1(this.dictionary).$clone();
             },
-            //System.Collections.Generic.Dictionary$2.ValueCollection.System$Collections$IEnumerable$GetEnumerator end.
+            //System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$IEnumerable$GetEnumerator end.
 
-            //System.Collections.Generic.Dictionary$2.ValueCollection.copyTo start.
+            //System.Collections.Generic.Dictionary$2+ValueCollection.copyTo start.
             copyTo: function (array, index) {
                 if (array == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.array);
@@ -21334,9 +21334,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
-            //System.Collections.Generic.Dictionary$2.ValueCollection.copyTo end.
+            //System.Collections.Generic.Dictionary$2+ValueCollection.copyTo end.
 
-            //System.Collections.Generic.Dictionary$2.ValueCollection.System$Collections$ICollection$copyTo start.
+            //System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$ICollection$copyTo start.
             System$Collections$ICollection$copyTo: function (array, index) {
                 if (array == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.array);
@@ -21385,41 +21385,41 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
-            //System.Collections.Generic.Dictionary$2.ValueCollection.System$Collections$ICollection$copyTo end.
+            //System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$ICollection$copyTo end.
 
-            //System.Collections.Generic.Dictionary$2.ValueCollection.System$Collections$Generic$ICollection$1$add start.
+            //System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$add start.
             System$Collections$Generic$ICollection$1$add: function (item) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_ValueCollectionSet);
             },
-            //System.Collections.Generic.Dictionary$2.ValueCollection.System$Collections$Generic$ICollection$1$add end.
+            //System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$add end.
 
-            //System.Collections.Generic.Dictionary$2.ValueCollection.System$Collections$Generic$ICollection$1$remove start.
+            //System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$remove start.
             System$Collections$Generic$ICollection$1$remove: function (item) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_ValueCollectionSet);
                 return false;
             },
-            //System.Collections.Generic.Dictionary$2.ValueCollection.System$Collections$Generic$ICollection$1$remove end.
+            //System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$remove end.
 
-            //System.Collections.Generic.Dictionary$2.ValueCollection.System$Collections$Generic$ICollection$1$clear start.
+            //System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$clear start.
             System$Collections$Generic$ICollection$1$clear: function () {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_ValueCollectionSet);
             },
-            //System.Collections.Generic.Dictionary$2.ValueCollection.System$Collections$Generic$ICollection$1$clear end.
+            //System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$clear end.
 
-            //System.Collections.Generic.Dictionary$2.ValueCollection.System$Collections$Generic$ICollection$1$contains start.
+            //System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$contains start.
             System$Collections$Generic$ICollection$1$contains: function (item) {
                 return this.dictionary.ContainsValue(item);
             },
-            //System.Collections.Generic.Dictionary$2.ValueCollection.System$Collections$Generic$ICollection$1$contains end.
+            //System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$contains end.
 
 
         }
     }; });
-    //System.Collections.Generic.Dictionary$2.ValueCollection end.
+    //System.Collections.Generic.Dictionary$2+ValueCollection end.
 
     // @source Enumerator.js
 
-    //System.Collections.Generic.Dictionary$2.ValueCollection.Enumerator start.
+    //System.Collections.Generic.Dictionary$2+ValueCollection+Enumerator start.
     Bridge.define("System.Collections.Generic.Dictionary$2.ValueCollection.Enumerator", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(TValue),System.Collections.IEnumerator],
         $kind: "nested struct",
@@ -21468,11 +21468,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.Collections.Generic.Dictionary$2.ValueCollection.Enumerator.Dispose start.
+            //System.Collections.Generic.Dictionary$2+ValueCollection+Enumerator.Dispose start.
             Dispose: function () { },
-            //System.Collections.Generic.Dictionary$2.ValueCollection.Enumerator.Dispose end.
+            //System.Collections.Generic.Dictionary$2+ValueCollection+Enumerator.Dispose end.
 
-            //System.Collections.Generic.Dictionary$2.ValueCollection.Enumerator.moveNext start.
+            //System.Collections.Generic.Dictionary$2+ValueCollection+Enumerator.moveNext start.
             moveNext: function () {
                 var $t, $t1;
                 if (this.version !== this.dictionary.version) {
@@ -21491,9 +21491,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.currentValue = Bridge.getDefaultValue(TValue);
                 return false;
             },
-            //System.Collections.Generic.Dictionary$2.ValueCollection.Enumerator.moveNext end.
+            //System.Collections.Generic.Dictionary$2+ValueCollection+Enumerator.moveNext end.
 
-            //System.Collections.Generic.Dictionary$2.ValueCollection.Enumerator.System$Collections$IEnumerator$reset start.
+            //System.Collections.Generic.Dictionary$2+ValueCollection+Enumerator.System$Collections$IEnumerator$reset start.
             System$Collections$IEnumerator$reset: function () {
                 if (this.version !== this.dictionary.version) {
                     System.ThrowHelper.ThrowInvalidOperationException(System.ExceptionResource.InvalidOperation_EnumFailedVersion);
@@ -21501,7 +21501,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.index = 0;
                 this.currentValue = Bridge.getDefaultValue(TValue);
             },
-            //System.Collections.Generic.Dictionary$2.ValueCollection.Enumerator.System$Collections$IEnumerator$reset end.
+            //System.Collections.Generic.Dictionary$2+ValueCollection+Enumerator.System$Collections$IEnumerator$reset end.
 
             getHashCode: function () {
                 var h = Bridge.addHash([3788985113, this.dictionary, this.index, this.version, this.currentValue]);
@@ -21523,7 +21523,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
-    //System.Collections.Generic.Dictionary$2.ValueCollection.Enumerator end.
+    //System.Collections.Generic.Dictionary$2+ValueCollection+Enumerator end.
 
     // @source ReadOnlyDictionary.js
 
@@ -21871,7 +21871,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
     // @source DictionaryEnumerator.js
 
-    //System.Collections.ObjectModel.ReadOnlyDictionary$2.DictionaryEnumerator start.
+    //System.Collections.ObjectModel.ReadOnlyDictionary$2+DictionaryEnumerator start.
     Bridge.define("System.Collections.ObjectModel.ReadOnlyDictionary$2.DictionaryEnumerator", function (TKey, TValue) { return {
         inherits: [System.Collections.IDictionaryEnumerator],
         $kind: "nested struct",
@@ -21925,17 +21925,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.DictionaryEnumerator.moveNext start.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+DictionaryEnumerator.moveNext start.
             moveNext: function () {
                 return this._enumerator.System$Collections$IEnumerator$moveNext();
             },
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.DictionaryEnumerator.moveNext end.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+DictionaryEnumerator.moveNext end.
 
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.DictionaryEnumerator.reset start.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+DictionaryEnumerator.reset start.
             reset: function () {
                 this._enumerator.System$Collections$IEnumerator$reset();
             },
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.DictionaryEnumerator.reset end.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+DictionaryEnumerator.reset end.
 
             getHashCode: function () {
                 var h = Bridge.addHash([9276503029, this._dictionary, this._enumerator]);
@@ -21955,11 +21955,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
-    //System.Collections.ObjectModel.ReadOnlyDictionary$2.DictionaryEnumerator end.
+    //System.Collections.ObjectModel.ReadOnlyDictionary$2+DictionaryEnumerator end.
 
     // @source KeyCollection.js
 
-    //System.Collections.ObjectModel.ReadOnlyDictionary$2.KeyCollection start.
+    //System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection start.
     Bridge.define("System.Collections.ObjectModel.ReadOnlyDictionary$2.KeyCollection", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.ICollection$1(TKey),System.Collections.ICollection,System.Collections.Generic.IReadOnlyCollection$1(TKey)],
         $kind: "nested class",
@@ -22010,62 +22010,62 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.KeyCollection.System$Collections$Generic$ICollection$1$add start.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$add start.
             System$Collections$Generic$ICollection$1$add: function (item) {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.KeyCollection.System$Collections$Generic$ICollection$1$add end.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$add end.
 
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.KeyCollection.System$Collections$Generic$ICollection$1$clear start.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$clear start.
             System$Collections$Generic$ICollection$1$clear: function () {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.KeyCollection.System$Collections$Generic$ICollection$1$clear end.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$clear end.
 
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.KeyCollection.System$Collections$Generic$ICollection$1$contains start.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$contains start.
             System$Collections$Generic$ICollection$1$contains: function (item) {
                 return System.Array.contains(this._collection, item, TKey);
             },
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.KeyCollection.System$Collections$Generic$ICollection$1$contains end.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$contains end.
 
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.KeyCollection.copyTo start.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.copyTo start.
             copyTo: function (array, arrayIndex) {
                 System.Array.copyTo(this._collection, array, arrayIndex, TKey);
             },
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.KeyCollection.copyTo end.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.copyTo end.
 
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.KeyCollection.System$Collections$ICollection$copyTo start.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.System$Collections$ICollection$copyTo start.
             System$Collections$ICollection$copyTo: function (array, index) {
                 System.Collections.ObjectModel.ReadOnlyDictionaryHelpers.CopyToNonGenericICollectionHelper(TKey, this._collection, array, index);
             },
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.KeyCollection.System$Collections$ICollection$copyTo end.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.System$Collections$ICollection$copyTo end.
 
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.KeyCollection.System$Collections$Generic$ICollection$1$remove start.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$remove start.
             System$Collections$Generic$ICollection$1$remove: function (item) {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.KeyCollection.System$Collections$Generic$ICollection$1$remove end.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$remove end.
 
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.KeyCollection.GetEnumerator start.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.GetEnumerator start.
             GetEnumerator: function () {
                 return Bridge.getEnumerator(this._collection, TKey);
             },
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.KeyCollection.GetEnumerator end.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.GetEnumerator end.
 
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.KeyCollection.System$Collections$IEnumerable$GetEnumerator start.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.System$Collections$IEnumerable$GetEnumerator start.
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return Bridge.getEnumerator(Bridge.cast(this._collection, System.Collections.IEnumerable));
             },
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.KeyCollection.System$Collections$IEnumerable$GetEnumerator end.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.System$Collections$IEnumerable$GetEnumerator end.
 
 
         }
     }; });
-    //System.Collections.ObjectModel.ReadOnlyDictionary$2.KeyCollection end.
+    //System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection end.
 
     // @source ValueCollection.js
 
-    //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection start.
+    //System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection start.
     Bridge.define("System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.ICollection$1(TValue),System.Collections.ICollection,System.Collections.Generic.IReadOnlyCollection$1(TValue)],
         $kind: "nested class",
@@ -22116,58 +22116,58 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.System$Collections$Generic$ICollection$1$add start.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$add start.
             System$Collections$Generic$ICollection$1$add: function (item) {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.System$Collections$Generic$ICollection$1$add end.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$add end.
 
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.System$Collections$Generic$ICollection$1$clear start.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$clear start.
             System$Collections$Generic$ICollection$1$clear: function () {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.System$Collections$Generic$ICollection$1$clear end.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$clear end.
 
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.System$Collections$Generic$ICollection$1$contains start.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$contains start.
             System$Collections$Generic$ICollection$1$contains: function (item) {
                 return System.Array.contains(this._collection, item, TValue);
             },
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.System$Collections$Generic$ICollection$1$contains end.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$contains end.
 
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.copyTo start.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.copyTo start.
             copyTo: function (array, arrayIndex) {
                 System.Array.copyTo(this._collection, array, arrayIndex, TValue);
             },
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.copyTo end.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.copyTo end.
 
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.System$Collections$ICollection$copyTo start.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.System$Collections$ICollection$copyTo start.
             System$Collections$ICollection$copyTo: function (array, index) {
                 System.Collections.ObjectModel.ReadOnlyDictionaryHelpers.CopyToNonGenericICollectionHelper(TValue, this._collection, array, index);
             },
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.System$Collections$ICollection$copyTo end.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.System$Collections$ICollection$copyTo end.
 
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.System$Collections$Generic$ICollection$1$remove start.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$remove start.
             System$Collections$Generic$ICollection$1$remove: function (item) {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.System$Collections$Generic$ICollection$1$remove end.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$remove end.
 
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.GetEnumerator start.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.GetEnumerator start.
             GetEnumerator: function () {
                 return Bridge.getEnumerator(this._collection, TValue);
             },
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.GetEnumerator end.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.GetEnumerator end.
 
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.System$Collections$IEnumerable$GetEnumerator start.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.System$Collections$IEnumerable$GetEnumerator start.
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return Bridge.getEnumerator(Bridge.cast(this._collection, System.Collections.IEnumerable));
             },
-            //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection.System$Collections$IEnumerable$GetEnumerator end.
+            //System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.System$Collections$IEnumerable$GetEnumerator end.
 
 
         }
     }; });
-    //System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection end.
+    //System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection end.
 
     // @source ReadOnlyDictionaryHelpers.js
 
@@ -38014,7 +38014,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
     // @source BitArrayEnumeratorSimple.js
 
-    //System.Collections.BitArray.BitArrayEnumeratorSimple start.
+    //System.Collections.BitArray+BitArrayEnumeratorSimple start.
     Bridge.define("System.Collections.BitArray.BitArrayEnumeratorSimple", {
         inherits: [System.Collections.IEnumerator],
         $kind: "nested class",
@@ -38051,7 +38051,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.Collections.BitArray.BitArrayEnumeratorSimple.moveNext start.
+            //System.Collections.BitArray+BitArrayEnumeratorSimple.moveNext start.
             moveNext: function () {
                 if (this.version !== this.bitarray._version) {
                     throw new System.InvalidOperationException.$ctor1("Collection was modified; enumeration operation may not execute.");
@@ -38066,21 +38066,21 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return false;
             },
-            //System.Collections.BitArray.BitArrayEnumeratorSimple.moveNext end.
+            //System.Collections.BitArray+BitArrayEnumeratorSimple.moveNext end.
 
-            //System.Collections.BitArray.BitArrayEnumeratorSimple.reset start.
+            //System.Collections.BitArray+BitArrayEnumeratorSimple.reset start.
             reset: function () {
                 if (this.version !== this.bitarray._version) {
                     throw new System.InvalidOperationException.$ctor1("Collection was modified; enumeration operation may not execute.");
                 }
                 this.index = -1;
             },
-            //System.Collections.BitArray.BitArrayEnumeratorSimple.reset end.
+            //System.Collections.BitArray+BitArrayEnumeratorSimple.reset end.
 
 
         }
     });
-    //System.Collections.BitArray.BitArrayEnumeratorSimple end.
+    //System.Collections.BitArray+BitArrayEnumeratorSimple end.
 
     // @source BitHelper.js
 
@@ -39215,7 +39215,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
     // @source ElementCount.js
 
-    //System.Collections.Generic.HashSet$1.ElementCount start.
+    //System.Collections.Generic.HashSet$1+ElementCount start.
     Bridge.define("System.Collections.Generic.HashSet$1.ElementCount", function (T) { return {
         $kind: "nested struct",
         statics: {
@@ -39251,11 +39251,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
-    //System.Collections.Generic.HashSet$1.ElementCount end.
+    //System.Collections.Generic.HashSet$1+ElementCount end.
 
     // @source Enumerator.js
 
-    //System.Collections.Generic.HashSet$1.Enumerator start.
+    //System.Collections.Generic.HashSet$1+Enumerator start.
     Bridge.define("System.Collections.Generic.HashSet$1.Enumerator", function (T) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(T)],
         $kind: "nested struct",
@@ -39303,11 +39303,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.Collections.Generic.HashSet$1.Enumerator.Dispose start.
+            //System.Collections.Generic.HashSet$1+Enumerator.Dispose start.
             Dispose: function () { },
-            //System.Collections.Generic.HashSet$1.Enumerator.Dispose end.
+            //System.Collections.Generic.HashSet$1+Enumerator.Dispose end.
 
-            //System.Collections.Generic.HashSet$1.Enumerator.moveNext start.
+            //System.Collections.Generic.HashSet$1+Enumerator.moveNext start.
             moveNext: function () {
                 var $t, $t1;
                 if (this._version !== this._set._version) {
@@ -39325,9 +39325,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._current = Bridge.getDefaultValue(T);
                 return false;
             },
-            //System.Collections.Generic.HashSet$1.Enumerator.moveNext end.
+            //System.Collections.Generic.HashSet$1+Enumerator.moveNext end.
 
-            //System.Collections.Generic.HashSet$1.Enumerator.System$Collections$IEnumerator$reset start.
+            //System.Collections.Generic.HashSet$1+Enumerator.System$Collections$IEnumerator$reset start.
             System$Collections$IEnumerator$reset: function () {
                 if (this._version !== this._set._version) {
                     throw new System.InvalidOperationException.$ctor1("Collection was modified; enumeration operation may not execute.");
@@ -39335,7 +39335,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._index = 0;
                 this._current = Bridge.getDefaultValue(T);
             },
-            //System.Collections.Generic.HashSet$1.Enumerator.System$Collections$IEnumerator$reset end.
+            //System.Collections.Generic.HashSet$1+Enumerator.System$Collections$IEnumerator$reset end.
 
             getHashCode: function () {
                 var h = Bridge.addHash([3788985113, this._set, this._index, this._version, this._current]);
@@ -39357,11 +39357,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
-    //System.Collections.Generic.HashSet$1.Enumerator end.
+    //System.Collections.Generic.HashSet$1+Enumerator end.
 
     // @source Slot.js
 
-    //System.Collections.Generic.HashSet$1.Slot start.
+    //System.Collections.Generic.HashSet$1+Slot start.
     Bridge.define("System.Collections.Generic.HashSet$1.Slot", function (T) { return {
         $kind: "nested struct",
         statics: {
@@ -39399,11 +39399,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
-    //System.Collections.Generic.HashSet$1.Slot end.
+    //System.Collections.Generic.HashSet$1+Slot end.
 
     // @source Enumerator.js
 
-    //System.Collections.Generic.List$1.Enumerator start.
+    //System.Collections.Generic.List$1+Enumerator start.
     Bridge.define("System.Collections.Generic.List$1.Enumerator", function (T) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(T),System.Collections.IEnumerator],
         $kind: "nested struct",
@@ -39451,11 +39451,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.Collections.Generic.List$1.Enumerator.Dispose start.
+            //System.Collections.Generic.List$1+Enumerator.Dispose start.
             Dispose: function () { },
-            //System.Collections.Generic.List$1.Enumerator.Dispose end.
+            //System.Collections.Generic.List$1+Enumerator.Dispose end.
 
-            //System.Collections.Generic.List$1.Enumerator.moveNext start.
+            //System.Collections.Generic.List$1+Enumerator.moveNext start.
             moveNext: function () {
 
                 var localList = this.list;
@@ -39467,9 +39467,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return this.MoveNextRare();
             },
-            //System.Collections.Generic.List$1.Enumerator.moveNext end.
+            //System.Collections.Generic.List$1+Enumerator.moveNext end.
 
-            //System.Collections.Generic.List$1.Enumerator.MoveNextRare start.
+            //System.Collections.Generic.List$1+Enumerator.MoveNextRare start.
             MoveNextRare: function () {
                 if (this.version !== this.list._version) {
                     throw new System.InvalidOperationException.ctor();
@@ -39479,9 +39479,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.current = Bridge.getDefaultValue(T);
                 return false;
             },
-            //System.Collections.Generic.List$1.Enumerator.MoveNextRare end.
+            //System.Collections.Generic.List$1+Enumerator.MoveNextRare end.
 
-            //System.Collections.Generic.List$1.Enumerator.System$Collections$IEnumerator$reset start.
+            //System.Collections.Generic.List$1+Enumerator.System$Collections$IEnumerator$reset start.
             System$Collections$IEnumerator$reset: function () {
                 if (this.version !== this.list._version) {
                     throw new System.InvalidOperationException.ctor();
@@ -39490,7 +39490,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.index = 0;
                 this.current = Bridge.getDefaultValue(T);
             },
-            //System.Collections.Generic.List$1.Enumerator.System$Collections$IEnumerator$reset end.
+            //System.Collections.Generic.List$1+Enumerator.System$Collections$IEnumerator$reset end.
 
             getHashCode: function () {
                 var h = Bridge.addHash([3788985113, this.list, this.index, this.version, this.current]);
@@ -39512,7 +39512,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
-    //System.Collections.Generic.List$1.Enumerator end.
+    //System.Collections.Generic.List$1+Enumerator end.
 
     // @source Queue.js
 
@@ -39906,7 +39906,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
     // @source Enumerator.js
 
-    //System.Collections.Generic.Queue$1.Enumerator start.
+    //System.Collections.Generic.Queue$1+Enumerator start.
     Bridge.define("System.Collections.Generic.Queue$1.Enumerator", function (T) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(T),System.Collections.IEnumerator],
         $kind: "nested struct",
@@ -39958,14 +39958,14 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.Collections.Generic.Queue$1.Enumerator.Dispose start.
+            //System.Collections.Generic.Queue$1+Enumerator.Dispose start.
             Dispose: function () {
                 this._index = -2;
                 this._currentElement = Bridge.getDefaultValue(T);
             },
-            //System.Collections.Generic.Queue$1.Enumerator.Dispose end.
+            //System.Collections.Generic.Queue$1+Enumerator.Dispose end.
 
-            //System.Collections.Generic.Queue$1.Enumerator.moveNext start.
+            //System.Collections.Generic.Queue$1+Enumerator.moveNext start.
             moveNext: function () {
                 if (this._version !== this._q._version) {
                     throw new System.InvalidOperationException.$ctor1("Collection was modified; enumeration operation may not execute.");
@@ -39986,9 +39986,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._currentElement = this._q.GetElement(this._index);
                 return true;
             },
-            //System.Collections.Generic.Queue$1.Enumerator.moveNext end.
+            //System.Collections.Generic.Queue$1+Enumerator.moveNext end.
 
-            //System.Collections.Generic.Queue$1.Enumerator.System$Collections$IEnumerator$reset start.
+            //System.Collections.Generic.Queue$1+Enumerator.System$Collections$IEnumerator$reset start.
             System$Collections$IEnumerator$reset: function () {
                 if (this._version !== this._q._version) {
                     throw new System.InvalidOperationException.$ctor1("Collection was modified; enumeration operation may not execute.");
@@ -39996,7 +39996,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._index = -1;
                 this._currentElement = Bridge.getDefaultValue(T);
             },
-            //System.Collections.Generic.Queue$1.Enumerator.System$Collections$IEnumerator$reset end.
+            //System.Collections.Generic.Queue$1+Enumerator.System$Collections$IEnumerator$reset end.
 
             getHashCode: function () {
                 var h = Bridge.addHash([3788985113, this._q, this._index, this._version, this._currentElement]);
@@ -40018,7 +40018,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
-    //System.Collections.Generic.Queue$1.Enumerator end.
+    //System.Collections.Generic.Queue$1+Enumerator end.
 
     // @source Stack.js
 
@@ -40270,7 +40270,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
     // @source Enumerator.js
 
-    //System.Collections.Generic.Stack$1.Enumerator start.
+    //System.Collections.Generic.Stack$1+Enumerator start.
     Bridge.define("System.Collections.Generic.Stack$1.Enumerator", function (T) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(T),System.Collections.IEnumerator],
         $kind: "nested struct",
@@ -40327,13 +40327,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.Collections.Generic.Stack$1.Enumerator.Dispose start.
+            //System.Collections.Generic.Stack$1+Enumerator.Dispose start.
             Dispose: function () {
                 this._index = -1;
             },
-            //System.Collections.Generic.Stack$1.Enumerator.Dispose end.
+            //System.Collections.Generic.Stack$1+Enumerator.Dispose end.
 
-            //System.Collections.Generic.Stack$1.Enumerator.moveNext start.
+            //System.Collections.Generic.Stack$1+Enumerator.moveNext start.
             moveNext: function () {
                 var $t, $t1;
                 var retval;
@@ -40360,9 +40360,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return retval;
             },
-            //System.Collections.Generic.Stack$1.Enumerator.moveNext end.
+            //System.Collections.Generic.Stack$1+Enumerator.moveNext end.
 
-            //System.Collections.Generic.Stack$1.Enumerator.System$Collections$IEnumerator$reset start.
+            //System.Collections.Generic.Stack$1+Enumerator.System$Collections$IEnumerator$reset start.
             System$Collections$IEnumerator$reset: function () {
                 if (this._version !== this._stack._version) {
                     throw new System.InvalidOperationException.$ctor1("Collection was modified; enumeration operation may not execute.");
@@ -40370,7 +40370,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._index = -2;
                 this._currentElement = Bridge.getDefaultValue(T);
             },
-            //System.Collections.Generic.Stack$1.Enumerator.System$Collections$IEnumerator$reset end.
+            //System.Collections.Generic.Stack$1+Enumerator.System$Collections$IEnumerator$reset end.
 
             getHashCode: function () {
                 var h = Bridge.addHash([3788985113, this._stack, this._index, this._version, this._currentElement]);
@@ -40392,7 +40392,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
-    //System.Collections.Generic.Stack$1.Enumerator end.
+    //System.Collections.Generic.Stack$1+Enumerator end.
 
     // @source HashHelpers.js
 
@@ -42960,7 +42960,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
     // @source ConcreteFormattableString.js
 
-    //System.Runtime.CompilerServices.FormattableStringFactory.ConcreteFormattableString start.
+    //System.Runtime.CompilerServices.FormattableStringFactory+ConcreteFormattableString start.
     Bridge.define("System.Runtime.CompilerServices.FormattableStringFactory.ConcreteFormattableString", {
         inherits: [System.FormattableString],
         $kind: "nested class",
@@ -42989,28 +42989,28 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.Runtime.CompilerServices.FormattableStringFactory.ConcreteFormattableString.GetArguments start.
+            //System.Runtime.CompilerServices.FormattableStringFactory+ConcreteFormattableString.GetArguments start.
             GetArguments: function () {
                 return this._arguments;
             },
-            //System.Runtime.CompilerServices.FormattableStringFactory.ConcreteFormattableString.GetArguments end.
+            //System.Runtime.CompilerServices.FormattableStringFactory+ConcreteFormattableString.GetArguments end.
 
-            //System.Runtime.CompilerServices.FormattableStringFactory.ConcreteFormattableString.GetArgument start.
+            //System.Runtime.CompilerServices.FormattableStringFactory+ConcreteFormattableString.GetArgument start.
             GetArgument: function (index) {
                 return this._arguments[System.Array.index(index, this._arguments)];
             },
-            //System.Runtime.CompilerServices.FormattableStringFactory.ConcreteFormattableString.GetArgument end.
+            //System.Runtime.CompilerServices.FormattableStringFactory+ConcreteFormattableString.GetArgument end.
 
-            //System.Runtime.CompilerServices.FormattableStringFactory.ConcreteFormattableString.ToString start.
+            //System.Runtime.CompilerServices.FormattableStringFactory+ConcreteFormattableString.ToString start.
             ToString: function (formatProvider) {
                 return System.String.formatProvider.apply(System.String, [formatProvider, this._format].concat(this._arguments));
             },
-            //System.Runtime.CompilerServices.FormattableStringFactory.ConcreteFormattableString.ToString end.
+            //System.Runtime.CompilerServices.FormattableStringFactory+ConcreteFormattableString.ToString end.
 
 
         }
     });
-    //System.Runtime.CompilerServices.FormattableStringFactory.ConcreteFormattableString end.
+    //System.Runtime.CompilerServices.FormattableStringFactory+ConcreteFormattableString end.
 
     // @source FormattableStringFactory.js
 
@@ -46628,7 +46628,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
     // @source FoundDatePattern.js
 
-    //System.Globalization.DateTimeFormatInfoScanner.FoundDatePattern start.
+    //System.Globalization.DateTimeFormatInfoScanner+FoundDatePattern start.
     Bridge.define("System.Globalization.DateTimeFormatInfoScanner.FoundDatePattern", {
         $kind: "nested enum",
         statics: {
@@ -46641,7 +46641,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
-    //System.Globalization.DateTimeFormatInfoScanner.FoundDatePattern end.
+    //System.Globalization.DateTimeFormatInfoScanner+FoundDatePattern end.
 
     // @source NotImplemented.js
 
@@ -49987,7 +49987,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
     // @source NullStream.js
 
-    //System.IO.Stream.NullStream start.
+    //System.IO.Stream+NullStream start.
     Bridge.define("System.IO.Stream.NullStream", {
         inherits: [System.IO.Stream],
         $kind: "nested class",
@@ -50026,15 +50026,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.IO.Stream.NullStream.Dispose$1 start.
+            //System.IO.Stream+NullStream.Dispose$1 start.
             Dispose$1: function (disposing) { },
-            //System.IO.Stream.NullStream.Dispose$1 end.
+            //System.IO.Stream+NullStream.Dispose$1 end.
 
-            //System.IO.Stream.NullStream.Flush start.
+            //System.IO.Stream+NullStream.Flush start.
             Flush: function () { },
-            //System.IO.Stream.NullStream.Flush end.
+            //System.IO.Stream+NullStream.Flush end.
 
-            //System.IO.Stream.NullStream.BeginRead start.
+            //System.IO.Stream+NullStream.BeginRead start.
             BeginRead: function (buffer, offset, count, callback, state) {
                 if (!this.CanRead) {
                     System.IO.__Error.ReadNotSupported();
@@ -50042,9 +50042,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return this.BlockingBeginRead(buffer, offset, count, callback, state);
             },
-            //System.IO.Stream.NullStream.BeginRead end.
+            //System.IO.Stream+NullStream.BeginRead end.
 
-            //System.IO.Stream.NullStream.EndRead start.
+            //System.IO.Stream+NullStream.EndRead start.
             EndRead: function (asyncResult) {
                 if (asyncResult == null) {
                     throw new System.ArgumentNullException.$ctor1("asyncResult");
@@ -50052,9 +50052,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return System.IO.Stream.BlockingEndRead(asyncResult);
             },
-            //System.IO.Stream.NullStream.EndRead end.
+            //System.IO.Stream+NullStream.EndRead end.
 
-            //System.IO.Stream.NullStream.BeginWrite start.
+            //System.IO.Stream+NullStream.BeginWrite start.
             BeginWrite: function (buffer, offset, count, callback, state) {
                 if (!this.CanWrite) {
                     System.IO.__Error.WriteNotSupported();
@@ -50062,9 +50062,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return this.BlockingBeginWrite(buffer, offset, count, callback, state);
             },
-            //System.IO.Stream.NullStream.BeginWrite end.
+            //System.IO.Stream+NullStream.BeginWrite end.
 
-            //System.IO.Stream.NullStream.EndWrite start.
+            //System.IO.Stream+NullStream.EndWrite start.
             EndWrite: function (asyncResult) {
                 if (asyncResult == null) {
                     throw new System.ArgumentNullException.$ctor1("asyncResult");
@@ -50072,52 +50072,52 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 System.IO.Stream.BlockingEndWrite(asyncResult);
             },
-            //System.IO.Stream.NullStream.EndWrite end.
+            //System.IO.Stream+NullStream.EndWrite end.
 
-            //System.IO.Stream.NullStream.Read start.
+            //System.IO.Stream+NullStream.Read start.
             Read: function (buffer, offset, count) {
                 return 0;
             },
-            //System.IO.Stream.NullStream.Read end.
+            //System.IO.Stream+NullStream.Read end.
 
-            //System.IO.Stream.NullStream.ReadByte start.
+            //System.IO.Stream+NullStream.ReadByte start.
             ReadByte: function () {
                 return -1;
             },
-            //System.IO.Stream.NullStream.ReadByte end.
+            //System.IO.Stream+NullStream.ReadByte end.
 
-            //System.IO.Stream.NullStream.Write start.
+            //System.IO.Stream+NullStream.Write start.
             Write: function (buffer, offset, count) { },
-            //System.IO.Stream.NullStream.Write end.
+            //System.IO.Stream+NullStream.Write end.
 
-            //System.IO.Stream.NullStream.WriteByte start.
+            //System.IO.Stream+NullStream.WriteByte start.
             WriteByte: function (value) { },
-            //System.IO.Stream.NullStream.WriteByte end.
+            //System.IO.Stream+NullStream.WriteByte end.
 
-            //System.IO.Stream.NullStream.Seek start.
+            //System.IO.Stream+NullStream.Seek start.
             Seek: function (offset, origin) {
                 return System.Int64(0);
             },
-            //System.IO.Stream.NullStream.Seek end.
+            //System.IO.Stream+NullStream.Seek end.
 
-            //System.IO.Stream.NullStream.SetLength start.
+            //System.IO.Stream+NullStream.SetLength start.
             SetLength: function (length) { },
-            //System.IO.Stream.NullStream.SetLength end.
+            //System.IO.Stream+NullStream.SetLength end.
 
 
         }
     });
-    //System.IO.Stream.NullStream end.
+    //System.IO.Stream+NullStream end.
 
     // @source SynchronousAsyncResult.js
 
-    //System.IO.Stream.SynchronousAsyncResult start.
+    //System.IO.Stream+SynchronousAsyncResult start.
     Bridge.define("System.IO.Stream.SynchronousAsyncResult", {
         inherits: [System.IAsyncResult],
         $kind: "nested class",
         statics: {
             methods: {
-                //System.IO.Stream.SynchronousAsyncResult.EndRead:static start.
+                //System.IO.Stream+SynchronousAsyncResult.EndRead:static start.
                 EndRead: function (asyncResult) {
 
                     var ar = Bridge.as(asyncResult, System.IO.Stream.SynchronousAsyncResult);
@@ -50134,9 +50134,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     ar.ThrowIfError();
                     return ar._bytesRead;
                 },
-                //System.IO.Stream.SynchronousAsyncResult.EndRead:static end.
+                //System.IO.Stream+SynchronousAsyncResult.EndRead:static end.
 
-                //System.IO.Stream.SynchronousAsyncResult.EndWrite:static start.
+                //System.IO.Stream+SynchronousAsyncResult.EndWrite:static start.
                 EndWrite: function (asyncResult) {
 
                     var ar = Bridge.as(asyncResult, System.IO.Stream.SynchronousAsyncResult);
@@ -50152,7 +50152,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     ar.ThrowIfError();
                 },
-                //System.IO.Stream.SynchronousAsyncResult.EndWrite:static end.
+                //System.IO.Stream+SynchronousAsyncResult.EndWrite:static end.
 
 
             }
@@ -50205,18 +50205,18 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.IO.Stream.SynchronousAsyncResult.ThrowIfError start.
+            //System.IO.Stream+SynchronousAsyncResult.ThrowIfError start.
             ThrowIfError: function () {
                 if (this._exceptionInfo != null) {
                     throw this._exceptionInfo;
                 }
             },
-            //System.IO.Stream.SynchronousAsyncResult.ThrowIfError end.
+            //System.IO.Stream+SynchronousAsyncResult.ThrowIfError end.
 
 
         }
     });
-    //System.IO.Stream.SynchronousAsyncResult end.
+    //System.IO.Stream+SynchronousAsyncResult end.
 
     // @source TextReader.js
 
@@ -50933,7 +50933,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
     // @source NullStreamReader.js
 
-    //System.IO.StreamReader.NullStreamReader start.
+    //System.IO.StreamReader+NullStreamReader start.
     Bridge.define("System.IO.StreamReader.NullStreamReader", {
         inherits: [System.IO.StreamReader],
         $kind: "nested class",
@@ -50957,50 +50957,50 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.IO.StreamReader.NullStreamReader.Dispose$1 start.
+            //System.IO.StreamReader+NullStreamReader.Dispose$1 start.
             Dispose$1: function (disposing) { },
-            //System.IO.StreamReader.NullStreamReader.Dispose$1 end.
+            //System.IO.StreamReader+NullStreamReader.Dispose$1 end.
 
-            //System.IO.StreamReader.NullStreamReader.Peek start.
+            //System.IO.StreamReader+NullStreamReader.Peek start.
             Peek: function () {
                 return -1;
             },
-            //System.IO.StreamReader.NullStreamReader.Peek end.
+            //System.IO.StreamReader+NullStreamReader.Peek end.
 
-            //System.IO.StreamReader.NullStreamReader.Read start.
+            //System.IO.StreamReader+NullStreamReader.Read start.
             Read: function () {
                 return -1;
             },
-            //System.IO.StreamReader.NullStreamReader.Read end.
+            //System.IO.StreamReader+NullStreamReader.Read end.
 
-            //System.IO.StreamReader.NullStreamReader.Read$1 start.
+            //System.IO.StreamReader+NullStreamReader.Read$1 start.
             Read$1: function (buffer, index, count) {
                 return 0;
             },
-            //System.IO.StreamReader.NullStreamReader.Read$1 end.
+            //System.IO.StreamReader+NullStreamReader.Read$1 end.
 
-            //System.IO.StreamReader.NullStreamReader.ReadLine start.
+            //System.IO.StreamReader+NullStreamReader.ReadLine start.
             ReadLine: function () {
                 return null;
             },
-            //System.IO.StreamReader.NullStreamReader.ReadLine end.
+            //System.IO.StreamReader+NullStreamReader.ReadLine end.
 
-            //System.IO.StreamReader.NullStreamReader.ReadToEnd start.
+            //System.IO.StreamReader+NullStreamReader.ReadToEnd start.
             ReadToEnd: function () {
                 return "";
             },
-            //System.IO.StreamReader.NullStreamReader.ReadToEnd end.
+            //System.IO.StreamReader+NullStreamReader.ReadToEnd end.
 
-            //System.IO.StreamReader.NullStreamReader.ReadBuffer start.
+            //System.IO.StreamReader+NullStreamReader.ReadBuffer start.
             ReadBuffer: function () {
                 return 0;
             },
-            //System.IO.StreamReader.NullStreamReader.ReadBuffer end.
+            //System.IO.StreamReader+NullStreamReader.ReadBuffer end.
 
 
         }
     });
-    //System.IO.StreamReader.NullStreamReader end.
+    //System.IO.StreamReader+NullStreamReader end.
 
     // @source TextWriter.js
 
@@ -51947,7 +51947,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
     // @source NullTextReader.js
 
-    //System.IO.TextReader.NullTextReader start.
+    //System.IO.TextReader+NullTextReader start.
     Bridge.define("System.IO.TextReader.NullTextReader", {
         inherits: [System.IO.TextReader],
         $kind: "nested class",
@@ -51958,26 +51958,26 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.IO.TextReader.NullTextReader.Read$1 start.
+            //System.IO.TextReader+NullTextReader.Read$1 start.
             Read$1: function (buffer, index, count) {
                 return 0;
             },
-            //System.IO.TextReader.NullTextReader.Read$1 end.
+            //System.IO.TextReader+NullTextReader.Read$1 end.
 
-            //System.IO.TextReader.NullTextReader.ReadLine start.
+            //System.IO.TextReader+NullTextReader.ReadLine start.
             ReadLine: function () {
                 return null;
             },
-            //System.IO.TextReader.NullTextReader.ReadLine end.
+            //System.IO.TextReader+NullTextReader.ReadLine end.
 
 
         }
     });
-    //System.IO.TextReader.NullTextReader end.
+    //System.IO.TextReader+NullTextReader end.
 
     // @source NullTextWriter.js
 
-    //System.IO.TextWriter.NullTextWriter start.
+    //System.IO.TextWriter+NullTextWriter start.
     Bridge.define("System.IO.TextWriter.NullTextWriter", {
         inherits: [System.IO.TextWriter],
         $kind: "nested class",
@@ -51995,30 +51995,30 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.IO.TextWriter.NullTextWriter.Write$3 start.
+            //System.IO.TextWriter+NullTextWriter.Write$3 start.
             Write$3: function (buffer, index, count) { },
-            //System.IO.TextWriter.NullTextWriter.Write$3 end.
+            //System.IO.TextWriter+NullTextWriter.Write$3 end.
 
-            //System.IO.TextWriter.NullTextWriter.Write$10 start.
+            //System.IO.TextWriter+NullTextWriter.Write$10 start.
             Write$10: function (value) { },
-            //System.IO.TextWriter.NullTextWriter.Write$10 end.
+            //System.IO.TextWriter+NullTextWriter.Write$10 end.
 
-            //System.IO.TextWriter.NullTextWriter.WriteLine start.
+            //System.IO.TextWriter+NullTextWriter.WriteLine start.
             WriteLine: function () { },
-            //System.IO.TextWriter.NullTextWriter.WriteLine end.
+            //System.IO.TextWriter+NullTextWriter.WriteLine end.
 
-            //System.IO.TextWriter.NullTextWriter.WriteLine$11 start.
+            //System.IO.TextWriter+NullTextWriter.WriteLine$11 start.
             WriteLine$11: function (value) { },
-            //System.IO.TextWriter.NullTextWriter.WriteLine$11 end.
+            //System.IO.TextWriter+NullTextWriter.WriteLine$11 end.
 
-            //System.IO.TextWriter.NullTextWriter.WriteLine$9 start.
+            //System.IO.TextWriter+NullTextWriter.WriteLine$9 start.
             WriteLine$9: function (value) { },
-            //System.IO.TextWriter.NullTextWriter.WriteLine$9 end.
+            //System.IO.TextWriter+NullTextWriter.WriteLine$9 end.
 
 
         }
     });
-    //System.IO.TextWriter.NullTextWriter end.
+    //System.IO.TextWriter+NullTextWriter end.
 
     // @source __Error.js
 
@@ -55704,7 +55704,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
     // @source ParseFailureKind.js
 
-    //System.Version.ParseFailureKind start.
+    //System.Version+ParseFailureKind start.
     Bridge.define("System.Version.ParseFailureKind", {
         $kind: "nested enum",
         statics: {
@@ -55716,11 +55716,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
-    //System.Version.ParseFailureKind end.
+    //System.Version+ParseFailureKind end.
 
     // @source VersionResult.js
 
-    //System.Version.VersionResult start.
+    //System.Version+VersionResult start.
     Bridge.define("System.Version.VersionResult", {
         $kind: "nested struct",
         statics: {
@@ -55741,20 +55741,20 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
-            //System.Version.VersionResult.init start.
+            //System.Version+VersionResult.init start.
             init: function (argumentName, canThrow) {
                 this.m_canThrow = canThrow;
                 this.m_argumentName = argumentName;
             },
-            //System.Version.VersionResult.init end.
+            //System.Version+VersionResult.init end.
 
-            //System.Version.VersionResult.setFailure start.
+            //System.Version+VersionResult.setFailure start.
             setFailure: function (failure) {
                 this.setFailure$1(failure, "");
             },
-            //System.Version.VersionResult.setFailure end.
+            //System.Version+VersionResult.setFailure end.
 
-            //System.Version.VersionResult.setFailure$1 start.
+            //System.Version+VersionResult.setFailure$1 start.
             setFailure$1: function (failure, argument) {
                 this.m_failure = failure;
                 this.m_exceptionArgument = argument;
@@ -55762,9 +55762,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     throw this.getVersionParseException();
                 }
             },
-            //System.Version.VersionResult.setFailure$1 end.
+            //System.Version+VersionResult.setFailure$1 end.
 
-            //System.Version.VersionResult.getVersionParseException start.
+            //System.Version+VersionResult.getVersionParseException start.
             getVersionParseException: function () {
                 switch (this.m_failure) {
                     case System.Version.ParseFailureKind.ArgumentNullException: 
@@ -55794,7 +55794,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                         return new System.ArgumentException.$ctor1("VersionString");
                 }
             },
-            //System.Version.VersionResult.getVersionParseException end.
+            //System.Version+VersionResult.getVersionParseException end.
 
             getHashCode: function () {
                 var h = Bridge.addHash([5139482776, this.m_parsedVersion, this.m_failure, this.m_exceptionArgument, this.m_argumentName, this.m_canThrow]);
@@ -55817,7 +55817,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
-    //System.Version.VersionResult end.
+    //System.Version+VersionResult end.
 
     // @source End.js
 

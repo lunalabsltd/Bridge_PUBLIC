@@ -1,4 +1,4 @@
-    //System.Collections.Generic.HashSet$1.ElementCount start.
+    //System.Collections.Generic.HashSet$1+ElementCount start.
     Bridge.define("System.Collections.Generic.HashSet$1.ElementCount", function (T) { return {
         $kind: "nested struct",
         statics: {
@@ -34,4 +34,4 @@
             }
         }
     }; });
-    //System.Collections.Generic.HashSet$1.ElementCount end.
+    //System.Collections.Generic.HashSet$1+ElementCount end.

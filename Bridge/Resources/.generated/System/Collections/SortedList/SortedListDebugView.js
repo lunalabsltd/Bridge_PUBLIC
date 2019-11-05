@@ -1,4 +1,4 @@
-    //System.Collections.SortedList.SortedListDebugView start.
+    //System.Collections.SortedList+SortedListDebugView start.
     Bridge.define("System.Collections.SortedList.SortedListDebugView", {
         $kind: "nested class",
         fields: {
@@ -22,4 +22,4 @@
             }
         }
     });
-    //System.Collections.SortedList.SortedListDebugView end.
+    //System.Collections.SortedList+SortedListDebugView end.

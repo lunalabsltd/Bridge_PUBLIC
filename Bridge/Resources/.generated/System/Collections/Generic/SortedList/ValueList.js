@@ -1,4 +1,4 @@
-    //System.Collections.Generic.SortedList$2.ValueList start.
+    //System.Collections.Generic.SortedList$2+ValueList start.
     Bridge.define("System.Collections.Generic.SortedList$2.ValueList", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IList$1(TValue),System.Collections.ICollection],
         $kind: "nested class",
@@ -56,31 +56,31 @@
             setItem: function (index, value) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
             },
-            //System.Collections.Generic.SortedList$2.ValueList.add start.
+            //System.Collections.Generic.SortedList$2+ValueList.add start.
             add: function (key) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
             },
-            //System.Collections.Generic.SortedList$2.ValueList.add end.
+            //System.Collections.Generic.SortedList$2+ValueList.add end.
 
-            //System.Collections.Generic.SortedList$2.ValueList.clear start.
+            //System.Collections.Generic.SortedList$2+ValueList.clear start.
             clear: function () {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
             },
-            //System.Collections.Generic.SortedList$2.ValueList.clear end.
+            //System.Collections.Generic.SortedList$2+ValueList.clear end.
 
-            //System.Collections.Generic.SortedList$2.ValueList.contains start.
+            //System.Collections.Generic.SortedList$2+ValueList.contains start.
             contains: function (value) {
                 return this._dict.ContainsValue(value);
             },
-            //System.Collections.Generic.SortedList$2.ValueList.contains end.
+            //System.Collections.Generic.SortedList$2+ValueList.contains end.
 
-            //System.Collections.Generic.SortedList$2.ValueList.copyTo start.
+            //System.Collections.Generic.SortedList$2+ValueList.copyTo start.
             copyTo: function (array, arrayIndex) {
                 System.Array.copy(this._dict.values, 0, array, arrayIndex, this._dict.Count);
             },
-            //System.Collections.Generic.SortedList$2.ValueList.copyTo end.
+            //System.Collections.Generic.SortedList$2+ValueList.copyTo end.
 
-            //System.Collections.Generic.SortedList$2.ValueList.System$Collections$ICollection$copyTo start.
+            //System.Collections.Generic.SortedList$2+ValueList.System$Collections$ICollection$copyTo start.
             System$Collections$ICollection$copyTo: function (array, arrayIndex) {
                 if (array != null && System.Array.getRank(array) !== 1) {
                     System.ThrowHelper.ThrowArgumentException(System.ExceptionResource.Arg_RankMultiDimNotSupported);
@@ -97,46 +97,46 @@
                     }
                 }
             },
-            //System.Collections.Generic.SortedList$2.ValueList.System$Collections$ICollection$copyTo end.
+            //System.Collections.Generic.SortedList$2+ValueList.System$Collections$ICollection$copyTo end.
 
-            //System.Collections.Generic.SortedList$2.ValueList.insert start.
+            //System.Collections.Generic.SortedList$2+ValueList.insert start.
             insert: function (index, value) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
             },
-            //System.Collections.Generic.SortedList$2.ValueList.insert end.
+            //System.Collections.Generic.SortedList$2+ValueList.insert end.
 
-            //System.Collections.Generic.SortedList$2.ValueList.GetEnumerator start.
+            //System.Collections.Generic.SortedList$2+ValueList.GetEnumerator start.
             GetEnumerator: function () {
                 return new (System.Collections.Generic.SortedList$2.SortedListValueEnumerator(TKey,TValue))(this._dict);
             },
-            //System.Collections.Generic.SortedList$2.ValueList.GetEnumerator end.
+            //System.Collections.Generic.SortedList$2+ValueList.GetEnumerator end.
 
-            //System.Collections.Generic.SortedList$2.ValueList.System$Collections$IEnumerable$GetEnumerator start.
+            //System.Collections.Generic.SortedList$2+ValueList.System$Collections$IEnumerable$GetEnumerator start.
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return new (System.Collections.Generic.SortedList$2.SortedListValueEnumerator(TKey,TValue))(this._dict);
             },
-            //System.Collections.Generic.SortedList$2.ValueList.System$Collections$IEnumerable$GetEnumerator end.
+            //System.Collections.Generic.SortedList$2+ValueList.System$Collections$IEnumerable$GetEnumerator end.
 
-            //System.Collections.Generic.SortedList$2.ValueList.indexOf start.
+            //System.Collections.Generic.SortedList$2+ValueList.indexOf start.
             indexOf: function (value) {
                 return System.Array.indexOfT(this._dict.values, value, 0, this._dict.Count);
             },
-            //System.Collections.Generic.SortedList$2.ValueList.indexOf end.
+            //System.Collections.Generic.SortedList$2+ValueList.indexOf end.
 
-            //System.Collections.Generic.SortedList$2.ValueList.remove start.
+            //System.Collections.Generic.SortedList$2+ValueList.remove start.
             remove: function (value) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
                 return false;
             },
-            //System.Collections.Generic.SortedList$2.ValueList.remove end.
+            //System.Collections.Generic.SortedList$2+ValueList.remove end.
 
-            //System.Collections.Generic.SortedList$2.ValueList.removeAt start.
+            //System.Collections.Generic.SortedList$2+ValueList.removeAt start.
             removeAt: function (index) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
             },
-            //System.Collections.Generic.SortedList$2.ValueList.removeAt end.
+            //System.Collections.Generic.SortedList$2+ValueList.removeAt end.
 
 
         }
     }; });
-    //System.Collections.Generic.SortedList$2.ValueList end.
+    //System.Collections.Generic.SortedList$2+ValueList end.

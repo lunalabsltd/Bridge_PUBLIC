@@ -1369,7 +1369,7 @@ namespace Bridge.Contract
 
         public static string GetClassName(TypeDefinition type)
         {
-            return type.FullName.Replace("/", ".").Replace("`", "$");
+            return type.FullName.Replace("/", "+").Replace("`", "$");
         }
 
         public static string GetMemberName(IMember member, IEmitter emitter)

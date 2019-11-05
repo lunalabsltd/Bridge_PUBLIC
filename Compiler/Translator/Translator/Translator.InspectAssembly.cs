@@ -51,9 +51,9 @@ namespace Bridge.Translator
 
             public override AssemblyDefinition Resolve(AssemblyNameReference name)
             {
-                string fullName = name != null ? name.FullName : "";
+                /*string fullName = name != null ? name.FullName : "";
 
-                this.Logger.Trace("CecilAssemblyResolver: Resolve(AssemblyNameReference) " + (fullName ?? ""));
+                this.Logger.Trace("CecilAssemblyResolver: Resolve(AssemblyNameReference) " + (fullName ?? ""));*/
 
                 return base.Resolve(name);
             }

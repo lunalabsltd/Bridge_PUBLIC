@@ -1,4 +1,4 @@
-    //System.Collections.Generic.HashSet$1.Enumerator start.
+    //System.Collections.Generic.HashSet$1+Enumerator start.
     Bridge.define("System.Collections.Generic.HashSet$1.Enumerator", function (T) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(T)],
         $kind: "nested struct",
@@ -46,11 +46,11 @@
             }
         },
         methods: {
-            //System.Collections.Generic.HashSet$1.Enumerator.Dispose start.
+            //System.Collections.Generic.HashSet$1+Enumerator.Dispose start.
             Dispose: function () { },
-            //System.Collections.Generic.HashSet$1.Enumerator.Dispose end.
+            //System.Collections.Generic.HashSet$1+Enumerator.Dispose end.
 
-            //System.Collections.Generic.HashSet$1.Enumerator.moveNext start.
+            //System.Collections.Generic.HashSet$1+Enumerator.moveNext start.
             moveNext: function () {
                 var $t, $t1;
                 if (this._version !== this._set._version) {
@@ -68,9 +68,9 @@
                 this._current = Bridge.getDefaultValue(T);
                 return false;
             },
-            //System.Collections.Generic.HashSet$1.Enumerator.moveNext end.
+            //System.Collections.Generic.HashSet$1+Enumerator.moveNext end.
 
-            //System.Collections.Generic.HashSet$1.Enumerator.System$Collections$IEnumerator$reset start.
+            //System.Collections.Generic.HashSet$1+Enumerator.System$Collections$IEnumerator$reset start.
             System$Collections$IEnumerator$reset: function () {
                 if (this._version !== this._set._version) {
                     throw new System.InvalidOperationException.$ctor1("Collection was modified; enumeration operation may not execute.");
@@ -78,7 +78,7 @@
                 this._index = 0;
                 this._current = Bridge.getDefaultValue(T);
             },
-            //System.Collections.Generic.HashSet$1.Enumerator.System$Collections$IEnumerator$reset end.
+            //System.Collections.Generic.HashSet$1+Enumerator.System$Collections$IEnumerator$reset end.
 
             getHashCode: function () {
                 var h = Bridge.addHash([3788985113, this._set, this._index, this._version, this._current]);
@@ -100,4 +100,4 @@
             }
         }
     }; });
-    //System.Collections.Generic.HashSet$1.Enumerator end.
+    //System.Collections.Generic.HashSet$1+Enumerator end.

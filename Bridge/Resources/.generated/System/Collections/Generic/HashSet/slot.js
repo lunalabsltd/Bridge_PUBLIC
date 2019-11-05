@@ -1,4 +1,4 @@
-    //System.Collections.Generic.HashSet$1.Slot start.
+    //System.Collections.Generic.HashSet$1+Slot start.
     Bridge.define("System.Collections.Generic.HashSet$1.Slot", function (T) { return {
         $kind: "nested struct",
         statics: {
@@ -36,4 +36,4 @@
             }
         }
     }; });
-    //System.Collections.Generic.HashSet$1.Slot end.
+    //System.Collections.Generic.HashSet$1+Slot end.

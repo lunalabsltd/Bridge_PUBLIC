@@ -462,6 +462,7 @@ namespace Bridge.Translator
 
             if (FileHelper.IsJS(fileName) && content.String != null)
             {
+                this.Log.Trace("Removing dead code from " + resource.Name);
                 content = this.RemoveUnusedCode(content.String, assembly.Modules.SelectMany(module => module.Types));
             }
 

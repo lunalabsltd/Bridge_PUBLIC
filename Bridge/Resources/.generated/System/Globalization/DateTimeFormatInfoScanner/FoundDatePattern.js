@@ -1,4 +1,4 @@
-    //System.Globalization.DateTimeFormatInfoScanner.FoundDatePattern start.
+    //System.Globalization.DateTimeFormatInfoScanner+FoundDatePattern start.
     Bridge.define("System.Globalization.DateTimeFormatInfoScanner.FoundDatePattern", {
         $kind: "nested enum",
         statics: {
@@ -11,4 +11,4 @@
             }
         }
     });
-    //System.Globalization.DateTimeFormatInfoScanner.FoundDatePattern end.
+    //System.Globalization.DateTimeFormatInfoScanner+FoundDatePattern end.
