@@ -92,47 +92,67 @@ namespace Bridge.Contract.Dependencies
                 return;
             }
 
-            var calls = method.Body.Instructions.Select(this.GetMemberDefinition).Where(c => c != null);
+            var classes = method.Body.Instructions.Select(Manager.GetTypeDefinition).Where(c => c != null);
 
-            foreach (var call in calls)
+            foreach (var klass in classes)
             {
-                this.AddDependency(name, call.DeclaringType);
+                this.AddDependency(name, klass);
             }
         }
 
-        private IMemberDefinition GetMemberDefinition(Instruction instruction)
+        private static TypeDefinition GetTypeDefinition(Instruction instruction)
         {
-            if (instruction.Operand == null)
+            switch (instruction.Operand)
             {
-                return null;
-            }
-            if (instruction.Operand is MethodReference methodRef)
-            {
-                try
+                case null:
                 {
-                    return methodRef.Resolve();
+                    return null;
                 }
-                catch (NotSupportedException)
+                case MethodDefinition method:
                 {
+                    return method.DeclaringType;
                 }
-            }
-            else if (instruction.Operand is FieldReference fieldRef)
-            {
-                try
+                case FieldDefinition field:
                 {
-                    return fieldRef.Resolve();
+                    return field.DeclaringType;
                 }
-                catch (NotSupportedException)
+                case TypeDefinition type:
                 {
+                    return type;
                 }
-            }
-            if (instruction.Operand is MethodDefinition method)
-            {
-                return method;
-            }
-            if (instruction.Operand is FieldDefinition field)
-            {
-                return field;
+                case MethodReference methodRef:
+                {
+                    try
+                    {
+                        return methodRef.Resolve().DeclaringType;
+                    }
+                    catch (NotSupportedException)
+                    {
+                    }
+                    break;
+                }
+                case FieldReference fieldRef:
+                {
+                    try
+                    {
+                        return fieldRef.Resolve().DeclaringType;
+                    }
+                    catch (NotSupportedException)
+                    {
+                    }
+                    break;
+                }
+                case TypeReference typeRef:
+                {
+                    try
+                    {
+                        return typeRef.Resolve();
+                    }
+                    catch (NotSupportedException)
+                    {
+                    }
+                    break;
+                }
             }
             return null;
         }
