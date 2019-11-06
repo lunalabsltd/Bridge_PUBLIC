@@ -47,7 +47,7 @@ namespace Bridge.Translator
             }
         }
 
-        public virtual string MethodParametersToString(MethodDeclaration member)
+        protected virtual string MethodParametersToString(MethodDeclaration member)
         {
             StringBuilder sb = new StringBuilder();
             bool firstItem = true;
@@ -73,14 +73,12 @@ namespace Bridge.Translator
             {
                 foreach (var declaration in method.Value)
                 {
-                    if (!overloads.ContainsKey(declaration.Name))
+                    if (overloads.ContainsKey(declaration.Name)) continue;
+
+                    var overloadName = OverloadsCollection.GetOverloadName(this.Emitter, declaration);
+                    if (overloadName != null)
                     {
-                        var overloadCollection = OverloadsCollection.Create(this.Emitter, declaration);
-                        string overloadName = overloadCollection.GetOverloadName(declaration.Name);
-                        if (overloadName != null)
-                        {
-                            overloads[overloadName] = declaration.Name + MethodParametersToString(declaration);
-                        }
+                        overloads[overloadName.Item2] = overloadName.Item1 + MethodParametersToString(declaration);
                     }
                 }
             }

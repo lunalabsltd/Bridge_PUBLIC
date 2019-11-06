@@ -998,11 +998,15 @@ namespace Bridge.Contract
         private Dictionary<Tuple<bool, string, bool, bool>, string> overloadName = new Dictionary<Tuple<bool, string, bool, bool>, string>();
         private Dictionary<string, string> currentOverloads = new Dictionary<string, string>();
 
-        public string GetOverloadName(string name)
-        {
-            if (this.currentOverloads.ContainsKey(name))
-            {
-                return this.currentOverloads[name];
+        public static Tuple<string,string> GetOverloadName(IEmitter emitter, MethodDeclaration declaration) {
+            var overloadCollection = OverloadsCollection.Create(emitter, declaration);
+            var declarationName = declaration.Name;
+            if (overloadCollection.Member.ImplementedInterfaceMembers.Count > 0) {
+                declarationName = BridgeTypes.ToJsName(overloadCollection.Member.ImplementedInterfaceMembers.First().DeclaringType, emitter) + "." + declarationName;
+            }
+
+            if (overloadCollection.currentOverloads.ContainsKey(declarationName)) {
+                return new Tuple<string, string>(declarationName, overloadCollection.currentOverloads[declarationName]);
             }
             return null;
         }
@@ -1028,9 +1032,16 @@ namespace Bridge.Contract
             {
                 name = this.GetOverloadName(this.Member, skipInterfaceName, prefix, withoutTypeParams, isObjectLiteral, excludeTypeOnly);
                 this.overloadName[key] = name;
-                if (this.Name != name)
-                {
-                    this.currentOverloads[this.Name] = name;
+                if (this.Name != name) {
+                    if (this.Member.ImplementedInterfaceMembers.Count > 0) {
+                        var interfaceName = BridgeTypes.ToJsName(this.Member.ImplementedInterfaceMembers.First().DeclaringType, this.Emitter);
+                        this.currentOverloads[interfaceName + "." + this.Name] = name;
+                    }
+                    else {
+
+
+                        this.currentOverloads[this.Name] = name;
+                    }
                 }
             }
             else if (contains)
@@ -1133,8 +1144,7 @@ namespace Bridge.Contract
                 interfaceMember = definition;
             }
 
-            if (interfaceMember != null && !skipInterfaceName && !this.Emitter.Validator.IsObjectLiteral(interfaceMember.DeclaringTypeDefinition))
-            {
+            if (interfaceMember != null && !skipInterfaceName && !this.Emitter.Validator.IsObjectLiteral(interfaceMember.DeclaringTypeDefinition)) {
                 return OverloadsCollection.GetInterfaceMemberName(this.Emitter, interfaceMember, null, prefix, withoutTypeParams, this.IsSetter, excludeTypeOnly);
             }
 
