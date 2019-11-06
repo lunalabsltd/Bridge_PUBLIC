@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using TypeDefinition = Mono.Cecil.TypeDefinition;
 
 namespace Bridge.Contract.Dependencies
 {
@@ -46,32 +46,37 @@ namespace Bridge.Contract.Dependencies
 
         private void AddDependencies(TypeDefinition type)
         {
+            foreach (var nested in type.NestedTypes)
+            {
+                this.AddDependencies(nested);
+            }
+
             var name = Helpers.GetClassName(type);
 
             foreach (var method in type.Methods)
             {
-                this.AddDependency(name, method);
+                this.AddDependencies(name, method);
             }
             foreach (var property in type.Properties)
             {
-                this.AddDependency(name, property.GetMethod);
-                this.AddDependency(name, property.SetMethod);
+                this.AddDependencies(name, property.GetMethod);
+                this.AddDependencies(name, property.SetMethod);
                 this.AddDependencies(name, property.CustomAttributes);
             }
             foreach (var field in type.Fields)
             {
-                this.AddDependency(name, field.FieldType);
+                this.AddDependencies(name, field.FieldType);
                 this.AddDependencies(name, field.CustomAttributes);
             }
             foreach (var face in type.Interfaces)
             {
-                this.AddDependency(name, face);
+                this.AddDependencies(name, face);
             }
             this.AddDependencies(name, type.CustomAttributes);
-            this.AddDependency(name, type.BaseType);
+            this.AddDependencies(name, type.BaseType);
         }
 
-        private void AddDependency(string name, MethodDefinition method)
+        private void AddDependencies(string name, MethodDefinition method)
         {
             if (method == null)
             {
@@ -79,11 +84,11 @@ namespace Bridge.Contract.Dependencies
             }
 
             this.AddDependencies(name, method.CustomAttributes);
-            this.AddDependency(name, method.ReturnType);
+            this.AddDependencies(name, method.ReturnType);
 
             foreach (var param in method.Parameters)
             {
-                this.AddDependency(name, param.ParameterType);
+                this.AddDependencies(name, param.ParameterType);
                 this.AddDependencies(name, param.CustomAttributes);
             }
 
@@ -92,107 +97,154 @@ namespace Bridge.Contract.Dependencies
                 return;
             }
 
-            var classes = method.Body.Instructions.Select(Manager.GetTypeDefinition).Where(c => c != null);
-
-            foreach (var klass in classes)
+            foreach (var instruction in method.Body.Instructions)
             {
-                this.AddDependency(name, klass);
+                this.AddDependencies(name, instruction);
             }
         }
 
-        private static TypeDefinition GetTypeDefinition(Instruction instruction)
+        private void AddDependencies(string name, Instruction instruction)
         {
             switch (instruction.Operand)
             {
                 case null:
                 {
-                    return null;
+                    return;
                 }
                 case MethodDefinition method:
                 {
-                    return method.DeclaringType;
+                    this.AddDependencies(name, method.DeclaringType);
+                    break;
                 }
                 case FieldDefinition field:
                 {
-                    return field.DeclaringType;
+                    this.AddDependencies(name, field.DeclaringType);
+                    break;
                 }
                 case TypeDefinition type:
                 {
-                    return type;
+                    this.AddDependencies(name, type);
+                    break;
                 }
                 case MethodReference methodRef:
                 {
-                    try
-                    {
-                        return methodRef.Resolve().DeclaringType;
-                    }
-                    catch (NotSupportedException)
-                    {
-                    }
+                    this.AddDependencies(name, methodRef);
                     break;
                 }
                 case FieldReference fieldRef:
                 {
-                    try
-                    {
-                        return fieldRef.Resolve().DeclaringType;
-                    }
-                    catch (NotSupportedException)
-                    {
-                    }
+                    this.AddDependencies(name, fieldRef);
                     break;
                 }
                 case TypeReference typeRef:
                 {
-                    try
-                    {
-                        return typeRef.Resolve();
-                    }
-                    catch (NotSupportedException)
-                    {
-                    }
+                    this.AddDependencies(name, typeRef);
                     break;
                 }
             }
-            return null;
         }
 
         private void AddDependencies(string name, IEnumerable<CustomAttribute> attributes)
         {
             foreach (var attribute in attributes)
             {
-                this.AddDependency(name, attribute.AttributeType);
+                this.AddDependencies(name, attribute.AttributeType);
             }
         }
 
-        private void AddDependency(string name, TypeReference reference)
+        private void AddDependencies(string name, TypeReference reference)
         {
+            if (reference == null)
+            {
+                return;
+            }
+            if (reference.IsGenericInstance)
+            {
+                this.AddDependencies(name, ((GenericInstanceType)reference).GenericArguments);
+            }
             var type = this.Resolve(reference);
             if (type != null)
             {
-                this.AddDependency(name, type);
+                this.AddDependencies(name, type);
             }
         }
 
-        private void AddDependency(string name, TypeDefinition type)
+        private void AddDependencies(string name, TypeDefinition type)
         {
             var used = Helpers.GetClassName(type);
             this.classDependencies.AddDependency(name, used);
         }
 
-        private TypeDefinition Resolve(TypeReference reference)
+        private void AddDependencies(string name, MethodReference reference)
         {
             if (reference == null)
             {
-                return null;
+                return;
             }
+            if (reference.IsGenericInstance)
+            {
+                this.AddDependencies(name, ((GenericInstanceMethod)reference).GenericArguments);
+            }
+            var method = this.Resolve(reference);
+            if (method != null)
+            {
+                this.AddDependencies(name, method.DeclaringType);
+            }
+        }
+
+        private void AddDependencies(string name, IEnumerable<TypeReference> references)
+        {
+            foreach (var reference in references)
+            {
+                this.AddDependencies(name, reference);
+            }
+        }
+
+        private void AddDependencies(string name, FieldReference reference)
+        {
+            if (reference == null)
+            {
+                return;
+            }
+            var field = this.Resolve(reference);
+            if (field != null)
+            {
+                this.AddDependencies(name, field.DeclaringType);
+            }
+        }
+
+        private TypeDefinition Resolve(TypeReference reference)
+        {
             try
             {
                 return reference.Resolve();
             }
             catch (NotSupportedException)
             {
-                this.logger.Warn(string.Format("Can't resolve type reference: {0}", reference));
+            }
+            return null;
+        }
+
+        private MethodDefinition Resolve(MethodReference reference)
+        {
+            try
+            {
+                return reference.Resolve();
+            }
+            catch (NotSupportedException)
+            {
+            }
+            return null;
+        }
+
+        private FieldDefinition Resolve(FieldReference reference)
+        {
+            try
+            {
+                return reference.Resolve();
+            }
+            catch (NotSupportedException)
+            {
             }
             return null;
         }
