@@ -176,16 +176,16 @@ namespace Bridge.Translator
             return assemblyDefinition;
         }
 
-        protected virtual void ReadTypes(AssemblyDefinition assembly)
+        protected virtual void ReadTypes(AssemblyDefinition assembly, bool isMainAssembly)
         {
             this.Log.Trace("Reading types for assembly " + (assembly != null && assembly.Name != null && assembly.Name.Name != null ? assembly.Name.Name : "") + " ...");
 
-            this.AddNestedTypes(assembly.MainModule.Types);
+            this.AddNestedTypes(assembly.MainModule.Types, isMainAssembly);
 
             this.Log.Trace("Reading types for assembly done");
         }
 
-        protected virtual void AddNestedTypes(IEnumerable<TypeDefinition> types)
+        protected virtual void AddNestedTypes(IEnumerable<TypeDefinition> types, bool isMainAsssembly)
         {
             bool skip_key;
 
@@ -231,13 +231,14 @@ namespace Bridge.Translator
 
                     this.BridgeTypes.Add(key, new BridgeType(key)
                     {
-                        TypeDefinition = type
+                        TypeDefinition = type,
+                        IsMainAssembly = isMainAsssembly
                     });
 
                     if (type.HasNestedTypes)
                     {
                         Translator.InheritAttributes(type);
-                        this.AddNestedTypes(type.NestedTypes);
+                        this.AddNestedTypes(type.NestedTypes, isMainAsssembly);
                     }
                 }
             }
@@ -290,12 +291,12 @@ namespace Bridge.Translator
 
             if (assembly.Name.Name != Translator.Bridge_ASSEMBLY || this.AssemblyInfo.Assembly != null && this.AssemblyInfo.Assembly.EnableReservedNamespaces)
             {
-                this.ReadTypes(assembly);
+                this.ReadTypes(assembly, true);
             }
 
             foreach (var item in references)
             {
-                this.ReadTypes(item);
+                this.ReadTypes(item, false);
             }
 
             if (!this.FolderMode)

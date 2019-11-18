@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using ICSharpCode.NRefactory.CSharp;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using TypeDefinition = Mono.Cecil.TypeDefinition;
@@ -39,6 +41,12 @@ namespace Bridge.Contract.Dependencies
             foreach (var klass in this.emitter.AssemblyInfo.DeadCode.Classes)
             {
                 this.classDependencies.Use(klass);
+            }
+
+            foreach (var type in this.types.Values.Where(t => t.IsMainAssembly))
+            {
+                var name = Helpers.GetClassName(type.TypeDefinition);
+                this.classDependencies.Use(name);
             }
 
             this.logger.Trace("Building dependencies graph done.");

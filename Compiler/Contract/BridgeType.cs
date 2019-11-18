@@ -39,6 +39,12 @@ namespace Bridge.Contract
             set;
         }
 
+        public virtual bool IsMainAssembly
+        {
+            get;
+            set;
+        }
+
         public virtual IType Type
         {
             get;
