@@ -38,6 +38,9 @@ namespace Bridge.Contract.Dependencies
                 this.AddDependencies(type.TypeDefinition);
             }
 
+            // Referenced from inside of bridge.js, so have to use it manually.
+            this.classDependencies.Use("System.TimeoutException");
+
             foreach (var klass in this.emitter.AssemblyInfo.DeadCode.Classes)
             {
                 this.classDependencies.Use(klass);
@@ -82,6 +85,12 @@ namespace Bridge.Contract.Dependencies
             }
             this.AddDependencies(name, type.CustomAttributes);
             this.AddDependencies(name, type.BaseType);
+
+            // Current version of Cecil doesn't include SerializableAttribute in CustomAttributes collection,
+            // so have to add it manually.
+            if (type.IsSerializable) {
+                this.classDependencies.AddDependency(name, "System.SerializableAttribute");
+            }
         }
 
         private void AddDependencies(string name, MethodDefinition method)
