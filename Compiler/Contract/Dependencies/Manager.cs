@@ -40,6 +40,7 @@ namespace Bridge.Contract.Dependencies
 
             // Referenced from inside of bridge.js, so have to use it manually.
             this.classDependencies.Use("System.TimeoutException");
+            this.classDependencies.Use("System.Threading.Tasks.TaskCanceledException");
 
             foreach (var klass in this.emitter.AssemblyInfo.DeadCode.Classes)
             {
