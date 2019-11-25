@@ -1,13 +1,13 @@
-    //System.Collections.ObjectModel.ReadOnlyCollection$1 start.
+    /*System.Collections.ObjectModel.ReadOnlyCollection$1 start.*/
     Bridge.define("System.Collections.ObjectModel.ReadOnlyCollection$1", function (T) { return {
         inherits: [System.Collections.Generic.IList$1(T),System.Collections.IList,System.Collections.Generic.IReadOnlyList$1(T)],
         statics: {
             methods: {
-                //System.Collections.ObjectModel.ReadOnlyCollection$1.IsCompatibleObject:static start.
+                /*System.Collections.ObjectModel.ReadOnlyCollection$1.IsCompatibleObject:static start.*/
                 IsCompatibleObject: function (value) {
                     return ((Bridge.is(value, T)) || (value == null && Bridge.getDefaultValue(T) == null));
                 },
-                //System.Collections.ObjectModel.ReadOnlyCollection$1.IsCompatibleObject:static end.
+                /*System.Collections.ObjectModel.ReadOnlyCollection$1.IsCompatibleObject:static end.*/
 
 
             }
@@ -95,28 +95,28 @@
             System$Collections$IList$setItem: function (index, value) {
                 throw new System.NotSupportedException.ctor();
             },
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.contains start.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.contains start.*/
             contains: function (value) {
                 return System.Array.contains(this.list, value, T);
             },
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.contains end.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.contains end.*/
 
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$contains start.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$contains start.*/
             System$Collections$IList$contains: function (value) {
                 if (System.Collections.ObjectModel.ReadOnlyCollection$1(T).IsCompatibleObject(value)) {
                     return this.contains(Bridge.cast(Bridge.unbox(value, T), T));
                 }
                 return false;
             },
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$contains end.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$contains end.*/
 
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.copyTo start.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.copyTo start.*/
             copyTo: function (array, index) {
                 System.Array.copyTo(this.list, array, index, T);
             },
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.copyTo end.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.copyTo end.*/
 
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$ICollection$copyTo start.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$ICollection$copyTo start.*/
             System$Collections$ICollection$copyTo: function (array, index) {
                 if (array == null) {
                     throw new System.ArgumentNullException.$ctor1("array");
@@ -159,96 +159,96 @@
                     }
                 }
             },
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$ICollection$copyTo end.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$ICollection$copyTo end.*/
 
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.GetEnumerator start.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.GetEnumerator start.*/
             GetEnumerator: function () {
                 return Bridge.getEnumerator(this.list, T);
             },
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.GetEnumerator end.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.GetEnumerator end.*/
 
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IEnumerable$GetEnumerator start.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IEnumerable$GetEnumerator start.*/
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return Bridge.getEnumerator(Bridge.cast(this.list, System.Collections.IEnumerable));
             },
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IEnumerable$GetEnumerator end.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IEnumerable$GetEnumerator end.*/
 
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.indexOf start.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.indexOf start.*/
             indexOf: function (value) {
                 return System.Array.indexOf(this.list, value, 0, null, T);
             },
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.indexOf end.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.indexOf end.*/
 
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$indexOf start.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$indexOf start.*/
             System$Collections$IList$indexOf: function (value) {
                 if (System.Collections.ObjectModel.ReadOnlyCollection$1(T).IsCompatibleObject(value)) {
                     return this.indexOf(Bridge.cast(Bridge.unbox(value, T), T));
                 }
                 return -1;
             },
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$indexOf end.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$indexOf end.*/
 
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$ICollection$1$add start.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$ICollection$1$add start.*/
             System$Collections$Generic$ICollection$1$add: function (value) {
                 throw new System.NotSupportedException.ctor();
             },
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$ICollection$1$add end.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$ICollection$1$add end.*/
 
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$add start.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$add start.*/
             System$Collections$IList$add: function (value) {
                 throw new System.NotSupportedException.ctor();
             },
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$add end.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$add end.*/
 
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$ICollection$1$clear start.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$ICollection$1$clear start.*/
             System$Collections$Generic$ICollection$1$clear: function () {
                 throw new System.NotSupportedException.ctor();
             },
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$ICollection$1$clear end.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$ICollection$1$clear end.*/
 
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$clear start.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$clear start.*/
             System$Collections$IList$clear: function () {
                 throw new System.NotSupportedException.ctor();
             },
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$clear end.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$clear end.*/
 
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$IList$1$insert start.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$IList$1$insert start.*/
             System$Collections$Generic$IList$1$insert: function (index, value) {
                 throw new System.NotSupportedException.ctor();
             },
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$IList$1$insert end.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$IList$1$insert end.*/
 
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$insert start.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$insert start.*/
             System$Collections$IList$insert: function (index, value) {
                 throw new System.NotSupportedException.ctor();
             },
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$insert end.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$insert end.*/
 
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$ICollection$1$remove start.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$ICollection$1$remove start.*/
             System$Collections$Generic$ICollection$1$remove: function (value) {
                 throw new System.NotSupportedException.ctor();
             },
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$ICollection$1$remove end.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$ICollection$1$remove end.*/
 
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$remove start.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$remove start.*/
             System$Collections$IList$remove: function (value) {
                 throw new System.NotSupportedException.ctor();
             },
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$remove end.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$remove end.*/
 
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$IList$1$removeAt start.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$IList$1$removeAt start.*/
             System$Collections$Generic$IList$1$removeAt: function (index) {
                 throw new System.NotSupportedException.ctor();
             },
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$IList$1$removeAt end.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$IList$1$removeAt end.*/
 
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$removeAt start.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$removeAt start.*/
             System$Collections$IList$removeAt: function (index) {
                 throw new System.NotSupportedException.ctor();
             },
-            //System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$removeAt end.
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$removeAt end.*/
 
 
         }
     }; });
-    //System.Collections.ObjectModel.ReadOnlyCollection$1 end.
+    /*System.Collections.ObjectModel.ReadOnlyCollection$1 end.*/

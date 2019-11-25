@@ -1,4 +1,4 @@
-    //System.ParseFailureKind start.
+    /*System.ParseFailureKind start.*/
     Bridge.define("System.ParseFailureKind", {
         $kind: "enum",
         statics: {
@@ -11,4 +11,4 @@
             }
         }
     });
-    //System.ParseFailureKind end.
+    /*System.ParseFailureKind end.*/

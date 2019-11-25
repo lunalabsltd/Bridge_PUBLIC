@@ -1,4 +1,4 @@
-    //System.Text.UTF32Encoding start.
+    /*System.Text.UTF32Encoding start.*/
     Bridge.define("System.Text.UTF32Encoding", {
         inherits: [System.Text.Encoding],
         fields: {
@@ -35,7 +35,7 @@
             }
         },
         methods: {
-            //System.Text.UTF32Encoding.ToCodePoints start.
+            /*System.Text.UTF32Encoding.ToCodePoints start.*/
             ToCodePoints: function (str) {
                 var surrogate_1st = 0;
                 var unicode_codes = System.Array.init(0, 0, System.Char);
@@ -74,9 +74,9 @@
 
                 return unicode_codes;
             },
-            //System.Text.UTF32Encoding.ToCodePoints end.
+            /*System.Text.UTF32Encoding.ToCodePoints end.*/
 
-            //System.Text.UTF32Encoding.Encode$3 start.
+            /*System.Text.UTF32Encoding.Encode$3 start.*/
             Encode$3: function (s, outputBytes, outputIndex, writtenBytes) {
                 var hasBuffer = outputBytes != null;
                 var recorded = 0;
@@ -128,9 +128,9 @@
 
                 return outputBytes;
             },
-            //System.Text.UTF32Encoding.Encode$3 end.
+            /*System.Text.UTF32Encoding.Encode$3 end.*/
 
-            //System.Text.UTF32Encoding.Decode$2 start.
+            /*System.Text.UTF32Encoding.Decode$2 start.*/
             Decode$2: function (bytes, index, count, chars, charIndex) {
                 var position = index;
                 var result = "";
@@ -192,9 +192,9 @@
 
                 return result;
             },
-            //System.Text.UTF32Encoding.Decode$2 end.
+            /*System.Text.UTF32Encoding.Decode$2 end.*/
 
-            //System.Text.UTF32Encoding.GetMaxByteCount start.
+            /*System.Text.UTF32Encoding.GetMaxByteCount start.*/
             GetMaxByteCount: function (charCount) {
                 if (charCount < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("charCount");
@@ -209,9 +209,9 @@
 
                 return System.Int64.clip32(byteCount);
             },
-            //System.Text.UTF32Encoding.GetMaxByteCount end.
+            /*System.Text.UTF32Encoding.GetMaxByteCount end.*/
 
-            //System.Text.UTF32Encoding.GetMaxCharCount start.
+            /*System.Text.UTF32Encoding.GetMaxCharCount start.*/
             GetMaxCharCount: function (byteCount) {
                 if (byteCount < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("byteCount");
@@ -225,9 +225,9 @@
 
                 return charCount;
             },
-            //System.Text.UTF32Encoding.GetMaxCharCount end.
+            /*System.Text.UTF32Encoding.GetMaxCharCount end.*/
 
 
         }
     });
-    //System.Text.UTF32Encoding end.
+    /*System.Text.UTF32Encoding end.*/

@@ -1,4 +1,4 @@
-    //System.Collections.Generic.BitHelper start.
+    /*System.Collections.Generic.BitHelper start.*/
     Bridge.define("System.Collections.Generic.BitHelper", {
         statics: {
             fields: {
@@ -12,11 +12,11 @@
                 }
             },
             methods: {
-                //System.Collections.Generic.BitHelper.ToIntArrayLength:static start.
+                /*System.Collections.Generic.BitHelper.ToIntArrayLength:static start.*/
                 ToIntArrayLength: function (n) {
                     return n > 0 ? (((((Bridge.Int.div((((n - 1) | 0)), System.Collections.Generic.BitHelper.IntSize)) | 0) + 1) | 0)) : 0;
                 },
-                //System.Collections.Generic.BitHelper.ToIntArrayLength:static end.
+                /*System.Collections.Generic.BitHelper.ToIntArrayLength:static end.*/
 
 
             }
@@ -33,7 +33,7 @@
             }
         },
         methods: {
-            //System.Collections.Generic.BitHelper.MarkBit start.
+            /*System.Collections.Generic.BitHelper.MarkBit start.*/
             MarkBit: function (bitPosition) {
                 var bitArrayIndex = (Bridge.Int.div(bitPosition, System.Collections.Generic.BitHelper.IntSize)) | 0;
                 if (bitArrayIndex < this._length && bitArrayIndex >= 0) {
@@ -41,9 +41,9 @@
                     this._array[System.Array.index(bitArrayIndex, this._array)] = this._array[System.Array.index(bitArrayIndex, this._array)] | flag;
                 }
             },
-            //System.Collections.Generic.BitHelper.MarkBit end.
+            /*System.Collections.Generic.BitHelper.MarkBit end.*/
 
-            //System.Collections.Generic.BitHelper.IsMarked start.
+            /*System.Collections.Generic.BitHelper.IsMarked start.*/
             IsMarked: function (bitPosition) {
                 var bitArrayIndex = (Bridge.Int.div(bitPosition, System.Collections.Generic.BitHelper.IntSize)) | 0;
                 if (bitArrayIndex < this._length && bitArrayIndex >= 0) {
@@ -52,9 +52,9 @@
                 }
                 return false;
             },
-            //System.Collections.Generic.BitHelper.IsMarked end.
+            /*System.Collections.Generic.BitHelper.IsMarked end.*/
 
 
         }
     });
-    //System.Collections.Generic.BitHelper end.
+    /*System.Collections.Generic.BitHelper end.*/

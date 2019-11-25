@@ -1,13 +1,13 @@
-    //System.Text.UTF7Encoding start.
+    /*System.Text.UTF7Encoding start.*/
     Bridge.define("System.Text.UTF7Encoding", {
         inherits: [System.Text.Encoding],
         statics: {
             methods: {
-                //System.Text.UTF7Encoding.Escape:static start.
+                /*System.Text.UTF7Encoding.Escape:static start.*/
                 Escape: function (chars) {
                     return chars.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
                 },
-                //System.Text.UTF7Encoding.Escape:static end.
+                /*System.Text.UTF7Encoding.Escape:static end.*/
 
 
             }
@@ -39,7 +39,7 @@
             }
         },
         methods: {
-            //System.Text.UTF7Encoding.Encode$3 start.
+            /*System.Text.UTF7Encoding.Encode$3 start.*/
             Encode$3: function (s, outputBytes, outputIndex, writtenBytes) {
                 var setD = "A-Za-z0-9" + (System.Text.UTF7Encoding.Escape("'(),-./:?") || "");
 
@@ -72,9 +72,9 @@
 
                 return arr;
             },
-            //System.Text.UTF7Encoding.Encode$3 end.
+            /*System.Text.UTF7Encoding.Encode$3 end.*/
 
-            //System.Text.UTF7Encoding.Decode$2 start.
+            /*System.Text.UTF7Encoding.Decode$2 start.*/
             Decode$2: function (bytes, index, count, chars, charIndex) {
                 var _base64ToArrayBuffer = $asm.$.System.Text.UTF7Encoding.f2;
 
@@ -90,9 +90,9 @@
                 var str = System.String.fromCharArray(bytes, index, count);
                 return str.replace(/\+([A-Za-z0-9\/]*)-?/gi, function (_, chunk) { if (chunk === "") { return _ == "+-" ? "+" : ""; } return decode(chunk); });
             },
-            //System.Text.UTF7Encoding.Decode$2 end.
+            /*System.Text.UTF7Encoding.Decode$2 end.*/
 
-            //System.Text.UTF7Encoding.GetMaxByteCount start.
+            /*System.Text.UTF7Encoding.GetMaxByteCount start.*/
             GetMaxByteCount: function (charCount) {
                 if (charCount < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("charCount");
@@ -106,9 +106,9 @@
 
                 return System.Int64.clip32(byteCount);
             },
-            //System.Text.UTF7Encoding.GetMaxByteCount end.
+            /*System.Text.UTF7Encoding.GetMaxByteCount end.*/
 
-            //System.Text.UTF7Encoding.GetMaxCharCount start.
+            /*System.Text.UTF7Encoding.GetMaxCharCount start.*/
             GetMaxCharCount: function (byteCount) {
                 if (byteCount < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("byteCount");
@@ -121,7 +121,7 @@
 
                 return charCount | 0;
             },
-            //System.Text.UTF7Encoding.GetMaxCharCount end.
+            /*System.Text.UTF7Encoding.GetMaxCharCount end.*/
 
 
         }
@@ -163,4 +163,4 @@
             }
         }
     });
-    //System.Text.UTF7Encoding end.
+    /*System.Text.UTF7Encoding end.*/

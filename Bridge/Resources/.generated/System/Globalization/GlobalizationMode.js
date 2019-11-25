@@ -1,4 +1,4 @@
-    //System.Globalization.GlobalizationMode start.
+    /*System.Globalization.GlobalizationMode start.*/
     Bridge.define("System.Globalization.GlobalizationMode", {
         statics: {
             props: {
@@ -10,22 +10,22 @@
                 }
             },
             methods: {
-                //System.Globalization.GlobalizationMode.GetInvariantSwitchValue:static start.
+                /*System.Globalization.GlobalizationMode.GetInvariantSwitchValue:static start.*/
                 GetInvariantSwitchValue: function () {
                     return true;
 
 
                 },
-                //System.Globalization.GlobalizationMode.GetInvariantSwitchValue:static end.
+                /*System.Globalization.GlobalizationMode.GetInvariantSwitchValue:static end.*/
 
-                //System.Globalization.GlobalizationMode.GetGlobalizationInvariantMode:static start.
+                /*System.Globalization.GlobalizationMode.GetGlobalizationInvariantMode:static start.*/
                 GetGlobalizationInvariantMode: function () {
                     return System.Globalization.GlobalizationMode.GetInvariantSwitchValue();
                 },
-                //System.Globalization.GlobalizationMode.GetGlobalizationInvariantMode:static end.
+                /*System.Globalization.GlobalizationMode.GetGlobalizationInvariantMode:static end.*/
 
 
             }
         }
     });
-    //System.Globalization.GlobalizationMode end.
+    /*System.Globalization.GlobalizationMode end.*/

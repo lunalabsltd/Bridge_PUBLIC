@@ -1,4 +1,4 @@
-    //System.ComponentModel.BrowsableAttribute start.
+    /*System.ComponentModel.BrowsableAttribute start.*/
     Bridge.define("System.ComponentModel.BrowsableAttribute", {
         inherits: [System.Attribute],
         statics: {
@@ -36,7 +36,7 @@
             }
         },
         methods: {
-            //System.ComponentModel.BrowsableAttribute.equals start.
+            /*System.ComponentModel.BrowsableAttribute.equals start.*/
             equals: function (obj) {
                 if (Bridge.referenceEquals(obj, this)) {
                     return true;
@@ -46,15 +46,15 @@
 
                 return (other != null) && other.Browsable === this.browsable;
             },
-            //System.ComponentModel.BrowsableAttribute.equals end.
+            /*System.ComponentModel.BrowsableAttribute.equals end.*/
 
-            //System.ComponentModel.BrowsableAttribute.getHashCode start.
+            /*System.ComponentModel.BrowsableAttribute.getHashCode start.*/
             getHashCode: function () {
                 return Bridge.getHashCode(this.browsable);
             },
-            //System.ComponentModel.BrowsableAttribute.getHashCode end.
+            /*System.ComponentModel.BrowsableAttribute.getHashCode end.*/
 
 
         }
     });
-    //System.ComponentModel.BrowsableAttribute end.
+    /*System.ComponentModel.BrowsableAttribute end.*/

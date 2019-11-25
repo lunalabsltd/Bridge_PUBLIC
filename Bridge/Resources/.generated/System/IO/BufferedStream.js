@@ -1,4 +1,4 @@
-    //System.IO.BufferedStream start.
+    /*System.IO.BufferedStream start.*/
     Bridge.define("System.IO.BufferedStream", {
         inherits: [System.IO.Stream],
         statics: {
@@ -113,16 +113,16 @@
             }
         },
         methods: {
-            //System.IO.BufferedStream.EnsureNotClosed start.
+            /*System.IO.BufferedStream.EnsureNotClosed start.*/
             EnsureNotClosed: function () {
 
                 if (this._stream == null) {
                     System.IO.__Error.StreamIsClosed();
                 }
             },
-            //System.IO.BufferedStream.EnsureNotClosed end.
+            /*System.IO.BufferedStream.EnsureNotClosed end.*/
 
-            //System.IO.BufferedStream.EnsureCanSeek start.
+            /*System.IO.BufferedStream.EnsureCanSeek start.*/
             EnsureCanSeek: function () {
 
 
@@ -130,9 +130,9 @@
                     System.IO.__Error.SeekNotSupported();
                 }
             },
-            //System.IO.BufferedStream.EnsureCanSeek end.
+            /*System.IO.BufferedStream.EnsureCanSeek end.*/
 
-            //System.IO.BufferedStream.EnsureCanRead start.
+            /*System.IO.BufferedStream.EnsureCanRead start.*/
             EnsureCanRead: function () {
 
 
@@ -140,9 +140,9 @@
                     System.IO.__Error.ReadNotSupported();
                 }
             },
-            //System.IO.BufferedStream.EnsureCanRead end.
+            /*System.IO.BufferedStream.EnsureCanRead end.*/
 
-            //System.IO.BufferedStream.EnsureCanWrite start.
+            /*System.IO.BufferedStream.EnsureCanWrite start.*/
             EnsureCanWrite: function () {
 
 
@@ -150,9 +150,9 @@
                     System.IO.__Error.WriteNotSupported();
                 }
             },
-            //System.IO.BufferedStream.EnsureCanWrite end.
+            /*System.IO.BufferedStream.EnsureCanWrite end.*/
 
-            //System.IO.BufferedStream.EnsureShadowBufferAllocated start.
+            /*System.IO.BufferedStream.EnsureShadowBufferAllocated start.*/
             EnsureShadowBufferAllocated: function () {
 
 
@@ -164,9 +164,9 @@
                 System.Array.copy(this._buffer, 0, shadowBuffer, 0, this._writePos);
                 this._buffer = shadowBuffer;
             },
-            //System.IO.BufferedStream.EnsureShadowBufferAllocated end.
+            /*System.IO.BufferedStream.EnsureShadowBufferAllocated end.*/
 
-            //System.IO.BufferedStream.EnsureBufferAllocated start.
+            /*System.IO.BufferedStream.EnsureBufferAllocated start.*/
             EnsureBufferAllocated: function () {
 
 
@@ -174,9 +174,9 @@
                     this._buffer = System.Array.init(this._bufferSize, 0, System.Byte);
                 }
             },
-            //System.IO.BufferedStream.EnsureBufferAllocated end.
+            /*System.IO.BufferedStream.EnsureBufferAllocated end.*/
 
-            //System.IO.BufferedStream.Dispose$1 start.
+            /*System.IO.BufferedStream.Dispose$1 start.*/
             Dispose$1: function (disposing) {
 
                 try {
@@ -194,9 +194,9 @@
                     System.IO.Stream.prototype.Dispose$1.call(this, disposing);
                 }
             },
-            //System.IO.BufferedStream.Dispose$1 end.
+            /*System.IO.BufferedStream.Dispose$1 end.*/
 
-            //System.IO.BufferedStream.Flush start.
+            /*System.IO.BufferedStream.Flush start.*/
             Flush: function () {
 
                 this.EnsureNotClosed();
@@ -228,9 +228,9 @@
 
                 this._writePos = (this._readPos = (this._readLen = 0));
             },
-            //System.IO.BufferedStream.Flush end.
+            /*System.IO.BufferedStream.Flush end.*/
 
-            //System.IO.BufferedStream.FlushRead start.
+            /*System.IO.BufferedStream.FlushRead start.*/
             FlushRead: function () {
 
 
@@ -241,9 +241,9 @@
                 this._readPos = 0;
                 this._readLen = 0;
             },
-            //System.IO.BufferedStream.FlushRead end.
+            /*System.IO.BufferedStream.FlushRead end.*/
 
-            //System.IO.BufferedStream.ClearReadBufferBeforeWrite start.
+            /*System.IO.BufferedStream.ClearReadBufferBeforeWrite start.*/
             ClearReadBufferBeforeWrite: function () {
 
 
@@ -261,9 +261,9 @@
 
                 this.FlushRead();
             },
-            //System.IO.BufferedStream.ClearReadBufferBeforeWrite end.
+            /*System.IO.BufferedStream.ClearReadBufferBeforeWrite end.*/
 
-            //System.IO.BufferedStream.FlushWrite start.
+            /*System.IO.BufferedStream.FlushWrite start.*/
             FlushWrite: function () {
 
 
@@ -271,9 +271,9 @@
                 this._writePos = 0;
                 this._stream.Flush();
             },
-            //System.IO.BufferedStream.FlushWrite end.
+            /*System.IO.BufferedStream.FlushWrite end.*/
 
-            //System.IO.BufferedStream.ReadFromBuffer start.
+            /*System.IO.BufferedStream.ReadFromBuffer start.*/
             ReadFromBuffer: function (array, offset, count) {
 
                 var readBytes = (this._readLen - this._readPos) | 0;
@@ -292,9 +292,9 @@
 
                 return readBytes;
             },
-            //System.IO.BufferedStream.ReadFromBuffer end.
+            /*System.IO.BufferedStream.ReadFromBuffer end.*/
 
-            //System.IO.BufferedStream.ReadFromBuffer$1 start.
+            /*System.IO.BufferedStream.ReadFromBuffer$1 start.*/
             ReadFromBuffer$1: function (array, offset, count, error) {
 
                 try {
@@ -308,9 +308,9 @@
                     return 0;
                 }
             },
-            //System.IO.BufferedStream.ReadFromBuffer$1 end.
+            /*System.IO.BufferedStream.ReadFromBuffer$1 end.*/
 
-            //System.IO.BufferedStream.Read start.
+            /*System.IO.BufferedStream.Read start.*/
             Read: function (array, offset, count) {
 
                 if (array == null) {
@@ -361,9 +361,9 @@
 
                 return ((bytesFromBuffer + alreadySatisfied) | 0);
             },
-            //System.IO.BufferedStream.Read end.
+            /*System.IO.BufferedStream.Read end.*/
 
-            //System.IO.BufferedStream.ReadByte start.
+            /*System.IO.BufferedStream.ReadByte start.*/
             ReadByte: function () {
 
                 this.EnsureNotClosed();
@@ -387,9 +387,9 @@
                 var b = this._buffer[System.Array.index(Bridge.identity(this._readPos, ((this._readPos = (this._readPos + 1) | 0))), this._buffer)];
                 return b;
             },
-            //System.IO.BufferedStream.ReadByte end.
+            /*System.IO.BufferedStream.ReadByte end.*/
 
-            //System.IO.BufferedStream.WriteToBuffer start.
+            /*System.IO.BufferedStream.WriteToBuffer start.*/
             WriteToBuffer: function (array, offset, count) {
 
                 var bytesToWrite = Math.min(((this._bufferSize - this._writePos) | 0), count.v);
@@ -405,9 +405,9 @@
                 count.v = (count.v - bytesToWrite) | 0;
                 offset.v = (offset.v + bytesToWrite) | 0;
             },
-            //System.IO.BufferedStream.WriteToBuffer end.
+            /*System.IO.BufferedStream.WriteToBuffer end.*/
 
-            //System.IO.BufferedStream.WriteToBuffer$1 start.
+            /*System.IO.BufferedStream.WriteToBuffer$1 start.*/
             WriteToBuffer$1: function (array, offset, count, error) {
 
                 try {
@@ -420,9 +420,9 @@
                     error.v = ex;
                 }
             },
-            //System.IO.BufferedStream.WriteToBuffer$1 end.
+            /*System.IO.BufferedStream.WriteToBuffer$1 end.*/
 
-            //System.IO.BufferedStream.Write start.
+            /*System.IO.BufferedStream.Write start.*/
             Write: function (array, offset, count) {
                 offset = {v:offset};
                 count = {v:count};
@@ -491,9 +491,9 @@
                     this._stream.Write(array, offset.v, count.v);
                 }
             },
-            //System.IO.BufferedStream.Write end.
+            /*System.IO.BufferedStream.Write end.*/
 
-            //System.IO.BufferedStream.WriteByte start.
+            /*System.IO.BufferedStream.WriteByte start.*/
             WriteByte: function (value) {
 
                 this.EnsureNotClosed();
@@ -512,9 +512,9 @@
                 this._buffer[System.Array.index(Bridge.identity(this._writePos, ((this._writePos = (this._writePos + 1) | 0))), this._buffer)] = value;
 
             },
-            //System.IO.BufferedStream.WriteByte end.
+            /*System.IO.BufferedStream.WriteByte end.*/
 
-            //System.IO.BufferedStream.Seek start.
+            /*System.IO.BufferedStream.Seek start.*/
             Seek: function (offset, origin) {
 
                 this.EnsureNotClosed();
@@ -550,9 +550,9 @@
 
                 return newPos;
             },
-            //System.IO.BufferedStream.Seek end.
+            /*System.IO.BufferedStream.Seek end.*/
 
-            //System.IO.BufferedStream.SetLength start.
+            /*System.IO.BufferedStream.SetLength start.*/
             SetLength: function (value) {
 
                 if (value.lt(System.Int64(0))) {
@@ -566,9 +566,9 @@
                 this.Flush();
                 this._stream.SetLength(value);
             },
-            //System.IO.BufferedStream.SetLength end.
+            /*System.IO.BufferedStream.SetLength end.*/
 
 
         }
     });
-    //System.IO.BufferedStream end.
+    /*System.IO.BufferedStream end.*/

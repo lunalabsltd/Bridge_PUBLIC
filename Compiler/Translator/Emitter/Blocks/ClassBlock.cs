@@ -87,7 +87,7 @@ namespace Bridge.Translator
                 }
 
                 this.EnsureNewLine();
-                this.Write(string.Format("//{0} start.", name));
+                this.Write(string.Format("/*{0} start.*/", name));
                 this.WriteNewLine();
 
                 XmlToJsDoc.EmitComment(this, this.Emitter.Translator.EmitNode);
@@ -127,7 +127,7 @@ namespace Bridge.Translator
 
                 this.EmitClassEnd();
 
-                this.Write(string.Format("//{0} end.", name));
+                this.Write(string.Format("/*{0} end.*/", name));
                 this.WriteNewLine();
             }
         }

@@ -1,4 +1,4 @@
-    //System.Collections.Generic.LinkedList$1+Enumerator start.
+    /*System.Collections.Generic.LinkedList$1+Enumerator start.*/
     Bridge.define("System.Collections.Generic.LinkedList$1.Enumerator", function (T) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(T),System.Collections.IEnumerator],
         $kind: "nested struct",
@@ -63,7 +63,7 @@
             }
         },
         methods: {
-            //System.Collections.Generic.LinkedList$1+Enumerator.moveNext start.
+            /*System.Collections.Generic.LinkedList$1+Enumerator.moveNext start.*/
             moveNext: function () {
                 if (this.version !== this.list.version) {
                     throw new System.InvalidOperationException.ctor();
@@ -82,9 +82,9 @@
                 }
                 return true;
             },
-            //System.Collections.Generic.LinkedList$1+Enumerator.moveNext end.
+            /*System.Collections.Generic.LinkedList$1+Enumerator.moveNext end.*/
 
-            //System.Collections.Generic.LinkedList$1+Enumerator.System$Collections$IEnumerator$reset start.
+            /*System.Collections.Generic.LinkedList$1+Enumerator.System$Collections$IEnumerator$reset start.*/
             System$Collections$IEnumerator$reset: function () {
                 if (this.version !== this.list.version) {
                     throw new System.InvalidOperationException.ctor();
@@ -94,11 +94,11 @@
                 this.node = this.list.head;
                 this.index = 0;
             },
-            //System.Collections.Generic.LinkedList$1+Enumerator.System$Collections$IEnumerator$reset end.
+            /*System.Collections.Generic.LinkedList$1+Enumerator.System$Collections$IEnumerator$reset end.*/
 
-            //System.Collections.Generic.LinkedList$1+Enumerator.Dispose start.
+            /*System.Collections.Generic.LinkedList$1+Enumerator.Dispose start.*/
             Dispose: function () { },
-            //System.Collections.Generic.LinkedList$1+Enumerator.Dispose end.
+            /*System.Collections.Generic.LinkedList$1+Enumerator.Dispose end.*/
 
             getHashCode: function () {
                 var h = Bridge.addHash([3788985113, this.list, this.node, this.version, this.current, this.index]);
@@ -121,4 +121,4 @@
             }
         }
     }; });
-    //System.Collections.Generic.LinkedList$1+Enumerator end.
+    /*System.Collections.Generic.LinkedList$1+Enumerator end.*/

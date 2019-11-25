@@ -1,4 +1,4 @@
-    //System.OutOfMemoryException start.
+    /*System.OutOfMemoryException start.*/
     Bridge.define("System.OutOfMemoryException", {
         inherits: [System.SystemException],
         ctors: {
@@ -19,4 +19,4 @@
             }
         }
     });
-    //System.OutOfMemoryException end.
+    /*System.OutOfMemoryException end.*/

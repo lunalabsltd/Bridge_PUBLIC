@@ -1,4 +1,4 @@
-    //System.DateTimeResult start.
+    /*System.DateTimeResult start.*/
     Bridge.define("System.DateTimeResult", {
         $kind: "struct",
         statics: {
@@ -34,7 +34,7 @@
             }
         },
         methods: {
-            //System.DateTimeResult.Init start.
+            /*System.DateTimeResult.Init start.*/
             Init: function () {
                 this.Year = -1;
                 this.Month = -1;
@@ -42,32 +42,32 @@
                 this.fraction = -1;
                 this.era = -1;
             },
-            //System.DateTimeResult.Init end.
+            /*System.DateTimeResult.Init end.*/
 
-            //System.DateTimeResult.SetDate start.
+            /*System.DateTimeResult.SetDate start.*/
             SetDate: function (year, month, day) {
                 this.Year = year;
                 this.Month = month;
                 this.Day = day;
             },
-            //System.DateTimeResult.SetDate end.
+            /*System.DateTimeResult.SetDate end.*/
 
-            //System.DateTimeResult.SetFailure start.
+            /*System.DateTimeResult.SetFailure start.*/
             SetFailure: function (failure, failureMessageID, failureMessageFormatArgument) {
                 this.failure = failure;
                 this.failureMessageID = failureMessageID;
                 this.failureMessageFormatArgument = failureMessageFormatArgument;
             },
-            //System.DateTimeResult.SetFailure end.
+            /*System.DateTimeResult.SetFailure end.*/
 
-            //System.DateTimeResult.SetFailure$1 start.
+            /*System.DateTimeResult.SetFailure$1 start.*/
             SetFailure$1: function (failure, failureMessageID, failureMessageFormatArgument, failureArgumentName) {
                 this.failure = failure;
                 this.failureMessageID = failureMessageID;
                 this.failureMessageFormatArgument = failureMessageFormatArgument;
                 this.failureArgumentName = failureArgumentName;
             },
-            //System.DateTimeResult.SetFailure$1 end.
+            /*System.DateTimeResult.SetFailure$1 end.*/
 
             getHashCode: function () {
                 var h = Bridge.addHash([5374321750, this.Year, this.Month, this.Day, this.Hour, this.Minute, this.Second, this.fraction, this.era, this.flags, this.timeZoneOffset, this.calendar, this.parsedDate, this.failure, this.failureMessageID, this.failureMessageFormatArgument, this.failureArgumentName]);
@@ -101,4 +101,4 @@
             }
         }
     });
-    //System.DateTimeResult end.
+    /*System.DateTimeResult end.*/

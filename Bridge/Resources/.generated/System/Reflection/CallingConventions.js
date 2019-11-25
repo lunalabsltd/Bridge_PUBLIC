@@ -1,4 +1,4 @@
-    //System.Reflection.CallingConventions start.
+    /*System.Reflection.CallingConventions start.*/
     Bridge.define("System.Reflection.CallingConventions", {
         $kind: "enum",
         statics: {
@@ -12,4 +12,4 @@
         },
         $flags: true
     });
-    //System.Reflection.CallingConventions end.
+    /*System.Reflection.CallingConventions end.*/

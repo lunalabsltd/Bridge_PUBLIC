@@ -1,4 +1,4 @@
-    //System.Reflection.ParameterModifier start.
+    /*System.Reflection.ParameterModifier start.*/
     Bridge.define("System.Reflection.ParameterModifier", {
         $kind: "struct",
         statics: {
@@ -46,4 +46,4 @@
             }
         }
     });
-    //System.Reflection.ParameterModifier end.
+    /*System.Reflection.ParameterModifier end.*/

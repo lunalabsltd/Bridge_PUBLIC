@@ -1,4 +1,4 @@
-    //System.Random start.
+    /*System.Random start.*/
     Bridge.define("System.Random", {
         statics: {
             fields: {
@@ -58,13 +58,13 @@
             }
         },
         methods: {
-            //System.Random.Sample start.
+            /*System.Random.Sample start.*/
             Sample: function () {
                 return (this.InternalSample() * (4.6566128752457969E-10));
             },
-            //System.Random.Sample end.
+            /*System.Random.Sample end.*/
 
-            //System.Random.InternalSample start.
+            /*System.Random.InternalSample start.*/
             InternalSample: function () {
                 var retVal;
                 var locINext = this.inext;
@@ -95,15 +95,15 @@
 
                 return retVal;
             },
-            //System.Random.InternalSample end.
+            /*System.Random.InternalSample end.*/
 
-            //System.Random.Next start.
+            /*System.Random.Next start.*/
             Next: function () {
                 return this.InternalSample();
             },
-            //System.Random.Next end.
+            /*System.Random.Next end.*/
 
-            //System.Random.Next$2 start.
+            /*System.Random.Next$2 start.*/
             Next$2: function (minValue, maxValue) {
                 if (minValue > maxValue) {
                     throw new System.ArgumentOutOfRangeException.$ctor4("minValue", "'minValue' cannot be greater than maxValue.");
@@ -116,18 +116,18 @@
                     return System.Int64.clip32(Bridge.Int.clip64((this.GetSampleForLargeRange() * System.Int64.toNumber(range))).add(System.Int64(minValue)));
                 }
             },
-            //System.Random.Next$2 end.
+            /*System.Random.Next$2 end.*/
 
-            //System.Random.Next$1 start.
+            /*System.Random.Next$1 start.*/
             Next$1: function (maxValue) {
                 if (maxValue < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor4("maxValue", "'maxValue' must be greater than zero.");
                 }
                 return Bridge.Int.clip32(this.Sample() * maxValue);
             },
-            //System.Random.Next$1 end.
+            /*System.Random.Next$1 end.*/
 
-            //System.Random.GetSampleForLargeRange start.
+            /*System.Random.GetSampleForLargeRange start.*/
             GetSampleForLargeRange: function () {
 
                 var result = this.InternalSample();
@@ -140,15 +140,15 @@
                 d /= 4294967293;
                 return d;
             },
-            //System.Random.GetSampleForLargeRange end.
+            /*System.Random.GetSampleForLargeRange end.*/
 
-            //System.Random.NextDouble start.
+            /*System.Random.NextDouble start.*/
             NextDouble: function () {
                 return this.Sample();
             },
-            //System.Random.NextDouble end.
+            /*System.Random.NextDouble end.*/
 
-            //System.Random.NextBytes start.
+            /*System.Random.NextBytes start.*/
             NextBytes: function (buffer) {
                 if (buffer == null) {
                     throw new System.ArgumentNullException.$ctor1("buffer");
@@ -157,9 +157,9 @@
                     buffer[System.Array.index(i, buffer)] = (this.InternalSample() % (256)) & 255;
                 }
             },
-            //System.Random.NextBytes end.
+            /*System.Random.NextBytes end.*/
 
 
         }
     });
-    //System.Random end.
+    /*System.Random end.*/

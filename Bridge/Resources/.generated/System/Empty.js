@@ -1,4 +1,4 @@
-    //System.Empty start.
+    /*System.Empty start.*/
     Bridge.define("System.Empty", {
         statics: {
             fields: {
@@ -16,13 +16,13 @@
             }
         },
         methods: {
-            //System.Empty.toString start.
+            /*System.Empty.toString start.*/
             toString: function () {
                 return "";
             },
-            //System.Empty.toString end.
+            /*System.Empty.toString end.*/
 
 
         }
     });
-    //System.Empty end.
+    /*System.Empty end.*/

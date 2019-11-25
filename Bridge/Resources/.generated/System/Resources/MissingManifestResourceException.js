@@ -1,4 +1,4 @@
-    //System.Resources.MissingManifestResourceException start.
+    /*System.Resources.MissingManifestResourceException start.*/
     Bridge.define("System.Resources.MissingManifestResourceException", {
         inherits: [System.SystemException],
         ctors: {
@@ -19,4 +19,4 @@
             }
         }
     });
-    //System.Resources.MissingManifestResourceException end.
+    /*System.Resources.MissingManifestResourceException end.*/

@@ -1,4 +1,4 @@
-    //System.Collections.HashHelpers start.
+    /*System.Collections.HashHelpers start.*/
     Bridge.define("System.Collections.HashHelpers", {
         statics: {
             fields: {
@@ -89,14 +89,14 @@
                 }
             },
             methods: {
-                //System.Collections.HashHelpers.Combine:static start.
+                /*System.Collections.HashHelpers.Combine:static start.*/
                 Combine: function (h1, h2) {
                     var rol5 = (((((h1 >>> 0) << 5) >>> 0)) | ((h1 >>> 0) >>> 27)) >>> 0;
                     return ((((rol5 | 0) + h1) | 0)) ^ h2;
                 },
-                //System.Collections.HashHelpers.Combine:static end.
+                /*System.Collections.HashHelpers.Combine:static end.*/
 
-                //System.Collections.HashHelpers.IsPrime:static start.
+                /*System.Collections.HashHelpers.IsPrime:static start.*/
                 IsPrime: function (candidate) {
                     if ((candidate & 1) !== 0) {
                         var limit = Bridge.Int.clip32(Math.sqrt(candidate));
@@ -109,9 +109,9 @@
                     }
                     return (candidate === 2);
                 },
-                //System.Collections.HashHelpers.IsPrime:static end.
+                /*System.Collections.HashHelpers.IsPrime:static end.*/
 
-                //System.Collections.HashHelpers.GetPrime:static start.
+                /*System.Collections.HashHelpers.GetPrime:static start.*/
                 GetPrime: function (min) {
                     if (min < 0) {
                         throw new System.ArgumentException.$ctor1("Hashtable's capacity overflowed and went negative. Check load factor, capacity and the current size of the table.");
@@ -129,15 +129,15 @@
                     }
                     return min;
                 },
-                //System.Collections.HashHelpers.GetPrime:static end.
+                /*System.Collections.HashHelpers.GetPrime:static end.*/
 
-                //System.Collections.HashHelpers.GetMinPrime:static start.
+                /*System.Collections.HashHelpers.GetMinPrime:static start.*/
                 GetMinPrime: function () {
                     return System.Collections.HashHelpers.primes[System.Array.index(0, System.Collections.HashHelpers.primes)];
                 },
-                //System.Collections.HashHelpers.GetMinPrime:static end.
+                /*System.Collections.HashHelpers.GetMinPrime:static end.*/
 
-                //System.Collections.HashHelpers.ExpandPrime:static start.
+                /*System.Collections.HashHelpers.ExpandPrime:static start.*/
                 ExpandPrime: function (oldSize) {
                     var newSize = Bridge.Int.mul(2, oldSize);
                     if ((newSize >>> 0) > System.Collections.HashHelpers.MaxPrimeArrayLength && System.Collections.HashHelpers.MaxPrimeArrayLength > oldSize) {
@@ -145,10 +145,10 @@
                     }
                     return System.Collections.HashHelpers.GetPrime(newSize);
                 },
-                //System.Collections.HashHelpers.ExpandPrime:static end.
+                /*System.Collections.HashHelpers.ExpandPrime:static end.*/
 
 
             }
         }
     });
-    //System.Collections.HashHelpers end.
+    /*System.Collections.HashHelpers end.*/

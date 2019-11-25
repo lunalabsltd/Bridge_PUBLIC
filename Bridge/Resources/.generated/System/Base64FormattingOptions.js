@@ -1,4 +1,4 @@
-    //System.Base64FormattingOptions start.
+    /*System.Base64FormattingOptions start.*/
     Bridge.define("System.Base64FormattingOptions", {
         $kind: "enum",
         statics: {
@@ -9,4 +9,4 @@
         },
         $flags: true
     });
-    //System.Base64FormattingOptions end.
+    /*System.Base64FormattingOptions end.*/

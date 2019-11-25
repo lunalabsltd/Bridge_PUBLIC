@@ -1,4 +1,4 @@
-    //System.DayOfWeek start.
+    /*System.DayOfWeek start.*/
     Bridge.define("System.DayOfWeek", {
         $kind: "enum",
         statics: {
@@ -13,4 +13,4 @@
             }
         }
     });
-    //System.DayOfWeek end.
+    /*System.DayOfWeek end.*/

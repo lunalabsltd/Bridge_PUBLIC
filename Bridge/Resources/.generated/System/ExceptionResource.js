@@ -1,4 +1,4 @@
-    //System.ExceptionResource start.
+    /*System.ExceptionResource start.*/
     Bridge.define("System.ExceptionResource", {
         $kind: "enum",
         statics: {
@@ -106,4 +106,4 @@
             }
         }
     });
-    //System.ExceptionResource end.
+    /*System.ExceptionResource end.*/

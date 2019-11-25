@@ -1,4 +1,4 @@
-    //System.CharEnumerator start.
+    /*System.CharEnumerator start.*/
     Bridge.define("System.CharEnumerator", {
         inherits: [System.Collections.IEnumerator,System.Collections.Generic.IEnumerator$1(System.Char),System.IDisposable,System.ICloneable],
         fields: {
@@ -39,13 +39,13 @@
             }
         },
         methods: {
-            //System.CharEnumerator.clone start.
+            /*System.CharEnumerator.clone start.*/
             clone: function () {
                 return Bridge.clone(this);
             },
-            //System.CharEnumerator.clone end.
+            /*System.CharEnumerator.clone end.*/
 
-            //System.CharEnumerator.moveNext start.
+            /*System.CharEnumerator.moveNext start.*/
             moveNext: function () {
                 if (this._index < (((this._str.length - 1) | 0))) {
                     this._index = (this._index + 1) | 0;
@@ -56,25 +56,25 @@
                 }
                 return false;
             },
-            //System.CharEnumerator.moveNext end.
+            /*System.CharEnumerator.moveNext end.*/
 
-            //System.CharEnumerator.Dispose start.
+            /*System.CharEnumerator.Dispose start.*/
             Dispose: function () {
                 if (this._str != null) {
                     this._index = this._str.length;
                 }
                 this._str = null;
             },
-            //System.CharEnumerator.Dispose end.
+            /*System.CharEnumerator.Dispose end.*/
 
-            //System.CharEnumerator.reset start.
+            /*System.CharEnumerator.reset start.*/
             reset: function () {
                 this._currentElement = 0;
                 this._index = -1;
             },
-            //System.CharEnumerator.reset end.
+            /*System.CharEnumerator.reset end.*/
 
 
         }
     });
-    //System.CharEnumerator end.
+    /*System.CharEnumerator end.*/

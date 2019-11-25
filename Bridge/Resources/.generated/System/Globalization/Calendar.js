@@ -1,4 +1,4 @@
-    //System.Globalization.Calendar start.
+    /*System.Globalization.Calendar start.*/
     Bridge.define("System.Globalization.Calendar", {
         inherits: [System.ICloneable],
         statics: {
@@ -41,7 +41,7 @@
                 }
             },
             methods: {
-                //System.Globalization.Calendar.ReadOnly:static start.
+                /*System.Globalization.Calendar.ReadOnly:static start.*/
                 ReadOnly: function (calendar) {
                     if (calendar == null) {
                         throw new System.ArgumentNullException.$ctor1("calendar");
@@ -55,17 +55,17 @@
 
                     return (clonedCalendar);
                 },
-                //System.Globalization.Calendar.ReadOnly:static end.
+                /*System.Globalization.Calendar.ReadOnly:static end.*/
 
-                //System.Globalization.Calendar.CheckAddResult:static start.
+                /*System.Globalization.Calendar.CheckAddResult:static start.*/
                 CheckAddResult: function (ticks, minValue, maxValue) {
                     if (ticks.lt(System.DateTime.getTicks(minValue)) || ticks.gt(System.DateTime.getTicks(maxValue))) {
                         throw new System.ArgumentException.$ctor1(System.String.formatProvider(System.Globalization.CultureInfo.invariantCulture, System.SR.Format$1("The result is out of the supported range for this calendar. The result should be between {0} (Gregorian date) and {1} (Gregorian date), inclusive.", Bridge.box(minValue, System.DateTime, System.DateTime.format), Bridge.box(maxValue, System.DateTime, System.DateTime.format)), null));
                     }
                 },
-                //System.Globalization.Calendar.CheckAddResult:static end.
+                /*System.Globalization.Calendar.CheckAddResult:static end.*/
 
-                //System.Globalization.Calendar.GetSystemTwoDigitYearSetting:static start.
+                /*System.Globalization.Calendar.GetSystemTwoDigitYearSetting:static start.*/
                 GetSystemTwoDigitYearSetting: function (CalID, defaultYearValue) {
                     var twoDigitYearMax = 2029;
                     if (twoDigitYearMax < 0) {
@@ -73,7 +73,7 @@
                     }
                     return (twoDigitYearMax);
                 },
-                //System.Globalization.Calendar.GetSystemTwoDigitYearSetting:static end.
+                /*System.Globalization.Calendar.GetSystemTwoDigitYearSetting:static end.*/
 
 
             }
@@ -144,29 +144,29 @@
             }
         },
         methods: {
-            //System.Globalization.Calendar.clone start.
+            /*System.Globalization.Calendar.clone start.*/
             clone: function () {
                 var o = Bridge.clone(this);
                 Bridge.cast(o, System.Globalization.Calendar).SetReadOnlyState(false);
                 return (o);
             },
-            //System.Globalization.Calendar.clone end.
+            /*System.Globalization.Calendar.clone end.*/
 
-            //System.Globalization.Calendar.VerifyWritable start.
+            /*System.Globalization.Calendar.VerifyWritable start.*/
             VerifyWritable: function () {
                 if (this._isReadOnly) {
                     throw new System.InvalidOperationException.$ctor1("Instance is read-only.");
                 }
             },
-            //System.Globalization.Calendar.VerifyWritable end.
+            /*System.Globalization.Calendar.VerifyWritable end.*/
 
-            //System.Globalization.Calendar.SetReadOnlyState start.
+            /*System.Globalization.Calendar.SetReadOnlyState start.*/
             SetReadOnlyState: function (readOnly) {
                 this._isReadOnly = readOnly;
             },
-            //System.Globalization.Calendar.SetReadOnlyState end.
+            /*System.Globalization.Calendar.SetReadOnlyState end.*/
 
-            //System.Globalization.Calendar.Add start.
+            /*System.Globalization.Calendar.Add start.*/
             Add: function (time, value, scale) {
                 var tempMillis = (value * scale + (value >= 0 ? 0.5 : -0.5));
                 if (!((tempMillis > -315537897600000.0) && (tempMillis < 315537897600000.0))) {
@@ -178,96 +178,96 @@
                 System.Globalization.Calendar.CheckAddResult(ticks, this.MinSupportedDateTime, this.MaxSupportedDateTime);
                 return (System.DateTime.create$2(ticks));
             },
-            //System.Globalization.Calendar.Add end.
+            /*System.Globalization.Calendar.Add end.*/
 
-            //System.Globalization.Calendar.AddMilliseconds start.
+            /*System.Globalization.Calendar.AddMilliseconds start.*/
             AddMilliseconds: function (time, milliseconds) {
                 return (this.Add(time, milliseconds, 1));
             },
-            //System.Globalization.Calendar.AddMilliseconds end.
+            /*System.Globalization.Calendar.AddMilliseconds end.*/
 
-            //System.Globalization.Calendar.AddDays start.
+            /*System.Globalization.Calendar.AddDays start.*/
             AddDays: function (time, days) {
                 return (this.Add(time, days, System.Globalization.Calendar.MillisPerDay));
             },
-            //System.Globalization.Calendar.AddDays end.
+            /*System.Globalization.Calendar.AddDays end.*/
 
-            //System.Globalization.Calendar.AddHours start.
+            /*System.Globalization.Calendar.AddHours start.*/
             AddHours: function (time, hours) {
                 return (this.Add(time, hours, System.Globalization.Calendar.MillisPerHour));
             },
-            //System.Globalization.Calendar.AddHours end.
+            /*System.Globalization.Calendar.AddHours end.*/
 
-            //System.Globalization.Calendar.AddMinutes start.
+            /*System.Globalization.Calendar.AddMinutes start.*/
             AddMinutes: function (time, minutes) {
                 return (this.Add(time, minutes, System.Globalization.Calendar.MillisPerMinute));
             },
-            //System.Globalization.Calendar.AddMinutes end.
+            /*System.Globalization.Calendar.AddMinutes end.*/
 
-            //System.Globalization.Calendar.AddSeconds start.
+            /*System.Globalization.Calendar.AddSeconds start.*/
             AddSeconds: function (time, seconds) {
                 return this.Add(time, seconds, System.Globalization.Calendar.MillisPerSecond);
             },
-            //System.Globalization.Calendar.AddSeconds end.
+            /*System.Globalization.Calendar.AddSeconds end.*/
 
-            //System.Globalization.Calendar.AddWeeks start.
+            /*System.Globalization.Calendar.AddWeeks start.*/
             AddWeeks: function (time, weeks) {
                 return (this.AddDays(time, Bridge.Int.mul(weeks, 7)));
             },
-            //System.Globalization.Calendar.AddWeeks end.
+            /*System.Globalization.Calendar.AddWeeks end.*/
 
-            //System.Globalization.Calendar.GetDaysInMonth start.
+            /*System.Globalization.Calendar.GetDaysInMonth start.*/
             GetDaysInMonth: function (year, month) {
                 return (this.GetDaysInMonth$1(year, month, System.Globalization.Calendar.CurrentEra));
             },
-            //System.Globalization.Calendar.GetDaysInMonth end.
+            /*System.Globalization.Calendar.GetDaysInMonth end.*/
 
-            //System.Globalization.Calendar.GetDaysInYear start.
+            /*System.Globalization.Calendar.GetDaysInYear start.*/
             GetDaysInYear: function (year) {
                 return (this.GetDaysInYear$1(year, System.Globalization.Calendar.CurrentEra));
             },
-            //System.Globalization.Calendar.GetDaysInYear end.
+            /*System.Globalization.Calendar.GetDaysInYear end.*/
 
-            //System.Globalization.Calendar.GetHour start.
+            /*System.Globalization.Calendar.GetHour start.*/
             GetHour: function (time) {
                 return (System.Int64.clip32((System.DateTime.getTicks(time).div(System.Globalization.Calendar.TicksPerHour)).mod(System.Int64(24))));
             },
-            //System.Globalization.Calendar.GetHour end.
+            /*System.Globalization.Calendar.GetHour end.*/
 
-            //System.Globalization.Calendar.GetMilliseconds start.
+            /*System.Globalization.Calendar.GetMilliseconds start.*/
             GetMilliseconds: function (time) {
                 return System.Int64.toNumber((System.DateTime.getTicks(time).div(System.Globalization.Calendar.TicksPerMillisecond)).mod(System.Int64(1000)));
             },
-            //System.Globalization.Calendar.GetMilliseconds end.
+            /*System.Globalization.Calendar.GetMilliseconds end.*/
 
-            //System.Globalization.Calendar.GetMinute start.
+            /*System.Globalization.Calendar.GetMinute start.*/
             GetMinute: function (time) {
                 return (System.Int64.clip32((System.DateTime.getTicks(time).div(System.Globalization.Calendar.TicksPerMinute)).mod(System.Int64(60))));
             },
-            //System.Globalization.Calendar.GetMinute end.
+            /*System.Globalization.Calendar.GetMinute end.*/
 
-            //System.Globalization.Calendar.GetMonthsInYear start.
+            /*System.Globalization.Calendar.GetMonthsInYear start.*/
             GetMonthsInYear: function (year) {
                 return (this.GetMonthsInYear$1(year, System.Globalization.Calendar.CurrentEra));
             },
-            //System.Globalization.Calendar.GetMonthsInYear end.
+            /*System.Globalization.Calendar.GetMonthsInYear end.*/
 
-            //System.Globalization.Calendar.GetSecond start.
+            /*System.Globalization.Calendar.GetSecond start.*/
             GetSecond: function (time) {
                 return (System.Int64.clip32((System.DateTime.getTicks(time).div(System.Globalization.Calendar.TicksPerSecond)).mod(System.Int64(60))));
             },
-            //System.Globalization.Calendar.GetSecond end.
+            /*System.Globalization.Calendar.GetSecond end.*/
 
-            //System.Globalization.Calendar.GetFirstDayWeekOfYear start.
+            /*System.Globalization.Calendar.GetFirstDayWeekOfYear start.*/
             GetFirstDayWeekOfYear: function (time, firstDayOfWeek) {
                 var dayOfYear = (this.GetDayOfYear(time) - 1) | 0;
                 var dayForJan1 = (this.GetDayOfWeek(time) - (dayOfYear % 7)) | 0;
                 var offset = (((((dayForJan1 - firstDayOfWeek) | 0) + 14) | 0)) % 7;
                 return (((((Bridge.Int.div((((dayOfYear + offset) | 0)), 7)) | 0) + 1) | 0));
             },
-            //System.Globalization.Calendar.GetFirstDayWeekOfYear end.
+            /*System.Globalization.Calendar.GetFirstDayWeekOfYear end.*/
 
-            //System.Globalization.Calendar.GetWeekOfYearFullDays start.
+            /*System.Globalization.Calendar.GetWeekOfYearFullDays start.*/
             GetWeekOfYearFullDays: function (time, firstDayOfWeek, fullDays) {
                 var dayForJan1;
                 var offset;
@@ -292,9 +292,9 @@
                 }
                 return (this.GetWeekOfYearFullDays(System.DateTime.addDays(time, ((-(((dayOfYear + 1) | 0))) | 0)), firstDayOfWeek, fullDays));
             },
-            //System.Globalization.Calendar.GetWeekOfYearFullDays end.
+            /*System.Globalization.Calendar.GetWeekOfYearFullDays end.*/
 
-            //System.Globalization.Calendar.GetWeekOfYearOfMinSupportedDateTime start.
+            /*System.Globalization.Calendar.GetWeekOfYearOfMinSupportedDateTime start.*/
             GetWeekOfYearOfMinSupportedDateTime: function (firstDayOfWeek, minimumDaysInFirstWeek) {
                 var dayOfYear = (this.GetDayOfYear(this.MinSupportedDateTime) - 1) | 0;
                 var dayOfWeekOfFirstOfYear = (this.GetDayOfWeek(this.MinSupportedDateTime) - dayOfYear % 7) | 0;
@@ -315,9 +315,9 @@
 
                 return (((((Bridge.Int.div(day, 7)) | 0) + 1) | 0));
             },
-            //System.Globalization.Calendar.GetWeekOfYearOfMinSupportedDateTime end.
+            /*System.Globalization.Calendar.GetWeekOfYearOfMinSupportedDateTime end.*/
 
-            //System.Globalization.Calendar.GetWeekOfYear start.
+            /*System.Globalization.Calendar.GetWeekOfYear start.*/
             GetWeekOfYear: function (time, rule, firstDayOfWeek) {
                 if (firstDayOfWeek < 0 || firstDayOfWeek > 6) {
                     throw new System.ArgumentOutOfRangeException.$ctor4("firstDayOfWeek", System.SR.Format$1("Valid values are between {0} and {1}, inclusive.", Bridge.box(System.DayOfWeek.Sunday, System.DayOfWeek, System.Enum.toStringFn(System.DayOfWeek)), Bridge.box(System.DayOfWeek.Saturday, System.DayOfWeek, System.Enum.toStringFn(System.DayOfWeek))));
@@ -332,27 +332,27 @@
                 }
                 throw new System.ArgumentOutOfRangeException.$ctor4("rule", System.SR.Format$1("Valid values are between {0} and {1}, inclusive.", Bridge.box(0, System.Globalization.CalendarWeekRule, System.Enum.toStringFn(System.Globalization.CalendarWeekRule)), Bridge.box(2, System.Globalization.CalendarWeekRule, System.Enum.toStringFn(System.Globalization.CalendarWeekRule))));
             },
-            //System.Globalization.Calendar.GetWeekOfYear end.
+            /*System.Globalization.Calendar.GetWeekOfYear end.*/
 
-            //System.Globalization.Calendar.IsLeapDay start.
+            /*System.Globalization.Calendar.IsLeapDay start.*/
             IsLeapDay: function (year, month, day) {
                 return (this.IsLeapDay$1(year, month, day, System.Globalization.Calendar.CurrentEra));
             },
-            //System.Globalization.Calendar.IsLeapDay end.
+            /*System.Globalization.Calendar.IsLeapDay end.*/
 
-            //System.Globalization.Calendar.IsLeapMonth start.
+            /*System.Globalization.Calendar.IsLeapMonth start.*/
             IsLeapMonth: function (year, month) {
                 return (this.IsLeapMonth$1(year, month, System.Globalization.Calendar.CurrentEra));
             },
-            //System.Globalization.Calendar.IsLeapMonth end.
+            /*System.Globalization.Calendar.IsLeapMonth end.*/
 
-            //System.Globalization.Calendar.GetLeapMonth start.
+            /*System.Globalization.Calendar.GetLeapMonth start.*/
             GetLeapMonth: function (year) {
                 return (this.GetLeapMonth$1(year, System.Globalization.Calendar.CurrentEra));
             },
-            //System.Globalization.Calendar.GetLeapMonth end.
+            /*System.Globalization.Calendar.GetLeapMonth end.*/
 
-            //System.Globalization.Calendar.GetLeapMonth$1 start.
+            /*System.Globalization.Calendar.GetLeapMonth$1 start.*/
             GetLeapMonth$1: function (year, era) {
                 if (!this.IsLeapYear$1(year, era)) {
                     return 0;
@@ -367,21 +367,21 @@
 
                 return 0;
             },
-            //System.Globalization.Calendar.GetLeapMonth$1 end.
+            /*System.Globalization.Calendar.GetLeapMonth$1 end.*/
 
-            //System.Globalization.Calendar.IsLeapYear start.
+            /*System.Globalization.Calendar.IsLeapYear start.*/
             IsLeapYear: function (year) {
                 return (this.IsLeapYear$1(year, System.Globalization.Calendar.CurrentEra));
             },
-            //System.Globalization.Calendar.IsLeapYear end.
+            /*System.Globalization.Calendar.IsLeapYear end.*/
 
-            //System.Globalization.Calendar.ToDateTime start.
+            /*System.Globalization.Calendar.ToDateTime start.*/
             ToDateTime: function (year, month, day, hour, minute, second, millisecond) {
                 return (this.ToDateTime$1(year, month, day, hour, minute, second, millisecond, System.Globalization.Calendar.CurrentEra));
             },
-            //System.Globalization.Calendar.ToDateTime end.
+            /*System.Globalization.Calendar.ToDateTime end.*/
 
-            //System.Globalization.Calendar.TryToDateTime start.
+            /*System.Globalization.Calendar.TryToDateTime start.*/
             TryToDateTime: function (year, month, day, hour, minute, second, millisecond, era, result) {
                 result.v = System.DateTime.getMinValue();
                 try {
@@ -396,27 +396,27 @@
                     }
                 }
             },
-            //System.Globalization.Calendar.TryToDateTime end.
+            /*System.Globalization.Calendar.TryToDateTime end.*/
 
-            //System.Globalization.Calendar.IsValidYear start.
+            /*System.Globalization.Calendar.IsValidYear start.*/
             IsValidYear: function (year, era) {
                 return (year >= this.GetYear(this.MinSupportedDateTime) && year <= this.GetYear(this.MaxSupportedDateTime));
             },
-            //System.Globalization.Calendar.IsValidYear end.
+            /*System.Globalization.Calendar.IsValidYear end.*/
 
-            //System.Globalization.Calendar.IsValidMonth start.
+            /*System.Globalization.Calendar.IsValidMonth start.*/
             IsValidMonth: function (year, month, era) {
                 return (this.IsValidYear(year, era) && month >= 1 && month <= this.GetMonthsInYear$1(year, era));
             },
-            //System.Globalization.Calendar.IsValidMonth end.
+            /*System.Globalization.Calendar.IsValidMonth end.*/
 
-            //System.Globalization.Calendar.IsValidDay start.
+            /*System.Globalization.Calendar.IsValidDay start.*/
             IsValidDay: function (year, month, day, era) {
                 return (this.IsValidMonth(year, month, era) && day >= 1 && day <= this.GetDaysInMonth$1(year, month, era));
             },
-            //System.Globalization.Calendar.IsValidDay end.
+            /*System.Globalization.Calendar.IsValidDay end.*/
 
-            //System.Globalization.Calendar.ToFourDigitYear start.
+            /*System.Globalization.Calendar.ToFourDigitYear start.*/
             ToFourDigitYear: function (year) {
                 if (year < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor4("year", "Non-negative number required.");
@@ -426,9 +426,9 @@
                 }
                 return (year);
             },
-            //System.Globalization.Calendar.ToFourDigitYear end.
+            /*System.Globalization.Calendar.ToFourDigitYear end.*/
 
 
         }
     });
-    //System.Globalization.Calendar end.
+    /*System.Globalization.Calendar end.*/

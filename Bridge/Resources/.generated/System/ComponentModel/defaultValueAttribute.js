@@ -1,4 +1,4 @@
-    //System.ComponentModel.DefaultValueAttribute start.
+    /*System.ComponentModel.DefaultValueAttribute start.*/
     Bridge.define("System.ComponentModel.DefaultValueAttribute", {
         inherits: [System.Attribute],
         fields: {
@@ -99,7 +99,7 @@
             }
         },
         methods: {
-            //System.ComponentModel.DefaultValueAttribute.equals start.
+            /*System.ComponentModel.DefaultValueAttribute.equals start.*/
             equals: function (obj) {
                 if (Bridge.referenceEquals(obj, this)) {
                     return true;
@@ -116,21 +116,21 @@
                 }
                 return false;
             },
-            //System.ComponentModel.DefaultValueAttribute.equals end.
+            /*System.ComponentModel.DefaultValueAttribute.equals end.*/
 
-            //System.ComponentModel.DefaultValueAttribute.getHashCode start.
+            /*System.ComponentModel.DefaultValueAttribute.getHashCode start.*/
             getHashCode: function () {
                 return Bridge.getHashCode(this);
             },
-            //System.ComponentModel.DefaultValueAttribute.getHashCode end.
+            /*System.ComponentModel.DefaultValueAttribute.getHashCode end.*/
 
-            //System.ComponentModel.DefaultValueAttribute.setValue start.
+            /*System.ComponentModel.DefaultValueAttribute.setValue start.*/
             setValue: function (value) {
                 this._value = value;
             },
-            //System.ComponentModel.DefaultValueAttribute.setValue end.
+            /*System.ComponentModel.DefaultValueAttribute.setValue end.*/
 
 
         }
     });
-    //System.ComponentModel.DefaultValueAttribute end.
+    /*System.ComponentModel.DefaultValueAttribute end.*/

@@ -1,5 +1,5 @@
-    //System.Collections.IEqualityComparer start.
+    /*System.Collections.IEqualityComparer start.*/
     Bridge.define("System.Collections.IEqualityComparer", {
         $kind: "interface"
     });
-    //System.Collections.IEqualityComparer end.
+    /*System.Collections.IEqualityComparer end.*/

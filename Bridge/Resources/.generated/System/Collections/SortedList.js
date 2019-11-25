@@ -1,4 +1,4 @@
-    //System.Collections.SortedList start.
+    /*System.Collections.SortedList start.*/
     Bridge.define("System.Collections.SortedList", {
         inherits: [System.Collections.IDictionary,System.ICloneable],
         statics: {
@@ -11,7 +11,7 @@
                 }
             },
             methods: {
-                //System.Collections.SortedList.Synchronized:static start.
+                /*System.Collections.SortedList.Synchronized:static start.*/
                 Synchronized: function (list) {
                     if (list == null) {
                         throw new System.ArgumentNullException.$ctor1("list");
@@ -19,7 +19,7 @@
 
                     return new System.Collections.SortedList.SyncSortedList(list);
                 },
-                //System.Collections.SortedList.Synchronized:static end.
+                /*System.Collections.SortedList.Synchronized:static end.*/
 
 
             }
@@ -175,16 +175,16 @@
                 }
                 this.Insert(~i, key, value);
             },
-            //System.Collections.SortedList.Init start.
+            /*System.Collections.SortedList.Init start.*/
             Init: function () {
                 this.keys = System.Collections.SortedList.emptyArray;
                 this.values = System.Collections.SortedList.emptyArray;
                 this._size = 0;
                 this.comparer = new (System.Collections.Generic.Comparer$1(Object))(System.Collections.Generic.Comparer$1.$default.fn);
             },
-            //System.Collections.SortedList.Init end.
+            /*System.Collections.SortedList.Init end.*/
 
-            //System.Collections.SortedList.add start.
+            /*System.Collections.SortedList.add start.*/
             add: function (key, value) {
                 if (key == null) {
                     throw new System.ArgumentNullException.$ctor1("key");
@@ -196,9 +196,9 @@
                 }
                 this.Insert(~i, key, value);
             },
-            //System.Collections.SortedList.add end.
+            /*System.Collections.SortedList.add end.*/
 
-            //System.Collections.SortedList.clear start.
+            /*System.Collections.SortedList.clear start.*/
             clear: function () {
                 this.version = (this.version + 1) | 0;
                 System.Array.fill(this.keys, null, 0, this._size);
@@ -206,9 +206,9 @@
                 this._size = 0;
 
             },
-            //System.Collections.SortedList.clear end.
+            /*System.Collections.SortedList.clear end.*/
 
-            //System.Collections.SortedList.clone start.
+            /*System.Collections.SortedList.clone start.*/
             clone: function () {
                 var sl = new System.Collections.SortedList.$ctor5(this._size);
                 System.Array.copy(this.keys, 0, sl.keys, 0, this._size);
@@ -218,27 +218,27 @@
                 sl.comparer = this.comparer;
                 return sl;
             },
-            //System.Collections.SortedList.clone end.
+            /*System.Collections.SortedList.clone end.*/
 
-            //System.Collections.SortedList.contains start.
+            /*System.Collections.SortedList.contains start.*/
             contains: function (key) {
                 return this.IndexOfKey(key) >= 0;
             },
-            //System.Collections.SortedList.contains end.
+            /*System.Collections.SortedList.contains end.*/
 
-            //System.Collections.SortedList.ContainsKey start.
+            /*System.Collections.SortedList.ContainsKey start.*/
             ContainsKey: function (key) {
                 return this.IndexOfKey(key) >= 0;
             },
-            //System.Collections.SortedList.ContainsKey end.
+            /*System.Collections.SortedList.ContainsKey end.*/
 
-            //System.Collections.SortedList.ContainsValue start.
+            /*System.Collections.SortedList.ContainsValue start.*/
             ContainsValue: function (value) {
                 return this.IndexOfValue(value) >= 0;
             },
-            //System.Collections.SortedList.ContainsValue end.
+            /*System.Collections.SortedList.ContainsValue end.*/
 
-            //System.Collections.SortedList.copyTo start.
+            /*System.Collections.SortedList.copyTo start.*/
             copyTo: function (array, arrayIndex) {
                 if (array == null) {
                     throw new System.ArgumentNullException.$ctor1("array");
@@ -257,9 +257,9 @@
                     System.Array.set(array, entry.$clone(), ((i + arrayIndex) | 0));
                 }
             },
-            //System.Collections.SortedList.copyTo end.
+            /*System.Collections.SortedList.copyTo end.*/
 
-            //System.Collections.SortedList.ToKeyValuePairsArray start.
+            /*System.Collections.SortedList.ToKeyValuePairsArray start.*/
             ToKeyValuePairsArray: function () {
                 var array = System.Array.init(this.Count, null, System.Collections.KeyValuePairs);
                 for (var i = 0; i < this.Count; i = (i + 1) | 0) {
@@ -267,9 +267,9 @@
                 }
                 return array;
             },
-            //System.Collections.SortedList.ToKeyValuePairsArray end.
+            /*System.Collections.SortedList.ToKeyValuePairsArray end.*/
 
-            //System.Collections.SortedList.EnsureCapacity start.
+            /*System.Collections.SortedList.EnsureCapacity start.*/
             EnsureCapacity: function (min) {
                 var newCapacity = this.keys.length === 0 ? 16 : Bridge.Int.mul(this.keys.length, 2);
 
@@ -281,9 +281,9 @@
                 }
                 this.Capacity = newCapacity;
             },
-            //System.Collections.SortedList.EnsureCapacity end.
+            /*System.Collections.SortedList.EnsureCapacity end.*/
 
-            //System.Collections.SortedList.GetByIndex start.
+            /*System.Collections.SortedList.GetByIndex start.*/
             GetByIndex: function (index) {
                 if (index < 0 || index >= this.Count) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("index");
@@ -291,48 +291,48 @@
 
                 return this.values[System.Array.index(index, this.values)];
             },
-            //System.Collections.SortedList.GetByIndex end.
+            /*System.Collections.SortedList.GetByIndex end.*/
 
-            //System.Collections.SortedList.System$Collections$IEnumerable$GetEnumerator start.
+            /*System.Collections.SortedList.System$Collections$IEnumerable$GetEnumerator start.*/
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return new System.Collections.SortedList.SortedListEnumerator(this, 0, this._size, System.Collections.SortedList.SortedListEnumerator.DictEntry);
             },
-            //System.Collections.SortedList.System$Collections$IEnumerable$GetEnumerator end.
+            /*System.Collections.SortedList.System$Collections$IEnumerable$GetEnumerator end.*/
 
-            //System.Collections.SortedList.GetEnumerator start.
+            /*System.Collections.SortedList.GetEnumerator start.*/
             GetEnumerator: function () {
                 return new System.Collections.SortedList.SortedListEnumerator(this, 0, this._size, System.Collections.SortedList.SortedListEnumerator.DictEntry);
             },
-            //System.Collections.SortedList.GetEnumerator end.
+            /*System.Collections.SortedList.GetEnumerator end.*/
 
-            //System.Collections.SortedList.GetKey start.
+            /*System.Collections.SortedList.GetKey start.*/
             GetKey: function (index) {
                 if (index < 0 || index >= this.Count) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("index");
                 }
                 return this.keys[System.Array.index(index, this.keys)];
             },
-            //System.Collections.SortedList.GetKey end.
+            /*System.Collections.SortedList.GetKey end.*/
 
-            //System.Collections.SortedList.GetKeyList start.
+            /*System.Collections.SortedList.GetKeyList start.*/
             GetKeyList: function () {
                 if (this.keyList == null) {
                     this.keyList = new System.Collections.SortedList.KeyList(this);
                 }
                 return this.keyList;
             },
-            //System.Collections.SortedList.GetKeyList end.
+            /*System.Collections.SortedList.GetKeyList end.*/
 
-            //System.Collections.SortedList.GetValueList start.
+            /*System.Collections.SortedList.GetValueList start.*/
             GetValueList: function () {
                 if (this.valueList == null) {
                     this.valueList = new System.Collections.SortedList.ValueList(this);
                 }
                 return this.valueList;
             },
-            //System.Collections.SortedList.GetValueList end.
+            /*System.Collections.SortedList.GetValueList end.*/
 
-            //System.Collections.SortedList.IndexOfKey start.
+            /*System.Collections.SortedList.IndexOfKey start.*/
             IndexOfKey: function (key) {
                 if (key == null) {
                     throw new System.ArgumentNullException.$ctor1("key");
@@ -341,15 +341,15 @@
                 var ret = System.Array.binarySearch(this.keys, 0, this._size, key, this.comparer);
                 return ret >= 0 ? ret : -1;
             },
-            //System.Collections.SortedList.IndexOfKey end.
+            /*System.Collections.SortedList.IndexOfKey end.*/
 
-            //System.Collections.SortedList.IndexOfValue start.
+            /*System.Collections.SortedList.IndexOfValue start.*/
             IndexOfValue: function (value) {
                 return System.Array.indexOfT(this.values, value, 0, this._size);
             },
-            //System.Collections.SortedList.IndexOfValue end.
+            /*System.Collections.SortedList.IndexOfValue end.*/
 
-            //System.Collections.SortedList.Insert start.
+            /*System.Collections.SortedList.Insert start.*/
             Insert: function (index, key, value) {
                 if (this._size === this.keys.length) {
                     this.EnsureCapacity(((this._size + 1) | 0));
@@ -363,9 +363,9 @@
                 this._size = (this._size + 1) | 0;
                 this.version = (this.version + 1) | 0;
             },
-            //System.Collections.SortedList.Insert end.
+            /*System.Collections.SortedList.Insert end.*/
 
-            //System.Collections.SortedList.RemoveAt start.
+            /*System.Collections.SortedList.RemoveAt start.*/
             RemoveAt: function (index) {
                 if (index < 0 || index >= this.Count) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("index");
@@ -380,18 +380,18 @@
                 this.values[System.Array.index(this._size, this.values)] = null;
                 this.version = (this.version + 1) | 0;
             },
-            //System.Collections.SortedList.RemoveAt end.
+            /*System.Collections.SortedList.RemoveAt end.*/
 
-            //System.Collections.SortedList.remove start.
+            /*System.Collections.SortedList.remove start.*/
             remove: function (key) {
                 var i = this.IndexOfKey(key);
                 if (i >= 0) {
                     this.RemoveAt(i);
                 }
             },
-            //System.Collections.SortedList.remove end.
+            /*System.Collections.SortedList.remove end.*/
 
-            //System.Collections.SortedList.SetByIndex start.
+            /*System.Collections.SortedList.SetByIndex start.*/
             SetByIndex: function (index, value) {
                 if (index < 0 || index >= this.Count) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("index");
@@ -400,15 +400,15 @@
                 this.values[System.Array.index(index, this.values)] = value;
                 this.version = (this.version + 1) | 0;
             },
-            //System.Collections.SortedList.SetByIndex end.
+            /*System.Collections.SortedList.SetByIndex end.*/
 
-            //System.Collections.SortedList.TrimToSize start.
+            /*System.Collections.SortedList.TrimToSize start.*/
             TrimToSize: function () {
                 this.Capacity = this._size;
             },
-            //System.Collections.SortedList.TrimToSize end.
+            /*System.Collections.SortedList.TrimToSize end.*/
 
 
         }
     });
-    //System.Collections.SortedList end.
+    /*System.Collections.SortedList end.*/

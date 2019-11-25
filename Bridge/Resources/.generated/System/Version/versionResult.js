@@ -1,4 +1,4 @@
-    //System.Version+VersionResult start.
+    /*System.Version+VersionResult start.*/
     Bridge.define("System.Version.VersionResult", {
         $kind: "nested struct",
         statics: {
@@ -19,20 +19,20 @@
             }
         },
         methods: {
-            //System.Version+VersionResult.init start.
+            /*System.Version+VersionResult.init start.*/
             init: function (argumentName, canThrow) {
                 this.m_canThrow = canThrow;
                 this.m_argumentName = argumentName;
             },
-            //System.Version+VersionResult.init end.
+            /*System.Version+VersionResult.init end.*/
 
-            //System.Version+VersionResult.setFailure start.
+            /*System.Version+VersionResult.setFailure start.*/
             setFailure: function (failure) {
                 this.setFailure$1(failure, "");
             },
-            //System.Version+VersionResult.setFailure end.
+            /*System.Version+VersionResult.setFailure end.*/
 
-            //System.Version+VersionResult.setFailure$1 start.
+            /*System.Version+VersionResult.setFailure$1 start.*/
             setFailure$1: function (failure, argument) {
                 this.m_failure = failure;
                 this.m_exceptionArgument = argument;
@@ -40,9 +40,9 @@
                     throw this.getVersionParseException();
                 }
             },
-            //System.Version+VersionResult.setFailure$1 end.
+            /*System.Version+VersionResult.setFailure$1 end.*/
 
-            //System.Version+VersionResult.getVersionParseException start.
+            /*System.Version+VersionResult.getVersionParseException start.*/
             getVersionParseException: function () {
                 switch (this.m_failure) {
                     case System.Version.ParseFailureKind.ArgumentNullException: 
@@ -72,7 +72,7 @@
                         return new System.ArgumentException.$ctor1("VersionString");
                 }
             },
-            //System.Version+VersionResult.getVersionParseException end.
+            /*System.Version+VersionResult.getVersionParseException end.*/
 
             getHashCode: function () {
                 var h = Bridge.addHash([5139482776, this.m_parsedVersion, this.m_failure, this.m_exceptionArgument, this.m_argumentName, this.m_canThrow]);
@@ -95,4 +95,4 @@
             }
         }
     });
-    //System.Version+VersionResult end.
+    /*System.Version+VersionResult end.*/

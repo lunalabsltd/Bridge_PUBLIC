@@ -1,4 +1,4 @@
-    //System.Collections.Generic.SortedSet$1+Enumerator start.
+    /*System.Collections.Generic.SortedSet$1+Enumerator start.*/
     Bridge.define("System.Collections.Generic.SortedSet$1.Enumerator", function (T) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(T),System.Collections.IEnumerator],
         $kind: "nested struct",
@@ -83,7 +83,7 @@
             }
         },
         methods: {
-            //System.Collections.Generic.SortedSet$1+Enumerator.Intialize start.
+            /*System.Collections.Generic.SortedSet$1+Enumerator.Intialize start.*/
             Intialize: function () {
 
                 this.current = null;
@@ -102,9 +102,9 @@
                     }
                 }
             },
-            //System.Collections.Generic.SortedSet$1+Enumerator.Intialize end.
+            /*System.Collections.Generic.SortedSet$1+Enumerator.Intialize end.*/
 
-            //System.Collections.Generic.SortedSet$1+Enumerator.moveNext start.
+            /*System.Collections.Generic.SortedSet$1+Enumerator.moveNext start.*/
             moveNext: function () {
 
                 this.tree.VersionCheck();
@@ -135,13 +135,13 @@
                 }
                 return true;
             },
-            //System.Collections.Generic.SortedSet$1+Enumerator.moveNext end.
+            /*System.Collections.Generic.SortedSet$1+Enumerator.moveNext end.*/
 
-            //System.Collections.Generic.SortedSet$1+Enumerator.Dispose start.
+            /*System.Collections.Generic.SortedSet$1+Enumerator.Dispose start.*/
             Dispose: function () { },
-            //System.Collections.Generic.SortedSet$1+Enumerator.Dispose end.
+            /*System.Collections.Generic.SortedSet$1+Enumerator.Dispose end.*/
 
-            //System.Collections.Generic.SortedSet$1+Enumerator.Reset start.
+            /*System.Collections.Generic.SortedSet$1+Enumerator.Reset start.*/
             Reset: function () {
                 if (this.version !== this.tree.version) {
                     System.ThrowHelper.ThrowInvalidOperationException(System.ExceptionResource.InvalidOperation_EnumFailedVersion);
@@ -150,13 +150,13 @@
                 this.stack.Clear();
                 this.Intialize();
             },
-            //System.Collections.Generic.SortedSet$1+Enumerator.Reset end.
+            /*System.Collections.Generic.SortedSet$1+Enumerator.Reset end.*/
 
-            //System.Collections.Generic.SortedSet$1+Enumerator.System$Collections$IEnumerator$reset start.
+            /*System.Collections.Generic.SortedSet$1+Enumerator.System$Collections$IEnumerator$reset start.*/
             System$Collections$IEnumerator$reset: function () {
                 this.Reset();
             },
-            //System.Collections.Generic.SortedSet$1+Enumerator.System$Collections$IEnumerator$reset end.
+            /*System.Collections.Generic.SortedSet$1+Enumerator.System$Collections$IEnumerator$reset end.*/
 
             getHashCode: function () {
                 var h = Bridge.addHash([3788985113, this.tree, this.version, this.stack, this.current, this.reverse]);
@@ -179,4 +179,4 @@
             }
         }
     }; });
-    //System.Collections.Generic.SortedSet$1+Enumerator end.
+    /*System.Collections.Generic.SortedSet$1+Enumerator end.*/

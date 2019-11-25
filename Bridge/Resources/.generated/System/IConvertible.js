@@ -1,5 +1,5 @@
-    //System.IConvertible start.
+    /*System.IConvertible start.*/
     Bridge.define("System.IConvertible", {
         $kind: "interface"
     });
-    //System.IConvertible end.
+    /*System.IConvertible end.*/

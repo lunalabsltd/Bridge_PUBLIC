@@ -1,4 +1,4 @@
-    //System.TokenType start.
+    /*System.TokenType start.*/
     Bridge.define("System.TokenType", {
         $kind: "enum",
         statics: {
@@ -38,4 +38,4 @@
             }
         }
     });
-    //System.TokenType end.
+    /*System.TokenType end.*/

@@ -1,4 +1,4 @@
-    //System.ArgumentOutOfRangeException start.
+    /*System.ArgumentOutOfRangeException start.*/
     Bridge.define("System.ArgumentOutOfRangeException", {
         inherits: [System.ArgumentException],
         fields: {
@@ -53,4 +53,4 @@
             }
         }
     });
-    //System.ArgumentOutOfRangeException end.
+    /*System.ArgumentOutOfRangeException end.*/

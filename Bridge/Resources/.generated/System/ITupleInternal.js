@@ -1,5 +1,5 @@
-    //System.ITupleInternal start.
+    /*System.ITupleInternal start.*/
     Bridge.define("System.ITupleInternal", {
         $kind: "interface"
     });
-    //System.ITupleInternal end.
+    /*System.ITupleInternal end.*/

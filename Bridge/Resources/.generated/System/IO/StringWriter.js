@@ -1,4 +1,4 @@
-    //System.IO.StringWriter start.
+    /*System.IO.StringWriter start.*/
     Bridge.define("System.IO.StringWriter", {
         inherits: [System.IO.TextWriter],
         statics: {
@@ -41,35 +41,35 @@
             }
         },
         methods: {
-            //System.IO.StringWriter.Close start.
+            /*System.IO.StringWriter.Close start.*/
             Close: function () {
                 this.Dispose$1(true);
             },
-            //System.IO.StringWriter.Close end.
+            /*System.IO.StringWriter.Close end.*/
 
-            //System.IO.StringWriter.Dispose$1 start.
+            /*System.IO.StringWriter.Dispose$1 start.*/
             Dispose$1: function (disposing) {
                 this._isOpen = false;
                 System.IO.TextWriter.prototype.Dispose$1.call(this, disposing);
             },
-            //System.IO.StringWriter.Dispose$1 end.
+            /*System.IO.StringWriter.Dispose$1 end.*/
 
-            //System.IO.StringWriter.GetStringBuilder start.
+            /*System.IO.StringWriter.GetStringBuilder start.*/
             GetStringBuilder: function () {
                 return this._sb;
             },
-            //System.IO.StringWriter.GetStringBuilder end.
+            /*System.IO.StringWriter.GetStringBuilder end.*/
 
-            //System.IO.StringWriter.Write$1 start.
+            /*System.IO.StringWriter.Write$1 start.*/
             Write$1: function (value) {
                 if (!this._isOpen) {
                     System.IO.__Error.WriterClosed();
                 }
                 this._sb.append(String.fromCharCode(value));
             },
-            //System.IO.StringWriter.Write$1 end.
+            /*System.IO.StringWriter.Write$1 end.*/
 
-            //System.IO.StringWriter.Write$3 start.
+            /*System.IO.StringWriter.Write$3 start.*/
             Write$3: function (buffer, index, count) {
                 if (buffer == null) {
                     throw new System.ArgumentNullException.$ctor1("buffer");
@@ -90,9 +90,9 @@
 
                 this._sb.append(System.String.fromCharArray(buffer, index, count));
             },
-            //System.IO.StringWriter.Write$3 end.
+            /*System.IO.StringWriter.Write$3 end.*/
 
-            //System.IO.StringWriter.Write$10 start.
+            /*System.IO.StringWriter.Write$10 start.*/
             Write$10: function (value) {
                 if (!this._isOpen) {
                     System.IO.__Error.WriterClosed();
@@ -101,15 +101,15 @@
                     this._sb.append(value);
                 }
             },
-            //System.IO.StringWriter.Write$10 end.
+            /*System.IO.StringWriter.Write$10 end.*/
 
-            //System.IO.StringWriter.toString start.
+            /*System.IO.StringWriter.toString start.*/
             toString: function () {
                 return this._sb.toString();
             },
-            //System.IO.StringWriter.toString end.
+            /*System.IO.StringWriter.toString end.*/
 
 
         }
     });
-    //System.IO.StringWriter end.
+    /*System.IO.StringWriter end.*/

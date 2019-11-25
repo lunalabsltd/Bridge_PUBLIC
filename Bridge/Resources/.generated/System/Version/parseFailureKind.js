@@ -1,4 +1,4 @@
-    //System.Version+ParseFailureKind start.
+    /*System.Version+ParseFailureKind start.*/
     Bridge.define("System.Version.ParseFailureKind", {
         $kind: "nested enum",
         statics: {
@@ -10,4 +10,4 @@
             }
         }
     });
-    //System.Version+ParseFailureKind end.
+    /*System.Version+ParseFailureKind end.*/

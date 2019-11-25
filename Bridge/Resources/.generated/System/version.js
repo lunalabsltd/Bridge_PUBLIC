@@ -1,4 +1,4 @@
-    //System.Version start.
+    /*System.Version start.*/
     Bridge.define("System.Version", {
         inherits: function () { return [System.ICloneable,System.IComparable$1(System.Version),System.IEquatable$1(System.Version)]; },
         statics: {
@@ -13,7 +13,7 @@
                 }
             },
             methods: {
-                //System.Version.appendPositiveNumber:static start.
+                /*System.Version.appendPositiveNumber:static start.*/
                 appendPositiveNumber: function (num, sb) {
                     var index = sb.getLength();
                     var reminder;
@@ -24,9 +24,9 @@
                         sb.insert(index, String.fromCharCode(((((System.Version.ZERO_CHAR_VALUE + reminder) | 0)) & 65535)));
                     } while (num > 0);
                 },
-                //System.Version.appendPositiveNumber:static end.
+                /*System.Version.appendPositiveNumber:static end.*/
 
-                //System.Version.parse:static start.
+                /*System.Version.parse:static start.*/
                 parse: function (input) {
                     if (input == null) {
                         throw new System.ArgumentNullException.$ctor1("input");
@@ -39,9 +39,9 @@
                     }
                     return r.v.m_parsedVersion;
                 },
-                //System.Version.parse:static end.
+                /*System.Version.parse:static end.*/
 
-                //System.Version.tryParse:static start.
+                /*System.Version.tryParse:static start.*/
                 tryParse: function (input, result) {
                     var r = { v : new System.Version.VersionResult() };
                     r.v.init("input", false);
@@ -49,9 +49,9 @@
                     result.v = r.v.m_parsedVersion;
                     return b;
                 },
-                //System.Version.tryParse:static end.
+                /*System.Version.tryParse:static end.*/
 
-                //System.Version.tryParseVersion:static start.
+                /*System.Version.tryParseVersion:static start.*/
                 tryParseVersion: function (version, result) {
                     var major = { }, minor = { }, build = { }, revision = { };
 
@@ -101,9 +101,9 @@
 
                     return true;
                 },
-                //System.Version.tryParseVersion:static end.
+                /*System.Version.tryParseVersion:static end.*/
 
-                //System.Version.tryParseComponent:static start.
+                /*System.Version.tryParseComponent:static start.*/
                 tryParseComponent: function (component, componentName, result, parsedComponent) {
                     if (!System.Int32.tryParse(component, parsedComponent)) {
                         result.v.setFailure$1(System.Version.ParseFailureKind.FormatException, component);
@@ -117,7 +117,7 @@
 
                     return true;
                 },
-                //System.Version.tryParseComponent:static end.
+                /*System.Version.tryParseComponent:static end.*/
 
                 op_Equality: function (v1, v2) {
                     if (Bridge.referenceEquals(v1, null)) {
@@ -268,7 +268,7 @@
             }
         },
         methods: {
-            //System.Version.clone start.
+            /*System.Version.clone start.*/
             clone: function () {
                 var v = new System.Version.ctor();
                 v._Major = this._Major;
@@ -277,9 +277,9 @@
                 v._Revision = this._Revision;
                 return (v);
             },
-            //System.Version.clone end.
+            /*System.Version.clone end.*/
 
-            //System.Version.compareTo$1 start.
+            /*System.Version.compareTo$1 start.*/
             compareTo$1: function (version) {
                 if (version == null) {
                     return 1;
@@ -324,9 +324,9 @@
 
                 return 0;
             },
-            //System.Version.compareTo$1 end.
+            /*System.Version.compareTo$1 end.*/
 
-            //System.Version.compareTo start.
+            /*System.Version.compareTo start.*/
             compareTo: function (value) {
                 if (System.Version.op_Equality(value, null)) {
                     return 1;
@@ -366,15 +366,15 @@
 
                 return 0;
             },
-            //System.Version.compareTo end.
+            /*System.Version.compareTo end.*/
 
-            //System.Version.equals start.
+            /*System.Version.equals start.*/
             equals: function (obj) {
                 return this.equalsT(Bridge.as(obj, System.Version));
             },
-            //System.Version.equals end.
+            /*System.Version.equals end.*/
 
-            //System.Version.equalsT start.
+            /*System.Version.equalsT start.*/
             equalsT: function (obj) {
                 if (System.Version.op_Equality(obj, null)) {
                     return false;
@@ -386,9 +386,9 @@
 
                 return true;
             },
-            //System.Version.equalsT end.
+            /*System.Version.equalsT end.*/
 
-            //System.Version.getHashCode start.
+            /*System.Version.getHashCode start.*/
             getHashCode: function () {
 
                 var accumulator = 0;
@@ -400,9 +400,9 @@
 
                 return accumulator;
             },
-            //System.Version.getHashCode end.
+            /*System.Version.getHashCode end.*/
 
-            //System.Version.toString start.
+            /*System.Version.toString start.*/
             toString: function () {
                 if (this._Build === -1) {
                     return (this.toString$1(2));
@@ -412,9 +412,9 @@
                 }
                 return (this.toString$1(4));
             },
-            //System.Version.toString end.
+            /*System.Version.toString end.*/
 
-            //System.Version.toString$1 start.
+            /*System.Version.toString$1 start.*/
             toString$1: function (fieldCount) {
                 var sb;
                 switch (fieldCount) {
@@ -458,9 +458,9 @@
                         throw new System.ArgumentException.$ctor3("Should be < 5", "fieldCount");
                 }
             },
-            //System.Version.toString$1 end.
+            /*System.Version.toString$1 end.*/
 
 
         }
     });
-    //System.Version end.
+    /*System.Version end.*/

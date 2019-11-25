@@ -1,4 +1,4 @@
-    //System.DateTimeKind start.
+    /*System.DateTimeKind start.*/
     Bridge.define("System.DateTimeKind", {
         $kind: "enum",
         statics: {
@@ -9,4 +9,4 @@
             }
         }
     });
-    //System.DateTimeKind end.
+    /*System.DateTimeKind end.*/

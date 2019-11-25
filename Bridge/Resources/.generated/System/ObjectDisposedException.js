@@ -1,4 +1,4 @@
-    //System.ObjectDisposedException start.
+    /*System.ObjectDisposedException start.*/
     Bridge.define("System.ObjectDisposedException", {
         inherits: [System.InvalidOperationException],
         fields: {
@@ -45,4 +45,4 @@
             }
         }
     });
-    //System.ObjectDisposedException end.
+    /*System.ObjectDisposedException end.*/

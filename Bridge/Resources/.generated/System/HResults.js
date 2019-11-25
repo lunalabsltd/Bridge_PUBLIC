@@ -1,3 +1,3 @@
-    //System.HResults start.
+    /*System.HResults start.*/
     Bridge.define("System.HResults");
-    //System.HResults end.
+    /*System.HResults end.*/

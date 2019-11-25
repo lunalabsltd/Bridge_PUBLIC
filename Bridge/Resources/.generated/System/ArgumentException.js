@@ -1,4 +1,4 @@
-    //System.ArgumentException start.
+    /*System.ArgumentException start.*/
     Bridge.define("System.ArgumentException", {
         inherits: [System.SystemException],
         fields: {
@@ -52,4 +52,4 @@
             }
         }
     });
-    //System.ArgumentException end.
+    /*System.ArgumentException end.*/

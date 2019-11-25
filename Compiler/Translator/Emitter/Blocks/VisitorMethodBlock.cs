@@ -100,7 +100,7 @@ namespace Bridge.Translator
 
             var name = overloads.GetOverloadName(false, null, excludeTypeOnly: OverloadsCollection.ExcludeTypeParameterForDefinition(member_rr));
             var fullName = Helpers.GetMemberName(member_rr.Member, this.Emitter.GetTypeDefinition(), this.Emitter);
-            this.Write(string.Format("//{0} start.", fullName));
+            this.Write(string.Format("/*{0} start.*/", fullName));
 
             this.WriteNewLine();
 
@@ -167,7 +167,7 @@ namespace Bridge.Translator
             this.ClearLocalsMap(prevMap);
             this.ClearLocalsNamesMap(prevNamesMap);
             this.Emitter.Comma = true;
-            this.Emitter.EndingComment = string.Format("//{0} end.", fullName);
+            this.Emitter.EndingComment = string.Format("/*{0} end.*/", fullName);
         }
     }
 }

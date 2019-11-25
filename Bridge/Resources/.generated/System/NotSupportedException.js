@@ -1,4 +1,4 @@
-    //System.NotSupportedException start.
+    /*System.NotSupportedException start.*/
     Bridge.define("System.NotSupportedException", {
         inherits: [System.SystemException],
         ctors: {
@@ -19,4 +19,4 @@
             }
         }
     });
-    //System.NotSupportedException end.
+    /*System.NotSupportedException end.*/

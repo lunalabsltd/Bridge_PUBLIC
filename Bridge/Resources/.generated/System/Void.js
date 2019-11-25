@@ -1,4 +1,4 @@
-    //System.Void start.
+    /*System.Void start.*/
     Bridge.define("System.Void", {
         $kind: "struct",
         statics: {
@@ -10,4 +10,4 @@
             $clone: function (to) { return this; }
         }
     });
-    //System.Void end.
+    /*System.Void end.*/

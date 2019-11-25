@@ -1,4 +1,4 @@
-    //System.IO.FileMode start.
+    /*System.IO.FileMode start.*/
     Bridge.define("System.IO.FileMode", {
         $kind: "enum",
         statics: {
@@ -12,4 +12,4 @@
             }
         }
     });
-    //System.IO.FileMode end.
+    /*System.IO.FileMode end.*/

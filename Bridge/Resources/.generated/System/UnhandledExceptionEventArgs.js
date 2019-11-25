@@ -1,4 +1,4 @@
-    //System.UnhandledExceptionEventArgs start.
+    /*System.UnhandledExceptionEventArgs start.*/
     Bridge.define("System.UnhandledExceptionEventArgs", {
         fields: {
             _exception: null,
@@ -25,4 +25,4 @@
             }
         }
     });
-    //System.UnhandledExceptionEventArgs end.
+    /*System.UnhandledExceptionEventArgs end.*/

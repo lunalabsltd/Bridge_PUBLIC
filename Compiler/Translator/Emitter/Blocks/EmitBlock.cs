@@ -483,11 +483,11 @@ namespace Bridge.Translator
                         typeArgs = arr_sb.ToString();
                     }
 
-                    this.Write(string.Format("//{0} start.", name));
+                    this.Write(string.Format("/*{0} start.*/", name));
                     this.WriteNewLine();
                     this.Write(string.Format("$m(\"{0}\", function ({2}) {{ return {1}; }}, $n);", MetadataUtils.GetTypeName(meta.Key, this.Emitter, false, true, false), metaData.ToString(Formatting.None), typeArgs));
                     this.WriteNewLine();
-                    this.Write(string.Format("//{0} end.", name));
+                    this.Write(string.Format("/*{0} end.*/", name));
                     this.WriteNewLine();
                     this.WriteNewLine();
                 }

@@ -1,4 +1,4 @@
-    //Bridge.Ref$1 start.
+    /*Bridge.Ref$1 start.*/
     Bridge.define("Bridge.Ref$1", function (T) { return {
         statics: {
             methods: {
@@ -37,19 +37,19 @@
             }
         },
         methods: {
-            //Bridge.Ref$1.toString start.
+            /*Bridge.Ref$1.toString start.*/
             toString: function () {
                 return Bridge.toString(this.Value);
             },
-            //Bridge.Ref$1.toString end.
+            /*Bridge.Ref$1.toString end.*/
 
-            //Bridge.Ref$1.valueOf start.
+            /*Bridge.Ref$1.valueOf start.*/
             valueOf: function () {
                 return this.Value;
             },
-            //Bridge.Ref$1.valueOf end.
+            /*Bridge.Ref$1.valueOf end.*/
 
 
         }
     }; });
-    //Bridge.Ref$1 end.
+    /*Bridge.Ref$1 end.*/

@@ -1,4 +1,4 @@
-    //System.IO.BinaryReader start.
+    /*System.IO.BinaryReader start.*/
     Bridge.define("System.IO.BinaryReader", {
         inherits: [System.IDisposable],
         statics: {
@@ -69,13 +69,13 @@
             }
         },
         methods: {
-            //System.IO.BinaryReader.Close start.
+            /*System.IO.BinaryReader.Close start.*/
             Close: function () {
                 this.Dispose$1(true);
             },
-            //System.IO.BinaryReader.Close end.
+            /*System.IO.BinaryReader.Close end.*/
 
-            //System.IO.BinaryReader.Dispose$1 start.
+            /*System.IO.BinaryReader.Dispose$1 start.*/
             Dispose$1: function (disposing) {
                 if (disposing) {
                     var copyOfStream = this.m_stream;
@@ -91,15 +91,15 @@
                 this.m_singleChar = null;
                 this.m_charBuffer = null;
             },
-            //System.IO.BinaryReader.Dispose$1 end.
+            /*System.IO.BinaryReader.Dispose$1 end.*/
 
-            //System.IO.BinaryReader.Dispose start.
+            /*System.IO.BinaryReader.Dispose start.*/
             Dispose: function () {
                 this.Dispose$1(true);
             },
-            //System.IO.BinaryReader.Dispose end.
+            /*System.IO.BinaryReader.Dispose end.*/
 
-            //System.IO.BinaryReader.PeekChar start.
+            /*System.IO.BinaryReader.PeekChar start.*/
             PeekChar: function () {
 
                 if (this.m_stream == null) {
@@ -114,9 +114,9 @@
                 this.m_stream.Position = origPos;
                 return ch;
             },
-            //System.IO.BinaryReader.PeekChar end.
+            /*System.IO.BinaryReader.PeekChar end.*/
 
-            //System.IO.BinaryReader.Read start.
+            /*System.IO.BinaryReader.Read start.*/
             Read: function () {
 
                 if (this.m_stream == null) {
@@ -124,9 +124,9 @@
                 }
                 return this.InternalReadOneChar();
             },
-            //System.IO.BinaryReader.Read end.
+            /*System.IO.BinaryReader.Read end.*/
 
-            //System.IO.BinaryReader.Read$2 start.
+            /*System.IO.BinaryReader.Read$2 start.*/
             Read$2: function (buffer, index, count) {
                 if (buffer == null) {
                     throw new System.ArgumentNullException.$ctor3("buffer", "ArgumentNull_Buffer");
@@ -147,9 +147,9 @@
 
                 return this.InternalReadChars(buffer, index, count);
             },
-            //System.IO.BinaryReader.Read$2 end.
+            /*System.IO.BinaryReader.Read$2 end.*/
 
-            //System.IO.BinaryReader.Read$1 start.
+            /*System.IO.BinaryReader.Read$1 start.*/
             Read$1: function (buffer, index, count) {
                 if (buffer == null) {
                     throw new System.ArgumentNullException.$ctor3("buffer", "ArgumentNull_Buffer");
@@ -169,16 +169,16 @@
                 }
                 return this.m_stream.Read(buffer, index, count);
             },
-            //System.IO.BinaryReader.Read$1 end.
+            /*System.IO.BinaryReader.Read$1 end.*/
 
-            //System.IO.BinaryReader.ReadBoolean start.
+            /*System.IO.BinaryReader.ReadBoolean start.*/
             ReadBoolean: function () {
                 this.FillBuffer(1);
                 return (this.m_buffer[System.Array.index(0, this.m_buffer)] !== 0);
             },
-            //System.IO.BinaryReader.ReadBoolean end.
+            /*System.IO.BinaryReader.ReadBoolean end.*/
 
-            //System.IO.BinaryReader.ReadByte start.
+            /*System.IO.BinaryReader.ReadByte start.*/
             ReadByte: function () {
                 if (this.m_stream == null) {
                     System.IO.__Error.FileNotOpen();
@@ -190,16 +190,16 @@
                 }
                 return (b & 255);
             },
-            //System.IO.BinaryReader.ReadByte end.
+            /*System.IO.BinaryReader.ReadByte end.*/
 
-            //System.IO.BinaryReader.ReadSByte start.
+            /*System.IO.BinaryReader.ReadSByte start.*/
             ReadSByte: function () {
                 this.FillBuffer(1);
                 return Bridge.Int.sxb((this.m_buffer[System.Array.index(0, this.m_buffer)]) & 255);
             },
-            //System.IO.BinaryReader.ReadSByte end.
+            /*System.IO.BinaryReader.ReadSByte end.*/
 
-            //System.IO.BinaryReader.ReadChar start.
+            /*System.IO.BinaryReader.ReadChar start.*/
             ReadChar: function () {
                 var value = this.Read();
                 if (value === -1) {
@@ -207,23 +207,23 @@
                 }
                 return (value & 65535);
             },
-            //System.IO.BinaryReader.ReadChar end.
+            /*System.IO.BinaryReader.ReadChar end.*/
 
-            //System.IO.BinaryReader.ReadInt16 start.
+            /*System.IO.BinaryReader.ReadInt16 start.*/
             ReadInt16: function () {
                 this.FillBuffer(2);
                 return Bridge.Int.sxs((this.m_buffer[System.Array.index(0, this.m_buffer)] | this.m_buffer[System.Array.index(1, this.m_buffer)] << 8) & 65535);
             },
-            //System.IO.BinaryReader.ReadInt16 end.
+            /*System.IO.BinaryReader.ReadInt16 end.*/
 
-            //System.IO.BinaryReader.ReadUInt16 start.
+            /*System.IO.BinaryReader.ReadUInt16 start.*/
             ReadUInt16: function () {
                 this.FillBuffer(2);
                 return ((this.m_buffer[System.Array.index(0, this.m_buffer)] | this.m_buffer[System.Array.index(1, this.m_buffer)] << 8) & 65535);
             },
-            //System.IO.BinaryReader.ReadUInt16 end.
+            /*System.IO.BinaryReader.ReadUInt16 end.*/
 
-            //System.IO.BinaryReader.ReadInt32 start.
+            /*System.IO.BinaryReader.ReadInt32 start.*/
             ReadInt32: function () {
                 if (this.m_isMemoryStream) {
                     if (this.m_stream == null) {
@@ -237,42 +237,42 @@
                     return this.m_buffer[System.Array.index(0, this.m_buffer)] | this.m_buffer[System.Array.index(1, this.m_buffer)] << 8 | this.m_buffer[System.Array.index(2, this.m_buffer)] << 16 | this.m_buffer[System.Array.index(3, this.m_buffer)] << 24;
                 }
             },
-            //System.IO.BinaryReader.ReadInt32 end.
+            /*System.IO.BinaryReader.ReadInt32 end.*/
 
-            //System.IO.BinaryReader.ReadUInt32 start.
+            /*System.IO.BinaryReader.ReadUInt32 start.*/
             ReadUInt32: function () {
                 this.FillBuffer(4);
                 return ((this.m_buffer[System.Array.index(0, this.m_buffer)] | this.m_buffer[System.Array.index(1, this.m_buffer)] << 8 | this.m_buffer[System.Array.index(2, this.m_buffer)] << 16 | this.m_buffer[System.Array.index(3, this.m_buffer)] << 24) >>> 0);
             },
-            //System.IO.BinaryReader.ReadUInt32 end.
+            /*System.IO.BinaryReader.ReadUInt32 end.*/
 
-            //System.IO.BinaryReader.ReadInt64 start.
+            /*System.IO.BinaryReader.ReadInt64 start.*/
             ReadInt64: function () {
                 this.FillBuffer(8);
                 var lo = (this.m_buffer[System.Array.index(0, this.m_buffer)] | this.m_buffer[System.Array.index(1, this.m_buffer)] << 8 | this.m_buffer[System.Array.index(2, this.m_buffer)] << 16 | this.m_buffer[System.Array.index(3, this.m_buffer)] << 24) >>> 0;
                 var hi = (this.m_buffer[System.Array.index(4, this.m_buffer)] | this.m_buffer[System.Array.index(5, this.m_buffer)] << 8 | this.m_buffer[System.Array.index(6, this.m_buffer)] << 16 | this.m_buffer[System.Array.index(7, this.m_buffer)] << 24) >>> 0;
                 return System.Int64.clip64(System.UInt64(hi)).shl(32).or(System.Int64(lo));
             },
-            //System.IO.BinaryReader.ReadInt64 end.
+            /*System.IO.BinaryReader.ReadInt64 end.*/
 
-            //System.IO.BinaryReader.ReadUInt64 start.
+            /*System.IO.BinaryReader.ReadUInt64 start.*/
             ReadUInt64: function () {
                 this.FillBuffer(8);
                 var lo = (this.m_buffer[System.Array.index(0, this.m_buffer)] | this.m_buffer[System.Array.index(1, this.m_buffer)] << 8 | this.m_buffer[System.Array.index(2, this.m_buffer)] << 16 | this.m_buffer[System.Array.index(3, this.m_buffer)] << 24) >>> 0;
                 var hi = (this.m_buffer[System.Array.index(4, this.m_buffer)] | this.m_buffer[System.Array.index(5, this.m_buffer)] << 8 | this.m_buffer[System.Array.index(6, this.m_buffer)] << 16 | this.m_buffer[System.Array.index(7, this.m_buffer)] << 24) >>> 0;
                 return System.UInt64(hi).shl(32).or(System.UInt64(lo));
             },
-            //System.IO.BinaryReader.ReadUInt64 end.
+            /*System.IO.BinaryReader.ReadUInt64 end.*/
 
-            //System.IO.BinaryReader.ReadSingle start.
+            /*System.IO.BinaryReader.ReadSingle start.*/
             ReadSingle: function () {
                 this.FillBuffer(4);
                 var tmpBuffer = (this.m_buffer[System.Array.index(0, this.m_buffer)] | this.m_buffer[System.Array.index(1, this.m_buffer)] << 8 | this.m_buffer[System.Array.index(2, this.m_buffer)] << 16 | this.m_buffer[System.Array.index(3, this.m_buffer)] << 24) >>> 0;
                 return System.BitConverter.toSingle(System.BitConverter.getBytes$8(tmpBuffer), 0);
             },
-            //System.IO.BinaryReader.ReadSingle end.
+            /*System.IO.BinaryReader.ReadSingle end.*/
 
-            //System.IO.BinaryReader.ReadDouble start.
+            /*System.IO.BinaryReader.ReadDouble start.*/
             ReadDouble: function () {
                 this.FillBuffer(8);
                 var lo = (this.m_buffer[System.Array.index(0, this.m_buffer)] | this.m_buffer[System.Array.index(1, this.m_buffer)] << 8 | this.m_buffer[System.Array.index(2, this.m_buffer)] << 16 | this.m_buffer[System.Array.index(3, this.m_buffer)] << 24) >>> 0;
@@ -281,9 +281,9 @@
                 var tmpBuffer = System.UInt64(hi).shl(32).or(System.UInt64(lo));
                 return System.BitConverter.toDouble(System.BitConverter.getBytes$9(tmpBuffer), 0);
             },
-            //System.IO.BinaryReader.ReadDouble end.
+            /*System.IO.BinaryReader.ReadDouble end.*/
 
-            //System.IO.BinaryReader.ReadDecimal start.
+            /*System.IO.BinaryReader.ReadDecimal start.*/
             ReadDecimal: function () {
                 this.FillBuffer(23);
                 try {
@@ -299,9 +299,9 @@
                     }
                 }
             },
-            //System.IO.BinaryReader.ReadDecimal end.
+            /*System.IO.BinaryReader.ReadDecimal end.*/
 
-            //System.IO.BinaryReader.ReadString start.
+            /*System.IO.BinaryReader.ReadString start.*/
             ReadString: function () {
 
                 if (this.m_stream == null) {
@@ -360,9 +360,9 @@
 
                 return sb.toString();
             },
-            //System.IO.BinaryReader.ReadString end.
+            /*System.IO.BinaryReader.ReadString end.*/
 
-            //System.IO.BinaryReader.InternalReadChars start.
+            /*System.IO.BinaryReader.InternalReadChars start.*/
             InternalReadChars: function (buffer, index, count) {
 
                 var charsRemaining = count;
@@ -397,9 +397,9 @@
 
                 return (((count - charsRemaining) | 0));
             },
-            //System.IO.BinaryReader.InternalReadChars end.
+            /*System.IO.BinaryReader.InternalReadChars end.*/
 
-            //System.IO.BinaryReader.InternalReadOneChar start.
+            /*System.IO.BinaryReader.InternalReadOneChar start.*/
             InternalReadOneChar: function (allowSurrogate) {
                 if (allowSurrogate === void 0) { allowSurrogate = false; }
                 var charsRead = 0;
@@ -517,9 +517,9 @@
 
                 return this.m_singleChar[System.Array.index(0, this.m_singleChar)];
             },
-            //System.IO.BinaryReader.InternalReadOneChar end.
+            /*System.IO.BinaryReader.InternalReadOneChar end.*/
 
-            //System.IO.BinaryReader.ReadChars start.
+            /*System.IO.BinaryReader.ReadChars start.*/
             ReadChars: function (count) {
                 if (count < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor4("count", "ArgumentOutOfRange_NeedNonNegNum");
@@ -542,9 +542,9 @@
 
                 return chars;
             },
-            //System.IO.BinaryReader.ReadChars end.
+            /*System.IO.BinaryReader.ReadChars end.*/
 
-            //System.IO.BinaryReader.ReadBytes start.
+            /*System.IO.BinaryReader.ReadBytes start.*/
             ReadBytes: function (count) {
                 if (count < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor4("count", "ArgumentOutOfRange_NeedNonNegNum");
@@ -577,9 +577,9 @@
 
                 return result;
             },
-            //System.IO.BinaryReader.ReadBytes end.
+            /*System.IO.BinaryReader.ReadBytes end.*/
 
-            //System.IO.BinaryReader.FillBuffer start.
+            /*System.IO.BinaryReader.FillBuffer start.*/
             FillBuffer: function (numBytes) {
                 if (this.m_buffer != null && (numBytes < 0 || numBytes > this.m_buffer.length)) {
                     throw new System.ArgumentOutOfRangeException.$ctor4("numBytes", "ArgumentOutOfRange_BinaryReaderFillBuffer");
@@ -608,9 +608,9 @@
                     bytesRead = (bytesRead + n) | 0;
                 } while (bytesRead < numBytes);
             },
-            //System.IO.BinaryReader.FillBuffer end.
+            /*System.IO.BinaryReader.FillBuffer end.*/
 
-            //System.IO.BinaryReader.Read7BitEncodedInt start.
+            /*System.IO.BinaryReader.Read7BitEncodedInt start.*/
             Read7BitEncodedInt: function () {
                 var count = 0;
                 var shift = 0;
@@ -626,9 +626,9 @@
                 } while ((b & 128) !== 0);
                 return count;
             },
-            //System.IO.BinaryReader.Read7BitEncodedInt end.
+            /*System.IO.BinaryReader.Read7BitEncodedInt end.*/
 
 
         }
     });
-    //System.IO.BinaryReader end.
+    /*System.IO.BinaryReader end.*/

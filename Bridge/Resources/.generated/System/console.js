@@ -1,8 +1,8 @@
-    //System.Console start.
+    /*System.Console start.*/
     Bridge.define("System.Console", {
         statics: {
             methods: {
-                //System.Console.Write:static start.
+                /*System.Console.Write:static start.*/
                 Write: function (value) {
                     var con = Bridge.global.console;
 
@@ -10,9 +10,9 @@
                         con.log(!Bridge.isDefined(Bridge.unbox(value)) ? "" : Bridge.unbox(value));
                     }
                 },
-                //System.Console.Write:static end.
+                /*System.Console.Write:static end.*/
 
-                //System.Console.WriteLine:static start.
+                /*System.Console.WriteLine:static start.*/
                 WriteLine: function (value) {
                     var con = Bridge.global.console;
 
@@ -20,9 +20,9 @@
                         con.log(!Bridge.isDefined(Bridge.unbox(value)) ? "" : Bridge.unbox(value));
                     }
                 },
-                //System.Console.WriteLine:static end.
+                /*System.Console.WriteLine:static end.*/
 
-                //System.Console.TransformChars:static start.
+                /*System.Console.TransformChars:static start.*/
                 TransformChars: function (buffer, all, index, count) {
                     if (all !== 1) {
                         if (buffer == null) {
@@ -56,9 +56,9 @@
 
                     return s;
                 },
-                //System.Console.TransformChars:static end.
+                /*System.Console.TransformChars:static end.*/
 
-                //System.Console.Clear:static start.
+                /*System.Console.Clear:static start.*/
                 Clear: function () {
                     var con = Bridge.global.console;
 
@@ -66,10 +66,10 @@
                         con.clear();
                     }
                 },
-                //System.Console.Clear:static end.
+                /*System.Console.Clear:static end.*/
 
 
             }
         }
     });
-    //System.Console end.
+    /*System.Console end.*/

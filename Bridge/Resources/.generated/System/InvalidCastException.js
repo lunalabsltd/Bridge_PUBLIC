@@ -1,4 +1,4 @@
-    //System.InvalidCastException start.
+    /*System.InvalidCastException start.*/
     Bridge.define("System.InvalidCastException", {
         inherits: [System.SystemException],
         ctors: {
@@ -24,4 +24,4 @@
             }
         }
     });
-    //System.InvalidCastException end.
+    /*System.InvalidCastException end.*/

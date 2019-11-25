@@ -1,4 +1,4 @@
-    //System.Collections.BitArray+BitArrayEnumeratorSimple start.
+    /*System.Collections.BitArray+BitArrayEnumeratorSimple start.*/
     Bridge.define("System.Collections.BitArray.BitArrayEnumeratorSimple", {
         inherits: [System.Collections.IEnumerator],
         $kind: "nested class",
@@ -35,7 +35,7 @@
             }
         },
         methods: {
-            //System.Collections.BitArray+BitArrayEnumeratorSimple.moveNext start.
+            /*System.Collections.BitArray+BitArrayEnumeratorSimple.moveNext start.*/
             moveNext: function () {
                 if (this.version !== this.bitarray._version) {
                     throw new System.InvalidOperationException.$ctor1("Collection was modified; enumeration operation may not execute.");
@@ -50,18 +50,18 @@
 
                 return false;
             },
-            //System.Collections.BitArray+BitArrayEnumeratorSimple.moveNext end.
+            /*System.Collections.BitArray+BitArrayEnumeratorSimple.moveNext end.*/
 
-            //System.Collections.BitArray+BitArrayEnumeratorSimple.reset start.
+            /*System.Collections.BitArray+BitArrayEnumeratorSimple.reset start.*/
             reset: function () {
                 if (this.version !== this.bitarray._version) {
                     throw new System.InvalidOperationException.$ctor1("Collection was modified; enumeration operation may not execute.");
                 }
                 this.index = -1;
             },
-            //System.Collections.BitArray+BitArrayEnumeratorSimple.reset end.
+            /*System.Collections.BitArray+BitArrayEnumeratorSimple.reset end.*/
 
 
         }
     });
-    //System.Collections.BitArray+BitArrayEnumeratorSimple end.
+    /*System.Collections.BitArray+BitArrayEnumeratorSimple end.*/

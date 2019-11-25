@@ -1,4 +1,4 @@
-    //System.Globalization.CalendarWeekRule start.
+    /*System.Globalization.CalendarWeekRule start.*/
     Bridge.define("System.Globalization.CalendarWeekRule", {
         $kind: "enum",
         statics: {
@@ -9,4 +9,4 @@
             }
         }
     });
-    //System.Globalization.CalendarWeekRule end.
+    /*System.Globalization.CalendarWeekRule end.*/

@@ -1,4 +1,4 @@
-    //System.StringSplitOptions start.
+    /*System.StringSplitOptions start.*/
     Bridge.define("System.StringSplitOptions", {
         $kind: "enum",
         statics: {
@@ -9,4 +9,4 @@
         },
         $flags: true
     });
-    //System.StringSplitOptions end.
+    /*System.StringSplitOptions end.*/

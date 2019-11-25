@@ -1,4 +1,4 @@
-    //System.Reflection.BindingFlags start.
+    /*System.Reflection.BindingFlags start.*/
     Bridge.define("System.Reflection.BindingFlags", {
         $kind: "enum",
         statics: {
@@ -28,4 +28,4 @@
         },
         $flags: true
     });
-    //System.Reflection.BindingFlags end.
+    /*System.Reflection.BindingFlags end.*/

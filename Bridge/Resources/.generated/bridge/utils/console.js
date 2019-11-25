@@ -1,4 +1,4 @@
-    //Bridge.Utils.Console start.
+    /*Bridge.Utils.Console start.*/
     Bridge.define("Bridge.Console", {
         statics: {
             fields: {
@@ -26,7 +26,7 @@
                 }
             },
             methods: {
-                //Bridge.Utils.Console.initConsoleFunctions:static start.
+                /*Bridge.Utils.Console.initConsoleFunctions:static start.*/
                 initConsoleFunctions: function () {
                     var wl = System.Console.WriteLine;
                     var w = System.Console.Write;
@@ -77,9 +77,9 @@
                         });
                     }
                 },
-                //Bridge.Utils.Console.initConsoleFunctions:static end.
+                /*Bridge.Utils.Console.initConsoleFunctions:static end.*/
 
-                //Bridge.Utils.Console.logBase:static start.
+                /*Bridge.Utils.Console.logBase:static start.*/
                 logBase: function (value, newLine, messageType) {
                     var $t;
                     if (newLine === void 0) { newLine = true; }
@@ -115,28 +115,28 @@
 
                     self.isNewLine = newLine;
                 },
-                //Bridge.Utils.Console.logBase:static end.
+                /*Bridge.Utils.Console.logBase:static end.*/
 
-                //Bridge.Utils.Console.error:static start.
+                /*Bridge.Utils.Console.error:static start.*/
                 error: function (value) {
                     Bridge.Console.logBase(value, true, 2);
                 },
-                //Bridge.Utils.Console.error:static end.
+                /*Bridge.Utils.Console.error:static end.*/
 
-                //Bridge.Utils.Console.debug:static start.
+                /*Bridge.Utils.Console.debug:static start.*/
                 debug: function (value) {
                     Bridge.Console.logBase(value, true, 1);
                 },
-                //Bridge.Utils.Console.debug:static end.
+                /*Bridge.Utils.Console.debug:static end.*/
 
-                //Bridge.Utils.Console.log:static start.
+                /*Bridge.Utils.Console.log:static start.*/
                 log: function (value, newLine) {
                     if (newLine === void 0) { newLine = true; }
                     Bridge.Console.logBase(value, newLine);
                 },
-                //Bridge.Utils.Console.log:static end.
+                /*Bridge.Utils.Console.log:static end.*/
 
-                //Bridge.Utils.Console.clear:static start.
+                /*Bridge.Utils.Console.clear:static start.*/
                 clear: function () {
                     var self = Bridge.Console.instance$1;
 
@@ -160,9 +160,9 @@
 
                     self.isNewLine = false;
                 },
-                //Bridge.Utils.Console.clear:static end.
+                /*Bridge.Utils.Console.clear:static end.*/
 
-                //Bridge.Utils.Console.hide:static start.
+                /*Bridge.Utils.Console.hide:static start.*/
                 hide: function () {
                     if (Bridge.Console.instance$1 == null) {
                         return;
@@ -176,9 +176,9 @@
 
                     self.close();
                 },
-                //Bridge.Utils.Console.hide:static end.
+                /*Bridge.Utils.Console.hide:static end.*/
 
-                //Bridge.Utils.Console.show:static start.
+                /*Bridge.Utils.Console.show:static start.*/
                 show: function () {
                     var self = Bridge.Console.instance;
 
@@ -188,9 +188,9 @@
 
                     self.init(true);
                 },
-                //Bridge.Utils.Console.show:static end.
+                /*Bridge.Utils.Console.show:static end.*/
 
-                //Bridge.Utils.Console.toggle:static start.
+                /*Bridge.Utils.Console.toggle:static start.*/
                 toggle: function () {
                     if (Bridge.Console.instance.hidden) {
                         Bridge.Console.show();
@@ -198,7 +198,7 @@
                         Bridge.Console.hide();
                     }
                 },
-                //Bridge.Utils.Console.toggle:static end.
+                /*Bridge.Utils.Console.toggle:static end.*/
 
 
             }
@@ -237,7 +237,7 @@
             }
         },
         methods: {
-            //Bridge.Utils.Console.init start.
+            /*Bridge.Utils.Console.init start.*/
             init: function (reinit) {
                 if (reinit === void 0) { reinit = false; }
                 this.hidden = false;
@@ -341,26 +341,26 @@
                     this.closeBtn.addEventListener("mouseout", Bridge.fn.cacheBind(this, this.hideTooltip));
                 }
             },
-            //Bridge.Utils.Console.init end.
+            /*Bridge.Utils.Console.init end.*/
 
-            //Bridge.Utils.Console.showTooltip start.
+            /*Bridge.Utils.Console.showTooltip start.*/
             showTooltip: function () {
                 var self = Bridge.Console.instance;
                 self.tooltip.style.right = "20px";
                 self.tooltip.style.visibility = "visible";
                 self.tooltip.style.opacity = "1";
             },
-            //Bridge.Utils.Console.showTooltip end.
+            /*Bridge.Utils.Console.showTooltip end.*/
 
-            //Bridge.Utils.Console.hideTooltip start.
+            /*Bridge.Utils.Console.hideTooltip start.*/
             hideTooltip: function () {
                 var self = Bridge.Console.instance;
                 self.tooltip.style.right = "30px";
                 self.tooltip.style.opacity = "0";
             },
-            //Bridge.Utils.Console.hideTooltip end.
+            /*Bridge.Utils.Console.hideTooltip end.*/
 
-            //Bridge.Utils.Console.close start.
+            /*Bridge.Utils.Console.close start.*/
             close: function () {
                 this.hidden = true;
 
@@ -372,9 +372,9 @@
                     document.body.removeAttribute("style");
                 }
             },
-            //Bridge.Utils.Console.close end.
+            /*Bridge.Utils.Console.close end.*/
 
-            //Bridge.Utils.Console.wrapBodyContent start.
+            /*Bridge.Utils.Console.wrapBodyContent start.*/
             wrapBodyContent: function () {
                 if (document.body == null) {
                     return;
@@ -402,9 +402,9 @@
 
                 document.body.appendChild(div);
             },
-            //Bridge.Utils.Console.wrapBodyContent end.
+            /*Bridge.Utils.Console.wrapBodyContent end.*/
 
-            //Bridge.Utils.Console.unwrapBodyContent start.
+            /*Bridge.Utils.Console.unwrapBodyContent start.*/
             unwrapBodyContent: function () {
                 var bridgeBodyWrap = document.getElementById(Bridge.Console.BODY_WRAPPER_ID);
 
@@ -418,9 +418,9 @@
 
                 document.body.removeChild(bridgeBodyWrap);
             },
-            //Bridge.Utils.Console.unwrapBodyContent end.
+            /*Bridge.Utils.Console.unwrapBodyContent end.*/
 
-            //Bridge.Utils.Console.buildConsoleMessage start.
+            /*Bridge.Utils.Console.buildConsoleMessage start.*/
             buildConsoleMessage: function (message, messageType) {
                 var messageItem = document.createElement("li");
                 messageItem.setAttribute("style", "padding:5px 10px;border-bottom:1px solid #f0f0f0;position:relative;");
@@ -459,9 +459,9 @@
 
                 return messageItem;
             },
-            //Bridge.Utils.Console.buildConsoleMessage end.
+            /*Bridge.Utils.Console.buildConsoleMessage end.*/
 
-            //Bridge.Utils.Console.setAttributes start.
+            /*Bridge.Utils.Console.setAttributes start.*/
             setAttributes: function (el, attrs) {
                 var $t;
                 $t = Bridge.getEnumerator(attrs);
@@ -476,9 +476,9 @@
                     }
                 }
             },
-            //Bridge.Utils.Console.setAttributes end.
+            /*Bridge.Utils.Console.setAttributes end.*/
 
-            //Bridge.Utils.Console.obj2Css start.
+            /*Bridge.Utils.Console.obj2Css start.*/
             obj2Css: function (obj) {
                 var $t;
                 var str = "";
@@ -497,7 +497,7 @@
 
                 return str;
             },
-            //Bridge.Utils.Console.obj2Css end.
+            /*Bridge.Utils.Console.obj2Css end.*/
 
 
         }
@@ -565,4 +565,4 @@
     });
 
     Bridge.init(function () { Bridge.Console.initConsoleFunctions(); });
-    //Bridge.Utils.Console end.
+    /*Bridge.Utils.Console end.*/

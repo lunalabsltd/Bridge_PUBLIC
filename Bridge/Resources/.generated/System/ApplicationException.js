@@ -1,4 +1,4 @@
-    //System.ApplicationException start.
+    /*System.ApplicationException start.*/
     Bridge.define("System.ApplicationException", {
         inherits: [System.Exception],
         ctors: {
@@ -19,4 +19,4 @@
             }
         }
     });
-    //System.ApplicationException end.
+    /*System.ApplicationException end.*/

@@ -1,4 +1,4 @@
-    //System.Runtime.Serialization.CollectionDataContractAttribute start.
+    /*System.Runtime.Serialization.CollectionDataContractAttribute start.*/
     Bridge.define("System.Runtime.Serialization.CollectionDataContractAttribute", {
         inherits: [System.Attribute],
         fields: {
@@ -108,4 +108,4 @@
             }
         }
     });
-    //System.Runtime.Serialization.CollectionDataContractAttribute end.
+    /*System.Runtime.Serialization.CollectionDataContractAttribute end.*/

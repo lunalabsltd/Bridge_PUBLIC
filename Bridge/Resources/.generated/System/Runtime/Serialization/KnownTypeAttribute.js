@@ -1,4 +1,4 @@
-    //System.Runtime.Serialization.KnownTypeAttribute start.
+    /*System.Runtime.Serialization.KnownTypeAttribute start.*/
     Bridge.define("System.Runtime.Serialization.KnownTypeAttribute", {
         inherits: [System.Attribute],
         fields: {
@@ -34,4 +34,4 @@
             }
         }
     });
-    //System.Runtime.Serialization.KnownTypeAttribute end.
+    /*System.Runtime.Serialization.KnownTypeAttribute end.*/

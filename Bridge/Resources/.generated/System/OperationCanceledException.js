@@ -1,4 +1,4 @@
-    //System.OperationCanceledException start.
+    /*System.OperationCanceledException start.*/
     Bridge.define("System.OperationCanceledException", {
         inherits: [System.SystemException],
         fields: {
@@ -47,4 +47,4 @@
             }
         }
     });
-    //System.OperationCanceledException end.
+    /*System.OperationCanceledException end.*/

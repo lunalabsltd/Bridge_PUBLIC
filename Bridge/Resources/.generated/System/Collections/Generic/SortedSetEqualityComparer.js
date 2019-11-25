@@ -1,4 +1,4 @@
-    //System.Collections.Generic.SortedSetEqualityComparer$1 start.
+    /*System.Collections.Generic.SortedSetEqualityComparer$1 start.*/
     Bridge.define("System.Collections.Generic.SortedSetEqualityComparer$1", function (T) { return {
         inherits: [System.Collections.Generic.IEqualityComparer$1(System.Collections.Generic.SortedSet$1(T))],
         fields: {
@@ -34,13 +34,13 @@
             }
         },
         methods: {
-            //System.Collections.Generic.SortedSetEqualityComparer$1.equals2 start.
+            /*System.Collections.Generic.SortedSetEqualityComparer$1.equals2 start.*/
             equals2: function (x, y) {
                 return System.Collections.Generic.SortedSet$1(T).SortedSetEquals(x, y, this.comparer);
             },
-            //System.Collections.Generic.SortedSetEqualityComparer$1.equals2 end.
+            /*System.Collections.Generic.SortedSetEqualityComparer$1.equals2 end.*/
 
-            //System.Collections.Generic.SortedSetEqualityComparer$1.equals start.
+            /*System.Collections.Generic.SortedSetEqualityComparer$1.equals start.*/
             equals: function (obj) {
                 var comparer = Bridge.as(obj, System.Collections.Generic.SortedSetEqualityComparer$1(T));
                 if (comparer == null) {
@@ -48,9 +48,9 @@
                 }
                 return (Bridge.referenceEquals(this.comparer, comparer.comparer));
             },
-            //System.Collections.Generic.SortedSetEqualityComparer$1.equals end.
+            /*System.Collections.Generic.SortedSetEqualityComparer$1.equals end.*/
 
-            //System.Collections.Generic.SortedSetEqualityComparer$1.getHashCode2 start.
+            /*System.Collections.Generic.SortedSetEqualityComparer$1.getHashCode2 start.*/
             getHashCode2: function (obj) {
                 var $t;
                 var hashCode = 0;
@@ -69,15 +69,15 @@
                 }
                 return hashCode;
             },
-            //System.Collections.Generic.SortedSetEqualityComparer$1.getHashCode2 end.
+            /*System.Collections.Generic.SortedSetEqualityComparer$1.getHashCode2 end.*/
 
-            //System.Collections.Generic.SortedSetEqualityComparer$1.getHashCode start.
+            /*System.Collections.Generic.SortedSetEqualityComparer$1.getHashCode start.*/
             getHashCode: function () {
                 return Bridge.getHashCode(this.comparer) ^ Bridge.getHashCode(this.e_comparer);
             },
-            //System.Collections.Generic.SortedSetEqualityComparer$1.getHashCode end.
+            /*System.Collections.Generic.SortedSetEqualityComparer$1.getHashCode end.*/
 
 
         }
     }; });
-    //System.Collections.Generic.SortedSetEqualityComparer$1 end.
+    /*System.Collections.Generic.SortedSetEqualityComparer$1 end.*/

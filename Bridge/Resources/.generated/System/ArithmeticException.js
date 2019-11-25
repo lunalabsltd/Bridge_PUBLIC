@@ -1,4 +1,4 @@
-    //System.ArithmeticException start.
+    /*System.ArithmeticException start.*/
     Bridge.define("System.ArithmeticException", {
         inherits: [System.SystemException],
         ctors: {
@@ -19,4 +19,4 @@
             }
         }
     });
-    //System.ArithmeticException end.
+    /*System.ArithmeticException end.*/

@@ -1,4 +1,4 @@
-    //System.Reflection.TypeAttributes start.
+    /*System.Reflection.TypeAttributes start.*/
     Bridge.define("System.Reflection.TypeAttributes", {
         $kind: "enum",
         statics: {
@@ -39,4 +39,4 @@
         },
         $flags: true
     });
-    //System.Reflection.TypeAttributes end.
+    /*System.Reflection.TypeAttributes end.*/

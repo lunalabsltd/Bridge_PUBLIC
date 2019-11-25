@@ -1,4 +1,4 @@
-    //System.Runtime.Serialization.DataMemberAttribute start.
+    /*System.Runtime.Serialization.DataMemberAttribute start.*/
     Bridge.define("System.Runtime.Serialization.DataMemberAttribute", {
         inherits: [System.Attribute],
         fields: {
@@ -62,4 +62,4 @@
             }
         }
     });
-    //System.Runtime.Serialization.DataMemberAttribute end.
+    /*System.Runtime.Serialization.DataMemberAttribute end.*/

@@ -1,4 +1,4 @@
-    //System.Runtime.Serialization.SerializationException start.
+    /*System.Runtime.Serialization.SerializationException start.*/
     Bridge.define("System.Runtime.Serialization.SerializationException", {
         inherits: [System.SystemException],
         statics: {
@@ -29,4 +29,4 @@
             }
         }
     });
-    //System.Runtime.Serialization.SerializationException end.
+    /*System.Runtime.Serialization.SerializationException end.*/

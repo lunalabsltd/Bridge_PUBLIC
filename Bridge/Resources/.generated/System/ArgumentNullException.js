@@ -1,4 +1,4 @@
-    //System.ArgumentNullException start.
+    /*System.ArgumentNullException start.*/
     Bridge.define("System.ArgumentNullException", {
         inherits: [System.ArgumentException],
         ctors: {
@@ -24,4 +24,4 @@
             }
         }
     });
-    //System.ArgumentNullException end.
+    /*System.ArgumentNullException end.*/

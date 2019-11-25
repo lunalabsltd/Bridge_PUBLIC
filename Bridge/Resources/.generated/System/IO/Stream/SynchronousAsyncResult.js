@@ -1,10 +1,10 @@
-    //System.IO.Stream+SynchronousAsyncResult start.
+    /*System.IO.Stream+SynchronousAsyncResult start.*/
     Bridge.define("System.IO.Stream.SynchronousAsyncResult", {
         inherits: [System.IAsyncResult],
         $kind: "nested class",
         statics: {
             methods: {
-                //System.IO.Stream+SynchronousAsyncResult.EndRead:static start.
+                /*System.IO.Stream+SynchronousAsyncResult.EndRead:static start.*/
                 EndRead: function (asyncResult) {
 
                     var ar = Bridge.as(asyncResult, System.IO.Stream.SynchronousAsyncResult);
@@ -21,9 +21,9 @@
                     ar.ThrowIfError();
                     return ar._bytesRead;
                 },
-                //System.IO.Stream+SynchronousAsyncResult.EndRead:static end.
+                /*System.IO.Stream+SynchronousAsyncResult.EndRead:static end.*/
 
-                //System.IO.Stream+SynchronousAsyncResult.EndWrite:static start.
+                /*System.IO.Stream+SynchronousAsyncResult.EndWrite:static start.*/
                 EndWrite: function (asyncResult) {
 
                     var ar = Bridge.as(asyncResult, System.IO.Stream.SynchronousAsyncResult);
@@ -39,7 +39,7 @@
 
                     ar.ThrowIfError();
                 },
-                //System.IO.Stream+SynchronousAsyncResult.EndWrite:static end.
+                /*System.IO.Stream+SynchronousAsyncResult.EndWrite:static end.*/
 
 
             }
@@ -92,15 +92,15 @@
             }
         },
         methods: {
-            //System.IO.Stream+SynchronousAsyncResult.ThrowIfError start.
+            /*System.IO.Stream+SynchronousAsyncResult.ThrowIfError start.*/
             ThrowIfError: function () {
                 if (this._exceptionInfo != null) {
                     throw this._exceptionInfo;
                 }
             },
-            //System.IO.Stream+SynchronousAsyncResult.ThrowIfError end.
+            /*System.IO.Stream+SynchronousAsyncResult.ThrowIfError end.*/
 
 
         }
     });
-    //System.IO.Stream+SynchronousAsyncResult end.
+    /*System.IO.Stream+SynchronousAsyncResult end.*/

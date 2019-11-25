@@ -494,7 +494,7 @@ namespace Bridge.Translator
 
         private string RemoveUnusedClass(string js, string name)
         {
-            var start = string.Format("//{0} start.", name);
+            var start = string.Format("/*{0} start.*/", name);
             var startIndex = js.IndexOf(start, StringComparison.InvariantCulture);
             while (startIndex > 0 && js[startIndex - 1] == ' ') // Finding line start.
             {
@@ -504,7 +504,7 @@ namespace Bridge.Translator
             {
                 return js;
             }
-            var end = string.Format("//{0} end.", name);
+            var end = string.Format("/*{0} end.*/", name);
             var endIndex = js.IndexOf(end, startIndex + start.Length, StringComparison.InvariantCulture);
             return endIndex > startIndex ?
                 js.Remove(startIndex, endIndex - startIndex + end.Length + 2) : // 2 -- two new lines.

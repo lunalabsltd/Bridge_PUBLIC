@@ -1,4 +1,4 @@
-    //System.IO.SeekOrigin start.
+    /*System.IO.SeekOrigin start.*/
     Bridge.define("System.IO.SeekOrigin", {
         $kind: "enum",
         statics: {
@@ -9,4 +9,4 @@
             }
         }
     });
-    //System.IO.SeekOrigin end.
+    /*System.IO.SeekOrigin end.*/

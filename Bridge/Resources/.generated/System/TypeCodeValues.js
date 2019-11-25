@@ -1,4 +1,4 @@
-    //System.TypeCodeValues start.
+    /*System.TypeCodeValues start.*/
     Bridge.define("System.TypeCodeValues", {
         statics: {
             fields: {
@@ -45,4 +45,4 @@
             }
         }
     });
-    //System.TypeCodeValues end.
+    /*System.TypeCodeValues end.*/

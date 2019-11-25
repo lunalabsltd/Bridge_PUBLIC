@@ -1,4 +1,4 @@
-    //System.Security.SecurityException start.
+    /*System.Security.SecurityException start.*/
     Bridge.define("System.Security.SecurityException", {
         inherits: [System.SystemException],
         statics: {
@@ -63,13 +63,13 @@
             }
         },
         methods: {
-            //System.Security.SecurityException.toString start.
+            /*System.Security.SecurityException.toString start.*/
             toString: function () {
                 return Bridge.toString(this);
             },
-            //System.Security.SecurityException.toString end.
+            /*System.Security.SecurityException.toString end.*/
 
 
         }
     });
-    //System.Security.SecurityException end.
+    /*System.Security.SecurityException end.*/

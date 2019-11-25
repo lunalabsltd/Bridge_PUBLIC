@@ -1,4 +1,4 @@
-    //System.Runtime.Serialization.ContractNamespaceAttribute start.
+    /*System.Runtime.Serialization.ContractNamespaceAttribute start.*/
     Bridge.define("System.Runtime.Serialization.ContractNamespaceAttribute", {
         inherits: [System.Attribute],
         fields: {
@@ -28,4 +28,4 @@
             }
         }
     });
-    //System.Runtime.Serialization.ContractNamespaceAttribute end.
+    /*System.Runtime.Serialization.ContractNamespaceAttribute end.*/

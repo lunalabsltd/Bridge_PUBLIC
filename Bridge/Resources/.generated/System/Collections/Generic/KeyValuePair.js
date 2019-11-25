@@ -1,4 +1,4 @@
-    //System.Collections.Generic.KeyValuePair$2 start.
+    /*System.Collections.Generic.KeyValuePair$2 start.*/
     Bridge.define("System.Collections.Generic.KeyValuePair$2", function (TKey, TValue) { return {
         $kind: "struct",
         statics: {
@@ -33,7 +33,7 @@
             }
         },
         methods: {
-            //System.Collections.Generic.KeyValuePair$2.toString start.
+            /*System.Collections.Generic.KeyValuePair$2.toString start.*/
             toString: function () {
                 var s = System.Text.StringBuilderCache.Acquire();
                 s.append(String.fromCharCode(91));
@@ -47,14 +47,14 @@
                 s.append(String.fromCharCode(93));
                 return System.Text.StringBuilderCache.GetStringAndRelease(s);
             },
-            //System.Collections.Generic.KeyValuePair$2.toString end.
+            /*System.Collections.Generic.KeyValuePair$2.toString end.*/
 
-            //System.Collections.Generic.KeyValuePair$2.Deconstruct start.
+            /*System.Collections.Generic.KeyValuePair$2.Deconstruct start.*/
             Deconstruct: function (key, value) {
                 key.v = this.key;
                 value.v = this.value;
             },
-            //System.Collections.Generic.KeyValuePair$2.Deconstruct end.
+            /*System.Collections.Generic.KeyValuePair$2.Deconstruct end.*/
 
             getHashCode: function () {
                 var h = Bridge.addHash([5072499452, this.key$1, this.value$1]);
@@ -69,4 +69,4 @@
             $clone: function (to) { return this; }
         }
     }; });
-    //System.Collections.Generic.KeyValuePair$2 end.
+    /*System.Collections.Generic.KeyValuePair$2 end.*/

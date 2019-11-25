@@ -1,4 +1,4 @@
-    //System.Reflection.Binder start.
+    /*System.Reflection.Binder start.*/
     Bridge.define("System.Reflection.Binder", {
         ctors: {
             ctor: function () {
@@ -6,4 +6,4 @@
             }
         }
     });
-    //System.Reflection.Binder end.
+    /*System.Reflection.Binder end.*/

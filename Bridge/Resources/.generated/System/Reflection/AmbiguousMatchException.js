@@ -1,4 +1,4 @@
-    //System.Reflection.AmbiguousMatchException start.
+    /*System.Reflection.AmbiguousMatchException start.*/
     Bridge.define("System.Reflection.AmbiguousMatchException", {
         inherits: [System.SystemException],
         ctors: {
@@ -19,4 +19,4 @@
             }
         }
     });
-    //System.Reflection.AmbiguousMatchException end.
+    /*System.Reflection.AmbiguousMatchException end.*/

@@ -1,4 +1,4 @@
-    //System.Globalization.DaylightTime start.
+    /*System.Globalization.DaylightTime start.*/
     Bridge.define("System.Globalization.DaylightTime", {
         fields: {
             _start: null,
@@ -39,4 +39,4 @@
             }
         }
     });
-    //System.Globalization.DaylightTime end.
+    /*System.Globalization.DaylightTime end.*/

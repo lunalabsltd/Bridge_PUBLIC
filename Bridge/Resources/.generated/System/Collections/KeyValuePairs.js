@@ -1,4 +1,4 @@
-    //System.Collections.KeyValuePairs start.
+    /*System.Collections.KeyValuePairs start.*/
     Bridge.define("System.Collections.KeyValuePairs", {
         fields: {
             key: null,
@@ -24,4 +24,4 @@
             }
         }
     });
-    //System.Collections.KeyValuePairs end.
+    /*System.Collections.KeyValuePairs end.*/

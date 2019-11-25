@@ -1,4 +1,4 @@
-    //System.Collections.Generic.DictionaryKeyCollectionDebugView$2 start.
+    /*System.Collections.Generic.DictionaryKeyCollectionDebugView$2 start.*/
     Bridge.define("System.Collections.Generic.DictionaryKeyCollectionDebugView$2", function (TKey, TValue) { return {
         fields: {
             _collection: null
@@ -25,4 +25,4 @@
             }
         }
     }; });
-    //System.Collections.Generic.DictionaryKeyCollectionDebugView$2 end.
+    /*System.Collections.Generic.DictionaryKeyCollectionDebugView$2 end.*/

@@ -1,4 +1,4 @@
-    //System.StringComparer start.
+    /*System.StringComparer start.*/
     Bridge.define("System.StringComparer", {
         inherits: [System.Collections.Generic.IComparer$1(System.String),System.Collections.Generic.IEqualityComparer$1(System.String)],
         statics: {
@@ -26,7 +26,7 @@
             }
         },
         methods: {
-            //System.StringComparer.Compare start.
+            /*System.StringComparer.Compare start.*/
             Compare: function (x, y) {
                 if (Bridge.referenceEquals(x, y)) {
                     return 0;
@@ -53,9 +53,9 @@
 
                 throw new System.ArgumentException.$ctor1("At least one object must implement IComparable.");
             },
-            //System.StringComparer.Compare end.
+            /*System.StringComparer.Compare end.*/
 
-            //System.StringComparer.Equals start.
+            /*System.StringComparer.Equals start.*/
             Equals: function (x, y) {
                 if (Bridge.referenceEquals(x, y)) {
                     return true;
@@ -73,9 +73,9 @@
                 }
                 return Bridge.equals(x, y);
             },
-            //System.StringComparer.Equals end.
+            /*System.StringComparer.Equals end.*/
 
-            //System.StringComparer.GetHashCode start.
+            /*System.StringComparer.GetHashCode start.*/
             GetHashCode: function (obj) {
                 if (obj == null) {
                     throw new System.ArgumentNullException.$ctor1("obj");
@@ -87,9 +87,9 @@
                 }
                 return Bridge.getHashCode(obj);
             },
-            //System.StringComparer.GetHashCode end.
+            /*System.StringComparer.GetHashCode end.*/
 
 
         }
     });
-    //System.StringComparer end.
+    /*System.StringComparer end.*/

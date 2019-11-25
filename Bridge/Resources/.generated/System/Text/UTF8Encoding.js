@@ -1,4 +1,4 @@
-    //System.Text.UTF8Encoding start.
+    /*System.Text.UTF8Encoding start.*/
     Bridge.define("System.Text.UTF8Encoding", {
         inherits: [System.Text.Encoding],
         fields: {
@@ -33,7 +33,7 @@
             }
         },
         methods: {
-            //System.Text.UTF8Encoding.Encode$3 start.
+            /*System.Text.UTF8Encoding.Encode$3 start.*/
             Encode$3: function (s, outputBytes, outputIndex, writtenBytes) {
                 var hasBuffer = outputBytes != null;
                 var record = 0;
@@ -94,9 +94,9 @@
 
                 return outputBytes;
             },
-            //System.Text.UTF8Encoding.Encode$3 end.
+            /*System.Text.UTF8Encoding.Encode$3 end.*/
 
-            //System.Text.UTF8Encoding.Decode$2 start.
+            /*System.Text.UTF8Encoding.Decode$2 start.*/
             Decode$2: function (bytes, index, count, chars, charIndex) {
                 this._hasError = false;
                 var position = index;
@@ -207,9 +207,9 @@
 
                 return result;
             },
-            //System.Text.UTF8Encoding.Decode$2 end.
+            /*System.Text.UTF8Encoding.Decode$2 end.*/
 
-            //System.Text.UTF8Encoding.GetMaxByteCount start.
+            /*System.Text.UTF8Encoding.GetMaxByteCount start.*/
             GetMaxByteCount: function (charCount) {
                 if (charCount < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("charCount");
@@ -225,9 +225,9 @@
 
                 return System.Int64.clip32(byteCount);
             },
-            //System.Text.UTF8Encoding.GetMaxByteCount end.
+            /*System.Text.UTF8Encoding.GetMaxByteCount end.*/
 
-            //System.Text.UTF8Encoding.GetMaxCharCount start.
+            /*System.Text.UTF8Encoding.GetMaxCharCount start.*/
             GetMaxCharCount: function (byteCount) {
                 if (byteCount < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("byteCount");
@@ -241,7 +241,7 @@
 
                 return System.Int64.clip32(charCount);
             },
-            //System.Text.UTF8Encoding.GetMaxCharCount end.
+            /*System.Text.UTF8Encoding.GetMaxCharCount end.*/
 
 
         }
@@ -258,4 +258,4 @@
             return this.fallbackCharacter;
         }
     });
-    //System.Text.UTF8Encoding end.
+    /*System.Text.UTF8Encoding end.*/

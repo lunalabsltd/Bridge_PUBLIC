@@ -1,4 +1,4 @@
-    //System.Collections.Generic.ICollectionDebugView$1 start.
+    /*System.Collections.Generic.ICollectionDebugView$1 start.*/
     Bridge.define("System.Collections.Generic.ICollectionDebugView$1", function (T) { return {
         fields: {
             _collection: null
@@ -25,4 +25,4 @@
             }
         }
     }; });
-    //System.Collections.Generic.ICollectionDebugView$1 end.
+    /*System.Collections.Generic.ICollectionDebugView$1 end.*/

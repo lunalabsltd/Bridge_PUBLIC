@@ -1,8 +1,8 @@
-    //System.Collections.Generic.EnumerableHelpers start.
+    /*System.Collections.Generic.EnumerableHelpers start.*/
     Bridge.define("Bridge.Collections.EnumerableHelpers", {
         statics: {
             methods: {
-                //System.Collections.Generic.EnumerableHelpers.ToArray:static start.
+                /*System.Collections.Generic.EnumerableHelpers.ToArray:static start.*/
                 ToArray: function (T, source) {
                     var count = { };
                     var results = { v : Bridge.Collections.EnumerableHelpers.ToArray$1(T, source, count) };
@@ -11,9 +11,9 @@
                     }, T);
                     return results.v;
                 },
-                //System.Collections.Generic.EnumerableHelpers.ToArray:static end.
+                /*System.Collections.Generic.EnumerableHelpers.ToArray:static end.*/
 
-                //System.Collections.Generic.EnumerableHelpers.ToArray$1:static start.
+                /*System.Collections.Generic.EnumerableHelpers.ToArray$1:static start.*/
                 ToArray$1: function (T, source, length) {
                     var en = Bridge.getEnumerator(source, T);
                     try {
@@ -57,10 +57,10 @@
                         return Bridge.getDefaultValue(T);
                     }, T);
                 },
-                //System.Collections.Generic.EnumerableHelpers.ToArray$1:static end.
+                /*System.Collections.Generic.EnumerableHelpers.ToArray$1:static end.*/
 
 
             }
         }
     });
-    //System.Collections.Generic.EnumerableHelpers end.
+    /*System.Collections.Generic.EnumerableHelpers end.*/

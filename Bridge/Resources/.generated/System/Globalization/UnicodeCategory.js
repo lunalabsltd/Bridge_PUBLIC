@@ -1,4 +1,4 @@
-    //System.Globalization.UnicodeCategory start.
+    /*System.Globalization.UnicodeCategory start.*/
     Bridge.define("System.Globalization.UnicodeCategory", {
         $kind: "enum",
         statics: {
@@ -36,4 +36,4 @@
             }
         }
     });
-    //System.Globalization.UnicodeCategory end.
+    /*System.Globalization.UnicodeCategory end.*/

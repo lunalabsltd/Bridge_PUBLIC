@@ -1,4 +1,4 @@
-    //System.RankException start.
+    /*System.RankException start.*/
     Bridge.define("System.RankException", {
         inherits: [System.SystemException],
         ctors: {
@@ -19,4 +19,4 @@
             }
         }
     });
-    //System.RankException end.
+    /*System.RankException end.*/

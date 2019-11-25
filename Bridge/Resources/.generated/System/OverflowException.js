@@ -1,4 +1,4 @@
-    //System.OverflowException start.
+    /*System.OverflowException start.*/
     Bridge.define("System.OverflowException", {
         inherits: [System.ArithmeticException],
         ctors: {
@@ -19,4 +19,4 @@
             }
         }
     });
-    //System.OverflowException end.
+    /*System.OverflowException end.*/

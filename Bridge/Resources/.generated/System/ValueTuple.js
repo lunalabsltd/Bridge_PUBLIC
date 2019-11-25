@@ -1,104 +1,104 @@
-    //System.ValueTuple start.
+    /*System.ValueTuple start.*/
     Bridge.define("System.ValueTuple", {
         inherits: function () { return [System.IEquatable$1(System.ValueTuple),System.Collections.IStructuralEquatable,System.Collections.IStructuralComparable,System.IComparable,System.IComparable$1(System.ValueTuple)]; },
         $kind: "struct",
         statics: {
             methods: {
-                //System.ValueTuple.Create:static start.
+                /*System.ValueTuple.Create:static start.*/
                 Create: function () {
                     return new System.ValueTuple();
                 },
-                //System.ValueTuple.Create:static end.
+                /*System.ValueTuple.Create:static end.*/
 
-                //System.ValueTuple.Create$1:static start.
+                /*System.ValueTuple.Create$1:static start.*/
                 Create$1: function (T1, item1) {
                     return new (System.ValueTuple$1(T1)).$ctor1(item1);
                 },
-                //System.ValueTuple.Create$1:static end.
+                /*System.ValueTuple.Create$1:static end.*/
 
-                //System.ValueTuple.Create$2:static start.
+                /*System.ValueTuple.Create$2:static start.*/
                 Create$2: function (T1, T2, item1, item2) {
                     return new (System.ValueTuple$2(T1,T2)).$ctor1(item1, item2);
                 },
-                //System.ValueTuple.Create$2:static end.
+                /*System.ValueTuple.Create$2:static end.*/
 
-                //System.ValueTuple.Create$3:static start.
+                /*System.ValueTuple.Create$3:static start.*/
                 Create$3: function (T1, T2, T3, item1, item2, item3) {
                     return new (System.ValueTuple$3(T1,T2,T3)).$ctor1(item1, item2, item3);
                 },
-                //System.ValueTuple.Create$3:static end.
+                /*System.ValueTuple.Create$3:static end.*/
 
-                //System.ValueTuple.Create$4:static start.
+                /*System.ValueTuple.Create$4:static start.*/
                 Create$4: function (T1, T2, T3, T4, item1, item2, item3, item4) {
                     return new (System.ValueTuple$4(T1,T2,T3,T4)).$ctor1(item1, item2, item3, item4);
                 },
-                //System.ValueTuple.Create$4:static end.
+                /*System.ValueTuple.Create$4:static end.*/
 
-                //System.ValueTuple.Create$5:static start.
+                /*System.ValueTuple.Create$5:static start.*/
                 Create$5: function (T1, T2, T3, T4, T5, item1, item2, item3, item4, item5) {
                     return new (System.ValueTuple$5(T1,T2,T3,T4,T5)).$ctor1(item1, item2, item3, item4, item5);
                 },
-                //System.ValueTuple.Create$5:static end.
+                /*System.ValueTuple.Create$5:static end.*/
 
-                //System.ValueTuple.Create$6:static start.
+                /*System.ValueTuple.Create$6:static start.*/
                 Create$6: function (T1, T2, T3, T4, T5, T6, item1, item2, item3, item4, item5, item6) {
                     return new (System.ValueTuple$6(T1,T2,T3,T4,T5,T6)).$ctor1(item1, item2, item3, item4, item5, item6);
                 },
-                //System.ValueTuple.Create$6:static end.
+                /*System.ValueTuple.Create$6:static end.*/
 
-                //System.ValueTuple.Create$7:static start.
+                /*System.ValueTuple.Create$7:static start.*/
                 Create$7: function (T1, T2, T3, T4, T5, T6, T7, item1, item2, item3, item4, item5, item6, item7) {
                     return new (System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7)).$ctor1(item1, item2, item3, item4, item5, item6, item7);
                 },
-                //System.ValueTuple.Create$7:static end.
+                /*System.ValueTuple.Create$7:static end.*/
 
-                //System.ValueTuple.Create$8:static start.
+                /*System.ValueTuple.Create$8:static start.*/
                 Create$8: function (T1, T2, T3, T4, T5, T6, T7, T8, item1, item2, item3, item4, item5, item6, item7, item8) {
                     return new (System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,System.ValueTuple$1(T8))).$ctor1(item1, item2, item3, item4, item5, item6, item7, System.ValueTuple.Create$1(T8, item8));
                 },
-                //System.ValueTuple.Create$8:static end.
+                /*System.ValueTuple.Create$8:static end.*/
 
-                //System.ValueTuple.CombineHashCodes:static start.
+                /*System.ValueTuple.CombineHashCodes:static start.*/
                 CombineHashCodes: function (h1, h2) {
                     return System.Collections.HashHelpers.Combine(System.Collections.HashHelpers.Combine(System.Collections.HashHelpers.RandomSeed, h1), h2);
                 },
-                //System.ValueTuple.CombineHashCodes:static end.
+                /*System.ValueTuple.CombineHashCodes:static end.*/
 
-                //System.ValueTuple.CombineHashCodes$1:static start.
+                /*System.ValueTuple.CombineHashCodes$1:static start.*/
                 CombineHashCodes$1: function (h1, h2, h3) {
                     return System.Collections.HashHelpers.Combine(System.ValueTuple.CombineHashCodes(h1, h2), h3);
                 },
-                //System.ValueTuple.CombineHashCodes$1:static end.
+                /*System.ValueTuple.CombineHashCodes$1:static end.*/
 
-                //System.ValueTuple.CombineHashCodes$2:static start.
+                /*System.ValueTuple.CombineHashCodes$2:static start.*/
                 CombineHashCodes$2: function (h1, h2, h3, h4) {
                     return System.Collections.HashHelpers.Combine(System.ValueTuple.CombineHashCodes$1(h1, h2, h3), h4);
                 },
-                //System.ValueTuple.CombineHashCodes$2:static end.
+                /*System.ValueTuple.CombineHashCodes$2:static end.*/
 
-                //System.ValueTuple.CombineHashCodes$3:static start.
+                /*System.ValueTuple.CombineHashCodes$3:static start.*/
                 CombineHashCodes$3: function (h1, h2, h3, h4, h5) {
                     return System.Collections.HashHelpers.Combine(System.ValueTuple.CombineHashCodes$2(h1, h2, h3, h4), h5);
                 },
-                //System.ValueTuple.CombineHashCodes$3:static end.
+                /*System.ValueTuple.CombineHashCodes$3:static end.*/
 
-                //System.ValueTuple.CombineHashCodes$4:static start.
+                /*System.ValueTuple.CombineHashCodes$4:static start.*/
                 CombineHashCodes$4: function (h1, h2, h3, h4, h5, h6) {
                     return System.Collections.HashHelpers.Combine(System.ValueTuple.CombineHashCodes$3(h1, h2, h3, h4, h5), h6);
                 },
-                //System.ValueTuple.CombineHashCodes$4:static end.
+                /*System.ValueTuple.CombineHashCodes$4:static end.*/
 
-                //System.ValueTuple.CombineHashCodes$5:static start.
+                /*System.ValueTuple.CombineHashCodes$5:static start.*/
                 CombineHashCodes$5: function (h1, h2, h3, h4, h5, h6, h7) {
                     return System.Collections.HashHelpers.Combine(System.ValueTuple.CombineHashCodes$4(h1, h2, h3, h4, h5, h6), h7);
                 },
-                //System.ValueTuple.CombineHashCodes$5:static end.
+                /*System.ValueTuple.CombineHashCodes$5:static end.*/
 
-                //System.ValueTuple.CombineHashCodes$6:static start.
+                /*System.ValueTuple.CombineHashCodes$6:static start.*/
                 CombineHashCodes$6: function (h1, h2, h3, h4, h5, h6, h7, h8) {
                     return System.Collections.HashHelpers.Combine(System.ValueTuple.CombineHashCodes$5(h1, h2, h3, h4, h5, h6, h7), h8);
                 },
-                //System.ValueTuple.CombineHashCodes$6:static end.
+                /*System.ValueTuple.CombineHashCodes$6:static end.*/
 
                 getDefaultValue: function () { return new System.ValueTuple(); }
             }
@@ -113,25 +113,25 @@
             }
         },
         methods: {
-            //System.ValueTuple.equals start.
+            /*System.ValueTuple.equals start.*/
             equals: function (obj) {
                 return Bridge.is(obj, System.ValueTuple);
             },
-            //System.ValueTuple.equals end.
+            /*System.ValueTuple.equals end.*/
 
-            //System.ValueTuple.equalsT start.
+            /*System.ValueTuple.equalsT start.*/
             equalsT: function (other) {
                 return true;
             },
-            //System.ValueTuple.equalsT end.
+            /*System.ValueTuple.equalsT end.*/
 
-            //System.ValueTuple.System$Collections$IStructuralEquatable$Equals start.
+            /*System.ValueTuple.System$Collections$IStructuralEquatable$Equals start.*/
             System$Collections$IStructuralEquatable$Equals: function (other, comparer) {
                 return Bridge.is(other, System.ValueTuple);
             },
-            //System.ValueTuple.System$Collections$IStructuralEquatable$Equals end.
+            /*System.ValueTuple.System$Collections$IStructuralEquatable$Equals end.*/
 
-            //System.ValueTuple.System$IComparable$compareTo start.
+            /*System.ValueTuple.System$IComparable$compareTo start.*/
             System$IComparable$compareTo: function (other) {
                 if (other == null) {
                     return 1;
@@ -143,15 +143,15 @@
 
                 return 0;
             },
-            //System.ValueTuple.System$IComparable$compareTo end.
+            /*System.ValueTuple.System$IComparable$compareTo end.*/
 
-            //System.ValueTuple.compareTo start.
+            /*System.ValueTuple.compareTo start.*/
             compareTo: function (other) {
                 return 0;
             },
-            //System.ValueTuple.compareTo end.
+            /*System.ValueTuple.compareTo end.*/
 
-            //System.ValueTuple.System$Collections$IStructuralComparable$CompareTo start.
+            /*System.ValueTuple.System$Collections$IStructuralComparable$CompareTo start.*/
             System$Collections$IStructuralComparable$CompareTo: function (other, comparer) {
                 if (other == null) {
                     return 1;
@@ -163,32 +163,32 @@
 
                 return 0;
             },
-            //System.ValueTuple.System$Collections$IStructuralComparable$CompareTo end.
+            /*System.ValueTuple.System$Collections$IStructuralComparable$CompareTo end.*/
 
-            //System.ValueTuple.getHashCode start.
+            /*System.ValueTuple.getHashCode start.*/
             getHashCode: function () {
                 return 0;
             },
-            //System.ValueTuple.getHashCode end.
+            /*System.ValueTuple.getHashCode end.*/
 
-            //System.ValueTuple.System$Collections$IStructuralEquatable$GetHashCode start.
+            /*System.ValueTuple.System$Collections$IStructuralEquatable$GetHashCode start.*/
             System$Collections$IStructuralEquatable$GetHashCode: function (comparer) {
                 return 0;
             },
-            //System.ValueTuple.System$Collections$IStructuralEquatable$GetHashCode end.
+            /*System.ValueTuple.System$Collections$IStructuralEquatable$GetHashCode end.*/
 
-            //System.ValueTuple.toString start.
+            /*System.ValueTuple.toString start.*/
             toString: function () {
                 return "()";
             },
-            //System.ValueTuple.toString end.
+            /*System.ValueTuple.toString end.*/
 
             $clone: function (to) { return this; }
         }
     });
-    //System.ValueTuple end.
+    /*System.ValueTuple end.*/
 
-    //System.ValueTuple$1 start.
+    /*System.ValueTuple$1 start.*/
     Bridge.define("System.ValueTuple$1", function (T1) { return {
         inherits: function () { return [System.IEquatable$1(System.ValueTuple$1(T1)),System.Collections.IStructuralEquatable,System.Collections.IStructuralComparable,System.IComparable,System.IComparable$1(System.ValueTuple$1(T1)),System.ITupleInternal]; },
         $kind: "struct",
@@ -229,19 +229,19 @@
             }
         },
         methods: {
-            //System.ValueTuple$1.equals start.
+            /*System.ValueTuple$1.equals start.*/
             equals: function (obj) {
                 return Bridge.is(obj, System.ValueTuple$1(T1)) && this.equalsT(System.Nullable.getValue(Bridge.cast(Bridge.unbox(obj, System.ValueTuple$1(T1)), System.ValueTuple$1(T1))));
             },
-            //System.ValueTuple$1.equals end.
+            /*System.ValueTuple$1.equals end.*/
 
-            //System.ValueTuple$1.equalsT start.
+            /*System.ValueTuple$1.equalsT start.*/
             equalsT: function (other) {
                 return System.ValueTuple$1(T1).s_t1Comparer.equals2(this.Item1, other.Item1);
             },
-            //System.ValueTuple$1.equalsT end.
+            /*System.ValueTuple$1.equalsT end.*/
 
-            //System.ValueTuple$1.System$Collections$IStructuralEquatable$Equals start.
+            /*System.ValueTuple$1.System$Collections$IStructuralEquatable$Equals start.*/
             System$Collections$IStructuralEquatable$Equals: function (other, comparer) {
                 if (other == null || !(Bridge.is(other, System.ValueTuple$1(T1)))) {
                     return false;
@@ -251,9 +251,9 @@
 
                 return comparer.System$Collections$IEqualityComparer$equals(this.Item1, objTuple.Item1);
             },
-            //System.ValueTuple$1.System$Collections$IStructuralEquatable$Equals end.
+            /*System.ValueTuple$1.System$Collections$IStructuralEquatable$Equals end.*/
 
-            //System.ValueTuple$1.System$IComparable$compareTo start.
+            /*System.ValueTuple$1.System$IComparable$compareTo start.*/
             System$IComparable$compareTo: function (other) {
                 if (other == null) {
                     return 1;
@@ -267,15 +267,15 @@
 
                 return new (System.Collections.Generic.Comparer$1(T1))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item1, objTuple.Item1);
             },
-            //System.ValueTuple$1.System$IComparable$compareTo end.
+            /*System.ValueTuple$1.System$IComparable$compareTo end.*/
 
-            //System.ValueTuple$1.compareTo start.
+            /*System.ValueTuple$1.compareTo start.*/
             compareTo: function (other) {
                 return new (System.Collections.Generic.Comparer$1(T1))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item1, other.Item1);
             },
-            //System.ValueTuple$1.compareTo end.
+            /*System.ValueTuple$1.compareTo end.*/
 
-            //System.ValueTuple$1.System$Collections$IStructuralComparable$CompareTo start.
+            /*System.ValueTuple$1.System$Collections$IStructuralComparable$CompareTo start.*/
             System$Collections$IStructuralComparable$CompareTo: function (other, comparer) {
                 if (other == null) {
                     return 1;
@@ -289,37 +289,37 @@
 
                 return comparer.System$Collections$IComparer$compare(this.Item1, objTuple.Item1);
             },
-            //System.ValueTuple$1.System$Collections$IStructuralComparable$CompareTo end.
+            /*System.ValueTuple$1.System$Collections$IStructuralComparable$CompareTo end.*/
 
-            //System.ValueTuple$1.getHashCode start.
+            /*System.ValueTuple$1.getHashCode start.*/
             getHashCode: function () {
                 return System.ValueTuple$1(T1).s_t1Comparer.getHashCode2(this.Item1);
             },
-            //System.ValueTuple$1.getHashCode end.
+            /*System.ValueTuple$1.getHashCode end.*/
 
-            //System.ValueTuple$1.System$Collections$IStructuralEquatable$GetHashCode start.
+            /*System.ValueTuple$1.System$Collections$IStructuralEquatable$GetHashCode start.*/
             System$Collections$IStructuralEquatable$GetHashCode: function (comparer) {
                 return comparer.System$Collections$IEqualityComparer$getHashCode(this.Item1);
             },
-            //System.ValueTuple$1.System$Collections$IStructuralEquatable$GetHashCode end.
+            /*System.ValueTuple$1.System$Collections$IStructuralEquatable$GetHashCode end.*/
 
-            //System.ValueTuple$1.System$ITupleInternal$GetHashCode start.
+            /*System.ValueTuple$1.System$ITupleInternal$GetHashCode start.*/
             System$ITupleInternal$GetHashCode: function (comparer) {
                 return comparer.System$Collections$IEqualityComparer$getHashCode(this.Item1);
             },
-            //System.ValueTuple$1.System$ITupleInternal$GetHashCode end.
+            /*System.ValueTuple$1.System$ITupleInternal$GetHashCode end.*/
 
-            //System.ValueTuple$1.toString start.
+            /*System.ValueTuple$1.toString start.*/
             toString: function () {
                 return "(" + ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ")";
             },
-            //System.ValueTuple$1.toString end.
+            /*System.ValueTuple$1.toString end.*/
 
-            //System.ValueTuple$1.System$ITupleInternal$ToStringEnd start.
+            /*System.ValueTuple$1.System$ITupleInternal$ToStringEnd start.*/
             System$ITupleInternal$ToStringEnd: function () {
                 return ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ")";
             },
-            //System.ValueTuple$1.System$ITupleInternal$ToStringEnd end.
+            /*System.ValueTuple$1.System$ITupleInternal$ToStringEnd end.*/
 
             $clone: function (to) {
                 var s = to || new (System.ValueTuple$1(T1))();
@@ -328,9 +328,9 @@
             }
         }
     }; });
-    //System.ValueTuple$1 end.
+    /*System.ValueTuple$1 end.*/
 
-    //System.ValueTuple$2 start.
+    /*System.ValueTuple$2 start.*/
     Bridge.define("System.ValueTuple$2", function (T1, T2) { return {
         inherits: function () { return [System.IEquatable$1(System.ValueTuple$2(T1,T2)),System.Collections.IStructuralEquatable,System.Collections.IStructuralComparable,System.IComparable,System.IComparable$1(System.ValueTuple$2(T1,T2)),System.ITupleInternal]; },
         $kind: "struct",
@@ -375,19 +375,19 @@
             }
         },
         methods: {
-            //System.ValueTuple$2.equals start.
+            /*System.ValueTuple$2.equals start.*/
             equals: function (obj) {
                 return Bridge.is(obj, System.ValueTuple$2(T1,T2)) && this.equalsT(System.Nullable.getValue(Bridge.cast(Bridge.unbox(obj, System.ValueTuple$2(T1,T2)), System.ValueTuple$2(T1,T2))));
             },
-            //System.ValueTuple$2.equals end.
+            /*System.ValueTuple$2.equals end.*/
 
-            //System.ValueTuple$2.equalsT start.
+            /*System.ValueTuple$2.equalsT start.*/
             equalsT: function (other) {
                 return System.ValueTuple$2(T1,T2).s_t1Comparer.equals2(this.Item1, other.Item1) && System.ValueTuple$2(T1,T2).s_t2Comparer.equals2(this.Item2, other.Item2);
             },
-            //System.ValueTuple$2.equalsT end.
+            /*System.ValueTuple$2.equalsT end.*/
 
-            //System.ValueTuple$2.System$Collections$IStructuralEquatable$Equals start.
+            /*System.ValueTuple$2.System$Collections$IStructuralEquatable$Equals start.*/
             System$Collections$IStructuralEquatable$Equals: function (other, comparer) {
                 if (other == null || !(Bridge.is(other, System.ValueTuple$2(T1,T2)))) {
                     return false;
@@ -397,9 +397,9 @@
 
                 return comparer.System$Collections$IEqualityComparer$equals(this.Item1, objTuple.Item1) && comparer.System$Collections$IEqualityComparer$equals(this.Item2, objTuple.Item2);
             },
-            //System.ValueTuple$2.System$Collections$IStructuralEquatable$Equals end.
+            /*System.ValueTuple$2.System$Collections$IStructuralEquatable$Equals end.*/
 
-            //System.ValueTuple$2.System$IComparable$compareTo start.
+            /*System.ValueTuple$2.System$IComparable$compareTo start.*/
             System$IComparable$compareTo: function (other) {
                 if (other == null) {
                     return 1;
@@ -411,9 +411,9 @@
 
                 return this.compareTo(System.Nullable.getValue(Bridge.cast(Bridge.unbox(other, System.ValueTuple$2(T1,T2)), System.ValueTuple$2(T1,T2))));
             },
-            //System.ValueTuple$2.System$IComparable$compareTo end.
+            /*System.ValueTuple$2.System$IComparable$compareTo end.*/
 
-            //System.ValueTuple$2.compareTo start.
+            /*System.ValueTuple$2.compareTo start.*/
             compareTo: function (other) {
                 var c = new (System.Collections.Generic.Comparer$1(T1))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item1, other.Item1);
                 if (c !== 0) {
@@ -422,9 +422,9 @@
 
                 return new (System.Collections.Generic.Comparer$1(T2))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item2, other.Item2);
             },
-            //System.ValueTuple$2.compareTo end.
+            /*System.ValueTuple$2.compareTo end.*/
 
-            //System.ValueTuple$2.System$Collections$IStructuralComparable$CompareTo start.
+            /*System.ValueTuple$2.System$Collections$IStructuralComparable$CompareTo start.*/
             System$Collections$IStructuralComparable$CompareTo: function (other, comparer) {
                 if (other == null) {
                     return 1;
@@ -443,43 +443,43 @@
 
                 return comparer.System$Collections$IComparer$compare(this.Item2, objTuple.Item2);
             },
-            //System.ValueTuple$2.System$Collections$IStructuralComparable$CompareTo end.
+            /*System.ValueTuple$2.System$Collections$IStructuralComparable$CompareTo end.*/
 
-            //System.ValueTuple$2.getHashCode start.
+            /*System.ValueTuple$2.getHashCode start.*/
             getHashCode: function () {
                 return System.ValueTuple.CombineHashCodes(System.ValueTuple$2(T1,T2).s_t1Comparer.getHashCode2(this.Item1), System.ValueTuple$2(T1,T2).s_t2Comparer.getHashCode2(this.Item2));
             },
-            //System.ValueTuple$2.getHashCode end.
+            /*System.ValueTuple$2.getHashCode end.*/
 
-            //System.ValueTuple$2.System$Collections$IStructuralEquatable$GetHashCode start.
+            /*System.ValueTuple$2.System$Collections$IStructuralEquatable$GetHashCode start.*/
             System$Collections$IStructuralEquatable$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
-            //System.ValueTuple$2.System$Collections$IStructuralEquatable$GetHashCode end.
+            /*System.ValueTuple$2.System$Collections$IStructuralEquatable$GetHashCode end.*/
 
-            //System.ValueTuple$2.System$ITupleInternal$GetHashCode start.
+            /*System.ValueTuple$2.System$ITupleInternal$GetHashCode start.*/
             System$ITupleInternal$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
-            //System.ValueTuple$2.System$ITupleInternal$GetHashCode end.
+            /*System.ValueTuple$2.System$ITupleInternal$GetHashCode end.*/
 
-            //System.ValueTuple$2.GetHashCodeCore start.
+            /*System.ValueTuple$2.GetHashCodeCore start.*/
             GetHashCodeCore: function (comparer) {
                 return System.ValueTuple.CombineHashCodes(comparer.System$Collections$IEqualityComparer$getHashCode(this.Item1), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item2));
             },
-            //System.ValueTuple$2.GetHashCodeCore end.
+            /*System.ValueTuple$2.GetHashCodeCore end.*/
 
-            //System.ValueTuple$2.toString start.
+            /*System.ValueTuple$2.toString start.*/
             toString: function () {
                 return "(" + ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ")";
             },
-            //System.ValueTuple$2.toString end.
+            /*System.ValueTuple$2.toString end.*/
 
-            //System.ValueTuple$2.System$ITupleInternal$ToStringEnd start.
+            /*System.ValueTuple$2.System$ITupleInternal$ToStringEnd start.*/
             System$ITupleInternal$ToStringEnd: function () {
                 return ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ")";
             },
-            //System.ValueTuple$2.System$ITupleInternal$ToStringEnd end.
+            /*System.ValueTuple$2.System$ITupleInternal$ToStringEnd end.*/
 
             $clone: function (to) {
                 var s = to || new (System.ValueTuple$2(T1,T2))();
@@ -489,9 +489,9 @@
             }
         }
     }; });
-    //System.ValueTuple$2 end.
+    /*System.ValueTuple$2 end.*/
 
-    //System.ValueTuple$3 start.
+    /*System.ValueTuple$3 start.*/
     Bridge.define("System.ValueTuple$3", function (T1, T2, T3) { return {
         inherits: function () { return [System.IEquatable$1(System.ValueTuple$3(T1,T2,T3)),System.Collections.IStructuralEquatable,System.Collections.IStructuralComparable,System.IComparable,System.IComparable$1(System.ValueTuple$3(T1,T2,T3)),System.ITupleInternal]; },
         $kind: "struct",
@@ -540,19 +540,19 @@
             }
         },
         methods: {
-            //System.ValueTuple$3.equals start.
+            /*System.ValueTuple$3.equals start.*/
             equals: function (obj) {
                 return Bridge.is(obj, System.ValueTuple$3(T1,T2,T3)) && this.equalsT(System.Nullable.getValue(Bridge.cast(Bridge.unbox(obj, System.ValueTuple$3(T1,T2,T3)), System.ValueTuple$3(T1,T2,T3))));
             },
-            //System.ValueTuple$3.equals end.
+            /*System.ValueTuple$3.equals end.*/
 
-            //System.ValueTuple$3.equalsT start.
+            /*System.ValueTuple$3.equalsT start.*/
             equalsT: function (other) {
                 return System.ValueTuple$3(T1,T2,T3).s_t1Comparer.equals2(this.Item1, other.Item1) && System.ValueTuple$3(T1,T2,T3).s_t2Comparer.equals2(this.Item2, other.Item2) && System.ValueTuple$3(T1,T2,T3).s_t3Comparer.equals2(this.Item3, other.Item3);
             },
-            //System.ValueTuple$3.equalsT end.
+            /*System.ValueTuple$3.equalsT end.*/
 
-            //System.ValueTuple$3.System$Collections$IStructuralEquatable$Equals start.
+            /*System.ValueTuple$3.System$Collections$IStructuralEquatable$Equals start.*/
             System$Collections$IStructuralEquatable$Equals: function (other, comparer) {
                 if (other == null || !(Bridge.is(other, System.ValueTuple$3(T1,T2,T3)))) {
                     return false;
@@ -562,9 +562,9 @@
 
                 return comparer.System$Collections$IEqualityComparer$equals(this.Item1, objTuple.Item1) && comparer.System$Collections$IEqualityComparer$equals(this.Item2, objTuple.Item2) && comparer.System$Collections$IEqualityComparer$equals(this.Item3, objTuple.Item3);
             },
-            //System.ValueTuple$3.System$Collections$IStructuralEquatable$Equals end.
+            /*System.ValueTuple$3.System$Collections$IStructuralEquatable$Equals end.*/
 
-            //System.ValueTuple$3.System$IComparable$compareTo start.
+            /*System.ValueTuple$3.System$IComparable$compareTo start.*/
             System$IComparable$compareTo: function (other) {
                 if (other == null) {
                     return 1;
@@ -576,9 +576,9 @@
 
                 return this.compareTo(System.Nullable.getValue(Bridge.cast(Bridge.unbox(other, System.ValueTuple$3(T1,T2,T3)), System.ValueTuple$3(T1,T2,T3))));
             },
-            //System.ValueTuple$3.System$IComparable$compareTo end.
+            /*System.ValueTuple$3.System$IComparable$compareTo end.*/
 
-            //System.ValueTuple$3.compareTo start.
+            /*System.ValueTuple$3.compareTo start.*/
             compareTo: function (other) {
                 var c = new (System.Collections.Generic.Comparer$1(T1))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item1, other.Item1);
                 if (c !== 0) {
@@ -592,9 +592,9 @@
 
                 return new (System.Collections.Generic.Comparer$1(T3))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item3, other.Item3);
             },
-            //System.ValueTuple$3.compareTo end.
+            /*System.ValueTuple$3.compareTo end.*/
 
-            //System.ValueTuple$3.System$Collections$IStructuralComparable$CompareTo start.
+            /*System.ValueTuple$3.System$Collections$IStructuralComparable$CompareTo start.*/
             System$Collections$IStructuralComparable$CompareTo: function (other, comparer) {
                 if (other == null) {
                     return 1;
@@ -618,43 +618,43 @@
 
                 return comparer.System$Collections$IComparer$compare(this.Item3, objTuple.Item3);
             },
-            //System.ValueTuple$3.System$Collections$IStructuralComparable$CompareTo end.
+            /*System.ValueTuple$3.System$Collections$IStructuralComparable$CompareTo end.*/
 
-            //System.ValueTuple$3.getHashCode start.
+            /*System.ValueTuple$3.getHashCode start.*/
             getHashCode: function () {
                 return System.ValueTuple.CombineHashCodes$1(System.ValueTuple$3(T1,T2,T3).s_t1Comparer.getHashCode2(this.Item1), System.ValueTuple$3(T1,T2,T3).s_t2Comparer.getHashCode2(this.Item2), System.ValueTuple$3(T1,T2,T3).s_t3Comparer.getHashCode2(this.Item3));
             },
-            //System.ValueTuple$3.getHashCode end.
+            /*System.ValueTuple$3.getHashCode end.*/
 
-            //System.ValueTuple$3.System$Collections$IStructuralEquatable$GetHashCode start.
+            /*System.ValueTuple$3.System$Collections$IStructuralEquatable$GetHashCode start.*/
             System$Collections$IStructuralEquatable$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
-            //System.ValueTuple$3.System$Collections$IStructuralEquatable$GetHashCode end.
+            /*System.ValueTuple$3.System$Collections$IStructuralEquatable$GetHashCode end.*/
 
-            //System.ValueTuple$3.System$ITupleInternal$GetHashCode start.
+            /*System.ValueTuple$3.System$ITupleInternal$GetHashCode start.*/
             System$ITupleInternal$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
-            //System.ValueTuple$3.System$ITupleInternal$GetHashCode end.
+            /*System.ValueTuple$3.System$ITupleInternal$GetHashCode end.*/
 
-            //System.ValueTuple$3.GetHashCodeCore start.
+            /*System.ValueTuple$3.GetHashCodeCore start.*/
             GetHashCodeCore: function (comparer) {
                 return System.ValueTuple.CombineHashCodes$1(comparer.System$Collections$IEqualityComparer$getHashCode(this.Item1), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item2), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item3));
             },
-            //System.ValueTuple$3.GetHashCodeCore end.
+            /*System.ValueTuple$3.GetHashCodeCore end.*/
 
-            //System.ValueTuple$3.toString start.
+            /*System.ValueTuple$3.toString start.*/
             toString: function () {
                 return "(" + ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ", " + ((this.Item3 != null ? Bridge.toString(this.Item3) : null) || "") + ")";
             },
-            //System.ValueTuple$3.toString end.
+            /*System.ValueTuple$3.toString end.*/
 
-            //System.ValueTuple$3.System$ITupleInternal$ToStringEnd start.
+            /*System.ValueTuple$3.System$ITupleInternal$ToStringEnd start.*/
             System$ITupleInternal$ToStringEnd: function () {
                 return ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ", " + ((this.Item3 != null ? Bridge.toString(this.Item3) : null) || "") + ")";
             },
-            //System.ValueTuple$3.System$ITupleInternal$ToStringEnd end.
+            /*System.ValueTuple$3.System$ITupleInternal$ToStringEnd end.*/
 
             $clone: function (to) {
                 var s = to || new (System.ValueTuple$3(T1,T2,T3))();
@@ -665,9 +665,9 @@
             }
         }
     }; });
-    //System.ValueTuple$3 end.
+    /*System.ValueTuple$3 end.*/
 
-    //System.ValueTuple$4 start.
+    /*System.ValueTuple$4 start.*/
     Bridge.define("System.ValueTuple$4", function (T1, T2, T3, T4) { return {
         inherits: function () { return [System.IEquatable$1(System.ValueTuple$4(T1,T2,T3,T4)),System.Collections.IStructuralEquatable,System.Collections.IStructuralComparable,System.IComparable,System.IComparable$1(System.ValueTuple$4(T1,T2,T3,T4)),System.ITupleInternal]; },
         $kind: "struct",
@@ -720,19 +720,19 @@
             }
         },
         methods: {
-            //System.ValueTuple$4.equals start.
+            /*System.ValueTuple$4.equals start.*/
             equals: function (obj) {
                 return Bridge.is(obj, System.ValueTuple$4(T1,T2,T3,T4)) && this.equalsT(System.Nullable.getValue(Bridge.cast(Bridge.unbox(obj, System.ValueTuple$4(T1,T2,T3,T4)), System.ValueTuple$4(T1,T2,T3,T4))));
             },
-            //System.ValueTuple$4.equals end.
+            /*System.ValueTuple$4.equals end.*/
 
-            //System.ValueTuple$4.equalsT start.
+            /*System.ValueTuple$4.equalsT start.*/
             equalsT: function (other) {
                 return System.ValueTuple$4(T1,T2,T3,T4).s_t1Comparer.equals2(this.Item1, other.Item1) && System.ValueTuple$4(T1,T2,T3,T4).s_t2Comparer.equals2(this.Item2, other.Item2) && System.ValueTuple$4(T1,T2,T3,T4).s_t3Comparer.equals2(this.Item3, other.Item3) && System.ValueTuple$4(T1,T2,T3,T4).s_t4Comparer.equals2(this.Item4, other.Item4);
             },
-            //System.ValueTuple$4.equalsT end.
+            /*System.ValueTuple$4.equalsT end.*/
 
-            //System.ValueTuple$4.System$Collections$IStructuralEquatable$Equals start.
+            /*System.ValueTuple$4.System$Collections$IStructuralEquatable$Equals start.*/
             System$Collections$IStructuralEquatable$Equals: function (other, comparer) {
                 if (other == null || !(Bridge.is(other, System.ValueTuple$4(T1,T2,T3,T4)))) {
                     return false;
@@ -742,9 +742,9 @@
 
                 return comparer.System$Collections$IEqualityComparer$equals(this.Item1, objTuple.Item1) && comparer.System$Collections$IEqualityComparer$equals(this.Item2, objTuple.Item2) && comparer.System$Collections$IEqualityComparer$equals(this.Item3, objTuple.Item3) && comparer.System$Collections$IEqualityComparer$equals(this.Item4, objTuple.Item4);
             },
-            //System.ValueTuple$4.System$Collections$IStructuralEquatable$Equals end.
+            /*System.ValueTuple$4.System$Collections$IStructuralEquatable$Equals end.*/
 
-            //System.ValueTuple$4.System$IComparable$compareTo start.
+            /*System.ValueTuple$4.System$IComparable$compareTo start.*/
             System$IComparable$compareTo: function (other) {
                 if (other == null) {
                     return 1;
@@ -756,9 +756,9 @@
 
                 return this.compareTo(System.Nullable.getValue(Bridge.cast(Bridge.unbox(other, System.ValueTuple$4(T1,T2,T3,T4)), System.ValueTuple$4(T1,T2,T3,T4))));
             },
-            //System.ValueTuple$4.System$IComparable$compareTo end.
+            /*System.ValueTuple$4.System$IComparable$compareTo end.*/
 
-            //System.ValueTuple$4.compareTo start.
+            /*System.ValueTuple$4.compareTo start.*/
             compareTo: function (other) {
                 var c = new (System.Collections.Generic.Comparer$1(T1))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item1, other.Item1);
                 if (c !== 0) {
@@ -777,9 +777,9 @@
 
                 return new (System.Collections.Generic.Comparer$1(T4))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item4, other.Item4);
             },
-            //System.ValueTuple$4.compareTo end.
+            /*System.ValueTuple$4.compareTo end.*/
 
-            //System.ValueTuple$4.System$Collections$IStructuralComparable$CompareTo start.
+            /*System.ValueTuple$4.System$Collections$IStructuralComparable$CompareTo start.*/
             System$Collections$IStructuralComparable$CompareTo: function (other, comparer) {
                 if (other == null) {
                     return 1;
@@ -808,43 +808,43 @@
 
                 return comparer.System$Collections$IComparer$compare(this.Item4, objTuple.Item4);
             },
-            //System.ValueTuple$4.System$Collections$IStructuralComparable$CompareTo end.
+            /*System.ValueTuple$4.System$Collections$IStructuralComparable$CompareTo end.*/
 
-            //System.ValueTuple$4.getHashCode start.
+            /*System.ValueTuple$4.getHashCode start.*/
             getHashCode: function () {
                 return System.ValueTuple.CombineHashCodes$2(System.ValueTuple$4(T1,T2,T3,T4).s_t1Comparer.getHashCode2(this.Item1), System.ValueTuple$4(T1,T2,T3,T4).s_t2Comparer.getHashCode2(this.Item2), System.ValueTuple$4(T1,T2,T3,T4).s_t3Comparer.getHashCode2(this.Item3), System.ValueTuple$4(T1,T2,T3,T4).s_t4Comparer.getHashCode2(this.Item4));
             },
-            //System.ValueTuple$4.getHashCode end.
+            /*System.ValueTuple$4.getHashCode end.*/
 
-            //System.ValueTuple$4.System$Collections$IStructuralEquatable$GetHashCode start.
+            /*System.ValueTuple$4.System$Collections$IStructuralEquatable$GetHashCode start.*/
             System$Collections$IStructuralEquatable$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
-            //System.ValueTuple$4.System$Collections$IStructuralEquatable$GetHashCode end.
+            /*System.ValueTuple$4.System$Collections$IStructuralEquatable$GetHashCode end.*/
 
-            //System.ValueTuple$4.System$ITupleInternal$GetHashCode start.
+            /*System.ValueTuple$4.System$ITupleInternal$GetHashCode start.*/
             System$ITupleInternal$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
-            //System.ValueTuple$4.System$ITupleInternal$GetHashCode end.
+            /*System.ValueTuple$4.System$ITupleInternal$GetHashCode end.*/
 
-            //System.ValueTuple$4.GetHashCodeCore start.
+            /*System.ValueTuple$4.GetHashCodeCore start.*/
             GetHashCodeCore: function (comparer) {
                 return System.ValueTuple.CombineHashCodes$2(comparer.System$Collections$IEqualityComparer$getHashCode(this.Item1), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item2), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item3), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item4));
             },
-            //System.ValueTuple$4.GetHashCodeCore end.
+            /*System.ValueTuple$4.GetHashCodeCore end.*/
 
-            //System.ValueTuple$4.toString start.
+            /*System.ValueTuple$4.toString start.*/
             toString: function () {
                 return "(" + ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ", " + ((this.Item3 != null ? Bridge.toString(this.Item3) : null) || "") + ", " + ((this.Item4 != null ? Bridge.toString(this.Item4) : null) || "") + ")";
             },
-            //System.ValueTuple$4.toString end.
+            /*System.ValueTuple$4.toString end.*/
 
-            //System.ValueTuple$4.System$ITupleInternal$ToStringEnd start.
+            /*System.ValueTuple$4.System$ITupleInternal$ToStringEnd start.*/
             System$ITupleInternal$ToStringEnd: function () {
                 return ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ", " + ((this.Item3 != null ? Bridge.toString(this.Item3) : null) || "") + ", " + ((this.Item4 != null ? Bridge.toString(this.Item4) : null) || "") + ")";
             },
-            //System.ValueTuple$4.System$ITupleInternal$ToStringEnd end.
+            /*System.ValueTuple$4.System$ITupleInternal$ToStringEnd end.*/
 
             $clone: function (to) {
                 var s = to || new (System.ValueTuple$4(T1,T2,T3,T4))();
@@ -856,9 +856,9 @@
             }
         }
     }; });
-    //System.ValueTuple$4 end.
+    /*System.ValueTuple$4 end.*/
 
-    //System.ValueTuple$5 start.
+    /*System.ValueTuple$5 start.*/
     Bridge.define("System.ValueTuple$5", function (T1, T2, T3, T4, T5) { return {
         inherits: function () { return [System.IEquatable$1(System.ValueTuple$5(T1,T2,T3,T4,T5)),System.Collections.IStructuralEquatable,System.Collections.IStructuralComparable,System.IComparable,System.IComparable$1(System.ValueTuple$5(T1,T2,T3,T4,T5)),System.ITupleInternal]; },
         $kind: "struct",
@@ -915,19 +915,19 @@
             }
         },
         methods: {
-            //System.ValueTuple$5.equals start.
+            /*System.ValueTuple$5.equals start.*/
             equals: function (obj) {
                 return Bridge.is(obj, System.ValueTuple$5(T1,T2,T3,T4,T5)) && this.equalsT(System.Nullable.getValue(Bridge.cast(Bridge.unbox(obj, System.ValueTuple$5(T1,T2,T3,T4,T5)), System.ValueTuple$5(T1,T2,T3,T4,T5))));
             },
-            //System.ValueTuple$5.equals end.
+            /*System.ValueTuple$5.equals end.*/
 
-            //System.ValueTuple$5.equalsT start.
+            /*System.ValueTuple$5.equalsT start.*/
             equalsT: function (other) {
                 return System.ValueTuple$5(T1,T2,T3,T4,T5).s_t1Comparer.equals2(this.Item1, other.Item1) && System.ValueTuple$5(T1,T2,T3,T4,T5).s_t2Comparer.equals2(this.Item2, other.Item2) && System.ValueTuple$5(T1,T2,T3,T4,T5).s_t3Comparer.equals2(this.Item3, other.Item3) && System.ValueTuple$5(T1,T2,T3,T4,T5).s_t4Comparer.equals2(this.Item4, other.Item4) && System.ValueTuple$5(T1,T2,T3,T4,T5).s_t5Comparer.equals2(this.Item5, other.Item5);
             },
-            //System.ValueTuple$5.equalsT end.
+            /*System.ValueTuple$5.equalsT end.*/
 
-            //System.ValueTuple$5.System$Collections$IStructuralEquatable$Equals start.
+            /*System.ValueTuple$5.System$Collections$IStructuralEquatable$Equals start.*/
             System$Collections$IStructuralEquatable$Equals: function (other, comparer) {
                 if (other == null || !(Bridge.is(other, System.ValueTuple$5(T1,T2,T3,T4,T5)))) {
                     return false;
@@ -937,9 +937,9 @@
 
                 return comparer.System$Collections$IEqualityComparer$equals(this.Item1, objTuple.Item1) && comparer.System$Collections$IEqualityComparer$equals(this.Item2, objTuple.Item2) && comparer.System$Collections$IEqualityComparer$equals(this.Item3, objTuple.Item3) && comparer.System$Collections$IEqualityComparer$equals(this.Item4, objTuple.Item4) && comparer.System$Collections$IEqualityComparer$equals(this.Item5, objTuple.Item5);
             },
-            //System.ValueTuple$5.System$Collections$IStructuralEquatable$Equals end.
+            /*System.ValueTuple$5.System$Collections$IStructuralEquatable$Equals end.*/
 
-            //System.ValueTuple$5.System$IComparable$compareTo start.
+            /*System.ValueTuple$5.System$IComparable$compareTo start.*/
             System$IComparable$compareTo: function (other) {
                 if (other == null) {
                     return 1;
@@ -951,9 +951,9 @@
 
                 return this.compareTo(System.Nullable.getValue(Bridge.cast(Bridge.unbox(other, System.ValueTuple$5(T1,T2,T3,T4,T5)), System.ValueTuple$5(T1,T2,T3,T4,T5))));
             },
-            //System.ValueTuple$5.System$IComparable$compareTo end.
+            /*System.ValueTuple$5.System$IComparable$compareTo end.*/
 
-            //System.ValueTuple$5.compareTo start.
+            /*System.ValueTuple$5.compareTo start.*/
             compareTo: function (other) {
                 var c = new (System.Collections.Generic.Comparer$1(T1))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item1, other.Item1);
                 if (c !== 0) {
@@ -977,9 +977,9 @@
 
                 return new (System.Collections.Generic.Comparer$1(T5))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item5, other.Item5);
             },
-            //System.ValueTuple$5.compareTo end.
+            /*System.ValueTuple$5.compareTo end.*/
 
-            //System.ValueTuple$5.System$Collections$IStructuralComparable$CompareTo start.
+            /*System.ValueTuple$5.System$Collections$IStructuralComparable$CompareTo start.*/
             System$Collections$IStructuralComparable$CompareTo: function (other, comparer) {
                 if (other == null) {
                     return 1;
@@ -1013,43 +1013,43 @@
 
                 return comparer.System$Collections$IComparer$compare(this.Item5, objTuple.Item5);
             },
-            //System.ValueTuple$5.System$Collections$IStructuralComparable$CompareTo end.
+            /*System.ValueTuple$5.System$Collections$IStructuralComparable$CompareTo end.*/
 
-            //System.ValueTuple$5.getHashCode start.
+            /*System.ValueTuple$5.getHashCode start.*/
             getHashCode: function () {
                 return System.ValueTuple.CombineHashCodes$3(System.ValueTuple$5(T1,T2,T3,T4,T5).s_t1Comparer.getHashCode2(this.Item1), System.ValueTuple$5(T1,T2,T3,T4,T5).s_t2Comparer.getHashCode2(this.Item2), System.ValueTuple$5(T1,T2,T3,T4,T5).s_t3Comparer.getHashCode2(this.Item3), System.ValueTuple$5(T1,T2,T3,T4,T5).s_t4Comparer.getHashCode2(this.Item4), System.ValueTuple$5(T1,T2,T3,T4,T5).s_t5Comparer.getHashCode2(this.Item5));
             },
-            //System.ValueTuple$5.getHashCode end.
+            /*System.ValueTuple$5.getHashCode end.*/
 
-            //System.ValueTuple$5.System$Collections$IStructuralEquatable$GetHashCode start.
+            /*System.ValueTuple$5.System$Collections$IStructuralEquatable$GetHashCode start.*/
             System$Collections$IStructuralEquatable$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
-            //System.ValueTuple$5.System$Collections$IStructuralEquatable$GetHashCode end.
+            /*System.ValueTuple$5.System$Collections$IStructuralEquatable$GetHashCode end.*/
 
-            //System.ValueTuple$5.System$ITupleInternal$GetHashCode start.
+            /*System.ValueTuple$5.System$ITupleInternal$GetHashCode start.*/
             System$ITupleInternal$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
-            //System.ValueTuple$5.System$ITupleInternal$GetHashCode end.
+            /*System.ValueTuple$5.System$ITupleInternal$GetHashCode end.*/
 
-            //System.ValueTuple$5.GetHashCodeCore start.
+            /*System.ValueTuple$5.GetHashCodeCore start.*/
             GetHashCodeCore: function (comparer) {
                 return System.ValueTuple.CombineHashCodes$3(comparer.System$Collections$IEqualityComparer$getHashCode(this.Item1), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item2), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item3), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item4), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item5));
             },
-            //System.ValueTuple$5.GetHashCodeCore end.
+            /*System.ValueTuple$5.GetHashCodeCore end.*/
 
-            //System.ValueTuple$5.toString start.
+            /*System.ValueTuple$5.toString start.*/
             toString: function () {
                 return "(" + ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ", " + ((this.Item3 != null ? Bridge.toString(this.Item3) : null) || "") + ", " + ((this.Item4 != null ? Bridge.toString(this.Item4) : null) || "") + ", " + ((this.Item5 != null ? Bridge.toString(this.Item5) : null) || "") + ")";
             },
-            //System.ValueTuple$5.toString end.
+            /*System.ValueTuple$5.toString end.*/
 
-            //System.ValueTuple$5.System$ITupleInternal$ToStringEnd start.
+            /*System.ValueTuple$5.System$ITupleInternal$ToStringEnd start.*/
             System$ITupleInternal$ToStringEnd: function () {
                 return ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ", " + ((this.Item3 != null ? Bridge.toString(this.Item3) : null) || "") + ", " + ((this.Item4 != null ? Bridge.toString(this.Item4) : null) || "") + ", " + ((this.Item5 != null ? Bridge.toString(this.Item5) : null) || "") + ")";
             },
-            //System.ValueTuple$5.System$ITupleInternal$ToStringEnd end.
+            /*System.ValueTuple$5.System$ITupleInternal$ToStringEnd end.*/
 
             $clone: function (to) {
                 var s = to || new (System.ValueTuple$5(T1,T2,T3,T4,T5))();
@@ -1062,9 +1062,9 @@
             }
         }
     }; });
-    //System.ValueTuple$5 end.
+    /*System.ValueTuple$5 end.*/
 
-    //System.ValueTuple$6 start.
+    /*System.ValueTuple$6 start.*/
     Bridge.define("System.ValueTuple$6", function (T1, T2, T3, T4, T5, T6) { return {
         inherits: function () { return [System.IEquatable$1(System.ValueTuple$6(T1,T2,T3,T4,T5,T6)),System.Collections.IStructuralEquatable,System.Collections.IStructuralComparable,System.IComparable,System.IComparable$1(System.ValueTuple$6(T1,T2,T3,T4,T5,T6)),System.ITupleInternal]; },
         $kind: "struct",
@@ -1125,19 +1125,19 @@
             }
         },
         methods: {
-            //System.ValueTuple$6.equals start.
+            /*System.ValueTuple$6.equals start.*/
             equals: function (obj) {
                 return Bridge.is(obj, System.ValueTuple$6(T1,T2,T3,T4,T5,T6)) && this.equalsT(System.Nullable.getValue(Bridge.cast(Bridge.unbox(obj, System.ValueTuple$6(T1,T2,T3,T4,T5,T6)), System.ValueTuple$6(T1,T2,T3,T4,T5,T6))));
             },
-            //System.ValueTuple$6.equals end.
+            /*System.ValueTuple$6.equals end.*/
 
-            //System.ValueTuple$6.equalsT start.
+            /*System.ValueTuple$6.equalsT start.*/
             equalsT: function (other) {
                 return System.ValueTuple$6(T1,T2,T3,T4,T5,T6).s_t1Comparer.equals2(this.Item1, other.Item1) && System.ValueTuple$6(T1,T2,T3,T4,T5,T6).s_t2Comparer.equals2(this.Item2, other.Item2) && System.ValueTuple$6(T1,T2,T3,T4,T5,T6).s_t3Comparer.equals2(this.Item3, other.Item3) && System.ValueTuple$6(T1,T2,T3,T4,T5,T6).s_t4Comparer.equals2(this.Item4, other.Item4) && System.ValueTuple$6(T1,T2,T3,T4,T5,T6).s_t5Comparer.equals2(this.Item5, other.Item5) && System.ValueTuple$6(T1,T2,T3,T4,T5,T6).s_t6Comparer.equals2(this.Item6, other.Item6);
             },
-            //System.ValueTuple$6.equalsT end.
+            /*System.ValueTuple$6.equalsT end.*/
 
-            //System.ValueTuple$6.System$Collections$IStructuralEquatable$Equals start.
+            /*System.ValueTuple$6.System$Collections$IStructuralEquatable$Equals start.*/
             System$Collections$IStructuralEquatable$Equals: function (other, comparer) {
                 if (other == null || !(Bridge.is(other, System.ValueTuple$6(T1,T2,T3,T4,T5,T6)))) {
                     return false;
@@ -1147,9 +1147,9 @@
 
                 return comparer.System$Collections$IEqualityComparer$equals(this.Item1, objTuple.Item1) && comparer.System$Collections$IEqualityComparer$equals(this.Item2, objTuple.Item2) && comparer.System$Collections$IEqualityComparer$equals(this.Item3, objTuple.Item3) && comparer.System$Collections$IEqualityComparer$equals(this.Item4, objTuple.Item4) && comparer.System$Collections$IEqualityComparer$equals(this.Item5, objTuple.Item5) && comparer.System$Collections$IEqualityComparer$equals(this.Item6, objTuple.Item6);
             },
-            //System.ValueTuple$6.System$Collections$IStructuralEquatable$Equals end.
+            /*System.ValueTuple$6.System$Collections$IStructuralEquatable$Equals end.*/
 
-            //System.ValueTuple$6.System$IComparable$compareTo start.
+            /*System.ValueTuple$6.System$IComparable$compareTo start.*/
             System$IComparable$compareTo: function (other) {
                 if (other == null) {
                     return 1;
@@ -1161,9 +1161,9 @@
 
                 return this.compareTo(System.Nullable.getValue(Bridge.cast(Bridge.unbox(other, System.ValueTuple$6(T1,T2,T3,T4,T5,T6)), System.ValueTuple$6(T1,T2,T3,T4,T5,T6))));
             },
-            //System.ValueTuple$6.System$IComparable$compareTo end.
+            /*System.ValueTuple$6.System$IComparable$compareTo end.*/
 
-            //System.ValueTuple$6.compareTo start.
+            /*System.ValueTuple$6.compareTo start.*/
             compareTo: function (other) {
                 var c = new (System.Collections.Generic.Comparer$1(T1))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item1, other.Item1);
                 if (c !== 0) {
@@ -1192,9 +1192,9 @@
 
                 return new (System.Collections.Generic.Comparer$1(T6))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item6, other.Item6);
             },
-            //System.ValueTuple$6.compareTo end.
+            /*System.ValueTuple$6.compareTo end.*/
 
-            //System.ValueTuple$6.System$Collections$IStructuralComparable$CompareTo start.
+            /*System.ValueTuple$6.System$Collections$IStructuralComparable$CompareTo start.*/
             System$Collections$IStructuralComparable$CompareTo: function (other, comparer) {
                 if (other == null) {
                     return 1;
@@ -1233,43 +1233,43 @@
 
                 return comparer.System$Collections$IComparer$compare(this.Item6, objTuple.Item6);
             },
-            //System.ValueTuple$6.System$Collections$IStructuralComparable$CompareTo end.
+            /*System.ValueTuple$6.System$Collections$IStructuralComparable$CompareTo end.*/
 
-            //System.ValueTuple$6.getHashCode start.
+            /*System.ValueTuple$6.getHashCode start.*/
             getHashCode: function () {
                 return System.ValueTuple.CombineHashCodes$4(System.ValueTuple$6(T1,T2,T3,T4,T5,T6).s_t1Comparer.getHashCode2(this.Item1), System.ValueTuple$6(T1,T2,T3,T4,T5,T6).s_t2Comparer.getHashCode2(this.Item2), System.ValueTuple$6(T1,T2,T3,T4,T5,T6).s_t3Comparer.getHashCode2(this.Item3), System.ValueTuple$6(T1,T2,T3,T4,T5,T6).s_t4Comparer.getHashCode2(this.Item4), System.ValueTuple$6(T1,T2,T3,T4,T5,T6).s_t5Comparer.getHashCode2(this.Item5), System.ValueTuple$6(T1,T2,T3,T4,T5,T6).s_t6Comparer.getHashCode2(this.Item6));
             },
-            //System.ValueTuple$6.getHashCode end.
+            /*System.ValueTuple$6.getHashCode end.*/
 
-            //System.ValueTuple$6.System$Collections$IStructuralEquatable$GetHashCode start.
+            /*System.ValueTuple$6.System$Collections$IStructuralEquatable$GetHashCode start.*/
             System$Collections$IStructuralEquatable$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
-            //System.ValueTuple$6.System$Collections$IStructuralEquatable$GetHashCode end.
+            /*System.ValueTuple$6.System$Collections$IStructuralEquatable$GetHashCode end.*/
 
-            //System.ValueTuple$6.System$ITupleInternal$GetHashCode start.
+            /*System.ValueTuple$6.System$ITupleInternal$GetHashCode start.*/
             System$ITupleInternal$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
-            //System.ValueTuple$6.System$ITupleInternal$GetHashCode end.
+            /*System.ValueTuple$6.System$ITupleInternal$GetHashCode end.*/
 
-            //System.ValueTuple$6.GetHashCodeCore start.
+            /*System.ValueTuple$6.GetHashCodeCore start.*/
             GetHashCodeCore: function (comparer) {
                 return System.ValueTuple.CombineHashCodes$4(comparer.System$Collections$IEqualityComparer$getHashCode(this.Item1), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item2), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item3), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item4), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item5), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item6));
             },
-            //System.ValueTuple$6.GetHashCodeCore end.
+            /*System.ValueTuple$6.GetHashCodeCore end.*/
 
-            //System.ValueTuple$6.toString start.
+            /*System.ValueTuple$6.toString start.*/
             toString: function () {
                 return "(" + ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ", " + ((this.Item3 != null ? Bridge.toString(this.Item3) : null) || "") + ", " + ((this.Item4 != null ? Bridge.toString(this.Item4) : null) || "") + ", " + ((this.Item5 != null ? Bridge.toString(this.Item5) : null) || "") + ", " + ((this.Item6 != null ? Bridge.toString(this.Item6) : null) || "") + ")";
             },
-            //System.ValueTuple$6.toString end.
+            /*System.ValueTuple$6.toString end.*/
 
-            //System.ValueTuple$6.System$ITupleInternal$ToStringEnd start.
+            /*System.ValueTuple$6.System$ITupleInternal$ToStringEnd start.*/
             System$ITupleInternal$ToStringEnd: function () {
                 return ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ", " + ((this.Item3 != null ? Bridge.toString(this.Item3) : null) || "") + ", " + ((this.Item4 != null ? Bridge.toString(this.Item4) : null) || "") + ", " + ((this.Item5 != null ? Bridge.toString(this.Item5) : null) || "") + ", " + ((this.Item6 != null ? Bridge.toString(this.Item6) : null) || "") + ")";
             },
-            //System.ValueTuple$6.System$ITupleInternal$ToStringEnd end.
+            /*System.ValueTuple$6.System$ITupleInternal$ToStringEnd end.*/
 
             $clone: function (to) {
                 var s = to || new (System.ValueTuple$6(T1,T2,T3,T4,T5,T6))();
@@ -1283,9 +1283,9 @@
             }
         }
     }; });
-    //System.ValueTuple$6 end.
+    /*System.ValueTuple$6 end.*/
 
-    //System.ValueTuple$7 start.
+    /*System.ValueTuple$7 start.*/
     Bridge.define("System.ValueTuple$7", function (T1, T2, T3, T4, T5, T6, T7) { return {
         inherits: function () { return [System.IEquatable$1(System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7)),System.Collections.IStructuralEquatable,System.Collections.IStructuralComparable,System.IComparable,System.IComparable$1(System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7)),System.ITupleInternal]; },
         $kind: "struct",
@@ -1350,19 +1350,19 @@
             }
         },
         methods: {
-            //System.ValueTuple$7.equals start.
+            /*System.ValueTuple$7.equals start.*/
             equals: function (obj) {
                 return Bridge.is(obj, System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7)) && this.equalsT(System.Nullable.getValue(Bridge.cast(Bridge.unbox(obj, System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7)), System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7))));
             },
-            //System.ValueTuple$7.equals end.
+            /*System.ValueTuple$7.equals end.*/
 
-            //System.ValueTuple$7.equalsT start.
+            /*System.ValueTuple$7.equalsT start.*/
             equalsT: function (other) {
                 return System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t1Comparer.equals2(this.Item1, other.Item1) && System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t2Comparer.equals2(this.Item2, other.Item2) && System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t3Comparer.equals2(this.Item3, other.Item3) && System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t4Comparer.equals2(this.Item4, other.Item4) && System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t5Comparer.equals2(this.Item5, other.Item5) && System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t6Comparer.equals2(this.Item6, other.Item6) && System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t7Comparer.equals2(this.Item7, other.Item7);
             },
-            //System.ValueTuple$7.equalsT end.
+            /*System.ValueTuple$7.equalsT end.*/
 
-            //System.ValueTuple$7.System$Collections$IStructuralEquatable$Equals start.
+            /*System.ValueTuple$7.System$Collections$IStructuralEquatable$Equals start.*/
             System$Collections$IStructuralEquatable$Equals: function (other, comparer) {
                 if (other == null || !(Bridge.is(other, System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7)))) {
                     return false;
@@ -1372,9 +1372,9 @@
 
                 return comparer.System$Collections$IEqualityComparer$equals(this.Item1, objTuple.Item1) && comparer.System$Collections$IEqualityComparer$equals(this.Item2, objTuple.Item2) && comparer.System$Collections$IEqualityComparer$equals(this.Item3, objTuple.Item3) && comparer.System$Collections$IEqualityComparer$equals(this.Item4, objTuple.Item4) && comparer.System$Collections$IEqualityComparer$equals(this.Item5, objTuple.Item5) && comparer.System$Collections$IEqualityComparer$equals(this.Item6, objTuple.Item6) && comparer.System$Collections$IEqualityComparer$equals(this.Item7, objTuple.Item7);
             },
-            //System.ValueTuple$7.System$Collections$IStructuralEquatable$Equals end.
+            /*System.ValueTuple$7.System$Collections$IStructuralEquatable$Equals end.*/
 
-            //System.ValueTuple$7.System$IComparable$compareTo start.
+            /*System.ValueTuple$7.System$IComparable$compareTo start.*/
             System$IComparable$compareTo: function (other) {
                 if (other == null) {
                     return 1;
@@ -1386,9 +1386,9 @@
 
                 return this.compareTo(System.Nullable.getValue(Bridge.cast(Bridge.unbox(other, System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7)), System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7))));
             },
-            //System.ValueTuple$7.System$IComparable$compareTo end.
+            /*System.ValueTuple$7.System$IComparable$compareTo end.*/
 
-            //System.ValueTuple$7.compareTo start.
+            /*System.ValueTuple$7.compareTo start.*/
             compareTo: function (other) {
                 var c = new (System.Collections.Generic.Comparer$1(T1))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item1, other.Item1);
                 if (c !== 0) {
@@ -1422,9 +1422,9 @@
 
                 return new (System.Collections.Generic.Comparer$1(T7))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item7, other.Item7);
             },
-            //System.ValueTuple$7.compareTo end.
+            /*System.ValueTuple$7.compareTo end.*/
 
-            //System.ValueTuple$7.System$Collections$IStructuralComparable$CompareTo start.
+            /*System.ValueTuple$7.System$Collections$IStructuralComparable$CompareTo start.*/
             System$Collections$IStructuralComparable$CompareTo: function (other, comparer) {
                 if (other == null) {
                     return 1;
@@ -1468,43 +1468,43 @@
 
                 return comparer.System$Collections$IComparer$compare(this.Item7, objTuple.Item7);
             },
-            //System.ValueTuple$7.System$Collections$IStructuralComparable$CompareTo end.
+            /*System.ValueTuple$7.System$Collections$IStructuralComparable$CompareTo end.*/
 
-            //System.ValueTuple$7.getHashCode start.
+            /*System.ValueTuple$7.getHashCode start.*/
             getHashCode: function () {
                 return System.ValueTuple.CombineHashCodes$5(System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t1Comparer.getHashCode2(this.Item1), System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t2Comparer.getHashCode2(this.Item2), System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t3Comparer.getHashCode2(this.Item3), System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t4Comparer.getHashCode2(this.Item4), System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t5Comparer.getHashCode2(this.Item5), System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t6Comparer.getHashCode2(this.Item6), System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t7Comparer.getHashCode2(this.Item7));
             },
-            //System.ValueTuple$7.getHashCode end.
+            /*System.ValueTuple$7.getHashCode end.*/
 
-            //System.ValueTuple$7.System$Collections$IStructuralEquatable$GetHashCode start.
+            /*System.ValueTuple$7.System$Collections$IStructuralEquatable$GetHashCode start.*/
             System$Collections$IStructuralEquatable$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
-            //System.ValueTuple$7.System$Collections$IStructuralEquatable$GetHashCode end.
+            /*System.ValueTuple$7.System$Collections$IStructuralEquatable$GetHashCode end.*/
 
-            //System.ValueTuple$7.System$ITupleInternal$GetHashCode start.
+            /*System.ValueTuple$7.System$ITupleInternal$GetHashCode start.*/
             System$ITupleInternal$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
-            //System.ValueTuple$7.System$ITupleInternal$GetHashCode end.
+            /*System.ValueTuple$7.System$ITupleInternal$GetHashCode end.*/
 
-            //System.ValueTuple$7.GetHashCodeCore start.
+            /*System.ValueTuple$7.GetHashCodeCore start.*/
             GetHashCodeCore: function (comparer) {
                 return System.ValueTuple.CombineHashCodes$5(comparer.System$Collections$IEqualityComparer$getHashCode(this.Item1), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item2), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item3), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item4), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item5), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item6), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item7));
             },
-            //System.ValueTuple$7.GetHashCodeCore end.
+            /*System.ValueTuple$7.GetHashCodeCore end.*/
 
-            //System.ValueTuple$7.toString start.
+            /*System.ValueTuple$7.toString start.*/
             toString: function () {
                 return "(" + ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ", " + ((this.Item3 != null ? Bridge.toString(this.Item3) : null) || "") + ", " + ((this.Item4 != null ? Bridge.toString(this.Item4) : null) || "") + ", " + ((this.Item5 != null ? Bridge.toString(this.Item5) : null) || "") + ", " + ((this.Item6 != null ? Bridge.toString(this.Item6) : null) || "") + ", " + ((this.Item7 != null ? Bridge.toString(this.Item7) : null) || "") + ")";
             },
-            //System.ValueTuple$7.toString end.
+            /*System.ValueTuple$7.toString end.*/
 
-            //System.ValueTuple$7.System$ITupleInternal$ToStringEnd start.
+            /*System.ValueTuple$7.System$ITupleInternal$ToStringEnd start.*/
             System$ITupleInternal$ToStringEnd: function () {
                 return ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ", " + ((this.Item3 != null ? Bridge.toString(this.Item3) : null) || "") + ", " + ((this.Item4 != null ? Bridge.toString(this.Item4) : null) || "") + ", " + ((this.Item5 != null ? Bridge.toString(this.Item5) : null) || "") + ", " + ((this.Item6 != null ? Bridge.toString(this.Item6) : null) || "") + ", " + ((this.Item7 != null ? Bridge.toString(this.Item7) : null) || "") + ")";
             },
-            //System.ValueTuple$7.System$ITupleInternal$ToStringEnd end.
+            /*System.ValueTuple$7.System$ITupleInternal$ToStringEnd end.*/
 
             $clone: function (to) {
                 var s = to || new (System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7))();
@@ -1519,9 +1519,9 @@
             }
         }
     }; });
-    //System.ValueTuple$7 end.
+    /*System.ValueTuple$7 end.*/
 
-    //System.ValueTuple$8 start.
+    /*System.ValueTuple$8 start.*/
     Bridge.define("System.ValueTuple$8", function (T1, T2, T3, T4, T5, T6, T7, TRest) { return {
         inherits: function () { return [System.IEquatable$1(System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest)),System.Collections.IStructuralEquatable,System.Collections.IStructuralComparable,System.IComparable,System.IComparable$1(System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest)),System.ITupleInternal]; },
         $kind: "struct",
@@ -1595,19 +1595,19 @@
             }
         },
         methods: {
-            //System.ValueTuple$8.equals start.
+            /*System.ValueTuple$8.equals start.*/
             equals: function (obj) {
                 return Bridge.is(obj, System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest)) && this.equalsT(System.Nullable.getValue(Bridge.cast(Bridge.unbox(obj, System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest)), System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest))));
             },
-            //System.ValueTuple$8.equals end.
+            /*System.ValueTuple$8.equals end.*/
 
-            //System.ValueTuple$8.equalsT start.
+            /*System.ValueTuple$8.equalsT start.*/
             equalsT: function (other) {
                 return System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest).s_t1Comparer.equals2(this.Item1, other.Item1) && System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest).s_t2Comparer.equals2(this.Item2, other.Item2) && System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest).s_t3Comparer.equals2(this.Item3, other.Item3) && System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest).s_t4Comparer.equals2(this.Item4, other.Item4) && System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest).s_t5Comparer.equals2(this.Item5, other.Item5) && System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest).s_t6Comparer.equals2(this.Item6, other.Item6) && System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest).s_t7Comparer.equals2(this.Item7, other.Item7) && System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest).s_tRestComparer.equals2(this.Rest, other.Rest);
             },
-            //System.ValueTuple$8.equalsT end.
+            /*System.ValueTuple$8.equalsT end.*/
 
-            //System.ValueTuple$8.System$Collections$IStructuralEquatable$Equals start.
+            /*System.ValueTuple$8.System$Collections$IStructuralEquatable$Equals start.*/
             System$Collections$IStructuralEquatable$Equals: function (other, comparer) {
                 if (other == null || !(Bridge.is(other, System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest)))) {
                     return false;
@@ -1617,9 +1617,9 @@
 
                 return comparer.System$Collections$IEqualityComparer$equals(this.Item1, objTuple.Item1) && comparer.System$Collections$IEqualityComparer$equals(this.Item2, objTuple.Item2) && comparer.System$Collections$IEqualityComparer$equals(this.Item3, objTuple.Item3) && comparer.System$Collections$IEqualityComparer$equals(this.Item4, objTuple.Item4) && comparer.System$Collections$IEqualityComparer$equals(this.Item5, objTuple.Item5) && comparer.System$Collections$IEqualityComparer$equals(this.Item6, objTuple.Item6) && comparer.System$Collections$IEqualityComparer$equals(this.Item7, objTuple.Item7) && comparer.System$Collections$IEqualityComparer$equals(this.Rest, objTuple.Rest);
             },
-            //System.ValueTuple$8.System$Collections$IStructuralEquatable$Equals end.
+            /*System.ValueTuple$8.System$Collections$IStructuralEquatable$Equals end.*/
 
-            //System.ValueTuple$8.System$IComparable$compareTo start.
+            /*System.ValueTuple$8.System$IComparable$compareTo start.*/
             System$IComparable$compareTo: function (other) {
                 if (other == null) {
                     return 1;
@@ -1631,9 +1631,9 @@
 
                 return this.compareTo(System.Nullable.getValue(Bridge.cast(Bridge.unbox(other, System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest)), System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest))));
             },
-            //System.ValueTuple$8.System$IComparable$compareTo end.
+            /*System.ValueTuple$8.System$IComparable$compareTo end.*/
 
-            //System.ValueTuple$8.compareTo start.
+            /*System.ValueTuple$8.compareTo start.*/
             compareTo: function (other) {
                 var c = new (System.Collections.Generic.Comparer$1(T1))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item1, other.Item1);
                 if (c !== 0) {
@@ -1672,9 +1672,9 @@
 
                 return new (System.Collections.Generic.Comparer$1(TRest))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Rest, other.Rest);
             },
-            //System.ValueTuple$8.compareTo end.
+            /*System.ValueTuple$8.compareTo end.*/
 
-            //System.ValueTuple$8.System$Collections$IStructuralComparable$CompareTo start.
+            /*System.ValueTuple$8.System$Collections$IStructuralComparable$CompareTo start.*/
             System$Collections$IStructuralComparable$CompareTo: function (other, comparer) {
                 if (other == null) {
                     return 1;
@@ -1723,9 +1723,9 @@
 
                 return comparer.System$Collections$IComparer$compare(this.Rest, objTuple.Rest);
             },
-            //System.ValueTuple$8.System$Collections$IStructuralComparable$CompareTo end.
+            /*System.ValueTuple$8.System$Collections$IStructuralComparable$CompareTo end.*/
 
-            //System.ValueTuple$8.getHashCode start.
+            /*System.ValueTuple$8.getHashCode start.*/
             getHashCode: function () {
                 var rest = Bridge.as(this.Rest, System.ITupleInternal);
                 if (rest == null) {
@@ -1758,21 +1758,21 @@
 
                 return -1;
             },
-            //System.ValueTuple$8.getHashCode end.
+            /*System.ValueTuple$8.getHashCode end.*/
 
-            //System.ValueTuple$8.System$Collections$IStructuralEquatable$GetHashCode start.
+            /*System.ValueTuple$8.System$Collections$IStructuralEquatable$GetHashCode start.*/
             System$Collections$IStructuralEquatable$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
-            //System.ValueTuple$8.System$Collections$IStructuralEquatable$GetHashCode end.
+            /*System.ValueTuple$8.System$Collections$IStructuralEquatable$GetHashCode end.*/
 
-            //System.ValueTuple$8.System$ITupleInternal$GetHashCode start.
+            /*System.ValueTuple$8.System$ITupleInternal$GetHashCode start.*/
             System$ITupleInternal$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
-            //System.ValueTuple$8.System$ITupleInternal$GetHashCode end.
+            /*System.ValueTuple$8.System$ITupleInternal$GetHashCode end.*/
 
-            //System.ValueTuple$8.GetHashCodeCore start.
+            /*System.ValueTuple$8.GetHashCodeCore start.*/
             GetHashCodeCore: function (comparer) {
                 var rest = Bridge.as(this.Rest, System.ITupleInternal);
                 if (rest == null) {
@@ -1805,9 +1805,9 @@
 
                 return -1;
             },
-            //System.ValueTuple$8.GetHashCodeCore end.
+            /*System.ValueTuple$8.GetHashCodeCore end.*/
 
-            //System.ValueTuple$8.toString start.
+            /*System.ValueTuple$8.toString start.*/
             toString: function () {
                 var rest = Bridge.as(this.Rest, System.ITupleInternal);
                 if (rest == null) {
@@ -1816,9 +1816,9 @@
                     return "(" + ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ", " + ((this.Item3 != null ? Bridge.toString(this.Item3) : null) || "") + ", " + ((this.Item4 != null ? Bridge.toString(this.Item4) : null) || "") + ", " + ((this.Item5 != null ? Bridge.toString(this.Item5) : null) || "") + ", " + ((this.Item6 != null ? Bridge.toString(this.Item6) : null) || "") + ", " + ((this.Item7 != null ? Bridge.toString(this.Item7) : null) || "") + ", " + (rest.System$ITupleInternal$ToStringEnd() || "");
                 }
             },
-            //System.ValueTuple$8.toString end.
+            /*System.ValueTuple$8.toString end.*/
 
-            //System.ValueTuple$8.System$ITupleInternal$ToStringEnd start.
+            /*System.ValueTuple$8.System$ITupleInternal$ToStringEnd start.*/
             System$ITupleInternal$ToStringEnd: function () {
                 var rest = Bridge.as(this.Rest, System.ITupleInternal);
                 if (rest == null) {
@@ -1827,7 +1827,7 @@
                     return ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ", " + ((this.Item3 != null ? Bridge.toString(this.Item3) : null) || "") + ", " + ((this.Item4 != null ? Bridge.toString(this.Item4) : null) || "") + ", " + ((this.Item5 != null ? Bridge.toString(this.Item5) : null) || "") + ", " + ((this.Item6 != null ? Bridge.toString(this.Item6) : null) || "") + ", " + ((this.Item7 != null ? Bridge.toString(this.Item7) : null) || "") + ", " + (rest.System$ITupleInternal$ToStringEnd() || "");
                 }
             },
-            //System.ValueTuple$8.System$ITupleInternal$ToStringEnd end.
+            /*System.ValueTuple$8.System$ITupleInternal$ToStringEnd end.*/
 
             $clone: function (to) {
                 var s = to || new (System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest))();
@@ -1843,4 +1843,4 @@
             }
         }
     }; });
-    //System.ValueTuple$8 end.
+    /*System.ValueTuple$8 end.*/

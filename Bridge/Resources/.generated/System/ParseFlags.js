@@ -1,4 +1,4 @@
-    //System.ParseFlags start.
+    /*System.ParseFlags start.*/
     Bridge.define("System.ParseFlags", {
         $kind: "enum",
         statics: {
@@ -22,4 +22,4 @@
         },
         $flags: true
     });
-    //System.ParseFlags end.
+    /*System.ParseFlags end.*/

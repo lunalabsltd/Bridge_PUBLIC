@@ -1,4 +1,4 @@
-    //System.Globalization.SortVersion start.
+    /*System.Globalization.SortVersion start.*/
     Bridge.define("System.Globalization.SortVersion", {
         inherits: function () { return [System.IEquatable$1(System.Globalization.SortVersion)]; },
         statics: {
@@ -61,7 +61,7 @@
             }
         },
         methods: {
-            //System.Globalization.SortVersion.equals start.
+            /*System.Globalization.SortVersion.equals start.*/
             equals: function (obj) {
                 var n = Bridge.as(obj, System.Globalization.SortVersion);
                 if (System.Globalization.SortVersion.op_Inequality(n, null)) {
@@ -70,9 +70,9 @@
 
                 return false;
             },
-            //System.Globalization.SortVersion.equals end.
+            /*System.Globalization.SortVersion.equals end.*/
 
-            //System.Globalization.SortVersion.equalsT start.
+            /*System.Globalization.SortVersion.equalsT start.*/
             equalsT: function (other) {
                 if (System.Globalization.SortVersion.op_Equality(other, null)) {
                     return false;
@@ -80,15 +80,15 @@
 
                 return this.m_NlsVersion === other.m_NlsVersion && System.Guid.op_Equality(this.m_SortId, other.m_SortId);
             },
-            //System.Globalization.SortVersion.equalsT end.
+            /*System.Globalization.SortVersion.equalsT end.*/
 
-            //System.Globalization.SortVersion.getHashCode start.
+            /*System.Globalization.SortVersion.getHashCode start.*/
             getHashCode: function () {
                 return Bridge.Int.mul(this.m_NlsVersion, 7) | this.m_SortId.getHashCode();
             },
-            //System.Globalization.SortVersion.getHashCode end.
+            /*System.Globalization.SortVersion.getHashCode end.*/
 
 
         }
     });
-    //System.Globalization.SortVersion end.
+    /*System.Globalization.SortVersion end.*/

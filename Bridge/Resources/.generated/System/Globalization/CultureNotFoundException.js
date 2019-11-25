@@ -1,4 +1,4 @@
-    //System.Globalization.CultureNotFoundException start.
+    /*System.Globalization.CultureNotFoundException start.*/
     Bridge.define("System.Globalization.CultureNotFoundException", {
         inherits: [System.ArgumentException],
         statics: {
@@ -84,4 +84,4 @@
             }
         }
     });
-    //System.Globalization.CultureNotFoundException end.
+    /*System.Globalization.CultureNotFoundException end.*/

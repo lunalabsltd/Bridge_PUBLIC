@@ -1,4 +1,4 @@
-    //System.Globalization.BidiCategory start.
+    /*System.Globalization.BidiCategory start.*/
     Bridge.define("System.Globalization.BidiCategory", {
         $kind: "enum",
         statics: {
@@ -29,4 +29,4 @@
             }
         }
     });
-    //System.Globalization.BidiCategory end.
+    /*System.Globalization.BidiCategory end.*/
