@@ -559,7 +559,7 @@ namespace Bridge.Contract
                 return false;
             }
 
-            const string pureAttributeName = "System.Diagnostics.Contracts.PureAttribute";
+            const string pureAttributeName = "Bridge.RefAttribute";
             var pureAttribute = emitter.Validator.GetAttribute(irr.Member.Attributes, pureAttributeName);
 
             if (pureAttribute != null)

@@ -54,6 +54,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Attributes\ConventionAttribute.cs" />
+    <Compile Include="Attributes\RefAttribute.cs" />
     <Compile Include="Attributes\ToAwaitAttribute.cs" />
     <Compile Include="Attributes\OptionalAttribute.cs" />
     <Compile Include="Attributes\PrivateProtectedAttribute.cs" />
