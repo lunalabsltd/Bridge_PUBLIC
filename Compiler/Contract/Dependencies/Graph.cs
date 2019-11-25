@@ -27,6 +27,11 @@ namespace Bridge.Contract.Dependencies
             return true;
         }
 
+        /// <summary>
+        /// Marks provided root and its dependencies as used.
+        /// </summary>
+        /// <param name="rootId">Root class id.</param>
+        /// <returns>True if provided id was marked (exists in the graph), false otherwise.</returns>
         public bool Use(string rootId)
         {
             if (!this.nodes.TryGetValue(rootId, out var root))
