@@ -1,3 +1,4 @@
+    /*System.SerializableAttribute start.*/
     Bridge.define("System.SerializableAttribute", {
         inherits: [System.Attribute],
         ctors: {
@@ -7,3 +8,4 @@
             }
         }
     });
+    /*System.SerializableAttribute end.*/

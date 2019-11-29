@@ -1,3 +1,4 @@
+    /*System.DivideByZeroException start.*/
     Bridge.define("System.DivideByZeroException", {
         inherits: [System.ArithmeticException],
         ctors: {
@@ -18,3 +19,4 @@
             }
         }
     });
+    /*System.DivideByZeroException end.*/

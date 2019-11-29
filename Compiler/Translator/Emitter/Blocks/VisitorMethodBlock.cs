@@ -86,6 +86,7 @@ namespace Bridge.Translator
             }
 
             this.EnsureComma();
+            this.EnsureEndingComment();
             this.ResetLocals();
 
             var prevMap = this.BuildLocalsMap();
@@ -94,11 +95,16 @@ namespace Bridge.Translator
             this.AddLocals(methodDeclaration.Parameters, methodDeclaration.Body);
 
             var overloads = OverloadsCollection.Create(this.Emitter, methodDeclaration);
-            XmlToJsDoc.EmitComment(this, this.MethodDeclaration);
             var isEntryPoint = Helpers.IsEntryPointMethod(this.Emitter, this.MethodDeclaration);
             var member_rr = (MemberResolveResult)this.Emitter.Resolver.ResolveNode(this.MethodDeclaration, this.Emitter);
 
-            string name = overloads.GetOverloadName(false, null, excludeTypeOnly: OverloadsCollection.ExcludeTypeParameterForDefinition(member_rr));
+            var name = overloads.GetOverloadName(false, null, excludeTypeOnly: OverloadsCollection.ExcludeTypeParameterForDefinition(member_rr));
+            var fullName = Helpers.GetMemberName(member_rr.Member, this.Emitter.GetTypeDefinition(), this.Emitter);
+            this.Write(string.Format("/*{0} start.*/", fullName));
+
+            this.WriteNewLine();
+
+            XmlToJsDoc.EmitComment(this, this.MethodDeclaration);
 
             if (isEntryPoint)
             {
@@ -161,6 +167,7 @@ namespace Bridge.Translator
             this.ClearLocalsMap(prevMap);
             this.ClearLocalsNamesMap(prevNamesMap);
             this.Emitter.Comma = true;
+            this.Emitter.EndingComment = string.Format("/*{0} end.*/", fullName);
         }
     }
 }

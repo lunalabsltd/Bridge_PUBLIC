@@ -1,3 +1,4 @@
+    /*System.NotImplementedException start.*/
     Bridge.define("System.NotImplementedException", {
         inherits: [System.SystemException],
         ctors: {
@@ -18,3 +19,4 @@
             }
         }
     });
+    /*System.NotImplementedException end.*/

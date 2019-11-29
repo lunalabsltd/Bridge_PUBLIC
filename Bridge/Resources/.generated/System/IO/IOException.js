@@ -1,3 +1,4 @@
+    /*System.IO.IOException start.*/
     Bridge.define("System.IO.IOException", {
         inherits: [System.SystemException],
         ctors: {
@@ -23,3 +24,4 @@
             }
         }
     });
+    /*System.IO.IOException end.*/

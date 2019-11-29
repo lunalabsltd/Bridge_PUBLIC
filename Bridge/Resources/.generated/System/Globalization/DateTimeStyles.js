@@ -1,3 +1,4 @@
+    /*System.Globalization.DateTimeStyles start.*/
     Bridge.define("System.Globalization.DateTimeStyles", {
         $kind: "enum",
         statics: {
@@ -16,3 +17,4 @@
         },
         $flags: true
     });
+    /*System.Globalization.DateTimeStyles end.*/

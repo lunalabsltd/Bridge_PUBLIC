@@ -1,3 +1,4 @@
+    /*System.Collections.SortedList+SortedListEnumerator start.*/
     Bridge.define("System.Collections.SortedList.SortedListEnumerator", {
         inherits: [System.Collections.IDictionaryEnumerator,System.ICloneable],
         $kind: "nested class",
@@ -100,9 +101,13 @@
             }
         },
         methods: {
+            /*System.Collections.SortedList+SortedListEnumerator.clone start.*/
             clone: function () {
                 return Bridge.clone(this);
             },
+            /*System.Collections.SortedList+SortedListEnumerator.clone end.*/
+
+            /*System.Collections.SortedList+SortedListEnumerator.moveNext start.*/
             moveNext: function () {
                 var $t, $t1;
                 if (this.version !== this.sortedList.version) {
@@ -120,6 +125,9 @@
                 this.current = false;
                 return false;
             },
+            /*System.Collections.SortedList+SortedListEnumerator.moveNext end.*/
+
+            /*System.Collections.SortedList+SortedListEnumerator.reset start.*/
             reset: function () {
                 if (this.version !== this.sortedList.version) {
                     throw new System.InvalidOperationException.ctor();
@@ -128,6 +136,10 @@
                 this.current = false;
                 this.key = null;
                 this.value = null;
-            }
+            },
+            /*System.Collections.SortedList+SortedListEnumerator.reset end.*/
+
+
         }
     });
+    /*System.Collections.SortedList+SortedListEnumerator end.*/

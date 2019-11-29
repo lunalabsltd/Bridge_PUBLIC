@@ -1,3 +1,4 @@
+    /*System.UnauthorizedAccessException start.*/
     Bridge.define("System.UnauthorizedAccessException", {
         inherits: [System.SystemException],
         ctors: {
@@ -18,3 +19,4 @@
             }
         }
     });
+    /*System.UnauthorizedAccessException end.*/

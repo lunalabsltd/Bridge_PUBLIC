@@ -166,6 +166,12 @@ namespace Bridge.Translator
             set;
         }
 
+        public bool IsStaticBlock
+        {
+            get;
+            set;
+        }
+
         public StringBuilder Output
         {
             get;
@@ -179,6 +185,18 @@ namespace Bridge.Translator
         }
 
         public bool Comma
+        {
+            get;
+            set;
+        }
+
+        public bool NewLine
+        {
+            get;
+            set;
+        }
+
+        public string EndingComment
         {
             get;
             set;

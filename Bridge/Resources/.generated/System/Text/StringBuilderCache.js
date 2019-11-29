@@ -1,3 +1,4 @@
+    /*System.Text.StringBuilderCache start.*/
     Bridge.define("System.Text.StringBuilderCache", {
         statics: {
             fields: {
@@ -12,6 +13,7 @@
                 }
             },
             methods: {
+                /*System.Text.StringBuilderCache.Acquire:static start.*/
                 Acquire: function (capacity) {
                     if (capacity === void 0) { capacity = 16; }
                     if (capacity <= System.Text.StringBuilderCache.MAX_BUILDER_SIZE) {
@@ -26,16 +28,26 @@
                     }
                     return new System.Text.StringBuilder("", capacity);
                 },
+                /*System.Text.StringBuilderCache.Acquire:static end.*/
+
+                /*System.Text.StringBuilderCache.Release:static start.*/
                 Release: function (sb) {
                     if (sb.getCapacity() <= System.Text.StringBuilderCache.MAX_BUILDER_SIZE) {
                         System.Text.StringBuilderCache.t_cachedInstance = sb;
                     }
                 },
+                /*System.Text.StringBuilderCache.Release:static end.*/
+
+                /*System.Text.StringBuilderCache.GetStringAndRelease:static start.*/
                 GetStringAndRelease: function (sb) {
                     var result = sb.toString();
                     System.Text.StringBuilderCache.Release(sb);
                     return result;
-                }
+                },
+                /*System.Text.StringBuilderCache.GetStringAndRelease:static end.*/
+
+
             }
         }
     });
+    /*System.Text.StringBuilderCache end.*/

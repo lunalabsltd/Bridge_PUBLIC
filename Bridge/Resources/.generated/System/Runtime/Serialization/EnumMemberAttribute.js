@@ -1,3 +1,4 @@
+    /*System.Runtime.Serialization.EnumMemberAttribute start.*/
     Bridge.define("System.Runtime.Serialization.EnumMemberAttribute", {
         inherits: [System.Attribute],
         fields: {
@@ -27,3 +28,4 @@
             }
         }
     });
+    /*System.Runtime.Serialization.EnumMemberAttribute end.*/

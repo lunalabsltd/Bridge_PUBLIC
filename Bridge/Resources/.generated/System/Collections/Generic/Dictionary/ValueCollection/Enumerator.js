@@ -1,3 +1,4 @@
+    /*System.Collections.Generic.Dictionary$2+ValueCollection+Enumerator start.*/
     Bridge.define("System.Collections.Generic.Dictionary$2.ValueCollection.Enumerator", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(TValue),System.Collections.IEnumerator],
         $kind: "nested struct",
@@ -46,7 +47,11 @@
             }
         },
         methods: {
+            /*System.Collections.Generic.Dictionary$2+ValueCollection+Enumerator.Dispose start.*/
             Dispose: function () { },
+            /*System.Collections.Generic.Dictionary$2+ValueCollection+Enumerator.Dispose end.*/
+
+            /*System.Collections.Generic.Dictionary$2+ValueCollection+Enumerator.moveNext start.*/
             moveNext: function () {
                 var $t, $t1;
                 if (this.version !== this.dictionary.version) {
@@ -65,6 +70,9 @@
                 this.currentValue = Bridge.getDefaultValue(TValue);
                 return false;
             },
+            /*System.Collections.Generic.Dictionary$2+ValueCollection+Enumerator.moveNext end.*/
+
+            /*System.Collections.Generic.Dictionary$2+ValueCollection+Enumerator.System$Collections$IEnumerator$reset start.*/
             System$Collections$IEnumerator$reset: function () {
                 if (this.version !== this.dictionary.version) {
                     System.ThrowHelper.ThrowInvalidOperationException(System.ExceptionResource.InvalidOperation_EnumFailedVersion);
@@ -72,6 +80,8 @@
                 this.index = 0;
                 this.currentValue = Bridge.getDefaultValue(TValue);
             },
+            /*System.Collections.Generic.Dictionary$2+ValueCollection+Enumerator.System$Collections$IEnumerator$reset end.*/
+
             getHashCode: function () {
                 var h = Bridge.addHash([3788985113, this.dictionary, this.index, this.version, this.currentValue]);
                 return h;
@@ -92,3 +102,4 @@
             }
         }
     }; });
+    /*System.Collections.Generic.Dictionary$2+ValueCollection+Enumerator end.*/

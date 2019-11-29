@@ -1,3 +1,4 @@
+    /*System.Collections.Generic.Dictionary$2 start.*/
     Bridge.define("System.Collections.Generic.Dictionary$2", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IDictionary$2(TKey,TValue),System.Collections.IDictionary,System.Collections.Generic.IReadOnlyDictionary$2(TKey,TValue)],
         statics: {
@@ -16,12 +17,16 @@
                 }
             },
             methods: {
+                /*System.Collections.Generic.Dictionary$2.IsCompatibleKey:static start.*/
                 IsCompatibleKey: function (key) {
                     if (key == null) {
                         System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.key);
                     }
                     return (Bridge.is(key, TKey));
-                }
+                },
+                /*System.Collections.Generic.Dictionary$2.IsCompatibleKey:static end.*/
+
+
             }
         },
         fields: {
@@ -252,12 +257,19 @@
                     }
                 }
             },
+            /*System.Collections.Generic.Dictionary$2.add start.*/
             add: function (key, value) {
                 this.Insert(key, value, true);
             },
+            /*System.Collections.Generic.Dictionary$2.add end.*/
+
+            /*System.Collections.Generic.Dictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$add start.*/
             System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$add: function (keyValuePair) {
                 this.add(keyValuePair.key, keyValuePair.value);
             },
+            /*System.Collections.Generic.Dictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$add end.*/
+
+            /*System.Collections.Generic.Dictionary$2.System$Collections$IDictionary$add start.*/
             System$Collections$IDictionary$add: function (key, value) {
                 if (key == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.key);
@@ -286,6 +298,9 @@
                     }
                 }
             },
+            /*System.Collections.Generic.Dictionary$2.System$Collections$IDictionary$add end.*/
+
+            /*System.Collections.Generic.Dictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$contains start.*/
             System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$contains: function (keyValuePair) {
                 var i = this.FindEntry(keyValuePair.key);
                 if (i >= 0 && System.Collections.Generic.EqualityComparer$1(TValue).def.equals2(this.entries[System.Array.index(i, this.entries)].value, keyValuePair.value)) {
@@ -293,6 +308,9 @@
                 }
                 return false;
             },
+            /*System.Collections.Generic.Dictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$contains end.*/
+
+            /*System.Collections.Generic.Dictionary$2.System$Collections$IDictionary$contains start.*/
             System$Collections$IDictionary$contains: function (key) {
                 if (System.Collections.Generic.Dictionary$2(TKey,TValue).IsCompatibleKey(key)) {
                     return this.containsKey(Bridge.cast(Bridge.unbox(key, TKey), TKey));
@@ -300,6 +318,9 @@
 
                 return false;
             },
+            /*System.Collections.Generic.Dictionary$2.System$Collections$IDictionary$contains end.*/
+
+            /*System.Collections.Generic.Dictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$remove start.*/
             System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$remove: function (keyValuePair) {
                 var i = this.FindEntry(keyValuePair.key);
                 if (i >= 0 && System.Collections.Generic.EqualityComparer$1(TValue).def.equals2(this.entries[System.Array.index(i, this.entries)].value, keyValuePair.value)) {
@@ -308,6 +329,9 @@
                 }
                 return false;
             },
+            /*System.Collections.Generic.Dictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$remove end.*/
+
+            /*System.Collections.Generic.Dictionary$2.remove start.*/
             remove: function (key) {
                 if (key == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.key);
@@ -352,11 +376,17 @@
                 }
                 return false;
             },
+            /*System.Collections.Generic.Dictionary$2.remove end.*/
+
+            /*System.Collections.Generic.Dictionary$2.System$Collections$IDictionary$remove start.*/
             System$Collections$IDictionary$remove: function (key) {
                 if (System.Collections.Generic.Dictionary$2(TKey,TValue).IsCompatibleKey(key)) {
                     this.remove(Bridge.cast(Bridge.unbox(key, TKey), TKey));
                 }
             },
+            /*System.Collections.Generic.Dictionary$2.System$Collections$IDictionary$remove end.*/
+
+            /*System.Collections.Generic.Dictionary$2.clear start.*/
             clear: function () {
                 if (this.count > 0) {
                     for (var i = 0; i < this.buckets.length; i = (i + 1) | 0) {
@@ -374,9 +404,15 @@
                     this.version = (this.version + 1) | 0;
                 }
             },
+            /*System.Collections.Generic.Dictionary$2.clear end.*/
+
+            /*System.Collections.Generic.Dictionary$2.containsKey start.*/
             containsKey: function (key) {
                 return this.FindEntry(key) >= 0;
             },
+            /*System.Collections.Generic.Dictionary$2.containsKey end.*/
+
+            /*System.Collections.Generic.Dictionary$2.ContainsValue start.*/
             ContainsValue: function (value) {
                 if (value == null) {
                     for (var i = 0; i < this.count; i = (i + 1) | 0) {
@@ -394,6 +430,9 @@
                 }
                 return false;
             },
+            /*System.Collections.Generic.Dictionary$2.ContainsValue end.*/
+
+            /*System.Collections.Generic.Dictionary$2.CopyTo start.*/
             CopyTo: function (array, index) {
                 if (array == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.array);
@@ -415,9 +454,15 @@
                     }
                 }
             },
+            /*System.Collections.Generic.Dictionary$2.CopyTo end.*/
+
+            /*System.Collections.Generic.Dictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$copyTo start.*/
             System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$copyTo: function (array, index) {
                 this.CopyTo(array, index);
             },
+            /*System.Collections.Generic.Dictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$copyTo end.*/
+
+            /*System.Collections.Generic.Dictionary$2.System$Collections$ICollection$copyTo start.*/
             System$Collections$ICollection$copyTo: function (array, index) {
                 if (array == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.array);
@@ -474,18 +519,33 @@
                     }
                 }
             },
+            /*System.Collections.Generic.Dictionary$2.System$Collections$ICollection$copyTo end.*/
+
+            /*System.Collections.Generic.Dictionary$2.GetEnumerator start.*/
             GetEnumerator: function () {
                 return new (System.Collections.Generic.Dictionary$2.Enumerator(TKey,TValue)).$ctor1(this, System.Collections.Generic.Dictionary$2.Enumerator(TKey,TValue).KeyValuePair);
             },
+            /*System.Collections.Generic.Dictionary$2.GetEnumerator end.*/
+
+            /*System.Collections.Generic.Dictionary$2.System$Collections$Generic$IEnumerable$1$System$Collections$Generic$KeyValuePair$2$GetEnumerator start.*/
             System$Collections$Generic$IEnumerable$1$System$Collections$Generic$KeyValuePair$2$GetEnumerator: function () {
                 return new (System.Collections.Generic.Dictionary$2.Enumerator(TKey,TValue)).$ctor1(this, System.Collections.Generic.Dictionary$2.Enumerator(TKey,TValue).KeyValuePair).$clone();
             },
+            /*System.Collections.Generic.Dictionary$2.System$Collections$Generic$IEnumerable$1$System$Collections$Generic$KeyValuePair$2$GetEnumerator end.*/
+
+            /*System.Collections.Generic.Dictionary$2.System$Collections$IEnumerable$GetEnumerator start.*/
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return new (System.Collections.Generic.Dictionary$2.Enumerator(TKey,TValue)).$ctor1(this, System.Collections.Generic.Dictionary$2.Enumerator(TKey,TValue).KeyValuePair).$clone();
             },
+            /*System.Collections.Generic.Dictionary$2.System$Collections$IEnumerable$GetEnumerator end.*/
+
+            /*System.Collections.Generic.Dictionary$2.System$Collections$IDictionary$GetEnumerator start.*/
             System$Collections$IDictionary$GetEnumerator: function () {
                 return new (System.Collections.Generic.Dictionary$2.Enumerator(TKey,TValue)).$ctor1(this, System.Collections.Generic.Dictionary$2.Enumerator(TKey,TValue).DictEntry).$clone();
             },
+            /*System.Collections.Generic.Dictionary$2.System$Collections$IDictionary$GetEnumerator end.*/
+
+            /*System.Collections.Generic.Dictionary$2.FindEntry start.*/
             FindEntry: function (key) {
                 if (key == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.key);
@@ -505,6 +565,9 @@
                 }
                 return -1;
             },
+            /*System.Collections.Generic.Dictionary$2.FindEntry end.*/
+
+            /*System.Collections.Generic.Dictionary$2.Initialize start.*/
             Initialize: function (capacity) {
                 var size = System.Collections.HashHelpers.GetPrime(capacity);
                 this.buckets = System.Array.init(size, 0, System.Int32);
@@ -517,6 +580,9 @@
                 this.freeList = -1;
                 this.simpleBuckets = { };
             },
+            /*System.Collections.Generic.Dictionary$2.Initialize end.*/
+
+            /*System.Collections.Generic.Dictionary$2.Insert start.*/
             Insert: function (key, value, add) {
 
                 if (key == null) {
@@ -596,9 +662,15 @@
                 this.buckets[System.Array.index(targetBucket, this.buckets)] = index;
                 this.version = (this.version + 1) | 0;
             },
+            /*System.Collections.Generic.Dictionary$2.Insert end.*/
+
+            /*System.Collections.Generic.Dictionary$2.Resize start.*/
             Resize: function () {
                 this.Resize$1(System.Collections.HashHelpers.ExpandPrime(this.count), false);
             },
+            /*System.Collections.Generic.Dictionary$2.Resize end.*/
+
+            /*System.Collections.Generic.Dictionary$2.Resize$1 start.*/
             Resize$1: function (newSize, forceNewHashCodes) {
                 var newBuckets = System.Array.init(newSize, 0, System.Int32);
                 for (var i = 0; i < newBuckets.length; i = (i + 1) | 0) {
@@ -633,6 +705,9 @@
                 this.buckets = newBuckets;
                 this.entries = newEntries;
             },
+            /*System.Collections.Generic.Dictionary$2.Resize$1 end.*/
+
+            /*System.Collections.Generic.Dictionary$2.tryGetValue start.*/
             tryGetValue: function (key, value) {
                 var i = this.FindEntry(key);
                 if (i >= 0) {
@@ -642,12 +717,19 @@
                 value.v = Bridge.getDefaultValue(TValue);
                 return false;
             },
+            /*System.Collections.Generic.Dictionary$2.tryGetValue end.*/
+
+            /*System.Collections.Generic.Dictionary$2.GetValueOrDefault start.*/
             GetValueOrDefault: function (key) {
                 var i = this.FindEntry(key);
                 if (i >= 0) {
                     return this.entries[System.Array.index(i, this.entries)].value;
                 }
                 return Bridge.getDefaultValue(TValue);
-            }
+            },
+            /*System.Collections.Generic.Dictionary$2.GetValueOrDefault end.*/
+
+
         }
     }; });
+    /*System.Collections.Generic.Dictionary$2 end.*/

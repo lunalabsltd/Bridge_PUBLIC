@@ -1,3 +1,4 @@
+    /*System.BitConverter start.*/
     Bridge.define("System.BitConverter", {
         statics: {
             fields: {
@@ -11,52 +12,80 @@
                 }
             },
             methods: {
+                /*System.BitConverter.getBytes:static start.*/
                 getBytes: function (value) {
                     return value ? System.Array.init([1], System.Byte) : System.Array.init([0], System.Byte);
                 },
+                /*System.BitConverter.getBytes:static end.*/
+
+                /*System.BitConverter.getBytes$1:static start.*/
                 getBytes$1: function (value) {
                     return System.BitConverter.getBytes$3(Bridge.Int.sxs(value & 65535));
                 },
+                /*System.BitConverter.getBytes$1:static end.*/
+
+                /*System.BitConverter.getBytes$3:static start.*/
                 getBytes$3: function (value) {
                     var view = System.BitConverter.view(2);
                     view.setInt16(0, value);
 
                     return System.BitConverter.getViewBytes(view);
                 },
+                /*System.BitConverter.getBytes$3:static end.*/
+
+                /*System.BitConverter.getBytes$4:static start.*/
                 getBytes$4: function (value) {
                     var view = System.BitConverter.view(4);
                     view.setInt32(0, value);
 
                     return System.BitConverter.getViewBytes(view);
                 },
+                /*System.BitConverter.getBytes$4:static end.*/
+
+                /*System.BitConverter.getBytes$5:static start.*/
                 getBytes$5: function (value) {
                     var view = System.BitConverter.getView(value);
 
                     return System.BitConverter.getViewBytes(view);
                 },
+                /*System.BitConverter.getBytes$5:static end.*/
+
+                /*System.BitConverter.getBytes$7:static start.*/
                 getBytes$7: function (value) {
                     var view = System.BitConverter.view(2);
                     view.setUint16(0, value);
 
                     return System.BitConverter.getViewBytes(view);
                 },
+                /*System.BitConverter.getBytes$7:static end.*/
+
+                /*System.BitConverter.getBytes$8:static start.*/
                 getBytes$8: function (value) {
                     var view = System.BitConverter.view(4);
                     view.setUint32(0, value);
 
                     return System.BitConverter.getViewBytes(view);
                 },
+                /*System.BitConverter.getBytes$8:static end.*/
+
+                /*System.BitConverter.getBytes$9:static start.*/
                 getBytes$9: function (value) {
                     var view = System.BitConverter.getView(System.Int64.clip64(value));
 
                     return System.BitConverter.getViewBytes(view);
                 },
+                /*System.BitConverter.getBytes$9:static end.*/
+
+                /*System.BitConverter.getBytes$6:static start.*/
                 getBytes$6: function (value) {
                     var view = System.BitConverter.view(4);
                     view.setFloat32(0, value);
 
                     return System.BitConverter.getViewBytes(view);
                 },
+                /*System.BitConverter.getBytes$6:static end.*/
+
+                /*System.BitConverter.getBytes$2:static start.*/
                 getBytes$2: function (value) {
                     if (isNaN(value)) {
                         if (System.BitConverter.isLittleEndian) {
@@ -71,9 +100,15 @@
 
                     return System.BitConverter.getViewBytes(view);
                 },
+                /*System.BitConverter.getBytes$2:static end.*/
+
+                /*System.BitConverter.toChar:static start.*/
                 toChar: function (value, startIndex) {
                     return ((System.BitConverter.toInt16(value, startIndex)) & 65535);
                 },
+                /*System.BitConverter.toChar:static end.*/
+
+                /*System.BitConverter.toInt16:static start.*/
                 toInt16: function (value, startIndex) {
                     System.BitConverter.checkArguments(value, startIndex, 2);
 
@@ -83,6 +118,9 @@
 
                     return view.getInt16(0);
                 },
+                /*System.BitConverter.toInt16:static end.*/
+
+                /*System.BitConverter.toInt32:static start.*/
                 toInt32: function (value, startIndex) {
                     System.BitConverter.checkArguments(value, startIndex, 4);
 
@@ -92,6 +130,9 @@
 
                     return view.getInt32(0);
                 },
+                /*System.BitConverter.toInt32:static end.*/
+
+                /*System.BitConverter.toInt64:static start.*/
                 toInt64: function (value, startIndex) {
                     System.BitConverter.checkArguments(value, startIndex, 8);
 
@@ -104,17 +145,29 @@
 
                     return System.Int64([high, low]);
                 },
+                /*System.BitConverter.toInt64:static end.*/
+
+                /*System.BitConverter.toUInt16:static start.*/
                 toUInt16: function (value, startIndex) {
                     return ((System.BitConverter.toInt16(value, startIndex)) & 65535);
                 },
+                /*System.BitConverter.toUInt16:static end.*/
+
+                /*System.BitConverter.toUInt32:static start.*/
                 toUInt32: function (value, startIndex) {
                     return ((System.BitConverter.toInt32(value, startIndex)) >>> 0);
                 },
+                /*System.BitConverter.toUInt32:static end.*/
+
+                /*System.BitConverter.toUInt64:static start.*/
                 toUInt64: function (value, startIndex) {
                     var l = System.BitConverter.toInt64(value, startIndex);
 
                     return System.UInt64([l.value.low, l.value.high]);
                 },
+                /*System.BitConverter.toUInt64:static end.*/
+
+                /*System.BitConverter.toSingle:static start.*/
                 toSingle: function (value, startIndex) {
                     System.BitConverter.checkArguments(value, startIndex, 4);
 
@@ -124,6 +177,9 @@
 
                     return view.getFloat32(0);
                 },
+                /*System.BitConverter.toSingle:static end.*/
+
+                /*System.BitConverter.toDouble:static start.*/
                 toDouble: function (value, startIndex) {
                     System.BitConverter.checkArguments(value, startIndex, 8);
 
@@ -133,6 +189,9 @@
 
                     return view.getFloat64(0);
                 },
+                /*System.BitConverter.toDouble:static end.*/
+
+                /*System.BitConverter.toString$2:static start.*/
                 toString$2: function (value, startIndex, length) {
                     if (value == null) {
                         throw new System.ArgumentNullException.$ctor1("value");
@@ -173,6 +232,9 @@
 
                     return System.String.fromCharArray(chArray, 0, ((chArray.length - 1) | 0));
                 },
+                /*System.BitConverter.toString$2:static end.*/
+
+                /*System.BitConverter.toString:static start.*/
                 toString: function (value) {
                     if (value == null) {
                         throw new System.ArgumentNullException.$ctor1("value");
@@ -180,6 +242,9 @@
 
                     return System.BitConverter.toString$2(value, 0, value.length);
                 },
+                /*System.BitConverter.toString:static end.*/
+
+                /*System.BitConverter.toString$1:static start.*/
                 toString$1: function (value, startIndex) {
                     if (value == null) {
                         throw new System.ArgumentNullException.$ctor1("value");
@@ -187,22 +252,34 @@
 
                     return System.BitConverter.toString$2(value, startIndex, ((value.length - startIndex) | 0));
                 },
+                /*System.BitConverter.toString$1:static end.*/
+
+                /*System.BitConverter.toBoolean:static start.*/
                 toBoolean: function (value, startIndex) {
                     System.BitConverter.checkArguments(value, startIndex, 1);
 
                     return (value[System.Array.index(startIndex, value)] === 0) ? false : true;
                 },
+                /*System.BitConverter.toBoolean:static end.*/
+
+                /*System.BitConverter.doubleToInt64Bits:static start.*/
                 doubleToInt64Bits: function (value) {
                     var view = System.BitConverter.view(8);
                     view.setFloat64(0, value);
 
                     return System.Int64([view.getInt32(4), view.getInt32(0)]);
                 },
+                /*System.BitConverter.doubleToInt64Bits:static end.*/
+
+                /*System.BitConverter.int64BitsToDouble:static start.*/
                 int64BitsToDouble: function (value) {
                     var view = System.BitConverter.getView(value);
 
                     return view.getFloat64(0);
                 },
+                /*System.BitConverter.int64BitsToDouble:static end.*/
+
+                /*System.BitConverter.getHexValue:static start.*/
                 getHexValue: function (i) {
                     if (i < 10) {
                         return ((((i + 48) | 0)) & 65535);
@@ -210,6 +287,9 @@
 
                     return ((((((i - 10) | 0) + 65) | 0)) & 65535);
                 },
+                /*System.BitConverter.getHexValue:static end.*/
+
+                /*System.BitConverter.getViewBytes:static start.*/
                 getViewBytes: function (view, count, startIndex) {
                     if (count === void 0) { count = -1; }
                     if (startIndex === void 0) { startIndex = 0; }
@@ -231,6 +311,9 @@
 
                     return r;
                 },
+                /*System.BitConverter.getViewBytes:static end.*/
+
+                /*System.BitConverter.setViewBytes:static start.*/
                 setViewBytes: function (view, value, count, startIndex) {
                     if (count === void 0) { count = -1; }
                     if (startIndex === void 0) { startIndex = 0; }
@@ -248,12 +331,18 @@
                         }
                     }
                 },
+                /*System.BitConverter.setViewBytes:static end.*/
+
+                /*System.BitConverter.view:static start.*/
                 view: function (length) {
                     var buffer = new ArrayBuffer(length);
                     var view = new DataView(buffer);
 
                     return view;
                 },
+                /*System.BitConverter.view:static end.*/
+
+                /*System.BitConverter.getView:static start.*/
                 getView: function (value) {
                     var view = System.BitConverter.view(8);
 
@@ -262,6 +351,9 @@
 
                     return view;
                 },
+                /*System.BitConverter.getView:static end.*/
+
+                /*System.BitConverter.getIsLittleEndian:static start.*/
                 getIsLittleEndian: function () {
                     var view = System.BitConverter.view(2);
 
@@ -274,6 +366,9 @@
 
                     return false;
                 },
+                /*System.BitConverter.getIsLittleEndian:static end.*/
+
+                /*System.BitConverter.checkArguments:static start.*/
                 checkArguments: function (value, startIndex, size) {
                     if (value == null) {
                         throw new System.ArgumentNullException.$ctor1("null");
@@ -286,7 +381,11 @@
                     if (startIndex > ((value.length - size) | 0)) {
                         throw new System.ArgumentException.$ctor1(System.BitConverter.arg_ArrayPlusOffTooSmall);
                     }
-                }
+                },
+                /*System.BitConverter.checkArguments:static end.*/
+
+
             }
         }
     });
+    /*System.BitConverter end.*/

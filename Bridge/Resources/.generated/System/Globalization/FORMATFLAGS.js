@@ -1,3 +1,4 @@
+    /*System.Globalization.FORMATFLAGS start.*/
     Bridge.define("System.Globalization.FORMATFLAGS", {
         $kind: "enum",
         statics: {
@@ -12,3 +13,4 @@
             }
         }
     });
+    /*System.Globalization.FORMATFLAGS end.*/

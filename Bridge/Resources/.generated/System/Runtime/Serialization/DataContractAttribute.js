@@ -1,3 +1,4 @@
+    /*System.Runtime.Serialization.DataContractAttribute start.*/
     Bridge.define("System.Runtime.Serialization.DataContractAttribute", {
         inherits: [System.Attribute],
         fields: {
@@ -59,3 +60,4 @@
             }
         }
     });
+    /*System.Runtime.Serialization.DataContractAttribute end.*/

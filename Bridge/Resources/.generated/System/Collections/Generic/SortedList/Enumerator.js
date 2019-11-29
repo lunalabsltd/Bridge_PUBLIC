@@ -1,3 +1,4 @@
+    /*System.Collections.Generic.SortedList$2+Enumerator start.*/
     Bridge.define("System.Collections.Generic.SortedList$2.Enumerator", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(System.Collections.Generic.KeyValuePair$2(TKey,TValue)),System.Collections.IDictionaryEnumerator],
         $kind: "nested struct",
@@ -91,11 +92,15 @@
             }
         },
         methods: {
+            /*System.Collections.Generic.SortedList$2+Enumerator.Dispose start.*/
             Dispose: function () {
                 this.index = 0;
                 this.key = Bridge.getDefaultValue(TKey);
                 this.value = Bridge.getDefaultValue(TValue);
             },
+            /*System.Collections.Generic.SortedList$2+Enumerator.Dispose end.*/
+
+            /*System.Collections.Generic.SortedList$2+Enumerator.moveNext start.*/
             moveNext: function () {
                 var $t, $t1;
                 if (this.version !== this._sortedList.version) {
@@ -114,6 +119,9 @@
                 this.value = Bridge.getDefaultValue(TValue);
                 return false;
             },
+            /*System.Collections.Generic.SortedList$2+Enumerator.moveNext end.*/
+
+            /*System.Collections.Generic.SortedList$2+Enumerator.System$Collections$IEnumerator$reset start.*/
             System$Collections$IEnumerator$reset: function () {
                 if (this.version !== this._sortedList.version) {
                     System.ThrowHelper.ThrowInvalidOperationException(System.ExceptionResource.InvalidOperation_EnumFailedVersion);
@@ -123,6 +131,8 @@
                 this.key = Bridge.getDefaultValue(TKey);
                 this.value = Bridge.getDefaultValue(TValue);
             },
+            /*System.Collections.Generic.SortedList$2+Enumerator.System$Collections$IEnumerator$reset end.*/
+
             getHashCode: function () {
                 var h = Bridge.addHash([3788985113, this._sortedList, this.key, this.value, this.index, this.version, this.getEnumeratorRetType]);
                 return h;
@@ -145,3 +155,4 @@
             }
         }
     }; });
+    /*System.Collections.Generic.SortedList$2+Enumerator end.*/

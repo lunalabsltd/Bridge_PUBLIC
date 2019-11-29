@@ -1,3 +1,4 @@
+    /*System.Text.ASCIIEncoding start.*/
     Bridge.define("System.Text.ASCIIEncoding", {
         inherits: [System.Text.Encoding],
         props: {
@@ -13,6 +14,7 @@
             }
         },
         methods: {
+            /*System.Text.ASCIIEncoding.Encode$3 start.*/
             Encode$3: function (s, outputBytes, outputIndex, writtenBytes) {
                 var hasBuffer = outputBytes != null;
 
@@ -44,6 +46,9 @@
 
                 return outputBytes;
             },
+            /*System.Text.ASCIIEncoding.Encode$3 end.*/
+
+            /*System.Text.ASCIIEncoding.Decode$2 start.*/
             Decode$2: function (bytes, index, count, chars, charIndex) {
                 var position = index;
                 var result = "";
@@ -61,6 +66,9 @@
 
                 return result;
             },
+            /*System.Text.ASCIIEncoding.Decode$2 end.*/
+
+            /*System.Text.ASCIIEncoding.GetMaxByteCount start.*/
             GetMaxByteCount: function (charCount) {
                 if (charCount < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("charCount");
@@ -74,6 +82,9 @@
 
                 return System.Int64.clip32(byteCount);
             },
+            /*System.Text.ASCIIEncoding.GetMaxByteCount end.*/
+
+            /*System.Text.ASCIIEncoding.GetMaxCharCount start.*/
             GetMaxCharCount: function (byteCount) {
                 if (byteCount < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("byteCount");
@@ -86,6 +97,10 @@
                 }
 
                 return System.Int64.clip32(charCount);
-            }
+            },
+            /*System.Text.ASCIIEncoding.GetMaxCharCount end.*/
+
+
         }
     });
+    /*System.Text.ASCIIEncoding end.*/

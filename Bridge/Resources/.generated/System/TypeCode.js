@@ -1,3 +1,4 @@
+    /*System.TypeCode start.*/
     Bridge.define("System.TypeCode", {
         $kind: "enum",
         statics: {
@@ -23,3 +24,4 @@
             }
         }
     });
+    /*System.TypeCode end.*/

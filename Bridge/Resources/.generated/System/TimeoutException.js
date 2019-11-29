@@ -1,3 +1,4 @@
+    /*System.TimeoutException start.*/
     Bridge.define("System.TimeoutException", {
         inherits: [System.SystemException],
         ctors: {
@@ -18,3 +19,4 @@
             }
         }
     });
+    /*System.TimeoutException end.*/

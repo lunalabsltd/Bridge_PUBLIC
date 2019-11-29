@@ -18,79 +18,95 @@ namespace Bridge.Translator
 {
     public partial class Translator
     {
-        public virtual string[] GetProjectReferenceAssemblies()
-        {
-            var baseDir = Path.GetDirectoryName(this.Location);
+        public virtual string[] GetProjectReferenceAssemblies() {
+            string[] assemblies = null;
 
             if (!this.FolderMode)
             {
-                XDocument projDefinition = XDocument.Load(this.Location);
-                XNamespace rootNs = projDefinition.Root.Name.Namespace;
-                var helper = new ConfigHelper<AssemblyInfo>(this.Log);
-                var tokens = this.ProjectProperties.GetValues();
-
-                var referencesPathes = projDefinition
-                    .Element(rootNs + "Project")
-                    .Elements(rootNs + "ItemGroup")
-                    .Elements(rootNs + "Reference")
-                    .Where(el => (el.Attribute("Include")?.Value != "System") && (el.Attribute("Condition") == null || el.Attribute("Condition").Value.ToLowerInvariant() != "false"))
-                    .Select(refElem => (refElem.Element(rootNs + "HintPath") == null ? (refElem.Attribute("Include") == null ? "" : refElem.Attribute("Include").Value) : refElem.Element(rootNs + "HintPath").Value))
-                    .Select(path => helper.ApplyPathTokens(tokens, Path.IsPathRooted(path) ? path : Path.GetFullPath((new Uri(Path.Combine(baseDir, path))).LocalPath)))
-                    .ToList();
-
-                var projectReferences = projDefinition
-                    .Element(rootNs + "Project")
-                    .Elements(rootNs + "ItemGroup")
-                    .Elements(rootNs + "ProjectReference")
-                    .Where(el => el.Attribute("Condition") == null || el.Attribute("Condition").Value.ToLowerInvariant() != "false")
-                    .Select(refElem => (refElem.Element(rootNs + "HintPath") == null ? (refElem.Attribute("Include") == null ? "" : refElem.Attribute("Include").Value) : refElem.Element(rootNs + "HintPath").Value))
-                    .Select(path => helper.ApplyPathTokens(tokens, Path.IsPathRooted(path) ? path : Path.GetFullPath((new Uri(Path.Combine(baseDir, path))).LocalPath)))
-                    .ToArray();
-
-                if (projectReferences.Length > 0)
-                {
-                    if (this.ProjectProperties.BuildProjects == null)
-                    {
-                        this.ProjectProperties.BuildProjects = new List<string>();
-                    }
-
-                    foreach (var projectRef in projectReferences)
-                    {
-                        var isBuilt = this.ProjectProperties.BuildProjects.Contains(projectRef);
-
-                        if (!isBuilt)
-                        {
-                            this.ProjectProperties.BuildProjects.Add(projectRef);
-                        }
-
-                        var processor = new TranslatorProcessor(new BridgeOptions
-                        {
-                            Rebuild = this.Rebuild,
-                            ProjectLocation = projectRef,
-                            BridgeLocation = this.BridgeLocation,
-                            ProjectProperties = new Contract.ProjectProperties
-                            {
-                                BuildProjects = this.ProjectProperties.BuildProjects,
-                                Configuration = this.ProjectProperties.Configuration,
-                                Platform = this.ProjectProperties.Platform
-                            }
-                        }, new Logger(null, false, LoggerLevel.Info, true, new ConsoleLoggerWriter(), new FileLoggerWriter()));
-
-                        processor.PreProcess();
-
-                        var projectAssembly = processor.Translator.AssemblyLocation;
-
-                        if (File.Exists(projectAssembly))
-                        {
-                            referencesPathes.Add(projectAssembly);
-                        }
-                    }
-                }
-
-                return referencesPathes.ToArray();
+                assemblies = this.GetReferencedAssemblies(this.Location)?.ToArray();
             }
 
-            return new string[0];
+            return assemblies ?? new string[0];
+        }
+
+        private IEnumerable<string> GetReferencedAssemblies(string location)
+        {
+            var baseDir = Path.GetDirectoryName(this.Location) ?? string.Empty;
+            XDocument projDefinition = XDocument.Load(location);
+            XNamespace rootNs = projDefinition.Root?.Name.Namespace ?? string.Empty;
+            var helper = new ConfigHelper<AssemblyInfo>(this.Log);
+            var tokens = this.ProjectProperties.GetValues();
+
+            var referencesPathes = projDefinition
+                .Element(rootNs + "Project")?
+                .Elements(rootNs + "ItemGroup")
+                .Elements(rootNs + "Reference")
+                .Where(el => (el.Attribute("Include")?.Value != "System") && (el.Attribute("Condition") == null || el.Attribute("Condition").Value.ToLowerInvariant() != "false"))
+                .Select(refElem => (refElem.Element(rootNs + "HintPath") == null ? (refElem.Attribute("Include") == null ? "" : refElem.Attribute("Include").Value) : refElem.Element(rootNs + "HintPath").Value))
+                .Select(path => helper.ApplyPathTokens(tokens, Path.IsPathRooted(path) ? path : Path.GetFullPath((new Uri(Path.Combine(baseDir, path))).LocalPath)))
+                .ToList();
+
+            var projectReferences = projDefinition
+                .Element(rootNs + "Project")?
+                .Elements(rootNs + "ItemGroup")
+                .Elements(rootNs + "ProjectReference")
+                .Where(el => el.Attribute("Condition") == null || el.Attribute("Condition").Value.ToLowerInvariant() != "false")
+                .Select(refElem => (refElem.Element(rootNs + "HintPath") == null ? (refElem.Attribute("Include") == null ? "" : refElem.Attribute("Include").Value) : refElem.Element(rootNs + "HintPath").Value))
+                .Select(path => helper.ApplyPathTokens(tokens, Path.IsPathRooted(path) ? path : Path.GetFullPath((new Uri(Path.Combine(baseDir, path))).LocalPath)))
+                .ToArray();
+
+            if (projectReferences != null && projectReferences.Length > 0)
+            {
+                if (this.ProjectProperties.BuildProjects == null)
+                {
+                    this.ProjectProperties.BuildProjects = new List<string>();
+                }
+
+                foreach (var projectRef in projectReferences)
+                {
+                    var isBuilt = this.ProjectProperties.BuildProjects.Contains(projectRef);
+
+                    if (!isBuilt)
+                    {
+                        this.ProjectProperties.BuildProjects.Add(projectRef);
+                    }
+
+                    var processor = new TranslatorProcessor(new BridgeOptions
+                    {
+                        Rebuild = this.Rebuild,
+                        ProjectLocation = projectRef,
+                        BridgeLocation = this.BridgeLocation,
+                        ProjectProperties = new Contract.ProjectProperties
+                        {
+                            BuildProjects = this.ProjectProperties.BuildProjects,
+                            Configuration = this.ProjectProperties.Configuration,
+                            Platform = this.ProjectProperties.Platform
+                        }
+                    }, new Logger(null, false, LoggerLevel.Info, true, new ConsoleLoggerWriter(), new FileLoggerWriter()));
+
+                    processor.PreProcess();
+
+                    var projectAssembly = processor.Translator.AssemblyLocation;
+
+                    if (File.Exists(projectAssembly))
+                    {
+                        referencesPathes?.Add(projectAssembly);
+                    }
+                }
+            }
+
+            var imports = projDefinition
+                .Element(rootNs + "Project")?
+                .Elements(rootNs + "Import")
+                .Where(el => (el.Attribute("Condition")?.Value.ToLowerInvariant() ?? string.Empty) != "false")
+                .Select(refElem => refElem.Attribute("Project")?.Value ?? string.Empty)
+                .Where(path => !string.IsNullOrWhiteSpace(path))
+                .Select(path => helper.ApplyPathTokens(tokens, path))
+                .Select(path => Path.IsPathRooted(path) ? path : Path.GetFullPath(new Uri(Path.Combine(baseDir, path)).LocalPath))
+                .Where(File.Exists)
+                .SelectMany(this.GetReferencedAssemblies);
+
+            return imports == null ? referencesPathes : referencesPathes?.Concat(imports) ?? imports;
         }
 
         public virtual void BuildAssembly()

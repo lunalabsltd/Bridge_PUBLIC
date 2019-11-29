@@ -1,3 +1,4 @@
+    /*System.Collections.Generic.Stack$1 start.*/
     Bridge.define("System.Collections.Generic.Stack$1", function (T) { return {
         inherits: [System.Collections.Generic.IEnumerable$1(T),System.Collections.ICollection,System.Collections.Generic.IReadOnlyCollection$1(T)],
         statics: {
@@ -70,6 +71,7 @@
             }
         },
         methods: {
+            /*System.Collections.Generic.Stack$1.Clear start.*/
             Clear: function () {
                 System.Array.fill(this._array, function () {
                     return Bridge.getDefaultValue(T);
@@ -77,6 +79,9 @@
                 this._size = 0;
                 this._version = (this._version + 1) | 0;
             },
+            /*System.Collections.Generic.Stack$1.Clear end.*/
+
+            /*System.Collections.Generic.Stack$1.Contains start.*/
             Contains: function (item) {
                 var count = this._size;
 
@@ -92,6 +97,9 @@
                 }
                 return false;
             },
+            /*System.Collections.Generic.Stack$1.Contains end.*/
+
+            /*System.Collections.Generic.Stack$1.CopyTo start.*/
             CopyTo: function (array, arrayIndex) {
                 if (array == null) {
                     throw new System.ArgumentNullException.$ctor1("array");
@@ -116,6 +124,9 @@
                     System.Array.reverse(array, arrayIndex, this._size);
                 }
             },
+            /*System.Collections.Generic.Stack$1.CopyTo end.*/
+
+            /*System.Collections.Generic.Stack$1.copyTo start.*/
             copyTo: function (array, arrayIndex) {
                 if (array == null) {
                     throw new System.ArgumentNullException.$ctor1("array");
@@ -145,15 +156,27 @@
                     throw new System.ArgumentException.$ctor1("Target array type is not compatible with the type of items in the collection.");
                 }
             },
+            /*System.Collections.Generic.Stack$1.copyTo end.*/
+
+            /*System.Collections.Generic.Stack$1.GetEnumerator start.*/
             GetEnumerator: function () {
                 return new (System.Collections.Generic.Stack$1.Enumerator(T)).$ctor1(this);
             },
+            /*System.Collections.Generic.Stack$1.GetEnumerator end.*/
+
+            /*System.Collections.Generic.Stack$1.System$Collections$Generic$IEnumerable$1$GetEnumerator start.*/
             System$Collections$Generic$IEnumerable$1$GetEnumerator: function () {
                 return new (System.Collections.Generic.Stack$1.Enumerator(T)).$ctor1(this).$clone();
             },
+            /*System.Collections.Generic.Stack$1.System$Collections$Generic$IEnumerable$1$GetEnumerator end.*/
+
+            /*System.Collections.Generic.Stack$1.System$Collections$IEnumerable$GetEnumerator start.*/
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return new (System.Collections.Generic.Stack$1.Enumerator(T)).$ctor1(this).$clone();
             },
+            /*System.Collections.Generic.Stack$1.System$Collections$IEnumerable$GetEnumerator end.*/
+
+            /*System.Collections.Generic.Stack$1.TrimExcess start.*/
             TrimExcess: function () {
                 var threshold = Bridge.Int.clip32(this._array.length * 0.9);
                 if (this._size < threshold) {
@@ -165,12 +188,18 @@
                     this._version = (this._version + 1) | 0;
                 }
             },
+            /*System.Collections.Generic.Stack$1.TrimExcess end.*/
+
+            /*System.Collections.Generic.Stack$1.Peek start.*/
             Peek: function () {
                 if (this._size === 0) {
                     throw new System.InvalidOperationException.$ctor1("Stack empty.");
                 }
                 return this._array[System.Array.index(((this._size - 1) | 0), this._array)];
             },
+            /*System.Collections.Generic.Stack$1.Peek end.*/
+
+            /*System.Collections.Generic.Stack$1.Pop start.*/
             Pop: function () {
                 if (this._size === 0) {
                     throw new System.InvalidOperationException.$ctor1("Stack empty.");
@@ -180,6 +209,9 @@
                 this._array[System.Array.index(this._size, this._array)] = Bridge.getDefaultValue(T);
                 return item;
             },
+            /*System.Collections.Generic.Stack$1.Pop end.*/
+
+            /*System.Collections.Generic.Stack$1.Push start.*/
             Push: function (item) {
                 if (this._size === this._array.length) {
                     var localArray = { v : this._array };
@@ -191,6 +223,9 @@
                 this._array[System.Array.index(Bridge.identity(this._size, ((this._size = (this._size + 1) | 0))), this._array)] = item;
                 this._version = (this._version + 1) | 0;
             },
+            /*System.Collections.Generic.Stack$1.Push end.*/
+
+            /*System.Collections.Generic.Stack$1.ToArray start.*/
             ToArray: function () {
                 var objArray = System.Array.init(this._size, function (){
                     return Bridge.getDefaultValue(T);
@@ -201,6 +236,10 @@
                     i = (i + 1) | 0;
                 }
                 return objArray;
-            }
+            },
+            /*System.Collections.Generic.Stack$1.ToArray end.*/
+
+
         }
     }; });
+    /*System.Collections.Generic.Stack$1 end.*/

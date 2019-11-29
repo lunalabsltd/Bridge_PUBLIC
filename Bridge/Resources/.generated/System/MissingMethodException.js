@@ -1,3 +1,4 @@
+    /*System.MissingMethodException start.*/
     Bridge.define("System.MissingMethodException", {
         inherits: [System.Exception],
         ctors: {
@@ -19,3 +20,4 @@
             }
         }
     });
+    /*System.MissingMethodException end.*/
