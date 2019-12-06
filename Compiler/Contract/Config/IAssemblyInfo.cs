@@ -238,5 +238,11 @@ namespace Bridge.Contract
         {
             get; set;
         }
+
+        bool MakeRValueCheck
+        {
+            get;
+            set;
+        }
     }
  }

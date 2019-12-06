@@ -26,6 +26,7 @@ namespace Bridge.Translator
             this.Rules = new CompilerRule();
             this.IgnoreDuplicateTypes = false;
             this.DeadCode = new DeadCodeConfig();
+            this.MakeRValueCheck = false;
         }
 
         /// <summary>
@@ -357,6 +358,15 @@ namespace Bridge.Translator
         public DeadCodeConfig DeadCode
         {
             get; set;
+        }
+
+        /// <summary>
+        /// Make additional check for generic value types for adding $clone 
+        /// </summary>
+        public bool MakeRValueCheck
+        {
+            get;
+            set;
         }
     }
 }
