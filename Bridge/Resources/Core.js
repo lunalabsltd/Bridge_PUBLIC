@@ -17,6 +17,11 @@
             }
         },
 
+
+        rValue: function (T, type) {
+            return T.$kind === "struct" ? type.$clone() : type;
+        },
+
         toString: function (instance) {
             if (instance == null) {
                 throw new System.ArgumentNullException();
