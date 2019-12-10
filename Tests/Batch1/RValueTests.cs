@@ -67,7 +67,7 @@ namespace Bridge.ClientTest.Batch1
             var newT = GetFoo <MyStruct>();
             Assert.NotNull(newT);
 
-            var newC = new InheritnceClass();
+            var newC = new InheritanceClass();
             Assert.NotNull(newC.foo);
         }
 
@@ -139,7 +139,7 @@ namespace Bridge.ClientTest.Batch1
             public T foo;
         }
 #pragma warning restore 0649
-        private class InheritnceClass : BaseClass<MyStruct>
+        private class InheritanceClass : BaseClass<MyStruct>
         {
             
         }
