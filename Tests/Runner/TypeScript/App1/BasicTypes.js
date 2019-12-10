@@ -1,13 +1,14 @@
 /**
  * Bridge Test library for TypeScript.
- * @version 17.9.0
+ * @version 17.9.2-luna
  * @author Object.NET, Inc.
  * @copyright Copyright 2008-2019 Object.NET, Inc.
- * @compiler Bridge.NET 17.9.0
+ * @compiler Bridge.NET 17.9.2-luna
  */
 Bridge.assembly("TypeScriptTest", function ($asm, globals) {
     "use strict";
 
+    /*BasicTypes.BasicTypes start.*/
     Bridge.define("BasicTypes.BasicTypes", {
         fields: {
             BoolValue: false,
@@ -42,10 +43,16 @@ Bridge.assembly("TypeScriptTest", function ($asm, globals) {
             }
         },
         methods: {
-            VoidFunction: function () { }
+            /*BasicTypes.BasicTypes.VoidFunction start.*/
+            VoidFunction: function () { },
+            /*BasicTypes.BasicTypes.VoidFunction end.*/
+
+
         }
     });
+    /*BasicTypes.BasicTypes end.*/
 
+    /*BasicTypes.Color start.*/
     Bridge.define("BasicTypes.Color", {
         $kind: "enum",
         statics: {
@@ -56,7 +63,9 @@ Bridge.assembly("TypeScriptTest", function ($asm, globals) {
             }
         }
     });
+    /*BasicTypes.Color end.*/
 
+    /*BasicTypes.Keywords start.*/
     Bridge.define("BasicTypes.Keywords", {
         fields: {
             Break: null,
@@ -187,4 +196,5 @@ Bridge.assembly("TypeScriptTest", function ($asm, globals) {
             }
         }
     });
+    /*BasicTypes.Keywords end.*/
 });

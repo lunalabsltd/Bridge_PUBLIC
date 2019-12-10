@@ -451,7 +451,7 @@ namespace Bridge.Contract
                     return;
                 }
 
-                if (Helpers.IsPure(expression, block.Emitter))
+                if (Helpers.IsRef(expression, block.Emitter))
                 {
                     return;
                 }
@@ -543,7 +543,7 @@ namespace Bridge.Contract
             return false;
         }
 
-        public static bool IsPure(Expression expression, IEmitter emitter)
+        public static bool IsRef(Expression expression, IEmitter emitter)
         {
             var invocationExpression = expression?.Parent as InvocationExpression;
 
