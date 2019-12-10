@@ -27,5 +27,5 @@
     }
   ],
   "ignoreDuplicateTypes": true,
-  "makeRValueCheck":  true
+  "safeStructsInGenerics": true
 }

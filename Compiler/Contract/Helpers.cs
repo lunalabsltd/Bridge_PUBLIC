@@ -445,7 +445,7 @@ namespace Bridge.Contract
 
             var type = nullable ? ((ParameterizedType)rrtype).TypeArguments[0] : rrtype;
 
-            if (type.Kind == TypeKind.TypeParameter && block.Emitter.AssemblyInfo.MakeRValueCheck)
+            if (type.Kind == TypeKind.TypeParameter && block.Emitter.AssemblyInfo.SafeStructsInGenerics)
             {
                 Helpers.BridgeRvalue(type, insertPosition, block);
                 return;

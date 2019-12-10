@@ -239,7 +239,7 @@ namespace Bridge.Contract
             get; set;
         }
 
-        bool MakeRValueCheck
+        bool SafeStructsInGenerics
         {
             get;
             set;
