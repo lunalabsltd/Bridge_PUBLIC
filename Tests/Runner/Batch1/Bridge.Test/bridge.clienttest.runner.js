@@ -2800,7 +2800,7 @@ Bridge.assembly("Bridge.Test.Bridge.ClientTest", function ($asm, globals) {
             QUnit.test("RValue - TestSimpleStruct", Bridge.Test.Runtime.BridgeClientTestRunner.RValueTests.TestSimpleStruct);
             QUnit.test("RValue - TestSimpleClass", Bridge.Test.Runtime.BridgeClientTestRunner.RValueTests.TestSimpleClass);
             QUnit.test("RValue - TestSimpleType", Bridge.Test.Runtime.BridgeClientTestRunner.RValueTests.TestSimpleType);
-            QUnit.test("RValue - RefOutGenericCheck", Bridge.Test.Runtime.BridgeClientTestRunner.RValueTests.RefOutGenericCheck);
+            QUnit.test("RValue - TestRefOutGeneric", Bridge.Test.Runtime.BridgeClientTestRunner.RValueTests.TestRefOutGeneric);
             QUnit.module("Script");
             QUnit.test("BooleanWorks_SPI_1619", Bridge.Test.Runtime.BridgeClientTestRunner.ScriptTests.BooleanWorks_SPI_1619);
             QUnit.test("EvalWorks", Bridge.Test.Runtime.BridgeClientTestRunner.ScriptTests.EvalWorks);
@@ -29983,13 +29983,13 @@ Bridge.assembly("Bridge.Test.Bridge.ClientTest", function ($asm, globals) {
                 },
                 /*Bridge.Test.Runtime.BridgeClientTestRunner+RValueTests.TestSimpleType:static end.*/
 
-                /*Bridge.Test.Runtime.BridgeClientTestRunner+RValueTests.RefOutGenericCheck:static start.*/
-                RefOutGenericCheck: function (assert) {
+                /*Bridge.Test.Runtime.BridgeClientTestRunner+RValueTests.TestRefOutGeneric:static start.*/
+                TestRefOutGeneric: function (assert) {
                     var $t;
-                    var t = Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.Batch1.RValueTests).BeforeTest(true, assert, Bridge.Test.Runtime.BridgeClientTestRunner.RValueTests, void 0, ($t = new Bridge.Test.Runtime.TestContext(), $t.Method = "RefOutGenericCheck()", $t.Line = "127", $t));
-                    t.Fixture.RefOutGenericCheck();
+                    var t = Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.Batch1.RValueTests).BeforeTest(true, assert, Bridge.Test.Runtime.BridgeClientTestRunner.RValueTests, void 0, ($t = new Bridge.Test.Runtime.TestContext(), $t.Method = "TestRefOutGeneric()", $t.Line = "127", $t));
+                    t.Fixture.TestRefOutGeneric();
                 },
-                /*Bridge.Test.Runtime.BridgeClientTestRunner+RValueTests.RefOutGenericCheck:static end.*/
+                /*Bridge.Test.Runtime.BridgeClientTestRunner+RValueTests.TestRefOutGeneric:static end.*/
 
 
             }

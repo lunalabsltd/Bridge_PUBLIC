@@ -37,7 +37,7 @@
 
 
         rValue: function (type) {
-            return type && type.$clone && type.constructor && type.constructor.$kind === "struct" ? type.$clone() : type;
+            return type && type.$clone ? type.$clone() : type;
         },
 
         toString: function (instance) {

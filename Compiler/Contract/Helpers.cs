@@ -447,10 +447,9 @@ namespace Bridge.Contract
 
             if (type.Kind == TypeKind.TypeParameter && block.Emitter.AssemblyInfo.SafeStructsInGenerics)
             {
-                Helpers.BridgeRValue(type, insertPosition, block);
+                Helpers.BridgeRValue(insertPosition, block);
                 return;
             }
-
 
             if (type.Kind == TypeKind.Struct)
             {
@@ -527,7 +526,7 @@ namespace Bridge.Contract
             }
         }
 
-        private static void BridgeRValue(IType type, int insertPosition, IAbstractEmitterBlock block)
+        private static void BridgeRValue(int insertPosition, IAbstractEmitterBlock block)
         {
             block.Emitter.Output.Insert(
               insertPosition,

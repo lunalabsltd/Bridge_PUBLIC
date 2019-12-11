@@ -124,7 +124,7 @@ namespace Bridge.ClientTest.Batch1
         }
 
         [Test]
-        public void RefOutGenericCheck()
+        public void TestRefOutGeneric()
         {
             MyInt? num = new MyInt(), num2;
             Set(out num2, ref num);
