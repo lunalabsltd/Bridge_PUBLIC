@@ -1,6 +1,4 @@
-﻿using Bridge.ClientTestHelper;
-using Bridge.Test.NUnit;
-using System;
+﻿using Bridge.Test.NUnit;
 
 
 namespace Bridge.ClientTest.Batch1
@@ -9,96 +7,120 @@ namespace Bridge.ClientTest.Batch1
     [TestFixture(TestNameFormat = "RValue - {0}")]
     public class RValueTests
     {
-        public static Int32 defaultValue = 10;
+        private const int DEFAULT_VALUE = 10;
 
         private struct MyStruct
         {
-            public int x;
-            public float y;
-
-            public float sum()
+            public int X
             {
-                return x + y;
+                get;
+                set;
+            }
+
+            public float Y
+            {
+                get;
+                set;
             }
         }
 
         private class MyClass
         {
-            public int x;
-            public float y;
-
-            public float sub()
+            public int X
             {
-                return x - y;
+                get;
+                set;
+            }
+
+            public float Y
+            {
+                get;
+                set;
             }
         }
 
         public struct MyInt
         {
-            public int Value;
+            public int Value
+            {
+                get;
+                set;
+            }
 
             public void Increment() => Value++;
         }
 
         [Test]
-        public void SimpleStructCheck()
+        public void TestSimpleStruct()
         {
-            var t = new MyStruct();
-            t.x = 5;
-            t.y = 7;
+            var t = new MyStruct
+            {
+                X = 5,
+                Y = 7
+            };
 
-            var rT = MainFunction<MyStruct>(t);
+            var rT = ReturnParameter(t);
 
-            t.x--;
-            t.y++;
+            t.X--;
+            t.Y++;
 
-            Assert.AreNotEqual(t.x, rT.x);
-            Assert.AreNotEqual(t.y, rT.y);
+            Assert.AreNotEqual(t.X, rT.X);
+            Assert.AreNotEqual(t.Y, rT.Y);
 
-            var newEx = MainFunction<MyStruct>(new MyStruct() { x = 8, y = -7 });
+            var newEx = ReturnParameter(new MyStruct
+            {
+                X = 8,
+                Y = -7
+            });
 
-            Assert.AreEqual(newEx.x, 8);
-            Assert.AreEqual(newEx.y, -7);
+            Assert.AreEqual(newEx.X, 8);
+            Assert.AreEqual(newEx.Y, -7);
 
-            BoxingTest(t);
-            Assert.AreEqual(t.x, 4);
-            Assert.AreEqual(t.y, 8);
+            ChangeMyStruct(t);
+            Assert.AreEqual(t.X, 4);
+            Assert.AreEqual(t.Y, 8);
 
-            var newT = GetFoo <MyStruct>();
+            var newT = GetDefault<MyStruct>();
             Assert.NotNull(newT);
 
             var newC = new InheritanceClass();
-            Assert.NotNull(newC.foo);
+            Assert.NotNull(newC.Foo);
         }
 
         [Test]
-        public void SimpleClassCheck()
+        public void TestSimpleClass()
         {
-            var t = new MyClass();
-            t.x = 5;
-            t.y = 7;
+            var t = new MyClass
+            {
+                X = 5,
+                Y = 7
+            };
 
-            var rT = MainFunction<MyClass>(t);
+            var rT = ReturnParameter(t);
 
-            t.x--;
-            t.y++;
+            t.X--;
+            t.Y++;
 
-            Assert.AreEqual(t.x, rT.x);
-            Assert.AreEqual(t.y, rT.y);
+            Assert.AreEqual(t.X, rT.X);
+            Assert.AreEqual(t.Y, rT.Y);
 
-            var newEx = MainFunction<MyClass>(new MyClass() { x = 8, y = -7 });
+            var newEx = ReturnParameter(new MyClass
+            {
+                X = 8,
+                Y = -7
+            });
 
-            Assert.AreEqual(newEx.x, 8);
-            Assert.AreEqual(newEx.y, -7);
+            Assert.AreEqual(newEx.X, 8);
+            Assert.AreEqual(newEx.Y, -7);
         }
 
         [Test]
-        public void SimpleTypeTest()
+        public void TestSimpleType()
         {
-            int x = MainFunction(defaultValue);
-            Assert.AreEqual(x, defaultValue);
+            var x = ReturnParameter(DEFAULT_VALUE);
+            Assert.AreEqual(x, DEFAULT_VALUE);
             x++;
-            Assert.AreNotEqual(x, defaultValue);
+            Assert.AreNotEqual(x, DEFAULT_VALUE);
         }
 
         [Test]
@@ -106,42 +128,43 @@ namespace Bridge.ClientTest.Batch1
         {
             MyInt? num = new MyInt(), num2;
             Set(out num2, ref num);
-            num.Value.Increment();
+            num?.Increment();
 
-            Assert.AreEqual(num2.Value.Value, 0);
+            Assert.AreEqual(num2?.Value, 0);
         }
 
-        public static void Set<T>(out T target, ref T input) => target = input;
+        private static void Set<T>(out T target, ref T input) => target = input;
 
-        private T MainFunction<T>(T value)
+        private static T ReturnParameter<T>(T value)
         {
             return value;
         }
 
-        private object BoxingTest(object value)
+        private static void ChangeMyStruct(object value)
         {
             var x = (MyStruct)value;
-            x.x++;
-            x.y--;
-
-            return x;
+            x.X++;
+            x.Y--;
         }
 
-        private T GetFoo<T>()
+        private static T GetDefault<T>()
         {
             var foo = default(T);
 
             return foo;
         }
+
 #pragma warning disable 0649
         private class BaseClass<T>
         {
-            public T foo;
+            public T Foo;
         }
 #pragma warning restore 0649
+
         private class InheritanceClass : BaseClass<MyStruct>
         {
-            
+
         }
+
     }
 }

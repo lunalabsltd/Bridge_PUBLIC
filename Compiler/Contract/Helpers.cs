@@ -447,7 +447,7 @@ namespace Bridge.Contract
 
             if (type.Kind == TypeKind.TypeParameter && block.Emitter.AssemblyInfo.SafeStructsInGenerics)
             {
-                Helpers.BridgeRvalue(type, insertPosition, block);
+                Helpers.BridgeRValue(type, insertPosition, block);
                 return;
             }
 
@@ -527,11 +527,11 @@ namespace Bridge.Contract
             }
         }
 
-        private static void BridgeRvalue(IType type, int insertPosition, IAbstractEmitterBlock block)
+        private static void BridgeRValue(IType type, int insertPosition, IAbstractEmitterBlock block)
         {
             block.Emitter.Output.Insert(
               insertPosition,
-              JS.Funcs.BRIDGE_RVALUE + "(" + type.FullName + ", "
+              JS.Funcs.BRIDGE_RVALUE + "("
             );
 
             block.WriteCloseParentheses();

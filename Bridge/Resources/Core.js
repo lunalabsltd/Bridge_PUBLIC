@@ -18,8 +18,8 @@
         },
 
 
-        rValue: function (T, type) {
-            return T.$kind === "struct" ? type.$clone() : type;
+        rValue: function (type) {
+            return type && type.$clone && type.constructor && type.constructor.$kind === "struct" ? type.$clone() : type;
         },
 
         toString: function (instance) {
