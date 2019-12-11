@@ -751,13 +751,7 @@
                 }
             }
 
-            var f = function () {
-                constructor.apply(this, args);
-            };
-
-            f.prototype = constructor.prototype;
-
-            return new f();
+            return new constructor( ...args );
         },
 
         getAttributes: function (type, attrType, inherit) {
