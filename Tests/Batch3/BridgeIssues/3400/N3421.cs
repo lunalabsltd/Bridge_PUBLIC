@@ -59,7 +59,11 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         /// To test just go ahead and call the statically used methods and
         /// check the result.
         /// </summary>
+#if RELEASE
         [Test(ExpectedCount = 2)]
+#else
+        [Test(ExpectedCount = 1)]
+#endif
         public static void TestUsingStaticWithDirective()
         {
 #if RELEASE

@@ -1,5 +1,5 @@
 /**
- * @version   : 17.9.0 - Bridge.NET
+ * @version   : 17.9.2-luna - Bridge.NET
  * @author    : Object.NET, Inc. http://bridge.net/
  * @copyright : Copyright 2008-2019 Object.NET, Inc. http://object.net/
  * @license   : See license.txt and https://github.com/bridgedotnet/Bridge/blob/master/LICENSE.md
@@ -2553,7 +2553,7 @@
 
             var isNested = false;
 
-            if (prop.$kind.match("^nested ") !== null) {
+            if (prop.$kind.substring(0, 7) === "nested ") {
                 isNested = true;
                 prop.$kind = prop.$kind.substr(7);
             }
@@ -2619,13 +2619,13 @@
 
             if (prop.$noRegister === true) {
                 registerT = false;
-                delete prop.$noRegister;
+                prop.$noRegister = null;
             }
 
             if (prop.$inherits) {
-                delete prop.$inherits;
+                prop.$inherits = null;
             } else {
-                delete prop.inherits;
+                prop.inherits = null;
             }
 
             if (isEntryPoint) {
@@ -2635,9 +2635,9 @@
             if (Bridge.isFunction(statics)) {
                 statics = null;
             } else if (prop.$statics) {
-                delete prop.$statics;
+                prop.$statics = null;
             } else {
-                delete prop.statics;
+                prop.statics = null;
             }
 
             var Class,
@@ -2686,7 +2686,7 @@
                 }
 
                 Class.$literal = true;
-                delete prop.$literal;
+                prop.$literal = null;
             }
 
             if (!isGenericInstance && registerT) {
@@ -2773,9 +2773,9 @@
                     Bridge.Class.initConfig(extend, base, staticsConfig, true, Class);
 
                     if (statics.$config) {
-                        delete statics.$config;
+                        statics.$config = null;
                     } else {
-                        delete statics.config;
+                        statics.config = null;
                     }
                 }
             }
@@ -2786,9 +2786,9 @@
                 Bridge.Class.initConfig(extend, base, instanceConfig, false, prop, prototype);
 
                 if (prop.$config) {
-                    delete prop.$config;
+                    prop.$config = null;
                 } else {
-                    delete prop.config;
+                    prop.config = null;
                 }
             } else if (extend && base.$initMembers) {
                 prop.$initMembers = function () {
@@ -2798,32 +2798,22 @@
 
             prop.$initialize = Bridge.Class._initialize;
 
-            var keys = [];
-
             for (name in prop) {
-                keys.push(name);
-            }
-
-            for (i = 0; i < keys.length; i++) {
-                name = keys[i];
-
                 v = prop[name];
                 isCtor = name === "ctor";
                 ctorName = name;
 
-                if (Bridge.isFunction(v) && (isCtor || name.match("^\\$ctor") !== null)) {
+                if (Bridge.isFunction(v) && (isCtor || name.substring(0, 5) === "$ctor")) {
                     isCtor = true;
                 }
 
-                var member = prop[name];
-
                 if (isCtor) {
-                    Class[ctorName] = member;
+                    Class[ctorName] = v;
                     Class[ctorName].prototype = prototype;
                     Class[ctorName].prototype.constructor = Class;
-                    prototype[ctorName] = member;
+                    prototype[ctorName] = v;
                 } else {
-                    prototype[ctorName] = member;
+                    prototype[ctorName] = v;
                 }
             }
 
@@ -3492,6 +3482,7 @@
 
     // @source Void.js
 
+    /*System.Void start.*/
     Bridge.define("System.Void", {
         $kind: "struct",
         statics: {
@@ -3503,15 +3494,18 @@
             $clone: function (to) { return this; }
         }
     });
+    /*System.Void end.*/
 
     // @source SystemAssemblyVersion.js
 
+    /*Bridge.Utils.SystemAssemblyVersion start.*/
     Bridge.init(function () {
-        Bridge.SystemAssembly.version = "17.9.0";
-        Bridge.SystemAssembly.compiler = "17.9.0";
+        Bridge.SystemAssembly.version = "17.9.2-luna";
+        Bridge.SystemAssembly.compiler = "17.9.2-luna";
     });
 
     Bridge.define("Bridge.Utils.SystemAssemblyVersion");
+    /*Bridge.Utils.SystemAssemblyVersion end.*/
 
     // @source Reflection.js
 
@@ -5602,6 +5596,7 @@ Bridge.define("System.ValueType", {
 
     // @source Ref.js
 
+    /*Bridge.Ref$1 start.*/
     Bridge.define("Bridge.Ref$1", function (T) { return {
         statics: {
             methods: {
@@ -5640,24 +5635,36 @@ Bridge.define("System.ValueType", {
             }
         },
         methods: {
+            /*Bridge.Ref$1.toString start.*/
             toString: function () {
                 return Bridge.toString(this.Value);
             },
+            /*Bridge.Ref$1.toString end.*/
+
+            /*Bridge.Ref$1.valueOf start.*/
             valueOf: function () {
                 return this.Value;
-            }
+            },
+            /*Bridge.Ref$1.valueOf end.*/
+
+
         }
     }; });
+    /*Bridge.Ref$1 end.*/
 
     // @source IConvertible.js
 
+    /*System.IConvertible start.*/
     Bridge.define("System.IConvertible", {
         $kind: "interface"
     });
+    /*System.IConvertible end.*/
 
     // @source HResults.js
 
+    /*System.HResults start.*/
     Bridge.define("System.HResults");
+    /*System.HResults end.*/
 
     // @source Exception.js
 
@@ -5764,6 +5771,7 @@ Bridge.define("System.ValueType", {
 
     // @source SystemException.js
 
+    /*System.SystemException start.*/
     Bridge.define("System.SystemException", {
         inherits: [System.Exception],
         ctors: {
@@ -5784,9 +5792,11 @@ Bridge.define("System.ValueType", {
             }
         }
     });
+    /*System.SystemException end.*/
 
     // @source OutOfMemoryException.js
 
+    /*System.OutOfMemoryException start.*/
     Bridge.define("System.OutOfMemoryException", {
         inherits: [System.SystemException],
         ctors: {
@@ -5807,9 +5817,11 @@ Bridge.define("System.ValueType", {
             }
         }
     });
+    /*System.OutOfMemoryException end.*/
 
     // @source ArrayTypeMismatchException.js
 
+    /*System.ArrayTypeMismatchException start.*/
     Bridge.define("System.ArrayTypeMismatchException", {
         inherits: [System.SystemException],
         ctors: {
@@ -5830,9 +5842,11 @@ Bridge.define("System.ValueType", {
             }
         }
     });
+    /*System.ArrayTypeMismatchException end.*/
 
     // @source MissingManifestResourceException.js
 
+    /*System.Resources.MissingManifestResourceException start.*/
     Bridge.define("System.Resources.MissingManifestResourceException", {
         inherits: [System.SystemException],
         ctors: {
@@ -5853,9 +5867,11 @@ Bridge.define("System.ValueType", {
             }
         }
     });
+    /*System.Resources.MissingManifestResourceException end.*/
 
     // @source TextInfo.js
 
+    /*System.Globalization.TextInfo start.*/
     Bridge.define("System.Globalization.TextInfo", {
         inherits: [System.ICloneable],
         fields: {
@@ -5883,19 +5899,28 @@ Bridge.define("System.ValueType", {
         },
         alias: ["clone", "System$ICloneable$clone"],
         methods: {
+            /*System.Globalization.TextInfo.clone start.*/
             clone: function () {
                 return Bridge.copy(new System.Globalization.TextInfo(), this, System.Array.init(["ANSICodePage", "CultureName", "EBCDICCodePage", "IsRightToLeft", "LCID", "listSeparator", "MacCodePage", "OEMCodePage", "IsReadOnly"], System.String));
             },
+            /*System.Globalization.TextInfo.clone end.*/
+
+            /*System.Globalization.TextInfo.VerifyWritable start.*/
             VerifyWritable: function () {
                 if (this.IsReadOnly) {
                     throw new System.InvalidOperationException.$ctor1("Instance is read-only.");
                 }
-            }
+            },
+            /*System.Globalization.TextInfo.VerifyWritable end.*/
+
+
         }
     });
+    /*System.Globalization.TextInfo end.*/
 
     // @source BidiCategory.js
 
+    /*System.Globalization.BidiCategory start.*/
     Bridge.define("System.Globalization.BidiCategory", {
         $kind: "enum",
         statics: {
@@ -5926,9 +5951,11 @@ Bridge.define("System.ValueType", {
             }
         }
     });
+    /*System.Globalization.BidiCategory end.*/
 
     // @source SortVersion.js
 
+    /*System.Globalization.SortVersion start.*/
     Bridge.define("System.Globalization.SortVersion", {
         inherits: function () { return [System.IEquatable$1(System.Globalization.SortVersion)]; },
         statics: {
@@ -5991,6 +6018,7 @@ Bridge.define("System.ValueType", {
             }
         },
         methods: {
+            /*System.Globalization.SortVersion.equals start.*/
             equals: function (obj) {
                 var n = Bridge.as(obj, System.Globalization.SortVersion);
                 if (System.Globalization.SortVersion.op_Inequality(n, null)) {
@@ -5999,6 +6027,9 @@ Bridge.define("System.ValueType", {
 
                 return false;
             },
+            /*System.Globalization.SortVersion.equals end.*/
+
+            /*System.Globalization.SortVersion.equalsT start.*/
             equalsT: function (other) {
                 if (System.Globalization.SortVersion.op_Equality(other, null)) {
                     return false;
@@ -6006,14 +6037,22 @@ Bridge.define("System.ValueType", {
 
                 return this.m_NlsVersion === other.m_NlsVersion && System.Guid.op_Equality(this.m_SortId, other.m_SortId);
             },
+            /*System.Globalization.SortVersion.equalsT end.*/
+
+            /*System.Globalization.SortVersion.getHashCode start.*/
             getHashCode: function () {
                 return Bridge.Int.mul(this.m_NlsVersion, 7) | this.m_SortId.getHashCode();
-            }
+            },
+            /*System.Globalization.SortVersion.getHashCode end.*/
+
+
         }
     });
+    /*System.Globalization.SortVersion end.*/
 
     // @source UnicodeCategory.js
 
+    /*System.Globalization.UnicodeCategory start.*/
     Bridge.define("System.Globalization.UnicodeCategory", {
         $kind: "enum",
         statics: {
@@ -6051,9 +6090,11 @@ Bridge.define("System.ValueType", {
             }
         }
     });
+    /*System.Globalization.UnicodeCategory end.*/
 
     // @source DaylightTimeStruct.js
 
+    /*System.Globalization.DaylightTimeStruct start.*/
     Bridge.define("System.Globalization.DaylightTimeStruct", {
         $kind: "struct",
         statics: {
@@ -6102,9 +6143,11 @@ Bridge.define("System.ValueType", {
             }
         }
     });
+    /*System.Globalization.DaylightTimeStruct end.*/
 
     // @source DaylightTime.js
 
+    /*System.Globalization.DaylightTime start.*/
     Bridge.define("System.Globalization.DaylightTime", {
         fields: {
             _start: null,
@@ -6145,6 +6188,7 @@ Bridge.define("System.ValueType", {
             }
         }
     });
+    /*System.Globalization.DaylightTime end.*/
 
     // @source Globalization.js
 
@@ -6547,6 +6591,7 @@ Bridge.define("System.ValueType", {
 
     // @source Environment.js
 
+    /*System.Environment start.*/
     Bridge.define("System.Environment", {
         statics: {
             fields: {
@@ -6644,22 +6689,35 @@ Bridge.define("System.ValueType", {
                 }
             },
             methods: {
+                /*System.Environment.GetResourceString:static start.*/
                 GetResourceString: function (key) {
                     return key;
                 },
+                /*System.Environment.GetResourceString:static end.*/
+
+                /*System.Environment.GetResourceString$1:static start.*/
                 GetResourceString$1: function (key, values) {
                     if (values === void 0) { values = []; }
                     var s = System.Environment.GetResourceString(key);
                     return System.String.formatProvider.apply(System.String, [System.Globalization.CultureInfo.getCurrentCulture(), s].concat(values));
                 },
+                /*System.Environment.GetResourceString$1:static end.*/
+
+                /*System.Environment.PatchDictionary:static start.*/
                 PatchDictionary: function (d) {
                     d.noKeyCheck = true;
 
                     return d;
                 },
+                /*System.Environment.PatchDictionary:static end.*/
+
+                /*System.Environment.Exit:static start.*/
                 Exit: function (exitCode) {
                     System.Environment.ExitCode = exitCode;
                 },
+                /*System.Environment.Exit:static end.*/
+
+                /*System.Environment.ExpandEnvironmentVariables:static start.*/
                 ExpandEnvironmentVariables: function (name) {
                     var $t;
                     if (name == null) {
@@ -6680,12 +6738,21 @@ Bridge.define("System.ValueType", {
 
                     return name;
                 },
+                /*System.Environment.ExpandEnvironmentVariables:static end.*/
+
+                /*System.Environment.FailFast:static start.*/
                 FailFast: function (message) {
                     throw new System.Exception(message);
                 },
+                /*System.Environment.FailFast:static end.*/
+
+                /*System.Environment.FailFast$1:static start.*/
                 FailFast$1: function (message, exception) {
                     throw new System.Exception(message, exception);
                 },
+                /*System.Environment.FailFast$1:static end.*/
+
+                /*System.Environment.GetCommandLineArgs:static start.*/
                 GetCommandLineArgs: function () {
                     var l = System.Environment.Location;
 
@@ -6717,6 +6784,9 @@ Bridge.define("System.ValueType", {
 
                     return System.Array.init(0, null, System.String);
                 },
+                /*System.Environment.GetCommandLineArgs:static end.*/
+
+                /*System.Environment.GetEnvironmentVariable:static start.*/
                 GetEnvironmentVariable: function (variable) {
                     if (variable == null) {
                         throw new System.ArgumentNullException.$ctor1("variable");
@@ -6730,18 +6800,33 @@ Bridge.define("System.ValueType", {
 
                     return null;
                 },
+                /*System.Environment.GetEnvironmentVariable:static end.*/
+
+                /*System.Environment.GetEnvironmentVariable$1:static start.*/
                 GetEnvironmentVariable$1: function (variable, target) {
                     return System.Environment.GetEnvironmentVariable(variable);
                 },
+                /*System.Environment.GetEnvironmentVariable$1:static end.*/
+
+                /*System.Environment.GetEnvironmentVariables:static start.*/
                 GetEnvironmentVariables: function () {
                     return System.Environment.PatchDictionary(new (System.Collections.Generic.Dictionary$2(System.String,System.String)).$ctor1(System.Environment.Variables));
                 },
+                /*System.Environment.GetEnvironmentVariables:static end.*/
+
+                /*System.Environment.GetEnvironmentVariables$1:static start.*/
                 GetEnvironmentVariables$1: function (target) {
                     return System.Environment.GetEnvironmentVariables();
                 },
+                /*System.Environment.GetEnvironmentVariables$1:static end.*/
+
+                /*System.Environment.GetLogicalDrives:static start.*/
                 GetLogicalDrives: function () {
                     return System.Array.init(0, null, System.String);
                 },
+                /*System.Environment.GetLogicalDrives:static end.*/
+
+                /*System.Environment.SetEnvironmentVariable:static start.*/
                 SetEnvironmentVariable: function (variable, value) {
                     if (variable == null) {
                         throw new System.ArgumentNullException.$ctor1("variable");
@@ -6761,15 +6846,23 @@ Bridge.define("System.ValueType", {
                         System.Environment.Variables.setItem(variable, value);
                     }
                 },
+                /*System.Environment.SetEnvironmentVariable:static end.*/
+
+                /*System.Environment.SetEnvironmentVariable$1:static start.*/
                 SetEnvironmentVariable$1: function (variable, value, target) {
                     System.Environment.SetEnvironmentVariable(variable, value);
-                }
+                },
+                /*System.Environment.SetEnvironmentVariable$1:static end.*/
+
+
             }
         }
     });
+    /*System.Environment end.*/
 
     // @source StringSplitOptions.js
 
+    /*System.StringSplitOptions start.*/
     Bridge.define("System.StringSplitOptions", {
         $kind: "enum",
         statics: {
@@ -6780,9 +6873,11 @@ Bridge.define("System.ValueType", {
         },
         $flags: true
     });
+    /*System.StringSplitOptions end.*/
 
     // @source TypeCode.js
 
+    /*System.TypeCode start.*/
     Bridge.define("System.TypeCode", {
         $kind: "enum",
         statics: {
@@ -6808,9 +6903,11 @@ Bridge.define("System.ValueType", {
             }
         }
     });
+    /*System.TypeCode end.*/
 
     // @source TypeCodeValues.js
 
+    /*System.TypeCodeValues start.*/
     Bridge.define("System.TypeCodeValues", {
         statics: {
             fields: {
@@ -6857,6 +6954,7 @@ Bridge.define("System.ValueType", {
             }
         }
     });
+    /*System.TypeCodeValues end.*/
 
     // @source Type.js
 
@@ -11660,6 +11758,7 @@ Bridge.define("System.Type", {
 
     // @source DebugAssertException.js
 
+    /*System.Diagnostics.Debug+DebugAssertException start.*/
     Bridge.define("System.Diagnostics.Debug.DebugAssertException", {
         inherits: [System.Exception],
         $kind: "nested class",
@@ -11670,9 +11769,11 @@ Bridge.define("System.Type", {
             }
         }
     });
+    /*System.Diagnostics.Debug+DebugAssertException end.*/
 
     // @source Debug.js
 
+    /*System.Diagnostics.Debug start.*/
     Bridge.define("System.Diagnostics.Debug", {
         statics: {
             fields: {
@@ -11719,27 +11820,52 @@ Bridge.define("System.Type", {
                 }
             },
             methods: {
+                /*System.Diagnostics.Debug.Close:static start.*/
                 Close: function () { },
+                /*System.Diagnostics.Debug.Close:static end.*/
+
+                /*System.Diagnostics.Debug.Flush:static start.*/
                 Flush: function () { },
+                /*System.Diagnostics.Debug.Flush:static end.*/
+
+                /*System.Diagnostics.Debug.Indent:static start.*/
                 Indent: function () {
                     System.Diagnostics.Debug.IndentLevel = (System.Diagnostics.Debug.IndentLevel + 1) | 0;
                 },
+                /*System.Diagnostics.Debug.Indent:static end.*/
+
+                /*System.Diagnostics.Debug.Unindent:static start.*/
                 Unindent: function () {
                     System.Diagnostics.Debug.IndentLevel = (System.Diagnostics.Debug.IndentLevel - 1) | 0;
                 },
+                /*System.Diagnostics.Debug.Unindent:static end.*/
+
+                /*System.Diagnostics.Debug.Print:static start.*/
                 Print: function (message) {
                     System.Diagnostics.Debug.Write$2(message);
                 },
+                /*System.Diagnostics.Debug.Print:static end.*/
+
+                /*System.Diagnostics.Debug.Print$1:static start.*/
                 Print$1: function (format, args) {
                     if (args === void 0) { args = []; }
                     System.Diagnostics.Debug.Write$2(System.String.formatProvider.apply(System.String, [null, format].concat(args)));
                 },
+                /*System.Diagnostics.Debug.Print$1:static end.*/
+
+                /*System.Diagnostics.Debug.Assert:static start.*/
                 Assert: function (condition) {
                     System.Diagnostics.Debug.Assert$2(condition, "", "");
                 },
+                /*System.Diagnostics.Debug.Assert:static end.*/
+
+                /*System.Diagnostics.Debug.Assert$1:static start.*/
                 Assert$1: function (condition, message) {
                     System.Diagnostics.Debug.Assert$2(condition, message, "");
                 },
+                /*System.Diagnostics.Debug.Assert$1:static end.*/
+
+                /*System.Diagnostics.Debug.Assert$2:static start.*/
                 Assert$2: function (condition, message, detailMessage) {
                     if (!condition) {
                         var stackTrace;
@@ -11755,33 +11881,60 @@ Bridge.define("System.Type", {
                         System.Diagnostics.Debug.s_ShowAssertDialog(stackTrace, message, detailMessage);
                     }
                 },
+                /*System.Diagnostics.Debug.Assert$2:static end.*/
+
+                /*System.Diagnostics.Debug.Assert$3:static start.*/
                 Assert$3: function (condition, message, detailMessageFormat, args) {
                     if (args === void 0) { args = []; }
                     System.Diagnostics.Debug.Assert$2(condition, message, System.String.format.apply(System.String, [detailMessageFormat].concat(args)));
                 },
+                /*System.Diagnostics.Debug.Assert$3:static end.*/
+
+                /*System.Diagnostics.Debug.Fail:static start.*/
                 Fail: function (message) {
                     System.Diagnostics.Debug.Assert$2(false, message, "");
                 },
+                /*System.Diagnostics.Debug.Fail:static end.*/
+
+                /*System.Diagnostics.Debug.Fail$1:static start.*/
                 Fail$1: function (message, detailMessage) {
                     System.Diagnostics.Debug.Assert$2(false, message, detailMessage);
                 },
+                /*System.Diagnostics.Debug.Fail$1:static end.*/
+
+                /*System.Diagnostics.Debug.FormatAssert:static start.*/
                 FormatAssert: function (stackTrace, message, detailMessage) {
                     var newLine = (System.Diagnostics.Debug.GetIndentString() || "") + ("\n" || "");
                     return "---- DEBUG ASSERTION FAILED ----" + (newLine || "") + "---- Assert Short Message ----" + (newLine || "") + (message || "") + (newLine || "") + "---- Assert Long Message ----" + (newLine || "") + (detailMessage || "") + (newLine || "") + (stackTrace || "");
                 },
+                /*System.Diagnostics.Debug.FormatAssert:static end.*/
+
+                /*System.Diagnostics.Debug.WriteLine$2:static start.*/
                 WriteLine$2: function (message) {
                     System.Diagnostics.Debug.Write$2((message || "") + ("\n" || ""));
                 },
+                /*System.Diagnostics.Debug.WriteLine$2:static end.*/
+
+                /*System.Diagnostics.Debug.WriteLine:static start.*/
                 WriteLine: function (value) {
                     System.Diagnostics.Debug.WriteLine$2(value != null ? Bridge.toString(value) : null);
                 },
+                /*System.Diagnostics.Debug.WriteLine:static end.*/
+
+                /*System.Diagnostics.Debug.WriteLine$1:static start.*/
                 WriteLine$1: function (value, category) {
                     System.Diagnostics.Debug.WriteLine$4(value != null ? Bridge.toString(value) : null, category);
                 },
+                /*System.Diagnostics.Debug.WriteLine$1:static end.*/
+
+                /*System.Diagnostics.Debug.WriteLine$3:static start.*/
                 WriteLine$3: function (format, args) {
                     if (args === void 0) { args = []; }
                     System.Diagnostics.Debug.WriteLine$2(System.String.formatProvider.apply(System.String, [null, format].concat(args)));
                 },
+                /*System.Diagnostics.Debug.WriteLine$3:static end.*/
+
+                /*System.Diagnostics.Debug.WriteLine$4:static start.*/
                 WriteLine$4: function (message, category) {
                     if (category == null) {
                         System.Diagnostics.Debug.WriteLine$2(message);
@@ -11789,6 +11942,9 @@ Bridge.define("System.Type", {
                         System.Diagnostics.Debug.WriteLine$2((category || "") + ":" + (message || ""));
                     }
                 },
+                /*System.Diagnostics.Debug.WriteLine$4:static end.*/
+
+                /*System.Diagnostics.Debug.Write$2:static start.*/
                 Write$2: function (message) {
                     System.Diagnostics.Debug.s_lock;
                     {
@@ -11806,9 +11962,15 @@ Bridge.define("System.Type", {
                         }
                     }
                 },
+                /*System.Diagnostics.Debug.Write$2:static end.*/
+
+                /*System.Diagnostics.Debug.Write:static start.*/
                 Write: function (value) {
                     System.Diagnostics.Debug.Write$2(value != null ? Bridge.toString(value) : null);
                 },
+                /*System.Diagnostics.Debug.Write:static end.*/
+
+                /*System.Diagnostics.Debug.Write$3:static start.*/
                 Write$3: function (message, category) {
                     if (category == null) {
                         System.Diagnostics.Debug.Write$2(message);
@@ -11816,49 +11978,79 @@ Bridge.define("System.Type", {
                         System.Diagnostics.Debug.Write$2((category || "") + ":" + (message || ""));
                     }
                 },
+                /*System.Diagnostics.Debug.Write$3:static end.*/
+
+                /*System.Diagnostics.Debug.Write$1:static start.*/
                 Write$1: function (value, category) {
                     System.Diagnostics.Debug.Write$3(value != null ? Bridge.toString(value) : null, category);
                 },
+                /*System.Diagnostics.Debug.Write$1:static end.*/
+
+                /*System.Diagnostics.Debug.WriteIf$2:static start.*/
                 WriteIf$2: function (condition, message) {
                     if (condition) {
                         System.Diagnostics.Debug.Write$2(message);
                     }
                 },
+                /*System.Diagnostics.Debug.WriteIf$2:static end.*/
+
+                /*System.Diagnostics.Debug.WriteIf:static start.*/
                 WriteIf: function (condition, value) {
                     if (condition) {
                         System.Diagnostics.Debug.Write(value);
                     }
                 },
+                /*System.Diagnostics.Debug.WriteIf:static end.*/
+
+                /*System.Diagnostics.Debug.WriteIf$3:static start.*/
                 WriteIf$3: function (condition, message, category) {
                     if (condition) {
                         System.Diagnostics.Debug.Write$3(message, category);
                     }
                 },
+                /*System.Diagnostics.Debug.WriteIf$3:static end.*/
+
+                /*System.Diagnostics.Debug.WriteIf$1:static start.*/
                 WriteIf$1: function (condition, value, category) {
                     if (condition) {
                         System.Diagnostics.Debug.Write$1(value, category);
                     }
                 },
+                /*System.Diagnostics.Debug.WriteIf$1:static end.*/
+
+                /*System.Diagnostics.Debug.WriteLineIf:static start.*/
                 WriteLineIf: function (condition, value) {
                     if (condition) {
                         System.Diagnostics.Debug.WriteLine(value);
                     }
                 },
+                /*System.Diagnostics.Debug.WriteLineIf:static end.*/
+
+                /*System.Diagnostics.Debug.WriteLineIf$1:static start.*/
                 WriteLineIf$1: function (condition, value, category) {
                     if (condition) {
                         System.Diagnostics.Debug.WriteLine$1(value, category);
                     }
                 },
+                /*System.Diagnostics.Debug.WriteLineIf$1:static end.*/
+
+                /*System.Diagnostics.Debug.WriteLineIf$2:static start.*/
                 WriteLineIf$2: function (condition, message) {
                     if (condition) {
                         System.Diagnostics.Debug.WriteLine$2(message);
                     }
                 },
+                /*System.Diagnostics.Debug.WriteLineIf$2:static end.*/
+
+                /*System.Diagnostics.Debug.WriteLineIf$3:static start.*/
                 WriteLineIf$3: function (condition, message, category) {
                     if (condition) {
                         System.Diagnostics.Debug.WriteLine$4(message, category);
                     }
                 },
+                /*System.Diagnostics.Debug.WriteLineIf$3:static end.*/
+
+                /*System.Diagnostics.Debug.GetIndentString:static start.*/
                 GetIndentString: function () {
                     var $t;
                     var indentCount = Bridge.Int.mul(System.Diagnostics.Debug.IndentSize, System.Diagnostics.Debug.IndentLevel);
@@ -11867,6 +12059,9 @@ Bridge.define("System.Type", {
                     }
                     return ($t = System.String.fromCharCount(32, indentCount), System.Diagnostics.Debug.s_indentString = $t, $t);
                 },
+                /*System.Diagnostics.Debug.GetIndentString:static end.*/
+
+                /*System.Diagnostics.Debug.ShowAssertDialog:static start.*/
                 ShowAssertDialog: function (stackTrace, message, detailMessage) {
                     if (System.Diagnostics.Debugger.IsAttached) {
                         debugger;
@@ -11875,6 +12070,9 @@ Bridge.define("System.Type", {
                         System.Environment.FailFast$1(ex.Message, ex);
                     }
                 },
+                /*System.Diagnostics.Debug.ShowAssertDialog:static end.*/
+
+                /*System.Diagnostics.Debug.WriteCore:static start.*/
                 WriteCore: function (message) {
                     System.Diagnostics.Debug.WriteToDebugger(message);
 
@@ -11882,6 +12080,9 @@ Bridge.define("System.Type", {
                         System.Diagnostics.Debug.WriteToStderr(message);
                     }
                 },
+                /*System.Diagnostics.Debug.WriteCore:static end.*/
+
+                /*System.Diagnostics.Debug.WriteToDebugger:static start.*/
                 WriteToDebugger: function (message) {
                     if (System.Diagnostics.Debugger.IsLogging()) {
                         System.Diagnostics.Debugger.Log(0, null, message);
@@ -11890,6 +12091,9 @@ Bridge.define("System.Type", {
 
                     }
                 },
+                /*System.Diagnostics.Debug.WriteToDebugger:static end.*/
+
+                /*System.Diagnostics.Debug.WriteToStderr:static start.*/
                 WriteToStderr: function (message) {
                     System.Console.WriteLine(message);
 
@@ -11899,13 +12103,18 @@ Bridge.define("System.Type", {
 
 
 
-                }
+                },
+                /*System.Diagnostics.Debug.WriteToStderr:static end.*/
+
+
             }
         }
     });
+    /*System.Diagnostics.Debug end.*/
 
     // @source Debugger.js
 
+    /*System.Diagnostics.Debugger start.*/
     Bridge.define("System.Diagnostics.Debugger", {
         statics: {
             fields: {
@@ -11919,17 +12128,31 @@ Bridge.define("System.Type", {
                 }
             },
             methods: {
+                /*System.Diagnostics.Debugger.IsLogging:static start.*/
                 IsLogging: function () {
                     return true;
                 },
+                /*System.Diagnostics.Debugger.IsLogging:static end.*/
+
+                /*System.Diagnostics.Debugger.Launch:static start.*/
                 Launch: function () {
                     return true;
                 },
+                /*System.Diagnostics.Debugger.Launch:static end.*/
+
+                /*System.Diagnostics.Debugger.Log:static start.*/
                 Log: function (level, category, message) { },
-                NotifyOfCrossThreadDependency: function () { }
+                /*System.Diagnostics.Debugger.Log:static end.*/
+
+                /*System.Diagnostics.Debugger.NotifyOfCrossThreadDependency:static start.*/
+                NotifyOfCrossThreadDependency: function () { },
+                /*System.Diagnostics.Debugger.NotifyOfCrossThreadDependency:static end.*/
+
+
             }
         }
     });
+    /*System.Diagnostics.Debugger end.*/
 
     // @source Diagnostics.js
 
@@ -14240,6 +14463,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
     // @source KeyValuePair.js
 
+    /*System.Collections.Generic.KeyValuePair$2 start.*/
     Bridge.define("System.Collections.Generic.KeyValuePair$2", function (TKey, TValue) { return {
         $kind: "struct",
         statics: {
@@ -14274,6 +14498,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.Generic.KeyValuePair$2.toString start.*/
             toString: function () {
                 var s = System.Text.StringBuilderCache.Acquire();
                 s.append(String.fromCharCode(91));
@@ -14287,10 +14512,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 s.append(String.fromCharCode(93));
                 return System.Text.StringBuilderCache.GetStringAndRelease(s);
             },
+            /*System.Collections.Generic.KeyValuePair$2.toString end.*/
+
+            /*System.Collections.Generic.KeyValuePair$2.Deconstruct start.*/
             Deconstruct: function (key, value) {
                 key.v = this.key;
                 value.v = this.value;
             },
+            /*System.Collections.Generic.KeyValuePair$2.Deconstruct end.*/
+
             getHashCode: function () {
                 var h = Bridge.addHash([5072499452, this.key$1, this.value$1]);
                 return h;
@@ -14304,61 +14534,79 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             $clone: function (to) { return this; }
         }
     }; });
+    /*System.Collections.Generic.KeyValuePair$2 end.*/
 
     // @source IEnumerator.js
 
+    /*System.Collections.IEnumerator start.*/
     Bridge.define("System.Collections.IEnumerator", {
         $kind: "interface"
     });
+    /*System.Collections.IEnumerator end.*/
 
     // @source IComparer.js
 
+    /*System.Collections.IComparer start.*/
     Bridge.define("System.Collections.IComparer", {
         $kind: "interface"
     });
+    /*System.Collections.IComparer end.*/
 
     // @source IDictionaryEnumerator.js
 
+    /*System.Collections.IDictionaryEnumerator start.*/
     Bridge.define("System.Collections.IDictionaryEnumerator", {
         inherits: [System.Collections.IEnumerator],
         $kind: "interface"
     });
+    /*System.Collections.IDictionaryEnumerator end.*/
 
     // @source IEqualityComparer.js
 
+    /*System.Collections.IEqualityComparer start.*/
     Bridge.define("System.Collections.IEqualityComparer", {
         $kind: "interface"
     });
+    /*System.Collections.IEqualityComparer end.*/
 
     // @source IStructuralComparable.js
 
+    /*System.Collections.IStructuralComparable start.*/
     Bridge.define("System.Collections.IStructuralComparable", {
         $kind: "interface"
     });
+    /*System.Collections.IStructuralComparable end.*/
 
     // @source IStructuralEquatable.js
 
+    /*System.Collections.IStructuralEquatable start.*/
     Bridge.define("System.Collections.IStructuralEquatable", {
         $kind: "interface"
     });
+    /*System.Collections.IStructuralEquatable end.*/
 
     // @source IEnumerator.js
 
+    /*System.Collections.Generic.IEnumerator$1 start.*/
     Bridge.definei("System.Collections.Generic.IEnumerator$1", function (T) { return {
         inherits: [System.IDisposable,System.Collections.IEnumerator],
         $kind: "interface",
         $variance: [1]
     }; });
+    /*System.Collections.Generic.IEnumerator$1 end.*/
 
     // @source IComparer.js
 
+    /*System.Collections.Generic.IComparer$1 start.*/
     Bridge.definei("System.Collections.Generic.IComparer$1", function (T) { return {
         $kind: "interface",
         $variance: [2]
     }; });
+    /*System.Collections.Generic.IComparer$1 end.*/
 
     // @source KeyValuePairs.js
 
+    /*System.Collections.KeyValuePairs start.*/
     Bridge.define("System.Collections.KeyValuePairs", {
         fields: {
             key: null,
@@ -14384,9 +14632,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Collections.KeyValuePairs end.*/
 
     // @source SortedList.js
 
+    /*System.Collections.SortedList start.*/
     Bridge.define("System.Collections.SortedList", {
         inherits: [System.Collections.IDictionary,System.ICloneable],
         statics: {
@@ -14399,13 +14649,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
             },
             methods: {
+                /*System.Collections.SortedList.Synchronized:static start.*/
                 Synchronized: function (list) {
                     if (list == null) {
                         throw new System.ArgumentNullException.$ctor1("list");
                     }
 
                     return new System.Collections.SortedList.SyncSortedList(list);
-                }
+                },
+                /*System.Collections.SortedList.Synchronized:static end.*/
+
+
             }
         },
         fields: {
@@ -14559,12 +14813,16 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 this.Insert(~i, key, value);
             },
+            /*System.Collections.SortedList.Init start.*/
             Init: function () {
                 this.keys = System.Collections.SortedList.emptyArray;
                 this.values = System.Collections.SortedList.emptyArray;
                 this._size = 0;
                 this.comparer = new (System.Collections.Generic.Comparer$1(Object))(System.Collections.Generic.Comparer$1.$default.fn);
             },
+            /*System.Collections.SortedList.Init end.*/
+
+            /*System.Collections.SortedList.add start.*/
             add: function (key, value) {
                 if (key == null) {
                     throw new System.ArgumentNullException.$ctor1("key");
@@ -14576,6 +14834,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 this.Insert(~i, key, value);
             },
+            /*System.Collections.SortedList.add end.*/
+
+            /*System.Collections.SortedList.clear start.*/
             clear: function () {
                 this.version = (this.version + 1) | 0;
                 System.Array.fill(this.keys, null, 0, this._size);
@@ -14583,6 +14844,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._size = 0;
 
             },
+            /*System.Collections.SortedList.clear end.*/
+
+            /*System.Collections.SortedList.clone start.*/
             clone: function () {
                 var sl = new System.Collections.SortedList.$ctor5(this._size);
                 System.Array.copy(this.keys, 0, sl.keys, 0, this._size);
@@ -14592,15 +14856,27 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 sl.comparer = this.comparer;
                 return sl;
             },
+            /*System.Collections.SortedList.clone end.*/
+
+            /*System.Collections.SortedList.contains start.*/
             contains: function (key) {
                 return this.IndexOfKey(key) >= 0;
             },
+            /*System.Collections.SortedList.contains end.*/
+
+            /*System.Collections.SortedList.ContainsKey start.*/
             ContainsKey: function (key) {
                 return this.IndexOfKey(key) >= 0;
             },
+            /*System.Collections.SortedList.ContainsKey end.*/
+
+            /*System.Collections.SortedList.ContainsValue start.*/
             ContainsValue: function (value) {
                 return this.IndexOfValue(value) >= 0;
             },
+            /*System.Collections.SortedList.ContainsValue end.*/
+
+            /*System.Collections.SortedList.copyTo start.*/
             copyTo: function (array, arrayIndex) {
                 if (array == null) {
                     throw new System.ArgumentNullException.$ctor1("array");
@@ -14619,6 +14895,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     System.Array.set(array, entry.$clone(), ((i + arrayIndex) | 0));
                 }
             },
+            /*System.Collections.SortedList.copyTo end.*/
+
+            /*System.Collections.SortedList.ToKeyValuePairsArray start.*/
             ToKeyValuePairsArray: function () {
                 var array = System.Array.init(this.Count, null, System.Collections.KeyValuePairs);
                 for (var i = 0; i < this.Count; i = (i + 1) | 0) {
@@ -14626,6 +14905,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return array;
             },
+            /*System.Collections.SortedList.ToKeyValuePairsArray end.*/
+
+            /*System.Collections.SortedList.EnsureCapacity start.*/
             EnsureCapacity: function (min) {
                 var newCapacity = this.keys.length === 0 ? 16 : Bridge.Int.mul(this.keys.length, 2);
 
@@ -14637,6 +14919,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 this.Capacity = newCapacity;
             },
+            /*System.Collections.SortedList.EnsureCapacity end.*/
+
+            /*System.Collections.SortedList.GetByIndex start.*/
             GetByIndex: function (index) {
                 if (index < 0 || index >= this.Count) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("index");
@@ -14644,30 +14929,48 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return this.values[System.Array.index(index, this.values)];
             },
+            /*System.Collections.SortedList.GetByIndex end.*/
+
+            /*System.Collections.SortedList.System$Collections$IEnumerable$GetEnumerator start.*/
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return new System.Collections.SortedList.SortedListEnumerator(this, 0, this._size, System.Collections.SortedList.SortedListEnumerator.DictEntry);
             },
+            /*System.Collections.SortedList.System$Collections$IEnumerable$GetEnumerator end.*/
+
+            /*System.Collections.SortedList.GetEnumerator start.*/
             GetEnumerator: function () {
                 return new System.Collections.SortedList.SortedListEnumerator(this, 0, this._size, System.Collections.SortedList.SortedListEnumerator.DictEntry);
             },
+            /*System.Collections.SortedList.GetEnumerator end.*/
+
+            /*System.Collections.SortedList.GetKey start.*/
             GetKey: function (index) {
                 if (index < 0 || index >= this.Count) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("index");
                 }
                 return this.keys[System.Array.index(index, this.keys)];
             },
+            /*System.Collections.SortedList.GetKey end.*/
+
+            /*System.Collections.SortedList.GetKeyList start.*/
             GetKeyList: function () {
                 if (this.keyList == null) {
                     this.keyList = new System.Collections.SortedList.KeyList(this);
                 }
                 return this.keyList;
             },
+            /*System.Collections.SortedList.GetKeyList end.*/
+
+            /*System.Collections.SortedList.GetValueList start.*/
             GetValueList: function () {
                 if (this.valueList == null) {
                     this.valueList = new System.Collections.SortedList.ValueList(this);
                 }
                 return this.valueList;
             },
+            /*System.Collections.SortedList.GetValueList end.*/
+
+            /*System.Collections.SortedList.IndexOfKey start.*/
             IndexOfKey: function (key) {
                 if (key == null) {
                     throw new System.ArgumentNullException.$ctor1("key");
@@ -14676,9 +14979,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 var ret = System.Array.binarySearch(this.keys, 0, this._size, key, this.comparer);
                 return ret >= 0 ? ret : -1;
             },
+            /*System.Collections.SortedList.IndexOfKey end.*/
+
+            /*System.Collections.SortedList.IndexOfValue start.*/
             IndexOfValue: function (value) {
                 return System.Array.indexOfT(this.values, value, 0, this._size);
             },
+            /*System.Collections.SortedList.IndexOfValue end.*/
+
+            /*System.Collections.SortedList.Insert start.*/
             Insert: function (index, key, value) {
                 if (this._size === this.keys.length) {
                     this.EnsureCapacity(((this._size + 1) | 0));
@@ -14692,6 +15001,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._size = (this._size + 1) | 0;
                 this.version = (this.version + 1) | 0;
             },
+            /*System.Collections.SortedList.Insert end.*/
+
+            /*System.Collections.SortedList.RemoveAt start.*/
             RemoveAt: function (index) {
                 if (index < 0 || index >= this.Count) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("index");
@@ -14706,12 +15018,18 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.values[System.Array.index(this._size, this.values)] = null;
                 this.version = (this.version + 1) | 0;
             },
+            /*System.Collections.SortedList.RemoveAt end.*/
+
+            /*System.Collections.SortedList.remove start.*/
             remove: function (key) {
                 var i = this.IndexOfKey(key);
                 if (i >= 0) {
                     this.RemoveAt(i);
                 }
             },
+            /*System.Collections.SortedList.remove end.*/
+
+            /*System.Collections.SortedList.SetByIndex start.*/
             SetByIndex: function (index, value) {
                 if (index < 0 || index >= this.Count) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("index");
@@ -14720,14 +15038,22 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.values[System.Array.index(index, this.values)] = value;
                 this.version = (this.version + 1) | 0;
             },
+            /*System.Collections.SortedList.SetByIndex end.*/
+
+            /*System.Collections.SortedList.TrimToSize start.*/
             TrimToSize: function () {
                 this.Capacity = this._size;
-            }
+            },
+            /*System.Collections.SortedList.TrimToSize end.*/
+
+
         }
     });
+    /*System.Collections.SortedList end.*/
 
     // @source KeyList.js
 
+    /*System.Collections.SortedList+KeyList start.*/
     Bridge.define("System.Collections.SortedList.KeyList", {
         inherits: [System.Collections.IList],
         $kind: "nested class",
@@ -14792,15 +15118,25 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             setItem: function (index, value) {
                 throw new System.NotSupportedException.ctor();
             },
+            /*System.Collections.SortedList+KeyList.add start.*/
             add: function (key) {
                 throw new System.NotSupportedException.ctor();
             },
+            /*System.Collections.SortedList+KeyList.add end.*/
+
+            /*System.Collections.SortedList+KeyList.clear start.*/
             clear: function () {
                 throw new System.NotSupportedException.ctor();
             },
+            /*System.Collections.SortedList+KeyList.clear end.*/
+
+            /*System.Collections.SortedList+KeyList.contains start.*/
             contains: function (key) {
                 return this.sortedList.contains(key);
             },
+            /*System.Collections.SortedList+KeyList.contains end.*/
+
+            /*System.Collections.SortedList+KeyList.copyTo start.*/
             copyTo: function (array, arrayIndex) {
                 if (array != null && System.Array.getRank(array) !== 1) {
                     throw new System.ArgumentException.ctor();
@@ -14808,12 +15144,21 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 System.Array.copy(this.sortedList.keys, 0, array, arrayIndex, this.sortedList.Count);
             },
+            /*System.Collections.SortedList+KeyList.copyTo end.*/
+
+            /*System.Collections.SortedList+KeyList.insert start.*/
             insert: function (index, value) {
                 throw new System.NotSupportedException.ctor();
             },
+            /*System.Collections.SortedList+KeyList.insert end.*/
+
+            /*System.Collections.SortedList+KeyList.GetEnumerator start.*/
             GetEnumerator: function () {
                 return new System.Collections.SortedList.SortedListEnumerator(this.sortedList, 0, this.sortedList.Count, System.Collections.SortedList.SortedListEnumerator.Keys);
             },
+            /*System.Collections.SortedList+KeyList.GetEnumerator end.*/
+
+            /*System.Collections.SortedList+KeyList.indexOf start.*/
             indexOf: function (key) {
                 if (key == null) {
                     throw new System.ArgumentNullException.$ctor1("key");
@@ -14825,17 +15170,28 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return -1;
             },
+            /*System.Collections.SortedList+KeyList.indexOf end.*/
+
+            /*System.Collections.SortedList+KeyList.remove start.*/
             remove: function (key) {
                 throw new System.NotSupportedException.ctor();
             },
+            /*System.Collections.SortedList+KeyList.remove end.*/
+
+            /*System.Collections.SortedList+KeyList.removeAt start.*/
             removeAt: function (index) {
                 throw new System.NotSupportedException.ctor();
-            }
+            },
+            /*System.Collections.SortedList+KeyList.removeAt end.*/
+
+
         }
     });
+    /*System.Collections.SortedList+KeyList end.*/
 
     // @source SortedListDebugView.js
 
+    /*System.Collections.SortedList+SortedListDebugView start.*/
     Bridge.define("System.Collections.SortedList.SortedListDebugView", {
         $kind: "nested class",
         fields: {
@@ -14859,9 +15215,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Collections.SortedList+SortedListDebugView end.*/
 
     // @source SortedListEnumerator.js
 
+    /*System.Collections.SortedList+SortedListEnumerator start.*/
     Bridge.define("System.Collections.SortedList.SortedListEnumerator", {
         inherits: [System.Collections.IDictionaryEnumerator,System.ICloneable],
         $kind: "nested class",
@@ -14964,9 +15322,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.SortedList+SortedListEnumerator.clone start.*/
             clone: function () {
                 return Bridge.clone(this);
             },
+            /*System.Collections.SortedList+SortedListEnumerator.clone end.*/
+
+            /*System.Collections.SortedList+SortedListEnumerator.moveNext start.*/
             moveNext: function () {
                 var $t, $t1;
                 if (this.version !== this.sortedList.version) {
@@ -14984,6 +15346,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.current = false;
                 return false;
             },
+            /*System.Collections.SortedList+SortedListEnumerator.moveNext end.*/
+
+            /*System.Collections.SortedList+SortedListEnumerator.reset start.*/
             reset: function () {
                 if (this.version !== this.sortedList.version) {
                     throw new System.InvalidOperationException.ctor();
@@ -14992,12 +15357,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.current = false;
                 this.key = null;
                 this.value = null;
-            }
+            },
+            /*System.Collections.SortedList+SortedListEnumerator.reset end.*/
+
+
         }
     });
+    /*System.Collections.SortedList+SortedListEnumerator end.*/
 
     // @source SyncSortedList.js
 
+    /*System.Collections.SortedList+SyncSortedList start.*/
     Bridge.define("System.Collections.SortedList.SyncSortedList", {
         inherits: [System.Collections.SortedList],
         $kind: "nested class",
@@ -15081,78 +15451,115 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this._list.setItem(key, value);
                 }
             },
+            /*System.Collections.SortedList+SyncSortedList.add start.*/
             add: function (key, value) {
                 this._root;
                 {
                     this._list.add(key, value);
                 }
             },
+            /*System.Collections.SortedList+SyncSortedList.add end.*/
+
+            /*System.Collections.SortedList+SyncSortedList.clear start.*/
             clear: function () {
                 this._root;
                 {
                     this._list.clear();
                 }
             },
+            /*System.Collections.SortedList+SyncSortedList.clear end.*/
+
+            /*System.Collections.SortedList+SyncSortedList.clone start.*/
             clone: function () {
                 this._root;
                 {
                     return this._list.clone();
                 }
             },
+            /*System.Collections.SortedList+SyncSortedList.clone end.*/
+
+            /*System.Collections.SortedList+SyncSortedList.contains start.*/
             contains: function (key) {
                 this._root;
                 {
                     return this._list.contains(key);
                 }
             },
+            /*System.Collections.SortedList+SyncSortedList.contains end.*/
+
+            /*System.Collections.SortedList+SyncSortedList.ContainsKey start.*/
             ContainsKey: function (key) {
                 this._root;
                 {
                     return this._list.ContainsKey(key);
                 }
             },
+            /*System.Collections.SortedList+SyncSortedList.ContainsKey end.*/
+
+            /*System.Collections.SortedList+SyncSortedList.ContainsValue start.*/
             ContainsValue: function (key) {
                 this._root;
                 {
                     return this._list.ContainsValue(key);
                 }
             },
+            /*System.Collections.SortedList+SyncSortedList.ContainsValue end.*/
+
+            /*System.Collections.SortedList+SyncSortedList.copyTo start.*/
             copyTo: function (array, index) {
                 this._root;
                 {
                     this._list.copyTo(array, index);
                 }
             },
+            /*System.Collections.SortedList+SyncSortedList.copyTo end.*/
+
+            /*System.Collections.SortedList+SyncSortedList.GetByIndex start.*/
             GetByIndex: function (index) {
                 this._root;
                 {
                     return this._list.GetByIndex(index);
                 }
             },
+            /*System.Collections.SortedList+SyncSortedList.GetByIndex end.*/
+
+            /*System.Collections.SortedList+SyncSortedList.GetEnumerator start.*/
             GetEnumerator: function () {
                 this._root;
                 {
                     return this._list.GetEnumerator();
                 }
             },
+            /*System.Collections.SortedList+SyncSortedList.GetEnumerator end.*/
+
+            /*System.Collections.SortedList+SyncSortedList.GetKey start.*/
             GetKey: function (index) {
                 this._root;
                 {
                     return this._list.GetKey(index);
                 }
             },
+            /*System.Collections.SortedList+SyncSortedList.GetKey end.*/
+
+            /*System.Collections.SortedList+SyncSortedList.GetKeyList start.*/
             GetKeyList: function () {
                 this._root;
                 {
                     return this._list.GetKeyList();
                 }
             },
+            /*System.Collections.SortedList+SyncSortedList.GetKeyList end.*/
+
+            /*System.Collections.SortedList+SyncSortedList.GetValueList start.*/
             GetValueList: function () {
                 this._root;
                 {
                     return this._list.GetValueList();
                 }
             },
+            /*System.Collections.SortedList+SyncSortedList.GetValueList end.*/
+
+            /*System.Collections.SortedList+SyncSortedList.IndexOfKey start.*/
             IndexOfKey: function (key) {
                 if (key == null) {
                     throw new System.ArgumentNullException.$ctor1("key");
@@ -15160,44 +15567,67 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return this._list.IndexOfKey(key);
             },
+            /*System.Collections.SortedList+SyncSortedList.IndexOfKey end.*/
+
+            /*System.Collections.SortedList+SyncSortedList.IndexOfValue start.*/
             IndexOfValue: function (value) {
                 this._root;
                 {
                     return this._list.IndexOfValue(value);
                 }
             },
+            /*System.Collections.SortedList+SyncSortedList.IndexOfValue end.*/
+
+            /*System.Collections.SortedList+SyncSortedList.RemoveAt start.*/
             RemoveAt: function (index) {
                 this._root;
                 {
                     this._list.RemoveAt(index);
                 }
             },
+            /*System.Collections.SortedList+SyncSortedList.RemoveAt end.*/
+
+            /*System.Collections.SortedList+SyncSortedList.remove start.*/
             remove: function (key) {
                 this._root;
                 {
                     this._list.remove(key);
                 }
             },
+            /*System.Collections.SortedList+SyncSortedList.remove end.*/
+
+            /*System.Collections.SortedList+SyncSortedList.SetByIndex start.*/
             SetByIndex: function (index, value) {
                 this._root;
                 {
                     this._list.SetByIndex(index, value);
                 }
             },
+            /*System.Collections.SortedList+SyncSortedList.SetByIndex end.*/
+
+            /*System.Collections.SortedList+SyncSortedList.ToKeyValuePairsArray start.*/
             ToKeyValuePairsArray: function () {
                 return this._list.ToKeyValuePairsArray();
             },
+            /*System.Collections.SortedList+SyncSortedList.ToKeyValuePairsArray end.*/
+
+            /*System.Collections.SortedList+SyncSortedList.TrimToSize start.*/
             TrimToSize: function () {
                 this._root;
                 {
                     this._list.TrimToSize();
                 }
-            }
+            },
+            /*System.Collections.SortedList+SyncSortedList.TrimToSize end.*/
+
+
         }
     });
+    /*System.Collections.SortedList+SyncSortedList end.*/
 
     // @source ValueList.js
 
+    /*System.Collections.SortedList+ValueList start.*/
     Bridge.define("System.Collections.SortedList.ValueList", {
         inherits: [System.Collections.IList],
         $kind: "nested class",
@@ -15262,15 +15692,25 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             setItem: function (index, value) {
                 throw new System.NotSupportedException.ctor();
             },
+            /*System.Collections.SortedList+ValueList.add start.*/
             add: function (key) {
                 throw new System.NotSupportedException.ctor();
             },
+            /*System.Collections.SortedList+ValueList.add end.*/
+
+            /*System.Collections.SortedList+ValueList.clear start.*/
             clear: function () {
                 throw new System.NotSupportedException.ctor();
             },
+            /*System.Collections.SortedList+ValueList.clear end.*/
+
+            /*System.Collections.SortedList+ValueList.contains start.*/
             contains: function (value) {
                 return this.sortedList.ContainsValue(value);
             },
+            /*System.Collections.SortedList+ValueList.contains end.*/
+
+            /*System.Collections.SortedList+ValueList.copyTo start.*/
             copyTo: function (array, arrayIndex) {
                 if (array != null && System.Array.getRank(array) !== 1) {
                     throw new System.ArgumentException.ctor();
@@ -15278,26 +15718,46 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 System.Array.copy(this.sortedList.values, 0, array, arrayIndex, this.sortedList.Count);
             },
+            /*System.Collections.SortedList+ValueList.copyTo end.*/
+
+            /*System.Collections.SortedList+ValueList.insert start.*/
             insert: function (index, value) {
                 throw new System.NotSupportedException.ctor();
             },
+            /*System.Collections.SortedList+ValueList.insert end.*/
+
+            /*System.Collections.SortedList+ValueList.GetEnumerator start.*/
             GetEnumerator: function () {
                 return new System.Collections.SortedList.SortedListEnumerator(this.sortedList, 0, this.sortedList.Count, System.Collections.SortedList.SortedListEnumerator.Values);
             },
+            /*System.Collections.SortedList+ValueList.GetEnumerator end.*/
+
+            /*System.Collections.SortedList+ValueList.indexOf start.*/
             indexOf: function (value) {
                 return System.Array.indexOfT(this.sortedList.values, value, 0, this.sortedList.Count);
             },
+            /*System.Collections.SortedList+ValueList.indexOf end.*/
+
+            /*System.Collections.SortedList+ValueList.remove start.*/
             remove: function (value) {
                 throw new System.NotSupportedException.ctor();
             },
+            /*System.Collections.SortedList+ValueList.remove end.*/
+
+            /*System.Collections.SortedList+ValueList.removeAt start.*/
             removeAt: function (index) {
                 throw new System.NotSupportedException.ctor();
-            }
+            },
+            /*System.Collections.SortedList+ValueList.removeAt end.*/
+
+
         }
     });
+    /*System.Collections.SortedList+ValueList end.*/
 
     // @source SortedList.js
 
+    /*System.Collections.Generic.SortedList$2 start.*/
     Bridge.define("System.Collections.Generic.SortedList$2", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IDictionary$2(TKey,TValue),System.Collections.IDictionary,System.Collections.Generic.IReadOnlyDictionary$2(TKey,TValue)],
         statics: {
@@ -15320,13 +15780,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
             },
             methods: {
+                /*System.Collections.Generic.SortedList$2.IsCompatibleKey:static start.*/
                 IsCompatibleKey: function (key) {
                     if (key == null) {
                         System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.key);
                     }
 
                     return (Bridge.is(key, TKey));
-                }
+                },
+                /*System.Collections.Generic.SortedList$2.IsCompatibleKey:static end.*/
+
+
             }
         },
         fields: {
@@ -15579,6 +16043,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.SortedList$2.add start.*/
             add: function (key, value) {
                 if (key == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.key);
@@ -15589,9 +16054,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 this.Insert(~i, key, value);
             },
+            /*System.Collections.Generic.SortedList$2.add end.*/
+
+            /*System.Collections.Generic.SortedList$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$add start.*/
             System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$add: function (keyValuePair) {
                 this.add(keyValuePair.key, keyValuePair.value);
             },
+            /*System.Collections.Generic.SortedList$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$add end.*/
+
+            /*System.Collections.Generic.SortedList$2.System$Collections$IDictionary$add start.*/
             System$Collections$IDictionary$add: function (key, value) {
                 if (key == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.key);
@@ -15621,6 +16092,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.SortedList$2.System$Collections$IDictionary$add end.*/
+
+            /*System.Collections.Generic.SortedList$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$contains start.*/
             System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$contains: function (keyValuePair) {
                 var index = this.IndexOfKey(keyValuePair.key);
                 if (index >= 0 && System.Collections.Generic.EqualityComparer$1(TValue).def.equals2(this.values[System.Array.index(index, this.values)], keyValuePair.value)) {
@@ -15628,12 +16102,18 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return false;
             },
+            /*System.Collections.Generic.SortedList$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$contains end.*/
+
+            /*System.Collections.Generic.SortedList$2.System$Collections$IDictionary$contains start.*/
             System$Collections$IDictionary$contains: function (key) {
                 if (System.Collections.Generic.SortedList$2(TKey,TValue).IsCompatibleKey(key)) {
                     return this.containsKey(Bridge.cast(Bridge.unbox(key, TKey), TKey));
                 }
                 return false;
             },
+            /*System.Collections.Generic.SortedList$2.System$Collections$IDictionary$contains end.*/
+
+            /*System.Collections.Generic.SortedList$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$remove start.*/
             System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$remove: function (keyValuePair) {
                 var index = this.IndexOfKey(keyValuePair.key);
                 if (index >= 0 && System.Collections.Generic.EqualityComparer$1(TValue).def.equals2(this.values[System.Array.index(index, this.values)], keyValuePair.value)) {
@@ -15642,6 +16122,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return false;
             },
+            /*System.Collections.Generic.SortedList$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$remove end.*/
+
+            /*System.Collections.Generic.SortedList$2.remove start.*/
             remove: function (key) {
                 var i = this.IndexOfKey(key);
                 if (i >= 0) {
@@ -15649,23 +16132,35 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return i >= 0;
             },
+            /*System.Collections.Generic.SortedList$2.remove end.*/
+
+            /*System.Collections.Generic.SortedList$2.System$Collections$IDictionary$remove start.*/
             System$Collections$IDictionary$remove: function (key) {
                 if (System.Collections.Generic.SortedList$2(TKey,TValue).IsCompatibleKey(key)) {
                     this.remove(Bridge.cast(Bridge.unbox(key, TKey), TKey));
                 }
             },
+            /*System.Collections.Generic.SortedList$2.System$Collections$IDictionary$remove end.*/
+
+            /*System.Collections.Generic.SortedList$2.GetKeyListHelper start.*/
             GetKeyListHelper: function () {
                 if (this.keyList == null) {
                     this.keyList = new (System.Collections.Generic.SortedList$2.KeyList(TKey,TValue))(this);
                 }
                 return this.keyList;
             },
+            /*System.Collections.Generic.SortedList$2.GetKeyListHelper end.*/
+
+            /*System.Collections.Generic.SortedList$2.GetValueListHelper start.*/
             GetValueListHelper: function () {
                 if (this.valueList == null) {
                     this.valueList = new (System.Collections.Generic.SortedList$2.ValueList(TKey,TValue))(this);
                 }
                 return this.valueList;
             },
+            /*System.Collections.Generic.SortedList$2.GetValueListHelper end.*/
+
+            /*System.Collections.Generic.SortedList$2.clear start.*/
             clear: function () {
                 this.version = (this.version + 1) | 0;
                 System.Array.fill(this.keys, function () {
@@ -15676,12 +16171,21 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }, 0, this._size);
                 this._size = 0;
             },
+            /*System.Collections.Generic.SortedList$2.clear end.*/
+
+            /*System.Collections.Generic.SortedList$2.containsKey start.*/
             containsKey: function (key) {
                 return this.IndexOfKey(key) >= 0;
             },
+            /*System.Collections.Generic.SortedList$2.containsKey end.*/
+
+            /*System.Collections.Generic.SortedList$2.ContainsValue start.*/
             ContainsValue: function (value) {
                 return this.IndexOfValue(value) >= 0;
             },
+            /*System.Collections.Generic.SortedList$2.ContainsValue end.*/
+
+            /*System.Collections.Generic.SortedList$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$copyTo start.*/
             System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$copyTo: function (array, arrayIndex) {
                 if (array == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.array);
@@ -15700,6 +16204,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     array[System.Array.index(((arrayIndex + i) | 0), array)] = entry;
                 }
             },
+            /*System.Collections.Generic.SortedList$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$copyTo end.*/
+
+            /*System.Collections.Generic.SortedList$2.System$Collections$ICollection$copyTo start.*/
             System$Collections$ICollection$copyTo: function (array, arrayIndex) {
                 if (array == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.array);
@@ -15747,6 +16254,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 }
             },
+            /*System.Collections.Generic.SortedList$2.System$Collections$ICollection$copyTo end.*/
+
+            /*System.Collections.Generic.SortedList$2.EnsureCapacity start.*/
             EnsureCapacity: function (min) {
                 var newCapacity = this.keys.length === 0 ? System.Collections.Generic.SortedList$2(TKey,TValue)._defaultCapacity : Bridge.Int.mul(this.keys.length, 2);
                 if ((newCapacity >>> 0) > System.Collections.Generic.SortedList$2(TKey,TValue).MaxArrayLength) {
@@ -15757,30 +16267,51 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 this.Capacity = newCapacity;
             },
+            /*System.Collections.Generic.SortedList$2.EnsureCapacity end.*/
+
+            /*System.Collections.Generic.SortedList$2.GetByIndex start.*/
             GetByIndex: function (index) {
                 if (index < 0 || index >= this._size) {
                     System.ThrowHelper.ThrowArgumentOutOfRangeException$2(System.ExceptionArgument.index, System.ExceptionResource.ArgumentOutOfRange_Index);
                 }
                 return this.values[System.Array.index(index, this.values)];
             },
+            /*System.Collections.Generic.SortedList$2.GetByIndex end.*/
+
+            /*System.Collections.Generic.SortedList$2.GetEnumerator start.*/
             GetEnumerator: function () {
                 return new (System.Collections.Generic.SortedList$2.Enumerator(TKey,TValue)).$ctor1(this, System.Collections.Generic.SortedList$2.Enumerator(TKey,TValue).KeyValuePair).$clone();
             },
+            /*System.Collections.Generic.SortedList$2.GetEnumerator end.*/
+
+            /*System.Collections.Generic.SortedList$2.System$Collections$Generic$IEnumerable$1$System$Collections$Generic$KeyValuePair$2$GetEnumerator start.*/
             System$Collections$Generic$IEnumerable$1$System$Collections$Generic$KeyValuePair$2$GetEnumerator: function () {
                 return new (System.Collections.Generic.SortedList$2.Enumerator(TKey,TValue)).$ctor1(this, System.Collections.Generic.SortedList$2.Enumerator(TKey,TValue).KeyValuePair).$clone();
             },
+            /*System.Collections.Generic.SortedList$2.System$Collections$Generic$IEnumerable$1$System$Collections$Generic$KeyValuePair$2$GetEnumerator end.*/
+
+            /*System.Collections.Generic.SortedList$2.System$Collections$IDictionary$GetEnumerator start.*/
             System$Collections$IDictionary$GetEnumerator: function () {
                 return new (System.Collections.Generic.SortedList$2.Enumerator(TKey,TValue)).$ctor1(this, System.Collections.Generic.SortedList$2.Enumerator(TKey,TValue).DictEntry).$clone();
             },
+            /*System.Collections.Generic.SortedList$2.System$Collections$IDictionary$GetEnumerator end.*/
+
+            /*System.Collections.Generic.SortedList$2.System$Collections$IEnumerable$GetEnumerator start.*/
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return new (System.Collections.Generic.SortedList$2.Enumerator(TKey,TValue)).$ctor1(this, System.Collections.Generic.SortedList$2.Enumerator(TKey,TValue).KeyValuePair).$clone();
             },
+            /*System.Collections.Generic.SortedList$2.System$Collections$IEnumerable$GetEnumerator end.*/
+
+            /*System.Collections.Generic.SortedList$2.GetKey start.*/
             GetKey: function (index) {
                 if (index < 0 || index >= this._size) {
                     System.ThrowHelper.ThrowArgumentOutOfRangeException$2(System.ExceptionArgument.index, System.ExceptionResource.ArgumentOutOfRange_Index);
                 }
                 return this.keys[System.Array.index(index, this.keys)];
             },
+            /*System.Collections.Generic.SortedList$2.GetKey end.*/
+
+            /*System.Collections.Generic.SortedList$2.IndexOfKey start.*/
             IndexOfKey: function (key) {
                 if (key == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.key);
@@ -15788,9 +16319,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 var ret = System.Array.binarySearch(this.keys, 0, this._size, key, this.comparer);
                 return ret >= 0 ? ret : -1;
             },
+            /*System.Collections.Generic.SortedList$2.IndexOfKey end.*/
+
+            /*System.Collections.Generic.SortedList$2.IndexOfValue start.*/
             IndexOfValue: function (value) {
                 return System.Array.indexOfT(this.values, value, 0, this._size);
             },
+            /*System.Collections.Generic.SortedList$2.IndexOfValue end.*/
+
+            /*System.Collections.Generic.SortedList$2.Insert start.*/
             Insert: function (index, key, value) {
                 if (this._size === this.keys.length) {
                     this.EnsureCapacity(((this._size + 1) | 0));
@@ -15804,6 +16341,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._size = (this._size + 1) | 0;
                 this.version = (this.version + 1) | 0;
             },
+            /*System.Collections.Generic.SortedList$2.Insert end.*/
+
+            /*System.Collections.Generic.SortedList$2.tryGetValue start.*/
             tryGetValue: function (key, value) {
                 var i = this.IndexOfKey(key);
                 if (i >= 0) {
@@ -15814,6 +16354,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 value.v = Bridge.getDefaultValue(TValue);
                 return false;
             },
+            /*System.Collections.Generic.SortedList$2.tryGetValue end.*/
+
+            /*System.Collections.Generic.SortedList$2.RemoveAt start.*/
             RemoveAt: function (index) {
                 if (index < 0 || index >= this._size) {
                     System.ThrowHelper.ThrowArgumentOutOfRangeException$2(System.ExceptionArgument.index, System.ExceptionResource.ArgumentOutOfRange_Index);
@@ -15827,17 +16370,25 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.values[System.Array.index(this._size, this.values)] = Bridge.getDefaultValue(TValue);
                 this.version = (this.version + 1) | 0;
             },
+            /*System.Collections.Generic.SortedList$2.RemoveAt end.*/
+
+            /*System.Collections.Generic.SortedList$2.TrimExcess start.*/
             TrimExcess: function () {
                 var threshold = Bridge.Int.clip32(this.keys.length * 0.9);
                 if (this._size < threshold) {
                     this.Capacity = this._size;
                 }
-            }
+            },
+            /*System.Collections.Generic.SortedList$2.TrimExcess end.*/
+
+
         }
     }; });
+    /*System.Collections.Generic.SortedList$2 end.*/
 
     // @source Enumerator.js
 
+    /*System.Collections.Generic.SortedList$2+Enumerator start.*/
     Bridge.define("System.Collections.Generic.SortedList$2.Enumerator", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(System.Collections.Generic.KeyValuePair$2(TKey,TValue)),System.Collections.IDictionaryEnumerator],
         $kind: "nested struct",
@@ -15931,11 +16482,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.Generic.SortedList$2+Enumerator.Dispose start.*/
             Dispose: function () {
                 this.index = 0;
                 this.key = Bridge.getDefaultValue(TKey);
                 this.value = Bridge.getDefaultValue(TValue);
             },
+            /*System.Collections.Generic.SortedList$2+Enumerator.Dispose end.*/
+
+            /*System.Collections.Generic.SortedList$2+Enumerator.moveNext start.*/
             moveNext: function () {
                 var $t, $t1;
                 if (this.version !== this._sortedList.version) {
@@ -15954,6 +16509,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.value = Bridge.getDefaultValue(TValue);
                 return false;
             },
+            /*System.Collections.Generic.SortedList$2+Enumerator.moveNext end.*/
+
+            /*System.Collections.Generic.SortedList$2+Enumerator.System$Collections$IEnumerator$reset start.*/
             System$Collections$IEnumerator$reset: function () {
                 if (this.version !== this._sortedList.version) {
                     System.ThrowHelper.ThrowInvalidOperationException(System.ExceptionResource.InvalidOperation_EnumFailedVersion);
@@ -15963,6 +16521,8 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.key = Bridge.getDefaultValue(TKey);
                 this.value = Bridge.getDefaultValue(TValue);
             },
+            /*System.Collections.Generic.SortedList$2+Enumerator.System$Collections$IEnumerator$reset end.*/
+
             getHashCode: function () {
                 var h = Bridge.addHash([3788985113, this._sortedList, this.key, this.value, this.index, this.version, this.getEnumeratorRetType]);
                 return h;
@@ -15985,9 +16545,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.Collections.Generic.SortedList$2+Enumerator end.*/
 
     // @source KeyList.js
 
+    /*System.Collections.Generic.SortedList$2+KeyList start.*/
     Bridge.define("System.Collections.Generic.SortedList$2.KeyList", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IList$1(TKey),System.Collections.ICollection],
         $kind: "nested class",
@@ -16045,18 +16607,31 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             setItem: function (index, value) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_KeyCollectionSet);
             },
+            /*System.Collections.Generic.SortedList$2+KeyList.add start.*/
             add: function (key) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
             },
+            /*System.Collections.Generic.SortedList$2+KeyList.add end.*/
+
+            /*System.Collections.Generic.SortedList$2+KeyList.clear start.*/
             clear: function () {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
             },
+            /*System.Collections.Generic.SortedList$2+KeyList.clear end.*/
+
+            /*System.Collections.Generic.SortedList$2+KeyList.contains start.*/
             contains: function (key) {
                 return this._dict.containsKey(key);
             },
+            /*System.Collections.Generic.SortedList$2+KeyList.contains end.*/
+
+            /*System.Collections.Generic.SortedList$2+KeyList.copyTo start.*/
             copyTo: function (array, arrayIndex) {
                 System.Array.copy(this._dict.keys, 0, array, arrayIndex, this._dict.Count);
             },
+            /*System.Collections.Generic.SortedList$2+KeyList.copyTo end.*/
+
+            /*System.Collections.Generic.SortedList$2+KeyList.System$Collections$ICollection$copyTo start.*/
             System$Collections$ICollection$copyTo: function (array, arrayIndex) {
                 if (array != null && System.Array.getRank(array) !== 1) {
                     System.ThrowHelper.ThrowArgumentException(System.ExceptionResource.Arg_RankMultiDimNotSupported);
@@ -16073,15 +16648,27 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.SortedList$2+KeyList.System$Collections$ICollection$copyTo end.*/
+
+            /*System.Collections.Generic.SortedList$2+KeyList.insert start.*/
             insert: function (index, value) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
             },
+            /*System.Collections.Generic.SortedList$2+KeyList.insert end.*/
+
+            /*System.Collections.Generic.SortedList$2+KeyList.GetEnumerator start.*/
             GetEnumerator: function () {
                 return new (System.Collections.Generic.SortedList$2.SortedListKeyEnumerator(TKey,TValue))(this._dict);
             },
+            /*System.Collections.Generic.SortedList$2+KeyList.GetEnumerator end.*/
+
+            /*System.Collections.Generic.SortedList$2+KeyList.System$Collections$IEnumerable$GetEnumerator start.*/
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return new (System.Collections.Generic.SortedList$2.SortedListKeyEnumerator(TKey,TValue))(this._dict);
             },
+            /*System.Collections.Generic.SortedList$2+KeyList.System$Collections$IEnumerable$GetEnumerator end.*/
+
+            /*System.Collections.Generic.SortedList$2+KeyList.indexOf start.*/
             indexOf: function (key) {
                 if (key == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.key);
@@ -16093,18 +16680,29 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return -1;
             },
+            /*System.Collections.Generic.SortedList$2+KeyList.indexOf end.*/
+
+            /*System.Collections.Generic.SortedList$2+KeyList.remove start.*/
             remove: function (key) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
                 return false;
             },
+            /*System.Collections.Generic.SortedList$2+KeyList.remove end.*/
+
+            /*System.Collections.Generic.SortedList$2+KeyList.removeAt start.*/
             removeAt: function (index) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
-            }
+            },
+            /*System.Collections.Generic.SortedList$2+KeyList.removeAt end.*/
+
+
         }
     }; });
+    /*System.Collections.Generic.SortedList$2+KeyList end.*/
 
     // @source SortedListKeyEnumerator.js
 
+    /*System.Collections.Generic.SortedList$2+SortedListKeyEnumerator start.*/
     Bridge.define("System.Collections.Generic.SortedList$2.SortedListKeyEnumerator", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(TKey),System.Collections.IEnumerator],
         $kind: "nested class",
@@ -16143,10 +16741,14 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.Generic.SortedList$2+SortedListKeyEnumerator.Dispose start.*/
             Dispose: function () {
                 this.index = 0;
                 this.currentKey = Bridge.getDefaultValue(TKey);
             },
+            /*System.Collections.Generic.SortedList$2+SortedListKeyEnumerator.Dispose end.*/
+
+            /*System.Collections.Generic.SortedList$2+SortedListKeyEnumerator.moveNext start.*/
             moveNext: function () {
                 var $t;
                 if (this.version !== this._sortedList.version) {
@@ -16163,18 +16765,26 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.currentKey = Bridge.getDefaultValue(TKey);
                 return false;
             },
+            /*System.Collections.Generic.SortedList$2+SortedListKeyEnumerator.moveNext end.*/
+
+            /*System.Collections.Generic.SortedList$2+SortedListKeyEnumerator.System$Collections$IEnumerator$reset start.*/
             System$Collections$IEnumerator$reset: function () {
                 if (this.version !== this._sortedList.version) {
                     System.ThrowHelper.ThrowInvalidOperationException(System.ExceptionResource.InvalidOperation_EnumFailedVersion);
                 }
                 this.index = 0;
                 this.currentKey = Bridge.getDefaultValue(TKey);
-            }
+            },
+            /*System.Collections.Generic.SortedList$2+SortedListKeyEnumerator.System$Collections$IEnumerator$reset end.*/
+
+
         }
     }; });
+    /*System.Collections.Generic.SortedList$2+SortedListKeyEnumerator end.*/
 
     // @source SortedListValueEnumerator.js
 
+    /*System.Collections.Generic.SortedList$2+SortedListValueEnumerator start.*/
     Bridge.define("System.Collections.Generic.SortedList$2.SortedListValueEnumerator", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(TValue),System.Collections.IEnumerator],
         $kind: "nested class",
@@ -16213,10 +16823,14 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.Generic.SortedList$2+SortedListValueEnumerator.Dispose start.*/
             Dispose: function () {
                 this.index = 0;
                 this.currentValue = Bridge.getDefaultValue(TValue);
             },
+            /*System.Collections.Generic.SortedList$2+SortedListValueEnumerator.Dispose end.*/
+
+            /*System.Collections.Generic.SortedList$2+SortedListValueEnumerator.moveNext start.*/
             moveNext: function () {
                 var $t;
                 if (this.version !== this._sortedList.version) {
@@ -16233,18 +16847,26 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.currentValue = Bridge.getDefaultValue(TValue);
                 return false;
             },
+            /*System.Collections.Generic.SortedList$2+SortedListValueEnumerator.moveNext end.*/
+
+            /*System.Collections.Generic.SortedList$2+SortedListValueEnumerator.System$Collections$IEnumerator$reset start.*/
             System$Collections$IEnumerator$reset: function () {
                 if (this.version !== this._sortedList.version) {
                     System.ThrowHelper.ThrowInvalidOperationException(System.ExceptionResource.InvalidOperation_EnumFailedVersion);
                 }
                 this.index = 0;
                 this.currentValue = Bridge.getDefaultValue(TValue);
-            }
+            },
+            /*System.Collections.Generic.SortedList$2+SortedListValueEnumerator.System$Collections$IEnumerator$reset end.*/
+
+
         }
     }; });
+    /*System.Collections.Generic.SortedList$2+SortedListValueEnumerator end.*/
 
     // @source ValueList.js
 
+    /*System.Collections.Generic.SortedList$2+ValueList start.*/
     Bridge.define("System.Collections.Generic.SortedList$2.ValueList", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IList$1(TValue),System.Collections.ICollection],
         $kind: "nested class",
@@ -16302,18 +16924,31 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             setItem: function (index, value) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
             },
+            /*System.Collections.Generic.SortedList$2+ValueList.add start.*/
             add: function (key) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
             },
+            /*System.Collections.Generic.SortedList$2+ValueList.add end.*/
+
+            /*System.Collections.Generic.SortedList$2+ValueList.clear start.*/
             clear: function () {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
             },
+            /*System.Collections.Generic.SortedList$2+ValueList.clear end.*/
+
+            /*System.Collections.Generic.SortedList$2+ValueList.contains start.*/
             contains: function (value) {
                 return this._dict.ContainsValue(value);
             },
+            /*System.Collections.Generic.SortedList$2+ValueList.contains end.*/
+
+            /*System.Collections.Generic.SortedList$2+ValueList.copyTo start.*/
             copyTo: function (array, arrayIndex) {
                 System.Array.copy(this._dict.values, 0, array, arrayIndex, this._dict.Count);
             },
+            /*System.Collections.Generic.SortedList$2+ValueList.copyTo end.*/
+
+            /*System.Collections.Generic.SortedList$2+ValueList.System$Collections$ICollection$copyTo start.*/
             System$Collections$ICollection$copyTo: function (array, arrayIndex) {
                 if (array != null && System.Array.getRank(array) !== 1) {
                     System.ThrowHelper.ThrowArgumentException(System.ExceptionResource.Arg_RankMultiDimNotSupported);
@@ -16330,30 +16965,53 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.SortedList$2+ValueList.System$Collections$ICollection$copyTo end.*/
+
+            /*System.Collections.Generic.SortedList$2+ValueList.insert start.*/
             insert: function (index, value) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
             },
+            /*System.Collections.Generic.SortedList$2+ValueList.insert end.*/
+
+            /*System.Collections.Generic.SortedList$2+ValueList.GetEnumerator start.*/
             GetEnumerator: function () {
                 return new (System.Collections.Generic.SortedList$2.SortedListValueEnumerator(TKey,TValue))(this._dict);
             },
+            /*System.Collections.Generic.SortedList$2+ValueList.GetEnumerator end.*/
+
+            /*System.Collections.Generic.SortedList$2+ValueList.System$Collections$IEnumerable$GetEnumerator start.*/
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return new (System.Collections.Generic.SortedList$2.SortedListValueEnumerator(TKey,TValue))(this._dict);
             },
+            /*System.Collections.Generic.SortedList$2+ValueList.System$Collections$IEnumerable$GetEnumerator end.*/
+
+            /*System.Collections.Generic.SortedList$2+ValueList.indexOf start.*/
             indexOf: function (value) {
                 return System.Array.indexOfT(this._dict.values, value, 0, this._dict.Count);
             },
+            /*System.Collections.Generic.SortedList$2+ValueList.indexOf end.*/
+
+            /*System.Collections.Generic.SortedList$2+ValueList.remove start.*/
             remove: function (value) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
                 return false;
             },
+            /*System.Collections.Generic.SortedList$2+ValueList.remove end.*/
+
+            /*System.Collections.Generic.SortedList$2+ValueList.removeAt start.*/
             removeAt: function (index) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_SortedListNestedWrite);
-            }
+            },
+            /*System.Collections.Generic.SortedList$2+ValueList.removeAt end.*/
+
+
         }
     }; });
+    /*System.Collections.Generic.SortedList$2+ValueList end.*/
 
     // @source SortedSet.js
 
+    /*System.Collections.Generic.SortedSet$1 start.*/
     Bridge.define("System.Collections.Generic.SortedSet$1", function (T) { return {
         inherits: [System.Collections.Generic.ISet$1(T),System.Collections.Generic.ICollection$1(T),System.Collections.ICollection,System.Collections.Generic.IReadOnlyCollection$1(T)],
         statics: {
@@ -16392,38 +17050,65 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
             },
             methods: {
+                /*System.Collections.Generic.SortedSet$1.GetSibling:static start.*/
                 GetSibling: function (node, parent) {
                     if (Bridge.referenceEquals(parent.Left, node)) {
                         return parent.Right;
                     }
                     return parent.Left;
                 },
+                /*System.Collections.Generic.SortedSet$1.GetSibling:static end.*/
+
+                /*System.Collections.Generic.SortedSet$1.Is2Node:static start.*/
                 Is2Node: function (node) {
+                    System.Diagnostics.Debug.Assert$1(node != null, "node cannot be null!");
                     return System.Collections.Generic.SortedSet$1(T).IsBlack(node) && System.Collections.Generic.SortedSet$1(T).IsNullOrBlack(node.Left) && System.Collections.Generic.SortedSet$1(T).IsNullOrBlack(node.Right);
                 },
+                /*System.Collections.Generic.SortedSet$1.Is2Node:static end.*/
+
+                /*System.Collections.Generic.SortedSet$1.Is4Node:static start.*/
                 Is4Node: function (node) {
                     return System.Collections.Generic.SortedSet$1(T).IsRed(node.Left) && System.Collections.Generic.SortedSet$1(T).IsRed(node.Right);
                 },
+                /*System.Collections.Generic.SortedSet$1.Is4Node:static end.*/
+
+                /*System.Collections.Generic.SortedSet$1.IsBlack:static start.*/
                 IsBlack: function (node) {
                     return (node != null && !node.IsRed);
                 },
+                /*System.Collections.Generic.SortedSet$1.IsBlack:static end.*/
+
+                /*System.Collections.Generic.SortedSet$1.IsNullOrBlack:static start.*/
                 IsNullOrBlack: function (node) {
                     return (node == null || !node.IsRed);
                 },
+                /*System.Collections.Generic.SortedSet$1.IsNullOrBlack:static end.*/
+
+                /*System.Collections.Generic.SortedSet$1.IsRed:static start.*/
                 IsRed: function (node) {
                     return (node != null && node.IsRed);
                 },
+                /*System.Collections.Generic.SortedSet$1.IsRed:static end.*/
+
+                /*System.Collections.Generic.SortedSet$1.Merge2Nodes:static start.*/
                 Merge2Nodes: function (parent, child1, child2) {
+                    System.Diagnostics.Debug.Assert$1(System.Collections.Generic.SortedSet$1(T).IsRed(parent), "parent must be be red");
                     parent.IsRed = false;
                     child1.IsRed = true;
                     child2.IsRed = true;
                 },
+                /*System.Collections.Generic.SortedSet$1.Merge2Nodes:static end.*/
+
+                /*System.Collections.Generic.SortedSet$1.RotateLeft:static start.*/
                 RotateLeft: function (node) {
                     var x = node.Right;
                     node.Right = x.Left;
                     x.Left = node;
                     return x;
                 },
+                /*System.Collections.Generic.SortedSet$1.RotateLeft:static end.*/
+
+                /*System.Collections.Generic.SortedSet$1.RotateLeftRight:static start.*/
                 RotateLeftRight: function (node) {
                     var child = node.Left;
                     var grandChild = child.Right;
@@ -16434,12 +17119,18 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     grandChild.Left = child;
                     return grandChild;
                 },
+                /*System.Collections.Generic.SortedSet$1.RotateLeftRight:static end.*/
+
+                /*System.Collections.Generic.SortedSet$1.RotateRight:static start.*/
                 RotateRight: function (node) {
                     var x = node.Left;
                     node.Left = x.Right;
                     x.Right = node;
                     return x;
                 },
+                /*System.Collections.Generic.SortedSet$1.RotateRight:static end.*/
+
+                /*System.Collections.Generic.SortedSet$1.RotateRightLeft:static start.*/
                 RotateRightLeft: function (node) {
                     var child = node.Right;
                     var grandChild = child.Left;
@@ -16450,7 +17141,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     grandChild.Right = child;
                     return grandChild;
                 },
+                /*System.Collections.Generic.SortedSet$1.RotateRightLeft:static end.*/
+
+                /*System.Collections.Generic.SortedSet$1.RotationNeeded:static start.*/
                 RotationNeeded: function (parent, current, sibling) {
+                    System.Diagnostics.Debug.Assert$1(System.Collections.Generic.SortedSet$1(T).IsRed(sibling.Left) || System.Collections.Generic.SortedSet$1(T).IsRed(sibling.Right), "sibling must have at least one red child");
                     if (System.Collections.Generic.SortedSet$1(T).IsRed(sibling.Left)) {
                         if (Bridge.referenceEquals(parent.Left, current)) {
                             return System.Collections.Generic.TreeRotation.RightLeftRotation;
@@ -16463,12 +17158,21 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                         return System.Collections.Generic.TreeRotation.LeftRightRotation;
                     }
                 },
+                /*System.Collections.Generic.SortedSet$1.RotationNeeded:static end.*/
+
+                /*System.Collections.Generic.SortedSet$1.CreateSetComparer:static start.*/
                 CreateSetComparer: function () {
                     return new (System.Collections.Generic.SortedSetEqualityComparer$1(T)).ctor();
                 },
+                /*System.Collections.Generic.SortedSet$1.CreateSetComparer:static end.*/
+
+                /*System.Collections.Generic.SortedSet$1.CreateSetComparer$1:static start.*/
                 CreateSetComparer$1: function (memberEqualityComparer) {
                     return new (System.Collections.Generic.SortedSetEqualityComparer$1(T)).$ctor3(memberEqualityComparer);
                 },
+                /*System.Collections.Generic.SortedSet$1.CreateSetComparer$1:static end.*/
+
+                /*System.Collections.Generic.SortedSet$1.SortedSetEquals:static start.*/
                 SortedSetEquals: function (set1, set2, comparer) {
                     var $t, $t1;
                     if (set1 == null) {
@@ -16517,14 +17221,23 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
 
                 },
+                /*System.Collections.Generic.SortedSet$1.SortedSetEquals:static end.*/
+
+                /*System.Collections.Generic.SortedSet$1.AreComparersEqual:static start.*/
                 AreComparersEqual: function (set1, set2) {
                     return Bridge.equals(set1.Comparer, set2.Comparer);
                 },
+                /*System.Collections.Generic.SortedSet$1.AreComparersEqual:static end.*/
+
+                /*System.Collections.Generic.SortedSet$1.Split4Node:static start.*/
                 Split4Node: function (node) {
                     node.IsRed = true;
                     node.Left.IsRed = false;
                     node.Right.IsRed = false;
                 },
+                /*System.Collections.Generic.SortedSet$1.Split4Node:static end.*/
+
+                /*System.Collections.Generic.SortedSet$1.ConstructRootFromSortedArray:static start.*/
                 ConstructRootFromSortedArray: function (arr, startIndex, endIndex, redNode) {
 
 
@@ -16569,6 +17282,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     return root;
 
                 },
+                /*System.Collections.Generic.SortedSet$1.ConstructRootFromSortedArray:static end.*/
+
+                /*System.Collections.Generic.SortedSet$1.log2:static start.*/
                 log2: function (value) {
                     var c = 0;
                     while (value > 0) {
@@ -16576,7 +17292,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                         value = value >> 1;
                     }
                     return c;
-                }
+                },
+                /*System.Collections.Generic.SortedSet$1.log2:static end.*/
+
+
             }
         },
         fields: {
@@ -16740,6 +17459,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.Generic.SortedSet$1.AddAllElements start.*/
             AddAllElements: function (collection) {
                 var $t;
 
@@ -16757,6 +17477,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.SortedSet$1.AddAllElements end.*/
+
+            /*System.Collections.Generic.SortedSet$1.RemoveAllElements start.*/
             RemoveAllElements: function (collection) {
                 var $t;
                 var min = this.Min;
@@ -16775,6 +17498,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.SortedSet$1.RemoveAllElements end.*/
+
+            /*System.Collections.Generic.SortedSet$1.ContainsAllElements start.*/
             ContainsAllElements: function (collection) {
                 var $t;
                 $t = Bridge.getEnumerator(collection, T);
@@ -16792,9 +17518,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return true;
             },
+            /*System.Collections.Generic.SortedSet$1.ContainsAllElements end.*/
+
+            /*System.Collections.Generic.SortedSet$1.InOrderTreeWalk start.*/
             InOrderTreeWalk: function (action) {
                 return this.InOrderTreeWalk$1(action, false);
             },
+            /*System.Collections.Generic.SortedSet$1.InOrderTreeWalk end.*/
+
+            /*System.Collections.Generic.SortedSet$1.InOrderTreeWalk$1 start.*/
             InOrderTreeWalk$1: function (action, reverse) {
                 if (this.root == null) {
                     return true;
@@ -16820,6 +17552,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return true;
             },
+            /*System.Collections.Generic.SortedSet$1.InOrderTreeWalk$1 end.*/
+
+            /*System.Collections.Generic.SortedSet$1.BreadthFirstTreeWalk start.*/
             BreadthFirstTreeWalk: function (action) {
                 if (this.root == null) {
                     return true;
@@ -16844,17 +17579,32 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return true;
             },
+            /*System.Collections.Generic.SortedSet$1.BreadthFirstTreeWalk end.*/
+
+            /*System.Collections.Generic.SortedSet$1.VersionCheck start.*/
             VersionCheck: function () { },
+            /*System.Collections.Generic.SortedSet$1.VersionCheck end.*/
+
+            /*System.Collections.Generic.SortedSet$1.IsWithinRange start.*/
             IsWithinRange: function (item) {
                 return true;
 
             },
+            /*System.Collections.Generic.SortedSet$1.IsWithinRange end.*/
+
+            /*System.Collections.Generic.SortedSet$1.add start.*/
             add: function (item) {
                 return this.AddIfNotPresent(item);
             },
+            /*System.Collections.Generic.SortedSet$1.add end.*/
+
+            /*System.Collections.Generic.SortedSet$1.System$Collections$Generic$ICollection$1$add start.*/
             System$Collections$Generic$ICollection$1$add: function (item) {
                 this.AddIfNotPresent(item);
             },
+            /*System.Collections.Generic.SortedSet$1.System$Collections$Generic$ICollection$1$add end.*/
+
+            /*System.Collections.Generic.SortedSet$1.AddIfNotPresent start.*/
             AddIfNotPresent: function (item) {
                 if (this.root == null) {
                     this.root = new (System.Collections.Generic.SortedSet$1.Node(T)).$ctor1(item, false);
@@ -16891,6 +17641,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     current = (order < 0) ? current.Left : current.Right;
                 }
 
+                System.Diagnostics.Debug.Assert$1(parent.v != null, "Parent node cannot be null here!");
                 var node = new (System.Collections.Generic.SortedSet$1.Node(T)).ctor(item);
                 if (order > 0) {
                     parent.v.Right = node;
@@ -16906,9 +17657,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.count = (this.count + 1) | 0;
                 return true;
             },
+            /*System.Collections.Generic.SortedSet$1.AddIfNotPresent end.*/
+
+            /*System.Collections.Generic.SortedSet$1.remove start.*/
             remove: function (item) {
                 return this.DoRemove(item);
             },
+            /*System.Collections.Generic.SortedSet$1.remove end.*/
+
+            /*System.Collections.Generic.SortedSet$1.DoRemove start.*/
             DoRemove: function (item) {
 
                 if (this.root == null) {
@@ -16932,6 +17689,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                         } else {
                             var sibling = System.Collections.Generic.SortedSet$1(T).GetSibling(current, parent);
                             if (sibling.IsRed) {
+                                System.Diagnostics.Debug.Assert$1(!parent.IsRed, "parent must be a black node!");
                                 if (Bridge.referenceEquals(parent.Right, sibling)) {
                                     System.Collections.Generic.SortedSet$1(T).RotateLeft(parent);
                                 } else {
@@ -16948,6 +17706,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                                 sibling = (Bridge.referenceEquals(parent.Left, current)) ? parent.Right : parent.Left;
                             }
+                            System.Diagnostics.Debug.Assert$1(sibling != null || sibling.IsRed === false, "sibling must not be null and it must be black!");
 
                             if (System.Collections.Generic.SortedSet$1(T).Is2Node(sibling)) {
                                 System.Collections.Generic.SortedSet$1(T).Merge2Nodes(parent, current, sibling);
@@ -16956,17 +17715,25 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                                 var newGrandParent = null;
                                 switch (rotation) {
                                     case System.Collections.Generic.TreeRotation.RightRotation: 
+                                        System.Diagnostics.Debug.Assert$1(Bridge.referenceEquals(parent.Left, sibling), "sibling must be left child of parent!");
+                                        System.Diagnostics.Debug.Assert$1(sibling.Left.IsRed, "Left child of sibling must be red!");
                                         sibling.Left.IsRed = false;
                                         newGrandParent = System.Collections.Generic.SortedSet$1(T).RotateRight(parent);
                                         break;
                                     case System.Collections.Generic.TreeRotation.LeftRotation: 
+                                        System.Diagnostics.Debug.Assert$1(Bridge.referenceEquals(parent.Right, sibling), "sibling must be left child of parent!");
+                                        System.Diagnostics.Debug.Assert$1(sibling.Right.IsRed, "Right child of sibling must be red!");
                                         sibling.Right.IsRed = false;
                                         newGrandParent = System.Collections.Generic.SortedSet$1(T).RotateLeft(parent);
                                         break;
                                     case System.Collections.Generic.TreeRotation.RightLeftRotation: 
+                                        System.Diagnostics.Debug.Assert$1(Bridge.referenceEquals(parent.Right, sibling), "sibling must be left child of parent!");
+                                        System.Diagnostics.Debug.Assert$1(sibling.Left.IsRed, "Left child of sibling must be red!");
                                         newGrandParent = System.Collections.Generic.SortedSet$1(T).RotateRightLeft(parent);
                                         break;
                                     case System.Collections.Generic.TreeRotation.LeftRightRotation: 
+                                        System.Diagnostics.Debug.Assert$1(Bridge.referenceEquals(parent.Left, sibling), "sibling must be left child of parent!");
+                                        System.Diagnostics.Debug.Assert$1(sibling.Right.IsRed, "Right child of sibling must be red!");
                                         newGrandParent = System.Collections.Generic.SortedSet$1(T).RotateLeftRight(parent);
                                         break;
                                 }
@@ -17010,21 +17777,36 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return foundMatch;
             },
+            /*System.Collections.Generic.SortedSet$1.DoRemove end.*/
+
+            /*System.Collections.Generic.SortedSet$1.clear start.*/
             clear: function () {
                 this.root = null;
                 this.count = 0;
                 this.version = (this.version + 1) | 0;
             },
+            /*System.Collections.Generic.SortedSet$1.clear end.*/
+
+            /*System.Collections.Generic.SortedSet$1.contains start.*/
             contains: function (item) {
 
                 return this.FindNode(item) != null;
             },
+            /*System.Collections.Generic.SortedSet$1.contains end.*/
+
+            /*System.Collections.Generic.SortedSet$1.CopyTo start.*/
             CopyTo: function (array) {
                 this.CopyTo$1(array, 0, this.Count);
             },
+            /*System.Collections.Generic.SortedSet$1.CopyTo end.*/
+
+            /*System.Collections.Generic.SortedSet$1.copyTo start.*/
             copyTo: function (array, index) {
                 this.CopyTo$1(array, index, this.Count);
             },
+            /*System.Collections.Generic.SortedSet$1.copyTo end.*/
+
+            /*System.Collections.Generic.SortedSet$1.CopyTo$1 start.*/
             CopyTo$1: function (array, index, count) {
                 if (array == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.array);
@@ -17052,6 +17834,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 });
             },
+            /*System.Collections.Generic.SortedSet$1.CopyTo$1 end.*/
+
+            /*System.Collections.Generic.SortedSet$1.System$Collections$ICollection$copyTo start.*/
             System$Collections$ICollection$copyTo: function (array, index) {
                 if (array == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.array);
@@ -17097,16 +17882,29 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.SortedSet$1.System$Collections$ICollection$copyTo end.*/
+
+            /*System.Collections.Generic.SortedSet$1.GetEnumerator start.*/
             GetEnumerator: function () {
                 return new (System.Collections.Generic.SortedSet$1.Enumerator(T)).$ctor1(this);
             },
+            /*System.Collections.Generic.SortedSet$1.GetEnumerator end.*/
+
+            /*System.Collections.Generic.SortedSet$1.System$Collections$Generic$IEnumerable$1$GetEnumerator start.*/
             System$Collections$Generic$IEnumerable$1$GetEnumerator: function () {
                 return new (System.Collections.Generic.SortedSet$1.Enumerator(T)).$ctor1(this).$clone();
             },
+            /*System.Collections.Generic.SortedSet$1.System$Collections$Generic$IEnumerable$1$GetEnumerator end.*/
+
+            /*System.Collections.Generic.SortedSet$1.System$Collections$IEnumerable$GetEnumerator start.*/
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return new (System.Collections.Generic.SortedSet$1.Enumerator(T)).$ctor1(this).$clone();
             },
+            /*System.Collections.Generic.SortedSet$1.System$Collections$IEnumerable$GetEnumerator end.*/
+
+            /*System.Collections.Generic.SortedSet$1.InsertionBalance start.*/
             InsertionBalance: function (current, parent, grandParent, greatGrandParent) {
+                System.Diagnostics.Debug.Assert$1(grandParent != null, "Grand parent cannot be null here!");
                 var parentIsOnRight = (Bridge.referenceEquals(grandParent.Right, parent.v));
                 var currentIsOnRight = (Bridge.referenceEquals(parent.v.Right, current));
 
@@ -17122,6 +17920,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 this.ReplaceChildOfNodeOrRoot(greatGrandParent, grandParent, newChildOfGreatGrandParent);
             },
+            /*System.Collections.Generic.SortedSet$1.InsertionBalance end.*/
+
+            /*System.Collections.Generic.SortedSet$1.ReplaceChildOfNodeOrRoot start.*/
             ReplaceChildOfNodeOrRoot: function (parent, child, newChild) {
                 if (parent != null) {
                     if (Bridge.referenceEquals(parent.Left, child)) {
@@ -17133,10 +17934,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this.root = newChild;
                 }
             },
+            /*System.Collections.Generic.SortedSet$1.ReplaceChildOfNodeOrRoot end.*/
+
+            /*System.Collections.Generic.SortedSet$1.ReplaceNode start.*/
             ReplaceNode: function (match, parentOfMatch, succesor, parentOfSuccesor) {
                 if (Bridge.referenceEquals(succesor, match)) {
+                    System.Diagnostics.Debug.Assert$1(match.Right == null, "Right child must be null!");
                     succesor = match.Left;
                 } else {
+                    System.Diagnostics.Debug.Assert$1(parentOfSuccesor != null, "parent of successor cannot be null!");
+                    System.Diagnostics.Debug.Assert$1(succesor.Left == null, "Left child of succesor must be null!");
+                    System.Diagnostics.Debug.Assert$1((succesor.Right == null && succesor.IsRed) || (succesor.Right.IsRed && !succesor.IsRed), "Succesor must be in valid state");
                     if (succesor.Right != null) {
                         succesor.Right.IsRed = false;
                     }
@@ -17156,6 +17964,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.ReplaceChildOfNodeOrRoot(parentOfMatch, match, succesor);
 
             },
+            /*System.Collections.Generic.SortedSet$1.ReplaceNode end.*/
+
+            /*System.Collections.Generic.SortedSet$1.FindNode start.*/
             FindNode: function (item) {
                 var current = this.root;
                 while (current != null) {
@@ -17169,6 +17980,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return null;
             },
+            /*System.Collections.Generic.SortedSet$1.FindNode end.*/
+
+            /*System.Collections.Generic.SortedSet$1.InternalIndexOf start.*/
             InternalIndexOf: function (item) {
                 var current = this.root;
                 var count = 0;
@@ -17183,9 +17997,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return -1;
             },
+            /*System.Collections.Generic.SortedSet$1.InternalIndexOf end.*/
+
+            /*System.Collections.Generic.SortedSet$1.FindRange start.*/
             FindRange: function (from, to) {
                 return this.FindRange$1(from, to, true, true);
             },
+            /*System.Collections.Generic.SortedSet$1.FindRange end.*/
+
+            /*System.Collections.Generic.SortedSet$1.FindRange$1 start.*/
             FindRange$1: function (from, to, lowerBoundActive, upperBoundActive) {
                 var current = this.root;
                 while (current != null) {
@@ -17202,9 +18022,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return null;
             },
+            /*System.Collections.Generic.SortedSet$1.FindRange$1 end.*/
+
+            /*System.Collections.Generic.SortedSet$1.UpdateVersion start.*/
             UpdateVersion: function () {
                 this.version = (this.version + 1) | 0;
             },
+            /*System.Collections.Generic.SortedSet$1.UpdateVersion end.*/
+
+            /*System.Collections.Generic.SortedSet$1.ToArray start.*/
             ToArray: function () {
                 var newArray = System.Array.init(this.Count, function (){
                     return Bridge.getDefaultValue(T);
@@ -17212,6 +18038,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.CopyTo(newArray);
                 return newArray;
             },
+            /*System.Collections.Generic.SortedSet$1.ToArray end.*/
+
+            /*System.Collections.Generic.SortedSet$1.unionWith start.*/
             unionWith: function (other) {
                 var $t;
                 if (other == null) {
@@ -17275,6 +18104,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this.AddAllElements(other);
                 }
             },
+            /*System.Collections.Generic.SortedSet$1.unionWith end.*/
+
+            /*System.Collections.Generic.SortedSet$1.intersectWith start.*/
             intersectWith: function (other) {
                 var $t, $t1;
                 if (other == null) {
@@ -17327,6 +18159,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this.IntersectWithEnumerable(other);
                 }
             },
+            /*System.Collections.Generic.SortedSet$1.intersectWith end.*/
+
+            /*System.Collections.Generic.SortedSet$1.IntersectWithEnumerable start.*/
             IntersectWithEnumerable: function (other) {
                 var $t;
                 var toSave = new (System.Collections.Generic.List$1(T)).$ctor2(this.Count);
@@ -17348,6 +18183,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.AddAllElements(toSave);
 
             },
+            /*System.Collections.Generic.SortedSet$1.IntersectWithEnumerable end.*/
+
+            /*System.Collections.Generic.SortedSet$1.exceptWith start.*/
             exceptWith: function (other) {
                 var $t;
                 if (other == null) {
@@ -17392,6 +18230,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this.RemoveAllElements(other);
                 }
             },
+            /*System.Collections.Generic.SortedSet$1.exceptWith end.*/
+
+            /*System.Collections.Generic.SortedSet$1.symmetricExceptWith start.*/
             symmetricExceptWith: function (other) {
                 if (other == null) {
                     throw new System.ArgumentNullException.$ctor1("other");
@@ -17421,6 +18262,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this.SymmetricExceptWithSameEC(elements);
                 }
             },
+            /*System.Collections.Generic.SortedSet$1.symmetricExceptWith end.*/
+
+            /*System.Collections.Generic.SortedSet$1.SymmetricExceptWithSameEC$1 start.*/
             SymmetricExceptWithSameEC$1: function (other) {
                 var $t;
                 $t = Bridge.getEnumerator(other, T);
@@ -17439,6 +18283,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.SortedSet$1.SymmetricExceptWithSameEC$1 end.*/
+
+            /*System.Collections.Generic.SortedSet$1.SymmetricExceptWithSameEC start.*/
             SymmetricExceptWithSameEC: function (other) {
                 if (other.length === 0) {
                     return;
@@ -17459,6 +18306,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     last = other[System.Array.index(i, other)];
                 }
             },
+            /*System.Collections.Generic.SortedSet$1.SymmetricExceptWithSameEC end.*/
+
+            /*System.Collections.Generic.SortedSet$1.isSubsetOf start.*/
             isSubsetOf: function (other) {
                 if (other == null) {
                     throw new System.ArgumentNullException.$ctor1("other");
@@ -17481,6 +18331,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     return (result.uniqueCount === this.Count && result.unfoundCount >= 0);
                 }
             },
+            /*System.Collections.Generic.SortedSet$1.isSubsetOf end.*/
+
+            /*System.Collections.Generic.SortedSet$1.IsSubsetOfSortedSetWithSameEC start.*/
             IsSubsetOfSortedSetWithSameEC: function (asSorted) {
                 var $t;
                 var prunedOther = asSorted.GetViewBetween(this.Min, this.Max);
@@ -17500,6 +18353,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 return true;
 
             },
+            /*System.Collections.Generic.SortedSet$1.IsSubsetOfSortedSetWithSameEC end.*/
+
+            /*System.Collections.Generic.SortedSet$1.isProperSubsetOf start.*/
             isProperSubsetOf: function (other) {
                 if (other == null) {
                     throw new System.ArgumentNullException.$ctor1("other");
@@ -17530,6 +18386,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 var result = this.CheckUniqueAndUnfoundElements(other, false);
                 return (result.uniqueCount === this.Count && result.unfoundCount > 0);
             },
+            /*System.Collections.Generic.SortedSet$1.isProperSubsetOf end.*/
+
+            /*System.Collections.Generic.SortedSet$1.isSupersetOf start.*/
             isSupersetOf: function (other) {
                 var $t;
                 if (other == null) {
@@ -17569,6 +18428,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return this.ContainsAllElements(other);
             },
+            /*System.Collections.Generic.SortedSet$1.isSupersetOf end.*/
+
+            /*System.Collections.Generic.SortedSet$1.isProperSupersetOf start.*/
             isProperSupersetOf: function (other) {
                 var $t;
                 if (other == null) {
@@ -17616,6 +18478,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 var result = this.CheckUniqueAndUnfoundElements(other, true);
                 return (result.uniqueCount < this.Count && result.unfoundCount === 0);
             },
+            /*System.Collections.Generic.SortedSet$1.isProperSupersetOf end.*/
+
+            /*System.Collections.Generic.SortedSet$1.setEquals start.*/
             setEquals: function (other) {
                 var $t;
                 if (other == null) {
@@ -17646,6 +18511,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 var result = this.CheckUniqueAndUnfoundElements(other, true);
                 return (result.uniqueCount === this.Count && result.unfoundCount === 0);
             },
+            /*System.Collections.Generic.SortedSet$1.setEquals end.*/
+
+            /*System.Collections.Generic.SortedSet$1.overlaps start.*/
             overlaps: function (other) {
                 var $t;
                 if (other == null) {
@@ -17685,6 +18553,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return false;
             },
+            /*System.Collections.Generic.SortedSet$1.overlaps end.*/
+
+            /*System.Collections.Generic.SortedSet$1.CheckUniqueAndUnfoundElements start.*/
             CheckUniqueAndUnfoundElements: function (other, returnIfUnfound) {
                 var $t, $t1;
                 var result = new (System.Collections.Generic.SortedSet$1.ElementCount(T))();
@@ -17746,6 +18617,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 result.unfoundCount = unfoundCount;
                 return result.$clone();
             },
+            /*System.Collections.Generic.SortedSet$1.CheckUniqueAndUnfoundElements end.*/
+
+            /*System.Collections.Generic.SortedSet$1.RemoveWhere start.*/
             RemoveWhere: function (match) {
                 if (Bridge.staticEquals(match, null)) {
                     throw new System.ArgumentNullException.$ctor1("match");
@@ -17768,6 +18642,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 return actuallyRemoved;
 
             },
+            /*System.Collections.Generic.SortedSet$1.RemoveWhere end.*/
+
+            /*System.Collections.Generic.SortedSet$1.Reverse start.*/
             Reverse: function () {
                 return new (Bridge.GeneratorEnumerable$1(T))(Bridge.fn.bind(this, function ()  {
                     var $step = 0,
@@ -17819,6 +18696,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     return $enumerator;
                 }));
             },
+            /*System.Collections.Generic.SortedSet$1.Reverse end.*/
+
+            /*System.Collections.Generic.SortedSet$1.GetViewBetween start.*/
             GetViewBetween: function (lowerValue, upperValue) {
                 var $t;
                 if (($t = this.Comparer)[Bridge.geti($t, "System$Collections$Generic$IComparer$1$" + Bridge.getTypeAlias(T) + "$compare", "System$Collections$Generic$IComparer$1$compare")](lowerValue, upperValue) > 0) {
@@ -17826,6 +18706,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return new (System.Collections.Generic.SortedSet$1.TreeSubSet(T)).$ctor1(this, lowerValue, upperValue, true, true);
             },
+            /*System.Collections.Generic.SortedSet$1.GetViewBetween end.*/
+
+            /*System.Collections.Generic.SortedSet$1.versionUpToDate start.*/
+            versionUpToDate: function () {
+                return true;
+            },
+            /*System.Collections.Generic.SortedSet$1.versionUpToDate end.*/
+
+            /*System.Collections.Generic.SortedSet$1.TryGetValue start.*/
             TryGetValue: function (equalValue, actualValue) {
                 var node = this.FindNode(equalValue);
                 if (node != null) {
@@ -17834,12 +18723,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 actualValue.v = Bridge.getDefaultValue(T);
                 return false;
-            }
+            },
+            /*System.Collections.Generic.SortedSet$1.TryGetValue end.*/
+
+
         }
     }; });
+    /*System.Collections.Generic.SortedSet$1 end.*/
 
     // @source SortedSetEqualityComparer.js
 
+    /*System.Collections.Generic.SortedSetEqualityComparer$1 start.*/
     Bridge.define("System.Collections.Generic.SortedSetEqualityComparer$1", function (T) { return {
         inherits: [System.Collections.Generic.IEqualityComparer$1(System.Collections.Generic.SortedSet$1(T))],
         fields: {
@@ -17875,9 +18769,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.Generic.SortedSetEqualityComparer$1.equals2 start.*/
             equals2: function (x, y) {
                 return System.Collections.Generic.SortedSet$1(T).SortedSetEquals(x, y, this.comparer);
             },
+            /*System.Collections.Generic.SortedSetEqualityComparer$1.equals2 end.*/
+
+            /*System.Collections.Generic.SortedSetEqualityComparer$1.equals start.*/
             equals: function (obj) {
                 var comparer = Bridge.as(obj, System.Collections.Generic.SortedSetEqualityComparer$1(T));
                 if (comparer == null) {
@@ -17885,6 +18783,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return (Bridge.referenceEquals(this.comparer, comparer.comparer));
             },
+            /*System.Collections.Generic.SortedSetEqualityComparer$1.equals end.*/
+
+            /*System.Collections.Generic.SortedSetEqualityComparer$1.getHashCode2 start.*/
             getHashCode2: function (obj) {
                 var $t;
                 var hashCode = 0;
@@ -17903,14 +18804,22 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return hashCode;
             },
+            /*System.Collections.Generic.SortedSetEqualityComparer$1.getHashCode2 end.*/
+
+            /*System.Collections.Generic.SortedSetEqualityComparer$1.getHashCode start.*/
             getHashCode: function () {
                 return Bridge.getHashCode(this.comparer) ^ Bridge.getHashCode(this.e_comparer);
-            }
+            },
+            /*System.Collections.Generic.SortedSetEqualityComparer$1.getHashCode end.*/
+
+
         }
     }; });
+    /*System.Collections.Generic.SortedSetEqualityComparer$1 end.*/
 
     // @source ElementCount.js
 
+    /*System.Collections.Generic.SortedSet$1+ElementCount start.*/
     Bridge.define("System.Collections.Generic.SortedSet$1.ElementCount", function (T) { return {
         $kind: "nested struct",
         statics: {
@@ -17946,9 +18855,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.Collections.Generic.SortedSet$1+ElementCount end.*/
 
     // @source Enumerator.js
 
+    /*System.Collections.Generic.SortedSet$1+Enumerator start.*/
     Bridge.define("System.Collections.Generic.SortedSet$1.Enumerator", function (T) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(T),System.Collections.IEnumerator],
         $kind: "nested struct",
@@ -18033,6 +18944,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.Generic.SortedSet$1+Enumerator.Intialize start.*/
             Intialize: function () {
 
                 this.current = null;
@@ -18051,6 +18963,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.SortedSet$1+Enumerator.Intialize end.*/
+
+            /*System.Collections.Generic.SortedSet$1+Enumerator.moveNext start.*/
             moveNext: function () {
 
                 this.tree.VersionCheck();
@@ -18081,7 +18996,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return true;
             },
+            /*System.Collections.Generic.SortedSet$1+Enumerator.moveNext end.*/
+
+            /*System.Collections.Generic.SortedSet$1+Enumerator.Dispose start.*/
             Dispose: function () { },
+            /*System.Collections.Generic.SortedSet$1+Enumerator.Dispose end.*/
+
+            /*System.Collections.Generic.SortedSet$1+Enumerator.Reset start.*/
             Reset: function () {
                 if (this.version !== this.tree.version) {
                     System.ThrowHelper.ThrowInvalidOperationException(System.ExceptionResource.InvalidOperation_EnumFailedVersion);
@@ -18090,9 +19011,14 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.stack.Clear();
                 this.Intialize();
             },
+            /*System.Collections.Generic.SortedSet$1+Enumerator.Reset end.*/
+
+            /*System.Collections.Generic.SortedSet$1+Enumerator.System$Collections$IEnumerator$reset start.*/
             System$Collections$IEnumerator$reset: function () {
                 this.Reset();
             },
+            /*System.Collections.Generic.SortedSet$1+Enumerator.System$Collections$IEnumerator$reset end.*/
+
             getHashCode: function () {
                 var h = Bridge.addHash([3788985113, this.tree, this.version, this.stack, this.current, this.reverse]);
                 return h;
@@ -18114,9 +19040,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.Collections.Generic.SortedSet$1+Enumerator end.*/
 
     // @source Node.js
 
+    /*System.Collections.Generic.SortedSet$1+Node start.*/
     Bridge.define("System.Collections.Generic.SortedSet$1.Node", function (T) { return {
         $kind: "nested class",
         fields: {
@@ -18138,9 +19066,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.Collections.Generic.SortedSet$1+Node end.*/
 
     // @source TreeSubSet.js
 
+    /*System.Collections.Generic.SortedSet$1+TreeSubSet start.*/
     Bridge.define("System.Collections.Generic.SortedSet$1.TreeSubSet", function (T) { return {
         inherits: [System.Collections.Generic.SortedSet$1(T)],
         $kind: "nested class",
@@ -18176,6 +19106,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.Generic.SortedSet$1+TreeSubSet.AddIfNotPresent start.*/
             AddIfNotPresent: function (item) {
 
                 if (!this.IsWithinRange(item)) {
@@ -18187,10 +19118,16 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return ret;
             },
+            /*System.Collections.Generic.SortedSet$1+TreeSubSet.AddIfNotPresent end.*/
+
+            /*System.Collections.Generic.SortedSet$1+TreeSubSet.contains start.*/
             contains: function (item) {
                 this.VersionCheck();
                 return System.Collections.Generic.SortedSet$1(T).prototype.contains.call(this, item);
             },
+            /*System.Collections.Generic.SortedSet$1+TreeSubSet.contains end.*/
+
+            /*System.Collections.Generic.SortedSet$1+TreeSubSet.DoRemove start.*/
             DoRemove: function (item) {
 
                 if (!this.IsWithinRange(item)) {
@@ -18201,6 +19138,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.VersionCheck();
                 return ret;
             },
+            /*System.Collections.Generic.SortedSet$1+TreeSubSet.DoRemove end.*/
+
+            /*System.Collections.Generic.SortedSet$1+TreeSubSet.clear start.*/
             clear: function () {
 
 
@@ -18221,6 +19161,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.count = 0;
                 this.version = this.underlying.version;
             },
+            /*System.Collections.Generic.SortedSet$1+TreeSubSet.clear end.*/
+
+            /*System.Collections.Generic.SortedSet$1+TreeSubSet.IsWithinRange start.*/
             IsWithinRange: function (item) {
                 var $t, $t1;
 
@@ -18234,6 +19177,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return true;
             },
+            /*System.Collections.Generic.SortedSet$1+TreeSubSet.IsWithinRange end.*/
+
+            /*System.Collections.Generic.SortedSet$1+TreeSubSet.InOrderTreeWalk$1 start.*/
             InOrderTreeWalk$1: function (action, reverse) {
                 var $t, $t1;
                 this.VersionCheck();
@@ -18275,6 +19221,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return true;
             },
+            /*System.Collections.Generic.SortedSet$1+TreeSubSet.InOrderTreeWalk$1 end.*/
+
+            /*System.Collections.Generic.SortedSet$1+TreeSubSet.BreadthFirstTreeWalk start.*/
             BreadthFirstTreeWalk: function (action) {
                 var $t, $t1;
                 this.VersionCheck();
@@ -18303,6 +19252,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return true;
             },
+            /*System.Collections.Generic.SortedSet$1+TreeSubSet.BreadthFirstTreeWalk end.*/
+
+            /*System.Collections.Generic.SortedSet$1+TreeSubSet.FindNode start.*/
             FindNode: function (item) {
 
                 if (!this.IsWithinRange(item)) {
@@ -18311,6 +19263,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.VersionCheck();
                 return System.Collections.Generic.SortedSet$1(T).prototype.FindNode.call(this, item);
             },
+            /*System.Collections.Generic.SortedSet$1+TreeSubSet.FindNode end.*/
+
+            /*System.Collections.Generic.SortedSet$1+TreeSubSet.InternalIndexOf start.*/
             InternalIndexOf: function (item) {
                 var $t, $t1;
                 var count = -1;
@@ -18330,10 +19285,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return -1;
             },
+            /*System.Collections.Generic.SortedSet$1+TreeSubSet.InternalIndexOf end.*/
+
+            /*System.Collections.Generic.SortedSet$1+TreeSubSet.VersionCheck start.*/
             VersionCheck: function () {
                 this.VersionCheckImpl();
             },
+            /*System.Collections.Generic.SortedSet$1+TreeSubSet.VersionCheck end.*/
+
+            /*System.Collections.Generic.SortedSet$1+TreeSubSet.VersionCheckImpl start.*/
             VersionCheckImpl: function () {
+                System.Diagnostics.Debug.Assert$1(this.underlying != null, "Underlying set no longer exists");
                 if (this.version !== this.underlying.version) {
                     this.root = this.underlying.FindRange$1(this.min, this.max, this.lBoundActive, this.uBoundActive);
                     this.version = this.underlying.version;
@@ -18341,6 +19303,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this.InOrderTreeWalk(Bridge.fn.bind(this, $asm.$.System.Collections.Generic.SortedSet$1.TreeSubSet.f1));
                 }
             },
+            /*System.Collections.Generic.SortedSet$1+TreeSubSet.VersionCheckImpl end.*/
+
+            /*System.Collections.Generic.SortedSet$1+TreeSubSet.GetViewBetween start.*/
             GetViewBetween: function (lowerValue, upperValue) {
                 var $t, $t1;
 
@@ -18353,6 +19318,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 var ret = Bridge.cast(this.underlying.GetViewBetween(lowerValue, upperValue), System.Collections.Generic.SortedSet$1.TreeSubSet(T));
                 return ret;
             },
+            /*System.Collections.Generic.SortedSet$1+TreeSubSet.GetViewBetween end.*/
+
+            /*System.Collections.Generic.SortedSet$1+TreeSubSet.IntersectWithEnumerable start.*/
             IntersectWithEnumerable: function (other) {
                 var $t;
 
@@ -18373,7 +19341,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 this.clear();
                 this.AddAllElements(toSave);
-            }
+            },
+            /*System.Collections.Generic.SortedSet$1+TreeSubSet.IntersectWithEnumerable end.*/
+
+
         }
     }; });
 
@@ -18385,9 +19356,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             return true;
         }
     });
+    /*System.Collections.Generic.SortedSet$1+TreeSubSet end.*/
 
     // @source LinkedList.js
 
+    /*System.Collections.Generic.LinkedList$1 start.*/
     Bridge.define("System.Collections.Generic.LinkedList$1", function (T) { return {
         inherits: [System.Collections.Generic.ICollection$1(T),System.Collections.ICollection,System.Collections.Generic.IReadOnlyCollection$1(T)],
         statics: {
@@ -18478,21 +19451,31 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.Generic.LinkedList$1.System$Collections$Generic$ICollection$1$add start.*/
             System$Collections$Generic$ICollection$1$add: function (value) {
                 this.AddLast(value);
             },
+            /*System.Collections.Generic.LinkedList$1.System$Collections$Generic$ICollection$1$add end.*/
+
+            /*System.Collections.Generic.LinkedList$1.AddAfter start.*/
             AddAfter: function (node, value) {
                 this.ValidateNode(node);
                 var result = new (System.Collections.Generic.LinkedListNode$1(T)).$ctor1(node.list, value);
                 this.InternalInsertNodeBefore(node.next, result);
                 return result;
             },
+            /*System.Collections.Generic.LinkedList$1.AddAfter end.*/
+
+            /*System.Collections.Generic.LinkedList$1.AddAfter$1 start.*/
             AddAfter$1: function (node, newNode) {
                 this.ValidateNode(node);
                 this.ValidateNewNode(newNode);
                 this.InternalInsertNodeBefore(node.next, newNode);
                 newNode.list = this;
             },
+            /*System.Collections.Generic.LinkedList$1.AddAfter$1 end.*/
+
+            /*System.Collections.Generic.LinkedList$1.AddBefore start.*/
             AddBefore: function (node, value) {
                 this.ValidateNode(node);
                 var result = new (System.Collections.Generic.LinkedListNode$1(T)).$ctor1(node.list, value);
@@ -18502,6 +19485,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return result;
             },
+            /*System.Collections.Generic.LinkedList$1.AddBefore end.*/
+
+            /*System.Collections.Generic.LinkedList$1.AddBefore$1 start.*/
             AddBefore$1: function (node, newNode) {
                 this.ValidateNode(node);
                 this.ValidateNewNode(newNode);
@@ -18511,6 +19497,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this.head = newNode;
                 }
             },
+            /*System.Collections.Generic.LinkedList$1.AddBefore$1 end.*/
+
+            /*System.Collections.Generic.LinkedList$1.AddFirst start.*/
             AddFirst: function (value) {
                 var result = new (System.Collections.Generic.LinkedListNode$1(T)).$ctor1(this, value);
                 if (this.head == null) {
@@ -18521,6 +19510,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return result;
             },
+            /*System.Collections.Generic.LinkedList$1.AddFirst end.*/
+
+            /*System.Collections.Generic.LinkedList$1.AddFirst$1 start.*/
             AddFirst$1: function (node) {
                 this.ValidateNewNode(node);
 
@@ -18532,6 +19524,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 node.list = this;
             },
+            /*System.Collections.Generic.LinkedList$1.AddFirst$1 end.*/
+
+            /*System.Collections.Generic.LinkedList$1.AddLast start.*/
             AddLast: function (value) {
                 var result = new (System.Collections.Generic.LinkedListNode$1(T)).$ctor1(this, value);
                 if (this.head == null) {
@@ -18541,6 +19536,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return result;
             },
+            /*System.Collections.Generic.LinkedList$1.AddLast end.*/
+
+            /*System.Collections.Generic.LinkedList$1.AddLast$1 start.*/
             AddLast$1: function (node) {
                 this.ValidateNewNode(node);
 
@@ -18551,6 +19549,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 node.list = this;
             },
+            /*System.Collections.Generic.LinkedList$1.AddLast$1 end.*/
+
+            /*System.Collections.Generic.LinkedList$1.clear start.*/
             clear: function () {
                 var current = this.head;
                 while (current != null) {
@@ -18563,9 +19564,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.count = 0;
                 this.version = (this.version + 1) | 0;
             },
+            /*System.Collections.Generic.LinkedList$1.clear end.*/
+
+            /*System.Collections.Generic.LinkedList$1.contains start.*/
             contains: function (value) {
                 return this.Find(value) != null;
             },
+            /*System.Collections.Generic.LinkedList$1.contains end.*/
+
+            /*System.Collections.Generic.LinkedList$1.copyTo start.*/
             copyTo: function (array, index) {
                 if (array == null) {
                     throw new System.ArgumentNullException.$ctor1("array");
@@ -18587,6 +19594,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     } while (!Bridge.referenceEquals(node, this.head));
                 }
             },
+            /*System.Collections.Generic.LinkedList$1.copyTo end.*/
+
+            /*System.Collections.Generic.LinkedList$1.System$Collections$ICollection$copyTo start.*/
             System$Collections$ICollection$copyTo: function (array, index) {
                 if (array == null) {
                     throw new System.ArgumentNullException.$ctor1("array");
@@ -18640,6 +19650,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.LinkedList$1.System$Collections$ICollection$copyTo end.*/
+
+            /*System.Collections.Generic.LinkedList$1.Find start.*/
             Find: function (value) {
                 var node = this.head;
                 var c = System.Collections.Generic.EqualityComparer$1(T).def;
@@ -18662,6 +19675,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return null;
             },
+            /*System.Collections.Generic.LinkedList$1.Find end.*/
+
+            /*System.Collections.Generic.LinkedList$1.FindLast start.*/
             FindLast: function (value) {
                 if (this.head == null) {
                     return null;
@@ -18690,15 +19706,27 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return null;
             },
+            /*System.Collections.Generic.LinkedList$1.FindLast end.*/
+
+            /*System.Collections.Generic.LinkedList$1.GetEnumerator start.*/
             GetEnumerator: function () {
                 return new (System.Collections.Generic.LinkedList$1.Enumerator(T)).$ctor1(this);
             },
+            /*System.Collections.Generic.LinkedList$1.GetEnumerator end.*/
+
+            /*System.Collections.Generic.LinkedList$1.System$Collections$Generic$IEnumerable$1$GetEnumerator start.*/
             System$Collections$Generic$IEnumerable$1$GetEnumerator: function () {
                 return this.GetEnumerator().$clone();
             },
+            /*System.Collections.Generic.LinkedList$1.System$Collections$Generic$IEnumerable$1$GetEnumerator end.*/
+
+            /*System.Collections.Generic.LinkedList$1.System$Collections$IEnumerable$GetEnumerator start.*/
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return this.GetEnumerator().$clone();
             },
+            /*System.Collections.Generic.LinkedList$1.System$Collections$IEnumerable$GetEnumerator end.*/
+
+            /*System.Collections.Generic.LinkedList$1.remove start.*/
             remove: function (value) {
                 var node = this.Find(value);
                 if (node != null) {
@@ -18707,22 +19735,34 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return false;
             },
+            /*System.Collections.Generic.LinkedList$1.remove end.*/
+
+            /*System.Collections.Generic.LinkedList$1.Remove start.*/
             Remove: function (node) {
                 this.ValidateNode(node);
                 this.InternalRemoveNode(node);
             },
+            /*System.Collections.Generic.LinkedList$1.Remove end.*/
+
+            /*System.Collections.Generic.LinkedList$1.RemoveFirst start.*/
             RemoveFirst: function () {
                 if (this.head == null) {
                     throw new System.InvalidOperationException.ctor();
                 }
                 this.InternalRemoveNode(this.head);
             },
+            /*System.Collections.Generic.LinkedList$1.RemoveFirst end.*/
+
+            /*System.Collections.Generic.LinkedList$1.RemoveLast start.*/
             RemoveLast: function () {
                 if (this.head == null) {
                     throw new System.InvalidOperationException.ctor();
                 }
                 this.InternalRemoveNode(this.head.prev);
             },
+            /*System.Collections.Generic.LinkedList$1.RemoveLast end.*/
+
+            /*System.Collections.Generic.LinkedList$1.InternalInsertNodeBefore start.*/
             InternalInsertNodeBefore: function (node, newNode) {
                 newNode.next = node;
                 newNode.prev = node.prev;
@@ -18731,15 +19771,25 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.version = (this.version + 1) | 0;
                 this.count = (this.count + 1) | 0;
             },
+            /*System.Collections.Generic.LinkedList$1.InternalInsertNodeBefore end.*/
+
+            /*System.Collections.Generic.LinkedList$1.InternalInsertNodeToEmptyList start.*/
             InternalInsertNodeToEmptyList: function (newNode) {
+                System.Diagnostics.Debug.Assert$1(this.head == null && this.count === 0, "LinkedList must be empty when this method is called!");
                 newNode.next = newNode;
                 newNode.prev = newNode;
                 this.head = newNode;
                 this.version = (this.version + 1) | 0;
                 this.count = (this.count + 1) | 0;
             },
+            /*System.Collections.Generic.LinkedList$1.InternalInsertNodeToEmptyList end.*/
+
+            /*System.Collections.Generic.LinkedList$1.InternalRemoveNode start.*/
             InternalRemoveNode: function (node) {
+                System.Diagnostics.Debug.Assert$1(Bridge.referenceEquals(node.list, this), "Deleting the node from another list!");
+                System.Diagnostics.Debug.Assert$1(this.head != null, "This method shouldn't be called on empty list!");
                 if (Bridge.referenceEquals(node.next, node)) {
+                    System.Diagnostics.Debug.Assert$1(this.count === 1 && Bridge.referenceEquals(this.head, node), "this should only be true for a list with only one node");
                     this.head = null;
                 } else {
                     node.next.prev = node.prev;
@@ -18752,6 +19802,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.count = (this.count - 1) | 0;
                 this.version = (this.version + 1) | 0;
             },
+            /*System.Collections.Generic.LinkedList$1.InternalRemoveNode end.*/
+
+            /*System.Collections.Generic.LinkedList$1.ValidateNewNode start.*/
             ValidateNewNode: function (node) {
                 if (node == null) {
                     throw new System.ArgumentNullException.$ctor1("node");
@@ -18761,6 +19814,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     throw new System.InvalidOperationException.ctor();
                 }
             },
+            /*System.Collections.Generic.LinkedList$1.ValidateNewNode end.*/
+
+            /*System.Collections.Generic.LinkedList$1.ValidateNode start.*/
             ValidateNode: function (node) {
                 if (node == null) {
                     throw new System.ArgumentNullException.$ctor1("node");
@@ -18769,12 +19825,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 if (!Bridge.referenceEquals(node.list, this)) {
                     throw new System.InvalidOperationException.ctor();
                 }
-            }
+            },
+            /*System.Collections.Generic.LinkedList$1.ValidateNode end.*/
+
+
         }
     }; });
+    /*System.Collections.Generic.LinkedList$1 end.*/
 
     // @source LinkedListNode.js
 
+    /*System.Collections.Generic.LinkedListNode$1 start.*/
     Bridge.define("System.Collections.Generic.LinkedListNode$1", function (T) { return {
         fields: {
             list: null,
@@ -18819,16 +19880,22 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.Generic.LinkedListNode$1.Invalidate start.*/
             Invalidate: function () {
                 this.list = null;
                 this.next = null;
                 this.prev = null;
-            }
+            },
+            /*System.Collections.Generic.LinkedListNode$1.Invalidate end.*/
+
+
         }
     }; });
+    /*System.Collections.Generic.LinkedListNode$1 end.*/
 
     // @source Enumerator.js
 
+    /*System.Collections.Generic.LinkedList$1+Enumerator start.*/
     Bridge.define("System.Collections.Generic.LinkedList$1.Enumerator", function (T) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(T),System.Collections.IEnumerator],
         $kind: "nested struct",
@@ -18893,6 +19960,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.Generic.LinkedList$1+Enumerator.moveNext start.*/
             moveNext: function () {
                 if (this.version !== this.list.version) {
                     throw new System.InvalidOperationException.ctor();
@@ -18911,6 +19979,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return true;
             },
+            /*System.Collections.Generic.LinkedList$1+Enumerator.moveNext end.*/
+
+            /*System.Collections.Generic.LinkedList$1+Enumerator.System$Collections$IEnumerator$reset start.*/
             System$Collections$IEnumerator$reset: function () {
                 if (this.version !== this.list.version) {
                     throw new System.InvalidOperationException.ctor();
@@ -18920,7 +19991,12 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.node = this.list.head;
                 this.index = 0;
             },
+            /*System.Collections.Generic.LinkedList$1+Enumerator.System$Collections$IEnumerator$reset end.*/
+
+            /*System.Collections.Generic.LinkedList$1+Enumerator.Dispose start.*/
             Dispose: function () { },
+            /*System.Collections.Generic.LinkedList$1+Enumerator.Dispose end.*/
+
             getHashCode: function () {
                 var h = Bridge.addHash([3788985113, this.list, this.node, this.version, this.current, this.index]);
                 return h;
@@ -18942,9 +20018,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.Collections.Generic.LinkedList$1+Enumerator end.*/
 
     // @source TreeRotation.js
 
+    /*System.Collections.Generic.TreeRotation start.*/
     Bridge.define("System.Collections.Generic.TreeRotation", {
         $kind: "enum",
         statics: {
@@ -18956,9 +20034,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Collections.Generic.TreeRotation end.*/
 
     // @source Dictionary.js
 
+    /*System.Collections.Generic.Dictionary$2 start.*/
     Bridge.define("System.Collections.Generic.Dictionary$2", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IDictionary$2(TKey,TValue),System.Collections.IDictionary,System.Collections.Generic.IReadOnlyDictionary$2(TKey,TValue)],
         statics: {
@@ -18977,12 +20057,16 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
             },
             methods: {
+                /*System.Collections.Generic.Dictionary$2.IsCompatibleKey:static start.*/
                 IsCompatibleKey: function (key) {
                     if (key == null) {
                         System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.key);
                     }
                     return (Bridge.is(key, TKey));
-                }
+                },
+                /*System.Collections.Generic.Dictionary$2.IsCompatibleKey:static end.*/
+
+
             }
         },
         fields: {
@@ -19213,12 +20297,19 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.Dictionary$2.add start.*/
             add: function (key, value) {
                 this.Insert(key, value, true);
             },
+            /*System.Collections.Generic.Dictionary$2.add end.*/
+
+            /*System.Collections.Generic.Dictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$add start.*/
             System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$add: function (keyValuePair) {
                 this.add(keyValuePair.key, keyValuePair.value);
             },
+            /*System.Collections.Generic.Dictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$add end.*/
+
+            /*System.Collections.Generic.Dictionary$2.System$Collections$IDictionary$add start.*/
             System$Collections$IDictionary$add: function (key, value) {
                 if (key == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.key);
@@ -19247,6 +20338,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.Dictionary$2.System$Collections$IDictionary$add end.*/
+
+            /*System.Collections.Generic.Dictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$contains start.*/
             System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$contains: function (keyValuePair) {
                 var i = this.FindEntry(keyValuePair.key);
                 if (i >= 0 && System.Collections.Generic.EqualityComparer$1(TValue).def.equals2(this.entries[System.Array.index(i, this.entries)].value, keyValuePair.value)) {
@@ -19254,6 +20348,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return false;
             },
+            /*System.Collections.Generic.Dictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$contains end.*/
+
+            /*System.Collections.Generic.Dictionary$2.System$Collections$IDictionary$contains start.*/
             System$Collections$IDictionary$contains: function (key) {
                 if (System.Collections.Generic.Dictionary$2(TKey,TValue).IsCompatibleKey(key)) {
                     return this.containsKey(Bridge.cast(Bridge.unbox(key, TKey), TKey));
@@ -19261,6 +20358,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return false;
             },
+            /*System.Collections.Generic.Dictionary$2.System$Collections$IDictionary$contains end.*/
+
+            /*System.Collections.Generic.Dictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$remove start.*/
             System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$remove: function (keyValuePair) {
                 var i = this.FindEntry(keyValuePair.key);
                 if (i >= 0 && System.Collections.Generic.EqualityComparer$1(TValue).def.equals2(this.entries[System.Array.index(i, this.entries)].value, keyValuePair.value)) {
@@ -19269,6 +20369,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return false;
             },
+            /*System.Collections.Generic.Dictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$remove end.*/
+
+            /*System.Collections.Generic.Dictionary$2.remove start.*/
             remove: function (key) {
                 if (key == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.key);
@@ -19313,11 +20416,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return false;
             },
+            /*System.Collections.Generic.Dictionary$2.remove end.*/
+
+            /*System.Collections.Generic.Dictionary$2.System$Collections$IDictionary$remove start.*/
             System$Collections$IDictionary$remove: function (key) {
                 if (System.Collections.Generic.Dictionary$2(TKey,TValue).IsCompatibleKey(key)) {
                     this.remove(Bridge.cast(Bridge.unbox(key, TKey), TKey));
                 }
             },
+            /*System.Collections.Generic.Dictionary$2.System$Collections$IDictionary$remove end.*/
+
+            /*System.Collections.Generic.Dictionary$2.clear start.*/
             clear: function () {
                 if (this.count > 0) {
                     for (var i = 0; i < this.buckets.length; i = (i + 1) | 0) {
@@ -19335,9 +20444,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this.version = (this.version + 1) | 0;
                 }
             },
+            /*System.Collections.Generic.Dictionary$2.clear end.*/
+
+            /*System.Collections.Generic.Dictionary$2.containsKey start.*/
             containsKey: function (key) {
                 return this.FindEntry(key) >= 0;
             },
+            /*System.Collections.Generic.Dictionary$2.containsKey end.*/
+
+            /*System.Collections.Generic.Dictionary$2.ContainsValue start.*/
             ContainsValue: function (value) {
                 if (value == null) {
                     for (var i = 0; i < this.count; i = (i + 1) | 0) {
@@ -19355,6 +20470,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return false;
             },
+            /*System.Collections.Generic.Dictionary$2.ContainsValue end.*/
+
+            /*System.Collections.Generic.Dictionary$2.CopyTo start.*/
             CopyTo: function (array, index) {
                 if (array == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.array);
@@ -19376,9 +20494,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.Dictionary$2.CopyTo end.*/
+
+            /*System.Collections.Generic.Dictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$copyTo start.*/
             System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$copyTo: function (array, index) {
                 this.CopyTo(array, index);
             },
+            /*System.Collections.Generic.Dictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$copyTo end.*/
+
+            /*System.Collections.Generic.Dictionary$2.System$Collections$ICollection$copyTo start.*/
             System$Collections$ICollection$copyTo: function (array, index) {
                 if (array == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.array);
@@ -19435,18 +20559,33 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.Dictionary$2.System$Collections$ICollection$copyTo end.*/
+
+            /*System.Collections.Generic.Dictionary$2.GetEnumerator start.*/
             GetEnumerator: function () {
                 return new (System.Collections.Generic.Dictionary$2.Enumerator(TKey,TValue)).$ctor1(this, System.Collections.Generic.Dictionary$2.Enumerator(TKey,TValue).KeyValuePair);
             },
+            /*System.Collections.Generic.Dictionary$2.GetEnumerator end.*/
+
+            /*System.Collections.Generic.Dictionary$2.System$Collections$Generic$IEnumerable$1$System$Collections$Generic$KeyValuePair$2$GetEnumerator start.*/
             System$Collections$Generic$IEnumerable$1$System$Collections$Generic$KeyValuePair$2$GetEnumerator: function () {
                 return new (System.Collections.Generic.Dictionary$2.Enumerator(TKey,TValue)).$ctor1(this, System.Collections.Generic.Dictionary$2.Enumerator(TKey,TValue).KeyValuePair).$clone();
             },
+            /*System.Collections.Generic.Dictionary$2.System$Collections$Generic$IEnumerable$1$System$Collections$Generic$KeyValuePair$2$GetEnumerator end.*/
+
+            /*System.Collections.Generic.Dictionary$2.System$Collections$IEnumerable$GetEnumerator start.*/
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return new (System.Collections.Generic.Dictionary$2.Enumerator(TKey,TValue)).$ctor1(this, System.Collections.Generic.Dictionary$2.Enumerator(TKey,TValue).KeyValuePair).$clone();
             },
+            /*System.Collections.Generic.Dictionary$2.System$Collections$IEnumerable$GetEnumerator end.*/
+
+            /*System.Collections.Generic.Dictionary$2.System$Collections$IDictionary$GetEnumerator start.*/
             System$Collections$IDictionary$GetEnumerator: function () {
                 return new (System.Collections.Generic.Dictionary$2.Enumerator(TKey,TValue)).$ctor1(this, System.Collections.Generic.Dictionary$2.Enumerator(TKey,TValue).DictEntry).$clone();
             },
+            /*System.Collections.Generic.Dictionary$2.System$Collections$IDictionary$GetEnumerator end.*/
+
+            /*System.Collections.Generic.Dictionary$2.FindEntry start.*/
             FindEntry: function (key) {
                 if (key == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.key);
@@ -19466,6 +20605,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return -1;
             },
+            /*System.Collections.Generic.Dictionary$2.FindEntry end.*/
+
+            /*System.Collections.Generic.Dictionary$2.Initialize start.*/
             Initialize: function (capacity) {
                 var size = System.Collections.HashHelpers.GetPrime(capacity);
                 this.buckets = System.Array.init(size, 0, System.Int32);
@@ -19478,6 +20620,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.freeList = -1;
                 this.simpleBuckets = { };
             },
+            /*System.Collections.Generic.Dictionary$2.Initialize end.*/
+
+            /*System.Collections.Generic.Dictionary$2.Insert start.*/
             Insert: function (key, value, add) {
 
                 if (key == null) {
@@ -19557,9 +20702,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.buckets[System.Array.index(targetBucket, this.buckets)] = index;
                 this.version = (this.version + 1) | 0;
             },
+            /*System.Collections.Generic.Dictionary$2.Insert end.*/
+
+            /*System.Collections.Generic.Dictionary$2.Resize start.*/
             Resize: function () {
                 this.Resize$1(System.Collections.HashHelpers.ExpandPrime(this.count), false);
             },
+            /*System.Collections.Generic.Dictionary$2.Resize end.*/
+
+            /*System.Collections.Generic.Dictionary$2.Resize$1 start.*/
             Resize$1: function (newSize, forceNewHashCodes) {
                 var newBuckets = System.Array.init(newSize, 0, System.Int32);
                 for (var i = 0; i < newBuckets.length; i = (i + 1) | 0) {
@@ -19594,6 +20745,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.buckets = newBuckets;
                 this.entries = newEntries;
             },
+            /*System.Collections.Generic.Dictionary$2.Resize$1 end.*/
+
+            /*System.Collections.Generic.Dictionary$2.tryGetValue start.*/
             tryGetValue: function (key, value) {
                 var i = this.FindEntry(key);
                 if (i >= 0) {
@@ -19603,18 +20757,26 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 value.v = Bridge.getDefaultValue(TValue);
                 return false;
             },
+            /*System.Collections.Generic.Dictionary$2.tryGetValue end.*/
+
+            /*System.Collections.Generic.Dictionary$2.GetValueOrDefault start.*/
             GetValueOrDefault: function (key) {
                 var i = this.FindEntry(key);
                 if (i >= 0) {
                     return this.entries[System.Array.index(i, this.entries)].value;
                 }
                 return Bridge.getDefaultValue(TValue);
-            }
+            },
+            /*System.Collections.Generic.Dictionary$2.GetValueOrDefault end.*/
+
+
         }
     }; });
+    /*System.Collections.Generic.Dictionary$2 end.*/
 
     // @source Entry.js
 
+    /*System.Collections.Generic.Dictionary$2+Entry start.*/
     Bridge.define("System.Collections.Generic.Dictionary$2.Entry", function (TKey, TValue) { return {
         $kind: "nested struct",
         statics: {
@@ -19654,9 +20816,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.Collections.Generic.Dictionary$2+Entry end.*/
 
     // @source Enumerator.js
 
+    /*System.Collections.Generic.Dictionary$2+Enumerator start.*/
     Bridge.define("System.Collections.Generic.Dictionary$2.Enumerator", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(System.Collections.Generic.KeyValuePair$2(TKey,TValue)),System.Collections.IDictionaryEnumerator],
         $kind: "nested struct",
@@ -19751,6 +20915,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.Generic.Dictionary$2+Enumerator.moveNext start.*/
             moveNext: function () {
                 var $t, $t1, $t2;
                 if (this.version !== this.dictionary.version) {
@@ -19770,7 +20935,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.current = new (System.Collections.Generic.KeyValuePair$2(TKey,TValue)).ctor();
                 return false;
             },
+            /*System.Collections.Generic.Dictionary$2+Enumerator.moveNext end.*/
+
+            /*System.Collections.Generic.Dictionary$2+Enumerator.Dispose start.*/
             Dispose: function () { },
+            /*System.Collections.Generic.Dictionary$2+Enumerator.Dispose end.*/
+
+            /*System.Collections.Generic.Dictionary$2+Enumerator.System$Collections$IEnumerator$reset start.*/
             System$Collections$IEnumerator$reset: function () {
                 if (this.version !== this.dictionary.version) {
                     System.ThrowHelper.ThrowInvalidOperationException(System.ExceptionResource.InvalidOperation_EnumFailedVersion);
@@ -19779,6 +20950,8 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.index = 0;
                 this.current = new (System.Collections.Generic.KeyValuePair$2(TKey,TValue)).ctor();
             },
+            /*System.Collections.Generic.Dictionary$2+Enumerator.System$Collections$IEnumerator$reset end.*/
+
             getHashCode: function () {
                 var h = Bridge.addHash([3788985113, this.dictionary, this.version, this.index, this.current, this.getEnumeratorRetType]);
                 return h;
@@ -19800,9 +20973,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.Collections.Generic.Dictionary$2+Enumerator end.*/
 
     // @source KeyCollection.js
 
+    /*System.Collections.Generic.Dictionary$2+KeyCollection start.*/
     Bridge.define("System.Collections.Generic.Dictionary$2.KeyCollection", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.ICollection$1(TKey),System.Collections.ICollection,System.Collections.Generic.IReadOnlyCollection$1(TKey)],
         $kind: "nested class",
@@ -19853,15 +21028,25 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.Generic.Dictionary$2+KeyCollection.GetEnumerator start.*/
             GetEnumerator: function () {
                 return new (System.Collections.Generic.Dictionary$2.KeyCollection.Enumerator(TKey,TValue)).$ctor1(this.dictionary);
             },
+            /*System.Collections.Generic.Dictionary$2+KeyCollection.GetEnumerator end.*/
+
+            /*System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$Generic$IEnumerable$1$GetEnumerator start.*/
             System$Collections$Generic$IEnumerable$1$GetEnumerator: function () {
                 return new (System.Collections.Generic.Dictionary$2.KeyCollection.Enumerator(TKey,TValue)).$ctor1(this.dictionary).$clone();
             },
+            /*System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$Generic$IEnumerable$1$GetEnumerator end.*/
+
+            /*System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$IEnumerable$GetEnumerator start.*/
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return new (System.Collections.Generic.Dictionary$2.KeyCollection.Enumerator(TKey,TValue)).$ctor1(this.dictionary).$clone();
             },
+            /*System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$IEnumerable$GetEnumerator end.*/
+
+            /*System.Collections.Generic.Dictionary$2+KeyCollection.copyTo start.*/
             copyTo: function (array, index) {
                 if (array == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.array);
@@ -19883,6 +21068,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.Dictionary$2+KeyCollection.copyTo end.*/
+
+            /*System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$ICollection$copyTo start.*/
             System$Collections$ICollection$copyTo: function (array, index) {
                 if (array == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.array);
@@ -19931,24 +21119,41 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$ICollection$copyTo end.*/
+
+            /*System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$add start.*/
             System$Collections$Generic$ICollection$1$add: function (item) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_KeyCollectionSet);
             },
+            /*System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$add end.*/
+
+            /*System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$clear start.*/
             System$Collections$Generic$ICollection$1$clear: function () {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_KeyCollectionSet);
             },
+            /*System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$clear end.*/
+
+            /*System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$contains start.*/
             System$Collections$Generic$ICollection$1$contains: function (item) {
                 return this.dictionary.containsKey(item);
             },
+            /*System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$contains end.*/
+
+            /*System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$remove start.*/
             System$Collections$Generic$ICollection$1$remove: function (item) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_KeyCollectionSet);
                 return false;
-            }
+            },
+            /*System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$remove end.*/
+
+
         }
     }; });
+    /*System.Collections.Generic.Dictionary$2+KeyCollection end.*/
 
     // @source Enumerator.js
 
+    /*System.Collections.Generic.Dictionary$2+KeyCollection+Enumerator start.*/
     Bridge.define("System.Collections.Generic.Dictionary$2.KeyCollection.Enumerator", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(TKey),System.Collections.IEnumerator],
         $kind: "nested struct",
@@ -19997,7 +21202,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.Generic.Dictionary$2+KeyCollection+Enumerator.Dispose start.*/
             Dispose: function () { },
+            /*System.Collections.Generic.Dictionary$2+KeyCollection+Enumerator.Dispose end.*/
+
+            /*System.Collections.Generic.Dictionary$2+KeyCollection+Enumerator.moveNext start.*/
             moveNext: function () {
                 var $t, $t1;
                 if (this.version !== this.dictionary.version) {
@@ -20017,6 +21226,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.currentKey = Bridge.getDefaultValue(TKey);
                 return false;
             },
+            /*System.Collections.Generic.Dictionary$2+KeyCollection+Enumerator.moveNext end.*/
+
+            /*System.Collections.Generic.Dictionary$2+KeyCollection+Enumerator.System$Collections$IEnumerator$reset start.*/
             System$Collections$IEnumerator$reset: function () {
                 if (this.version !== this.dictionary.version) {
                     System.ThrowHelper.ThrowInvalidOperationException(System.ExceptionResource.InvalidOperation_EnumFailedVersion);
@@ -20025,6 +21237,8 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.index = 0;
                 this.currentKey = Bridge.getDefaultValue(TKey);
             },
+            /*System.Collections.Generic.Dictionary$2+KeyCollection+Enumerator.System$Collections$IEnumerator$reset end.*/
+
             getHashCode: function () {
                 var h = Bridge.addHash([3788985113, this.dictionary, this.index, this.version, this.currentKey]);
                 return h;
@@ -20045,9 +21259,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.Collections.Generic.Dictionary$2+KeyCollection+Enumerator end.*/
 
     // @source ValueCollection.js
 
+    /*System.Collections.Generic.Dictionary$2+ValueCollection start.*/
     Bridge.define("System.Collections.Generic.Dictionary$2.ValueCollection", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.ICollection$1(TValue),System.Collections.ICollection,System.Collections.Generic.IReadOnlyCollection$1(TValue)],
         $kind: "nested class",
@@ -20098,15 +21314,25 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.Generic.Dictionary$2+ValueCollection.GetEnumerator start.*/
             GetEnumerator: function () {
                 return new (System.Collections.Generic.Dictionary$2.ValueCollection.Enumerator(TKey,TValue)).$ctor1(this.dictionary);
             },
+            /*System.Collections.Generic.Dictionary$2+ValueCollection.GetEnumerator end.*/
+
+            /*System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$Generic$IEnumerable$1$GetEnumerator start.*/
             System$Collections$Generic$IEnumerable$1$GetEnumerator: function () {
                 return new (System.Collections.Generic.Dictionary$2.ValueCollection.Enumerator(TKey,TValue)).$ctor1(this.dictionary).$clone();
             },
+            /*System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$Generic$IEnumerable$1$GetEnumerator end.*/
+
+            /*System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$IEnumerable$GetEnumerator start.*/
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return new (System.Collections.Generic.Dictionary$2.ValueCollection.Enumerator(TKey,TValue)).$ctor1(this.dictionary).$clone();
             },
+            /*System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$IEnumerable$GetEnumerator end.*/
+
+            /*System.Collections.Generic.Dictionary$2+ValueCollection.copyTo start.*/
             copyTo: function (array, index) {
                 if (array == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.array);
@@ -20128,6 +21354,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.Dictionary$2+ValueCollection.copyTo end.*/
+
+            /*System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$ICollection$copyTo start.*/
             System$Collections$ICollection$copyTo: function (array, index) {
                 if (array == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.array);
@@ -20176,24 +21405,41 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$ICollection$copyTo end.*/
+
+            /*System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$add start.*/
             System$Collections$Generic$ICollection$1$add: function (item) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_ValueCollectionSet);
             },
+            /*System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$add end.*/
+
+            /*System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$remove start.*/
             System$Collections$Generic$ICollection$1$remove: function (item) {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_ValueCollectionSet);
                 return false;
             },
+            /*System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$remove end.*/
+
+            /*System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$clear start.*/
             System$Collections$Generic$ICollection$1$clear: function () {
                 System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_ValueCollectionSet);
             },
+            /*System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$clear end.*/
+
+            /*System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$contains start.*/
             System$Collections$Generic$ICollection$1$contains: function (item) {
                 return this.dictionary.ContainsValue(item);
-            }
+            },
+            /*System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$contains end.*/
+
+
         }
     }; });
+    /*System.Collections.Generic.Dictionary$2+ValueCollection end.*/
 
     // @source Enumerator.js
 
+    /*System.Collections.Generic.Dictionary$2+ValueCollection+Enumerator start.*/
     Bridge.define("System.Collections.Generic.Dictionary$2.ValueCollection.Enumerator", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(TValue),System.Collections.IEnumerator],
         $kind: "nested struct",
@@ -20242,7 +21488,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.Generic.Dictionary$2+ValueCollection+Enumerator.Dispose start.*/
             Dispose: function () { },
+            /*System.Collections.Generic.Dictionary$2+ValueCollection+Enumerator.Dispose end.*/
+
+            /*System.Collections.Generic.Dictionary$2+ValueCollection+Enumerator.moveNext start.*/
             moveNext: function () {
                 var $t, $t1;
                 if (this.version !== this.dictionary.version) {
@@ -20261,6 +21511,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.currentValue = Bridge.getDefaultValue(TValue);
                 return false;
             },
+            /*System.Collections.Generic.Dictionary$2+ValueCollection+Enumerator.moveNext end.*/
+
+            /*System.Collections.Generic.Dictionary$2+ValueCollection+Enumerator.System$Collections$IEnumerator$reset start.*/
             System$Collections$IEnumerator$reset: function () {
                 if (this.version !== this.dictionary.version) {
                     System.ThrowHelper.ThrowInvalidOperationException(System.ExceptionResource.InvalidOperation_EnumFailedVersion);
@@ -20268,6 +21521,8 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.index = 0;
                 this.currentValue = Bridge.getDefaultValue(TValue);
             },
+            /*System.Collections.Generic.Dictionary$2+ValueCollection+Enumerator.System$Collections$IEnumerator$reset end.*/
+
             getHashCode: function () {
                 var h = Bridge.addHash([3788985113, this.dictionary, this.index, this.version, this.currentValue]);
                 return h;
@@ -20288,9 +21543,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.Collections.Generic.Dictionary$2+ValueCollection+Enumerator end.*/
 
     // @source ReadOnlyDictionary.js
 
+    /*System.Collections.ObjectModel.ReadOnlyDictionary$2 start.*/
     Bridge.define("System.Collections.ObjectModel.ReadOnlyDictionary$2", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IDictionary$2(TKey,TValue),System.Collections.IDictionary,System.Collections.Generic.IReadOnlyDictionary$2(TKey,TValue)],
         statics: {
@@ -20303,12 +21560,16 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
             },
             methods: {
+                /*System.Collections.ObjectModel.ReadOnlyDictionary$2.IsCompatibleKey:static start.*/
                 IsCompatibleKey: function (key) {
                     if (key == null) {
                         throw new System.ArgumentNullException.$ctor1("key");
                     }
                     return Bridge.is(key, TKey);
-                }
+                },
+                /*System.Collections.ObjectModel.ReadOnlyDictionary$2.IsCompatibleKey:static end.*/
+
+
             }
         },
         fields: {
@@ -20452,39 +21713,73 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             System$Collections$IDictionary$setItem: function (key, value) {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.containsKey start.*/
             containsKey: function (key) {
                 return this.m_dictionary["System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$containsKey"](key);
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.containsKey end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.tryGetValue start.*/
             tryGetValue: function (key, value) {
                 return this.m_dictionary["System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$tryGetValue"](key, value);
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.tryGetValue end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$IDictionary$2$add start.*/
             System$Collections$Generic$IDictionary$2$add: function (key, value) {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$IDictionary$2$add end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$add start.*/
             System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$add: function (item) {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$add end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$IDictionary$add start.*/
             System$Collections$IDictionary$add: function (key, value) {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$IDictionary$add end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$IDictionary$2$remove start.*/
             System$Collections$Generic$IDictionary$2$remove: function (key) {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$IDictionary$2$remove end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$remove start.*/
             System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$remove: function (item) {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$remove end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$IDictionary$remove start.*/
             System$Collections$IDictionary$remove: function (key) {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$IDictionary$remove end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$contains start.*/
             System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$contains: function (item) {
                 return System.Array.contains(this.m_dictionary, item, System.Collections.Generic.KeyValuePair$2(TKey,TValue));
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$contains end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$IDictionary$contains start.*/
             System$Collections$IDictionary$contains: function (key) {
                 return System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).IsCompatibleKey(key) && this.containsKey(Bridge.cast(Bridge.unbox(key, TKey), TKey));
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$IDictionary$contains end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$copyTo start.*/
             System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$copyTo: function (array, arrayIndex) {
                 System.Array.copyTo(this.m_dictionary, array, arrayIndex, System.Collections.Generic.KeyValuePair$2(TKey,TValue));
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$copyTo end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$ICollection$copyTo start.*/
             System$Collections$ICollection$copyTo: function (array, index) {
                 var $t, $t1;
                 if (array == null) {
@@ -20553,30 +21848,50 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$ICollection$copyTo end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$clear start.*/
             System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$clear: function () {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$clear end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$IDictionary$clear start.*/
             System$Collections$IDictionary$clear: function () {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$IDictionary$clear end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.GetEnumerator start.*/
             GetEnumerator: function () {
                 return Bridge.getEnumerator(this.m_dictionary, System.Collections.Generic.KeyValuePair$2(TKey,TValue));
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.GetEnumerator end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$IEnumerable$GetEnumerator start.*/
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return Bridge.getEnumerator(Bridge.cast(this.m_dictionary, System.Collections.IEnumerable));
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$IEnumerable$GetEnumerator end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$IDictionary$GetEnumerator start.*/
             System$Collections$IDictionary$GetEnumerator: function () {
                 var d = Bridge.as(this.m_dictionary, System.Collections.IDictionary);
                 if (d != null) {
                     return d.System$Collections$IDictionary$GetEnumerator();
                 }
                 return new (System.Collections.ObjectModel.ReadOnlyDictionary$2.DictionaryEnumerator(TKey,TValue)).$ctor1(this.m_dictionary).$clone();
-            }
+            },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$IDictionary$GetEnumerator end.*/
+
+
         }
     }; });
+    /*System.Collections.ObjectModel.ReadOnlyDictionary$2 end.*/
 
     // @source DictionaryEnumerator.js
 
+    /*System.Collections.ObjectModel.ReadOnlyDictionary$2+DictionaryEnumerator start.*/
     Bridge.define("System.Collections.ObjectModel.ReadOnlyDictionary$2.DictionaryEnumerator", function (TKey, TValue) { return {
         inherits: [System.Collections.IDictionaryEnumerator],
         $kind: "nested struct",
@@ -20630,12 +21945,18 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+DictionaryEnumerator.moveNext start.*/
             moveNext: function () {
                 return this._enumerator.System$Collections$IEnumerator$moveNext();
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+DictionaryEnumerator.moveNext end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+DictionaryEnumerator.reset start.*/
             reset: function () {
                 this._enumerator.System$Collections$IEnumerator$reset();
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+DictionaryEnumerator.reset end.*/
+
             getHashCode: function () {
                 var h = Bridge.addHash([9276503029, this._dictionary, this._enumerator]);
                 return h;
@@ -20654,9 +21975,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.Collections.ObjectModel.ReadOnlyDictionary$2+DictionaryEnumerator end.*/
 
     // @source KeyCollection.js
 
+    /*System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection start.*/
     Bridge.define("System.Collections.ObjectModel.ReadOnlyDictionary$2.KeyCollection", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.ICollection$1(TKey),System.Collections.ICollection,System.Collections.Generic.IReadOnlyCollection$1(TKey)],
         $kind: "nested class",
@@ -20707,35 +22030,62 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$add start.*/
             System$Collections$Generic$ICollection$1$add: function (item) {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$add end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$clear start.*/
             System$Collections$Generic$ICollection$1$clear: function () {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$clear end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$contains start.*/
             System$Collections$Generic$ICollection$1$contains: function (item) {
                 return System.Array.contains(this._collection, item, TKey);
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$contains end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.copyTo start.*/
             copyTo: function (array, arrayIndex) {
                 System.Array.copyTo(this._collection, array, arrayIndex, TKey);
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.copyTo end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.System$Collections$ICollection$copyTo start.*/
             System$Collections$ICollection$copyTo: function (array, index) {
                 System.Collections.ObjectModel.ReadOnlyDictionaryHelpers.CopyToNonGenericICollectionHelper(TKey, this._collection, array, index);
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.System$Collections$ICollection$copyTo end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$remove start.*/
             System$Collections$Generic$ICollection$1$remove: function (item) {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$remove end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.GetEnumerator start.*/
             GetEnumerator: function () {
                 return Bridge.getEnumerator(this._collection, TKey);
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.GetEnumerator end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.System$Collections$IEnumerable$GetEnumerator start.*/
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return Bridge.getEnumerator(Bridge.cast(this._collection, System.Collections.IEnumerable));
-            }
+            },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.System$Collections$IEnumerable$GetEnumerator end.*/
+
+
         }
     }; });
+    /*System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection end.*/
 
     // @source ValueCollection.js
 
+    /*System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection start.*/
     Bridge.define("System.Collections.ObjectModel.ReadOnlyDictionary$2.ValueCollection", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.ICollection$1(TValue),System.Collections.ICollection,System.Collections.Generic.IReadOnlyCollection$1(TValue)],
         $kind: "nested class",
@@ -20786,38 +22136,66 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$add start.*/
             System$Collections$Generic$ICollection$1$add: function (item) {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$add end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$clear start.*/
             System$Collections$Generic$ICollection$1$clear: function () {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$clear end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$contains start.*/
             System$Collections$Generic$ICollection$1$contains: function (item) {
                 return System.Array.contains(this._collection, item, TValue);
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$contains end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.copyTo start.*/
             copyTo: function (array, arrayIndex) {
                 System.Array.copyTo(this._collection, array, arrayIndex, TValue);
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.copyTo end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.System$Collections$ICollection$copyTo start.*/
             System$Collections$ICollection$copyTo: function (array, index) {
                 System.Collections.ObjectModel.ReadOnlyDictionaryHelpers.CopyToNonGenericICollectionHelper(TValue, this._collection, array, index);
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.System$Collections$ICollection$copyTo end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$remove start.*/
             System$Collections$Generic$ICollection$1$remove: function (item) {
                 throw new System.NotSupportedException.$ctor1(System.Collections.ObjectModel.ReadOnlyDictionary$2(TKey,TValue).NotSupported_ReadOnlyCollection);
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$remove end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.GetEnumerator start.*/
             GetEnumerator: function () {
                 return Bridge.getEnumerator(this._collection, TValue);
             },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.GetEnumerator end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.System$Collections$IEnumerable$GetEnumerator start.*/
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return Bridge.getEnumerator(Bridge.cast(this._collection, System.Collections.IEnumerable));
-            }
+            },
+            /*System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.System$Collections$IEnumerable$GetEnumerator end.*/
+
+
         }
     }; });
+    /*System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection end.*/
 
     // @source ReadOnlyDictionaryHelpers.js
 
+    /*System.Collections.ObjectModel.ReadOnlyDictionaryHelpers start.*/
     Bridge.define("System.Collections.ObjectModel.ReadOnlyDictionaryHelpers", {
         statics: {
             methods: {
+                /*System.Collections.ObjectModel.ReadOnlyDictionaryHelpers.CopyToNonGenericICollectionHelper:static start.*/
                 CopyToNonGenericICollectionHelper: function (T, collection, array, index) {
                     var $t;
                     if (array == null) {
@@ -20892,19 +22270,28 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                             }
                         }
                     }
-                }
+                },
+                /*System.Collections.ObjectModel.ReadOnlyDictionaryHelpers.CopyToNonGenericICollectionHelper:static end.*/
+
+
             }
         }
     });
+    /*System.Collections.ObjectModel.ReadOnlyDictionaryHelpers end.*/
 
     // @source CollectionExtensions.js
 
+    /*System.Collections.Generic.CollectionExtensions start.*/
     Bridge.define("System.Collections.Generic.CollectionExtensions", {
         statics: {
             methods: {
+                /*System.Collections.Generic.CollectionExtensions.GetValueOrDefault:static start.*/
                 GetValueOrDefault: function (TKey, TValue, dictionary, key) {
                     return System.Collections.Generic.CollectionExtensions.GetValueOrDefault$1(TKey, TValue, dictionary, key, Bridge.getDefaultValue(TValue));
                 },
+                /*System.Collections.Generic.CollectionExtensions.GetValueOrDefault:static end.*/
+
+                /*System.Collections.Generic.CollectionExtensions.GetValueOrDefault$1:static start.*/
                 GetValueOrDefault$1: function (TKey, TValue, dictionary, key, defaultValue) {
                     if (dictionary == null) {
                         throw new System.ArgumentNullException.$ctor1("dictionary");
@@ -20913,6 +22300,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     var value = { };
                     return dictionary["System$Collections$Generic$IReadOnlyDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$tryGetValue"](key, value) ? value.v : defaultValue;
                 },
+                /*System.Collections.Generic.CollectionExtensions.GetValueOrDefault$1:static end.*/
+
+                /*System.Collections.Generic.CollectionExtensions.TryAdd:static start.*/
                 TryAdd: function (TKey, TValue, dictionary, key, value) {
                     if (dictionary == null) {
                         throw new System.ArgumentNullException.$ctor1("dictionary");
@@ -20925,6 +22315,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return false;
                 },
+                /*System.Collections.Generic.CollectionExtensions.TryAdd:static end.*/
+
+                /*System.Collections.Generic.CollectionExtensions.Remove:static start.*/
                 Remove: function (TKey, TValue, dictionary, key, value) {
                     if (dictionary == null) {
                         throw new System.ArgumentNullException.$ctor1("dictionary");
@@ -20937,13 +22330,18 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     value.v = Bridge.getDefaultValue(TValue);
                     return false;
-                }
+                },
+                /*System.Collections.Generic.CollectionExtensions.Remove:static end.*/
+
+
             }
         }
     });
+    /*System.Collections.Generic.CollectionExtensions end.*/
 
     // @source StringComparer.js
 
+    /*System.StringComparer start.*/
     Bridge.define("System.StringComparer", {
         inherits: [System.Collections.Generic.IComparer$1(System.String),System.Collections.Generic.IEqualityComparer$1(System.String)],
         statics: {
@@ -20971,6 +22369,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.StringComparer.Compare start.*/
             Compare: function (x, y) {
                 if (Bridge.referenceEquals(x, y)) {
                     return 0;
@@ -20997,6 +22396,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 throw new System.ArgumentException.$ctor1("At least one object must implement IComparable.");
             },
+            /*System.StringComparer.Compare end.*/
+
+            /*System.StringComparer.Equals start.*/
             Equals: function (x, y) {
                 if (Bridge.referenceEquals(x, y)) {
                     return true;
@@ -21014,6 +22416,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return Bridge.equals(x, y);
             },
+            /*System.StringComparer.Equals end.*/
+
+            /*System.StringComparer.GetHashCode start.*/
             GetHashCode: function (obj) {
                 if (obj == null) {
                     throw new System.ArgumentNullException.$ctor1("obj");
@@ -21024,12 +22429,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     return this.getHashCode2(s);
                 }
                 return Bridge.getHashCode(obj);
-            }
+            },
+            /*System.StringComparer.GetHashCode end.*/
+
+
         }
     });
+    /*System.StringComparer end.*/
 
     // @source OrdinalComparer.js
 
+    /*System.OrdinalComparer start.*/
     Bridge.define("System.OrdinalComparer", {
         inherits: [System.StringComparer],
         fields: {
@@ -21048,6 +22458,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.OrdinalComparer.compare start.*/
             compare: function (x, y) {
                 if (Bridge.referenceEquals(x, y)) {
                     return 0;
@@ -21065,6 +22476,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return System.String.compare(x, y, false);
             },
+            /*System.OrdinalComparer.compare end.*/
+
+            /*System.OrdinalComparer.equals2 start.*/
             equals2: function (x, y) {
                 if (Bridge.referenceEquals(x, y)) {
                     return true;
@@ -21081,6 +22495,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return System.String.equals(x, y);
             },
+            /*System.OrdinalComparer.equals2 end.*/
+
+            /*System.OrdinalComparer.equals start.*/
             equals: function (obj) {
                 var comparer = Bridge.as(obj, System.OrdinalComparer);
                 if (comparer == null) {
@@ -21088,6 +22505,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return (this._ignoreCase === comparer._ignoreCase);
             },
+            /*System.OrdinalComparer.equals end.*/
+
+            /*System.OrdinalComparer.getHashCode2 start.*/
             getHashCode2: function (obj) {
                 if (obj == null) {
                     throw new System.ArgumentNullException.$ctor1("obj");
@@ -21099,13 +22519,20 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return Bridge.getHashCode(obj);
             },
+            /*System.OrdinalComparer.getHashCode2 end.*/
+
+            /*System.OrdinalComparer.getHashCode start.*/
             getHashCode: function () {
                 var name = "OrdinalComparer";
                 var hashCode = Bridge.getHashCode(name);
                 return this._ignoreCase ? (~hashCode) : hashCode;
-            }
+            },
+            /*System.OrdinalComparer.getHashCode end.*/
+
+
         }
     });
+    /*System.OrdinalComparer end.*/
 
     // @source CustomEnumerator.js
 
@@ -21404,6 +22831,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
     };
     // @source List.js
 
+    /*System.Collections.Generic.List$1 start.*/
     Bridge.define("System.Collections.Generic.List$1", function (T) { return {
         inherits: [System.Collections.Generic.IList$1(T),System.Collections.IList,System.Collections.Generic.IReadOnlyList$1(T)],
         statics: {
@@ -21420,9 +22848,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
             },
             methods: {
+                /*System.Collections.Generic.List$1.IsCompatibleObject:static start.*/
                 IsCompatibleObject: function (value) {
                     return ((Bridge.is(value, T)) || (value == null && Bridge.getDefaultValue(T) == null));
-                }
+                },
+                /*System.Collections.Generic.List$1.IsCompatibleObject:static end.*/
+
+
             }
         },
         fields: {
@@ -21595,6 +23027,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.List$1.add start.*/
             add: function (item) {
                 if (this._size === this._items.length) {
                     this.EnsureCapacity(((this._size + 1) | 0));
@@ -21602,6 +23035,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._items[System.Array.index(Bridge.identity(this._size, ((this._size = (this._size + 1) | 0))), this._items)] = item;
                 this._version = (this._version + 1) | 0;
             },
+            /*System.Collections.Generic.List$1.add end.*/
+
+            /*System.Collections.Generic.List$1.System$Collections$IList$add start.*/
             System$Collections$IList$add: function (item) {
                 if (item == null && !(Bridge.getDefaultValue(T) == null)) {
                     throw new System.ArgumentNullException.$ctor1("item");
@@ -21620,12 +23056,21 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return ((this.Count - 1) | 0);
             },
+            /*System.Collections.Generic.List$1.System$Collections$IList$add end.*/
+
+            /*System.Collections.Generic.List$1.AddRange start.*/
             AddRange: function (collection) {
                 this.InsertRange(this._size, collection);
             },
+            /*System.Collections.Generic.List$1.AddRange end.*/
+
+            /*System.Collections.Generic.List$1.AsReadOnly start.*/
             AsReadOnly: function () {
                 return new (System.Collections.ObjectModel.ReadOnlyCollection$1(T))(this);
             },
+            /*System.Collections.Generic.List$1.AsReadOnly end.*/
+
+            /*System.Collections.Generic.List$1.BinarySearch$2 start.*/
             BinarySearch$2: function (index, count, item, comparer) {
                 if (index < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("index");
@@ -21639,12 +23084,21 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return System.Array.binarySearch(this._items, index, count, item, comparer);
             },
+            /*System.Collections.Generic.List$1.BinarySearch$2 end.*/
+
+            /*System.Collections.Generic.List$1.BinarySearch start.*/
             BinarySearch: function (item) {
                 return this.BinarySearch$2(0, this.Count, item, null);
             },
+            /*System.Collections.Generic.List$1.BinarySearch end.*/
+
+            /*System.Collections.Generic.List$1.BinarySearch$1 start.*/
             BinarySearch$1: function (item, comparer) {
                 return this.BinarySearch$2(0, this.Count, item, comparer);
             },
+            /*System.Collections.Generic.List$1.BinarySearch$1 end.*/
+
+            /*System.Collections.Generic.List$1.clear start.*/
             clear: function () {
                 if (this._size > 0) {
                     System.Array.fill(this._items, function () {
@@ -21654,6 +23108,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 this._version = (this._version + 1) | 0;
             },
+            /*System.Collections.Generic.List$1.clear end.*/
+
+            /*System.Collections.Generic.List$1.contains start.*/
             contains: function (item) {
                 if (item == null) {
                     for (var i = 0; i < this._size; i = (i + 1) | 0) {
@@ -21672,12 +23129,18 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     return false;
                 }
             },
+            /*System.Collections.Generic.List$1.contains end.*/
+
+            /*System.Collections.Generic.List$1.System$Collections$IList$contains start.*/
             System$Collections$IList$contains: function (item) {
                 if (System.Collections.Generic.List$1(T).IsCompatibleObject(item)) {
                     return this.contains(Bridge.cast(Bridge.unbox(item, T), T));
                 }
                 return false;
             },
+            /*System.Collections.Generic.List$1.System$Collections$IList$contains end.*/
+
+            /*System.Collections.Generic.List$1.ConvertAll start.*/
             ConvertAll: function (TOutput, converter) {
                 if (Bridge.staticEquals(converter, null)) {
                     throw new System.ArgumentNullException.$ctor1("converter");
@@ -21690,9 +23153,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 list._size = this._size;
                 return list;
             },
+            /*System.Collections.Generic.List$1.ConvertAll end.*/
+
+            /*System.Collections.Generic.List$1.CopyTo start.*/
             CopyTo: function (array) {
                 this.copyTo(array, 0);
             },
+            /*System.Collections.Generic.List$1.CopyTo end.*/
+
+            /*System.Collections.Generic.List$1.System$Collections$ICollection$copyTo start.*/
             System$Collections$ICollection$copyTo: function (array, arrayIndex) {
                 if ((array != null) && (System.Array.getRank(array) !== 1)) {
                     throw new System.ArgumentException.$ctor1("array");
@@ -21700,6 +23169,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 System.Array.copy(this._items, 0, array, arrayIndex, this._size);
             },
+            /*System.Collections.Generic.List$1.System$Collections$ICollection$copyTo end.*/
+
+            /*System.Collections.Generic.List$1.CopyTo$1 start.*/
             CopyTo$1: function (index, array, arrayIndex, count) {
                 if (((this._size - index) | 0) < count) {
                     throw new System.ArgumentException.ctor();
@@ -21707,9 +23179,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 System.Array.copy(this._items, index, array, arrayIndex, count);
             },
+            /*System.Collections.Generic.List$1.CopyTo$1 end.*/
+
+            /*System.Collections.Generic.List$1.copyTo start.*/
             copyTo: function (array, arrayIndex) {
                 System.Array.copy(this._items, 0, array, arrayIndex, this._size);
             },
+            /*System.Collections.Generic.List$1.copyTo end.*/
+
+            /*System.Collections.Generic.List$1.EnsureCapacity start.*/
             EnsureCapacity: function (min) {
                 if (this._items.length < min) {
                     var newCapacity = this._items.length === 0 ? System.Collections.Generic.List$1(T)._defaultCapacity : Bridge.Int.mul(this._items.length, 2);
@@ -21722,9 +23200,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this.Capacity = newCapacity;
                 }
             },
+            /*System.Collections.Generic.List$1.EnsureCapacity end.*/
+
+            /*System.Collections.Generic.List$1.Exists start.*/
             Exists: function (match) {
                 return this.FindIndex$2(match) !== -1;
             },
+            /*System.Collections.Generic.List$1.Exists end.*/
+
+            /*System.Collections.Generic.List$1.Find start.*/
             Find: function (match) {
                 if (Bridge.staticEquals(match, null)) {
                     throw new System.ArgumentNullException.$ctor1("match");
@@ -21737,6 +23221,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return Bridge.getDefaultValue(T);
             },
+            /*System.Collections.Generic.List$1.Find end.*/
+
+            /*System.Collections.Generic.List$1.FindAll start.*/
             FindAll: function (match) {
                 if (Bridge.staticEquals(match, null)) {
                     throw new System.ArgumentNullException.$ctor1("match");
@@ -21750,12 +23237,21 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return list;
             },
+            /*System.Collections.Generic.List$1.FindAll end.*/
+
+            /*System.Collections.Generic.List$1.FindIndex$2 start.*/
             FindIndex$2: function (match) {
                 return this.FindIndex(0, this._size, match);
             },
+            /*System.Collections.Generic.List$1.FindIndex$2 end.*/
+
+            /*System.Collections.Generic.List$1.FindIndex$1 start.*/
             FindIndex$1: function (startIndex, match) {
                 return this.FindIndex(startIndex, ((this._size - startIndex) | 0), match);
             },
+            /*System.Collections.Generic.List$1.FindIndex$1 end.*/
+
+            /*System.Collections.Generic.List$1.FindIndex start.*/
             FindIndex: function (startIndex, count, match) {
                 if ((startIndex >>> 0) > (this._size >>> 0)) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("startIndex");
@@ -21777,6 +23273,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return -1;
             },
+            /*System.Collections.Generic.List$1.FindIndex end.*/
+
+            /*System.Collections.Generic.List$1.FindLast start.*/
             FindLast: function (match) {
                 if (Bridge.staticEquals(match, null)) {
                     throw new System.ArgumentNullException.$ctor1("match");
@@ -21789,12 +23288,21 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return Bridge.getDefaultValue(T);
             },
+            /*System.Collections.Generic.List$1.FindLast end.*/
+
+            /*System.Collections.Generic.List$1.FindLastIndex$2 start.*/
             FindLastIndex$2: function (match) {
                 return this.FindLastIndex(((this._size - 1) | 0), this._size, match);
             },
+            /*System.Collections.Generic.List$1.FindLastIndex$2 end.*/
+
+            /*System.Collections.Generic.List$1.FindLastIndex$1 start.*/
             FindLastIndex$1: function (startIndex, match) {
                 return this.FindLastIndex(startIndex, ((startIndex + 1) | 0), match);
             },
+            /*System.Collections.Generic.List$1.FindLastIndex$1 end.*/
+
+            /*System.Collections.Generic.List$1.FindLastIndex start.*/
             FindLastIndex: function (startIndex, count, match) {
                 if (Bridge.staticEquals(match, null)) {
                     throw new System.ArgumentNullException.$ctor1("match");
@@ -21822,6 +23330,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return -1;
             },
+            /*System.Collections.Generic.List$1.FindLastIndex end.*/
+
+            /*System.Collections.Generic.List$1.ForEach start.*/
             ForEach: function (action) {
                 if (Bridge.staticEquals(action, null)) {
                     throw new System.ArgumentNullException.$ctor1("match");
@@ -21840,15 +23351,27 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     throw new System.InvalidOperationException.ctor();
                 }
             },
+            /*System.Collections.Generic.List$1.ForEach end.*/
+
+            /*System.Collections.Generic.List$1.GetEnumerator start.*/
             GetEnumerator: function () {
                 return new (System.Collections.Generic.List$1.Enumerator(T)).$ctor1(this);
             },
+            /*System.Collections.Generic.List$1.GetEnumerator end.*/
+
+            /*System.Collections.Generic.List$1.System$Collections$Generic$IEnumerable$1$GetEnumerator start.*/
             System$Collections$Generic$IEnumerable$1$GetEnumerator: function () {
                 return new (System.Collections.Generic.List$1.Enumerator(T)).$ctor1(this).$clone();
             },
+            /*System.Collections.Generic.List$1.System$Collections$Generic$IEnumerable$1$GetEnumerator end.*/
+
+            /*System.Collections.Generic.List$1.System$Collections$IEnumerable$GetEnumerator start.*/
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return new (System.Collections.Generic.List$1.Enumerator(T)).$ctor1(this).$clone();
             },
+            /*System.Collections.Generic.List$1.System$Collections$IEnumerable$GetEnumerator end.*/
+
+            /*System.Collections.Generic.List$1.GetRange start.*/
             GetRange: function (index, count) {
                 if (index < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("index");
@@ -21867,21 +23390,33 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 list._size = count;
                 return list;
             },
+            /*System.Collections.Generic.List$1.GetRange end.*/
+
+            /*System.Collections.Generic.List$1.indexOf start.*/
             indexOf: function (item) {
                 return System.Array.indexOfT(this._items, item, 0, this._size);
             },
+            /*System.Collections.Generic.List$1.indexOf end.*/
+
+            /*System.Collections.Generic.List$1.System$Collections$IList$indexOf start.*/
             System$Collections$IList$indexOf: function (item) {
                 if (System.Collections.Generic.List$1(T).IsCompatibleObject(item)) {
                     return this.indexOf(Bridge.cast(Bridge.unbox(item, T), T));
                 }
                 return -1;
             },
+            /*System.Collections.Generic.List$1.System$Collections$IList$indexOf end.*/
+
+            /*System.Collections.Generic.List$1.IndexOf start.*/
             IndexOf: function (item, index) {
                 if (index > this._size) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("index");
                 }
                 return System.Array.indexOfT(this._items, item, index, ((this._size - index) | 0));
             },
+            /*System.Collections.Generic.List$1.IndexOf end.*/
+
+            /*System.Collections.Generic.List$1.IndexOf$1 start.*/
             IndexOf$1: function (item, index, count) {
                 if (index > this._size) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("index");
@@ -21893,6 +23428,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return System.Array.indexOfT(this._items, item, index, count);
             },
+            /*System.Collections.Generic.List$1.IndexOf$1 end.*/
+
+            /*System.Collections.Generic.List$1.insert start.*/
             insert: function (index, item) {
                 if ((index >>> 0) > (this._size >>> 0)) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("index");
@@ -21907,6 +23445,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._size = (this._size + 1) | 0;
                 this._version = (this._version + 1) | 0;
             },
+            /*System.Collections.Generic.List$1.insert end.*/
+
+            /*System.Collections.Generic.List$1.System$Collections$IList$insert start.*/
             System$Collections$IList$insert: function (index, item) {
                 if (item == null && !(Bridge.getDefaultValue(T) == null)) {
                     throw new System.ArgumentNullException.$ctor1("item");
@@ -21923,6 +23464,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.List$1.System$Collections$IList$insert end.*/
+
+            /*System.Collections.Generic.List$1.InsertRange start.*/
             InsertRange: function (index, collection) {
                 if (collection == null) {
                     throw new System.ArgumentNullException.$ctor1("collection");
@@ -21968,6 +23512,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 this._version = (this._version + 1) | 0;
             },
+            /*System.Collections.Generic.List$1.InsertRange end.*/
+
+            /*System.Collections.Generic.List$1.LastIndexOf start.*/
             LastIndexOf: function (item) {
                 if (this._size === 0) {
                     return -1;
@@ -21975,12 +23522,18 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     return this.LastIndexOf$2(item, ((this._size - 1) | 0), this._size);
                 }
             },
+            /*System.Collections.Generic.List$1.LastIndexOf end.*/
+
+            /*System.Collections.Generic.List$1.LastIndexOf$1 start.*/
             LastIndexOf$1: function (item, index) {
                 if (index >= this._size) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("index");
                 }
                 return this.LastIndexOf$2(item, index, ((index + 1) | 0));
             },
+            /*System.Collections.Generic.List$1.LastIndexOf$1 end.*/
+
+            /*System.Collections.Generic.List$1.LastIndexOf$2 start.*/
             LastIndexOf$2: function (item, index, count) {
                 if ((this.Count !== 0) && (index < 0)) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("index");
@@ -22004,6 +23557,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return System.Array.lastIndexOfT(this._items, item, index, count);
             },
+            /*System.Collections.Generic.List$1.LastIndexOf$2 end.*/
+
+            /*System.Collections.Generic.List$1.remove start.*/
             remove: function (item) {
                 var index = this.indexOf(item);
                 if (index >= 0) {
@@ -22013,11 +23569,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return false;
             },
+            /*System.Collections.Generic.List$1.remove end.*/
+
+            /*System.Collections.Generic.List$1.System$Collections$IList$remove start.*/
             System$Collections$IList$remove: function (item) {
                 if (System.Collections.Generic.List$1(T).IsCompatibleObject(item)) {
                     this.remove(Bridge.cast(Bridge.unbox(item, T), T));
                 }
             },
+            /*System.Collections.Generic.List$1.System$Collections$IList$remove end.*/
+
+            /*System.Collections.Generic.List$1.RemoveAll start.*/
             RemoveAll: function (match) {
                 if (Bridge.staticEquals(match, null)) {
                     throw new System.ArgumentNullException.$ctor1("match");
@@ -22051,6 +23613,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._version = (this._version + 1) | 0;
                 return result;
             },
+            /*System.Collections.Generic.List$1.RemoveAll end.*/
+
+            /*System.Collections.Generic.List$1.removeAt start.*/
             removeAt: function (index) {
                 if ((index >>> 0) >= (this._size >>> 0)) {
                     throw new System.ArgumentOutOfRangeException.ctor();
@@ -22062,6 +23627,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._items[System.Array.index(this._size, this._items)] = Bridge.getDefaultValue(T);
                 this._version = (this._version + 1) | 0;
             },
+            /*System.Collections.Generic.List$1.removeAt end.*/
+
+            /*System.Collections.Generic.List$1.RemoveRange start.*/
             RemoveRange: function (index, count) {
                 if (index < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("index");
@@ -22087,9 +23655,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this._version = (this._version + 1) | 0;
                 }
             },
+            /*System.Collections.Generic.List$1.RemoveRange end.*/
+
+            /*System.Collections.Generic.List$1.Reverse start.*/
             Reverse: function () {
                 this.Reverse$1(0, this.Count);
             },
+            /*System.Collections.Generic.List$1.Reverse end.*/
+
+            /*System.Collections.Generic.List$1.Reverse$1 start.*/
             Reverse$1: function (index, count) {
                 if (index < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("index");
@@ -22105,12 +23679,21 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 System.Array.reverse(this._items, index, count);
                 this._version = (this._version + 1) | 0;
             },
+            /*System.Collections.Generic.List$1.Reverse$1 end.*/
+
+            /*System.Collections.Generic.List$1.Sort start.*/
             Sort: function () {
                 this.Sort$3(0, this.Count, null);
             },
+            /*System.Collections.Generic.List$1.Sort end.*/
+
+            /*System.Collections.Generic.List$1.Sort$1 start.*/
             Sort$1: function (comparer) {
                 this.Sort$3(0, this.Count, comparer);
             },
+            /*System.Collections.Generic.List$1.Sort$1 end.*/
+
+            /*System.Collections.Generic.List$1.Sort$3 start.*/
             Sort$3: function (index, count, comparer) {
                 if (index < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("index");
@@ -22127,6 +23710,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 System.Array.sort(this._items, index, count, comparer);
                 this._version = (this._version + 1) | 0;
             },
+            /*System.Collections.Generic.List$1.Sort$3 end.*/
+
+            /*System.Collections.Generic.List$1.Sort$2 start.*/
             Sort$2: function (comparison) {
                 if (Bridge.staticEquals(comparison, null)) {
                     throw new System.ArgumentNullException.$ctor1("comparison");
@@ -22145,6 +23731,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.List$1.Sort$2 end.*/
+
+            /*System.Collections.Generic.List$1.ToArray start.*/
             ToArray: function () {
 
                 var array = System.Array.init(this._size, function (){
@@ -22153,12 +23742,18 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 System.Array.copy(this._items, 0, array, 0, this._size);
                 return array;
             },
+            /*System.Collections.Generic.List$1.ToArray end.*/
+
+            /*System.Collections.Generic.List$1.TrimExcess start.*/
             TrimExcess: function () {
                 var threshold = Bridge.Int.clip32(this._items.length * 0.9);
                 if (this._size < threshold) {
                     this.Capacity = this._size;
                 }
             },
+            /*System.Collections.Generic.List$1.TrimExcess end.*/
+
+            /*System.Collections.Generic.List$1.TrueForAll start.*/
             TrueForAll: function (match) {
                 if (Bridge.staticEquals(match, null)) {
                     throw new System.ArgumentNullException.$ctor1("match");
@@ -22171,6 +23766,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return true;
             },
+            /*System.Collections.Generic.List$1.TrueForAll end.*/
+
+            /*System.Collections.Generic.List$1.toJSON start.*/
             toJSON: function () {
                 var newItems = System.Array.init(this._size, function (){
                     return Bridge.getDefaultValue(T);
@@ -22180,12 +23778,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
 
                 return newItems;
-            }
+            },
+            /*System.Collections.Generic.List$1.toJSON end.*/
+
+
         }
     }; });
+    /*System.Collections.Generic.List$1 end.*/
 
     // @source KeyNotFoundException.js
 
+    /*System.Collections.Generic.KeyNotFoundException start.*/
     Bridge.define("System.Collections.Generic.KeyNotFoundException", {
         inherits: [System.SystemException],
         ctors: {
@@ -22206,6 +23809,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Collections.Generic.KeyNotFoundException end.*/
 
     // @source List.js
 
@@ -22231,6 +23835,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
     // @source CharEnumerator.js
 
+    /*System.CharEnumerator start.*/
     Bridge.define("System.CharEnumerator", {
         inherits: [System.Collections.IEnumerator,System.Collections.Generic.IEnumerator$1(System.Char),System.IDisposable,System.ICloneable],
         fields: {
@@ -22271,9 +23876,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.CharEnumerator.clone start.*/
             clone: function () {
                 return Bridge.clone(this);
             },
+            /*System.CharEnumerator.clone end.*/
+
+            /*System.CharEnumerator.moveNext start.*/
             moveNext: function () {
                 if (this._index < (((this._str.length - 1) | 0))) {
                     this._index = (this._index + 1) | 0;
@@ -22284,18 +23893,28 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return false;
             },
+            /*System.CharEnumerator.moveNext end.*/
+
+            /*System.CharEnumerator.Dispose start.*/
             Dispose: function () {
                 if (this._str != null) {
                     this._index = this._str.length;
                 }
                 this._str = null;
             },
+            /*System.CharEnumerator.Dispose end.*/
+
+            /*System.CharEnumerator.reset start.*/
             reset: function () {
                 this._currentElement = 0;
                 this._index = -1;
-            }
+            },
+            /*System.CharEnumerator.reset end.*/
+
+
         }
     });
+    /*System.CharEnumerator end.*/
 
     // @source Task.js
 
@@ -23302,6 +24921,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
     // @source SerializableAttribute.js
 
+    /*System.SerializableAttribute start.*/
     Bridge.define("System.SerializableAttribute", {
         inherits: [System.Attribute],
         ctors: {
@@ -23311,6 +24931,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.SerializableAttribute end.*/
 
     // @source INotifyPropertyChanged.js
 
@@ -28715,6 +30336,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
     // @source CollectionDataContractAttribute.js
 
+    /*System.Runtime.Serialization.CollectionDataContractAttribute start.*/
     Bridge.define("System.Runtime.Serialization.CollectionDataContractAttribute", {
         inherits: [System.Attribute],
         fields: {
@@ -28824,9 +30446,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Runtime.Serialization.CollectionDataContractAttribute end.*/
 
     // @source ContractNamespaceAttribute.js
 
+    /*System.Runtime.Serialization.ContractNamespaceAttribute start.*/
     Bridge.define("System.Runtime.Serialization.ContractNamespaceAttribute", {
         inherits: [System.Attribute],
         fields: {
@@ -28856,9 +30480,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Runtime.Serialization.ContractNamespaceAttribute end.*/
 
     // @source DataContractAttribute.js
 
+    /*System.Runtime.Serialization.DataContractAttribute start.*/
     Bridge.define("System.Runtime.Serialization.DataContractAttribute", {
         inherits: [System.Attribute],
         fields: {
@@ -28920,9 +30546,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Runtime.Serialization.DataContractAttribute end.*/
 
     // @source DataMemberAttribute.js
 
+    /*System.Runtime.Serialization.DataMemberAttribute start.*/
     Bridge.define("System.Runtime.Serialization.DataMemberAttribute", {
         inherits: [System.Attribute],
         fields: {
@@ -28986,9 +30614,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Runtime.Serialization.DataMemberAttribute end.*/
 
     // @source EnumMemberAttribute.js
 
+    /*System.Runtime.Serialization.EnumMemberAttribute start.*/
     Bridge.define("System.Runtime.Serialization.EnumMemberAttribute", {
         inherits: [System.Attribute],
         fields: {
@@ -29018,21 +30648,27 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Runtime.Serialization.EnumMemberAttribute end.*/
 
     // @source IDeserializationCallback.js
 
+    /*System.Runtime.Serialization.IDeserializationCallback start.*/
     Bridge.define("System.Runtime.Serialization.IDeserializationCallback", {
         $kind: "interface"
     });
+    /*System.Runtime.Serialization.IDeserializationCallback end.*/
 
     // @source IFormatterConverter.js
 
+    /*System.Runtime.Serialization.IFormatterConverter start.*/
     Bridge.define("System.Runtime.Serialization.IFormatterConverter", {
         $kind: "interface"
     });
+    /*System.Runtime.Serialization.IFormatterConverter end.*/
 
     // @source IgnoreDataMemberAttribute.js
 
+    /*System.Runtime.Serialization.IgnoreDataMemberAttribute start.*/
     Bridge.define("System.Runtime.Serialization.IgnoreDataMemberAttribute", {
         inherits: [System.Attribute],
         ctors: {
@@ -29042,9 +30678,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Runtime.Serialization.IgnoreDataMemberAttribute end.*/
 
     // @source InvalidDataContractException.js
 
+    /*System.Runtime.Serialization.InvalidDataContractException start.*/
     Bridge.define("System.Runtime.Serialization.InvalidDataContractException", {
         inherits: [System.Exception],
         ctors: {
@@ -29062,33 +30700,43 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Runtime.Serialization.InvalidDataContractException end.*/
 
     // @source IObjectReference.js
 
+    /*System.Runtime.Serialization.IObjectReference start.*/
     Bridge.define("System.Runtime.Serialization.IObjectReference", {
         $kind: "interface"
     });
+    /*System.Runtime.Serialization.IObjectReference end.*/
 
     // @source ISafeSerializationData.js
 
+    /*System.Runtime.Serialization.ISafeSerializationData start.*/
     Bridge.define("System.Runtime.Serialization.ISafeSerializationData", {
         $kind: "interface"
     });
+    /*System.Runtime.Serialization.ISafeSerializationData end.*/
 
     // @source ISerializable.js
 
+    /*System.Runtime.Serialization.ISerializable start.*/
     Bridge.define("System.Runtime.Serialization.ISerializable", {
         $kind: "interface"
     });
+    /*System.Runtime.Serialization.ISerializable end.*/
 
     // @source ISerializationSurrogateProvider.js
 
+    /*System.Runtime.Serialization.ISerializationSurrogateProvider start.*/
     Bridge.define("System.Runtime.Serialization.ISerializationSurrogateProvider", {
         $kind: "interface"
     });
+    /*System.Runtime.Serialization.ISerializationSurrogateProvider end.*/
 
     // @source KnownTypeAttribute.js
 
+    /*System.Runtime.Serialization.KnownTypeAttribute start.*/
     Bridge.define("System.Runtime.Serialization.KnownTypeAttribute", {
         inherits: [System.Attribute],
         fields: {
@@ -29124,9 +30772,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Runtime.Serialization.KnownTypeAttribute end.*/
 
     // @source SerializationEntry.js
 
+    /*System.Runtime.Serialization.SerializationEntry start.*/
     Bridge.define("System.Runtime.Serialization.SerializationEntry", {
         $kind: "struct",
         statics: {
@@ -29187,9 +30837,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Runtime.Serialization.SerializationEntry end.*/
 
     // @source SerializationException.js
 
+    /*System.Runtime.Serialization.SerializationException start.*/
     Bridge.define("System.Runtime.Serialization.SerializationException", {
         inherits: [System.SystemException],
         statics: {
@@ -29220,9 +30872,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Runtime.Serialization.SerializationException end.*/
 
     // @source SerializationInfoEnumerator.js
 
+    /*System.Runtime.Serialization.SerializationInfoEnumerator start.*/
     Bridge.define("System.Runtime.Serialization.SerializationInfoEnumerator", {
         inherits: [System.Collections.IEnumerator],
         fields: {
@@ -29279,6 +30933,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
         ctors: {
             ctor: function (members, info, types, numItems) {
                 this.$initialize();
+                System.Diagnostics.Debug.Assert$1(members != null, "[SerializationInfoEnumerator.ctor]members!=null");
+                System.Diagnostics.Debug.Assert$1(info != null, "[SerializationInfoEnumerator.ctor]info!=null");
+                System.Diagnostics.Debug.Assert$1(types != null, "[SerializationInfoEnumerator.ctor]types!=null");
+                System.Diagnostics.Debug.Assert$1(numItems >= 0, "[SerializationInfoEnumerator.ctor]numItems>=0");
+                System.Diagnostics.Debug.Assert$1(members.length >= numItems, "[SerializationInfoEnumerator.ctor]members.Length>=numItems");
+                System.Diagnostics.Debug.Assert$1(info.length >= numItems, "[SerializationInfoEnumerator.ctor]info.Length>=numItems");
+                System.Diagnostics.Debug.Assert$1(types.length >= numItems, "[SerializationInfoEnumerator.ctor]types.Length>=numItems");
 
                 this._members = members;
                 this._data = info;
@@ -29290,6 +30951,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Runtime.Serialization.SerializationInfoEnumerator.moveNext start.*/
             moveNext: function () {
                 if (this._currItem < this._numItems) {
                     this._currItem = (this._currItem + 1) | 0;
@@ -29300,15 +30962,23 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return this._current;
             },
+            /*System.Runtime.Serialization.SerializationInfoEnumerator.moveNext end.*/
+
+            /*System.Runtime.Serialization.SerializationInfoEnumerator.reset start.*/
             reset: function () {
                 this._currItem = -1;
                 this._current = false;
-            }
+            },
+            /*System.Runtime.Serialization.SerializationInfoEnumerator.reset end.*/
+
+
         }
     });
+    /*System.Runtime.Serialization.SerializationInfoEnumerator end.*/
 
     // @source StreamingContext.js
 
+    /*System.Runtime.Serialization.StreamingContext start.*/
     Bridge.define("System.Runtime.Serialization.StreamingContext", {
         $kind: "struct",
         statics: {
@@ -29346,6 +31016,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Runtime.Serialization.StreamingContext.equals start.*/
             equals: function (obj) {
                 if (!(Bridge.is(obj, System.Runtime.Serialization.StreamingContext))) {
                     return false;
@@ -29353,9 +31024,14 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 var ctx = System.Nullable.getValue(Bridge.cast(Bridge.unbox(obj, System.Runtime.Serialization.StreamingContext), System.Runtime.Serialization.StreamingContext));
                 return Bridge.referenceEquals(ctx._additionalContext, this._additionalContext) && ctx._state === this._state;
             },
+            /*System.Runtime.Serialization.StreamingContext.equals end.*/
+
+            /*System.Runtime.Serialization.StreamingContext.getHashCode start.*/
             getHashCode: function () {
                 return this._state;
             },
+            /*System.Runtime.Serialization.StreamingContext.getHashCode end.*/
+
             $clone: function (to) {
                 var s = to || new System.Runtime.Serialization.StreamingContext();
                 s._additionalContext = this._additionalContext;
@@ -29364,9 +31040,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Runtime.Serialization.StreamingContext end.*/
 
     // @source StreamingContextStates.js
 
+    /*System.Runtime.Serialization.StreamingContextStates start.*/
     Bridge.define("System.Runtime.Serialization.StreamingContextStates", {
         $kind: "enum",
         statics: {
@@ -29384,33 +31062,43 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
         },
         $flags: true
     });
+    /*System.Runtime.Serialization.StreamingContextStates end.*/
 
     // @source OnSerializingAttribute.js
 
+    /*System.Runtime.Serialization.OnSerializingAttribute start.*/
     Bridge.define("System.Runtime.Serialization.OnSerializingAttribute", {
         inherits: [System.Attribute]
     });
+    /*System.Runtime.Serialization.OnSerializingAttribute end.*/
 
     // @source OnSerializedAttribute.js
 
+    /*System.Runtime.Serialization.OnSerializedAttribute start.*/
     Bridge.define("System.Runtime.Serialization.OnSerializedAttribute", {
         inherits: [System.Attribute]
     });
+    /*System.Runtime.Serialization.OnSerializedAttribute end.*/
 
     // @source OnDeserializingAttribute.js
 
+    /*System.Runtime.Serialization.OnDeserializingAttribute start.*/
     Bridge.define("System.Runtime.Serialization.OnDeserializingAttribute", {
         inherits: [System.Attribute]
     });
+    /*System.Runtime.Serialization.OnDeserializingAttribute end.*/
 
     // @source OnDeserializedAttribute.js
 
+    /*System.Runtime.Serialization.OnDeserializedAttribute start.*/
     Bridge.define("System.Runtime.Serialization.OnDeserializedAttribute", {
         inherits: [System.Attribute]
     });
+    /*System.Runtime.Serialization.OnDeserializedAttribute end.*/
 
     // @source SecurityException.js
 
+    /*System.Security.SecurityException start.*/
     Bridge.define("System.Security.SecurityException", {
         inherits: [System.SystemException],
         statics: {
@@ -29475,14 +31163,20 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Security.SecurityException.toString start.*/
             toString: function () {
                 return Bridge.toString(this);
-            }
+            },
+            /*System.Security.SecurityException.toString end.*/
+
+
         }
     });
+    /*System.Security.SecurityException end.*/
 
     // @source UnauthorizedAccessException.js
 
+    /*System.UnauthorizedAccessException start.*/
     Bridge.define("System.UnauthorizedAccessException", {
         inherits: [System.SystemException],
         ctors: {
@@ -29503,9 +31197,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.UnauthorizedAccessException end.*/
 
     // @source UnhandledExceptionEventArgs.js
 
+    /*System.UnhandledExceptionEventArgs start.*/
     Bridge.define("System.UnhandledExceptionEventArgs", {
         fields: {
             _exception: null,
@@ -29532,6 +31228,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.UnhandledExceptionEventArgs end.*/
 
     // @source Regex.js
 
@@ -35576,6 +37273,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
     // @source BitConverter.js
 
+    /*System.BitConverter start.*/
     Bridge.define("System.BitConverter", {
         statics: {
             fields: {
@@ -35589,52 +37287,80 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
             },
             methods: {
+                /*System.BitConverter.getBytes:static start.*/
                 getBytes: function (value) {
                     return value ? System.Array.init([1], System.Byte) : System.Array.init([0], System.Byte);
                 },
+                /*System.BitConverter.getBytes:static end.*/
+
+                /*System.BitConverter.getBytes$1:static start.*/
                 getBytes$1: function (value) {
                     return System.BitConverter.getBytes$3(Bridge.Int.sxs(value & 65535));
                 },
+                /*System.BitConverter.getBytes$1:static end.*/
+
+                /*System.BitConverter.getBytes$3:static start.*/
                 getBytes$3: function (value) {
                     var view = System.BitConverter.view(2);
                     view.setInt16(0, value);
 
                     return System.BitConverter.getViewBytes(view);
                 },
+                /*System.BitConverter.getBytes$3:static end.*/
+
+                /*System.BitConverter.getBytes$4:static start.*/
                 getBytes$4: function (value) {
                     var view = System.BitConverter.view(4);
                     view.setInt32(0, value);
 
                     return System.BitConverter.getViewBytes(view);
                 },
+                /*System.BitConverter.getBytes$4:static end.*/
+
+                /*System.BitConverter.getBytes$5:static start.*/
                 getBytes$5: function (value) {
                     var view = System.BitConverter.getView(value);
 
                     return System.BitConverter.getViewBytes(view);
                 },
+                /*System.BitConverter.getBytes$5:static end.*/
+
+                /*System.BitConverter.getBytes$7:static start.*/
                 getBytes$7: function (value) {
                     var view = System.BitConverter.view(2);
                     view.setUint16(0, value);
 
                     return System.BitConverter.getViewBytes(view);
                 },
+                /*System.BitConverter.getBytes$7:static end.*/
+
+                /*System.BitConverter.getBytes$8:static start.*/
                 getBytes$8: function (value) {
                     var view = System.BitConverter.view(4);
                     view.setUint32(0, value);
 
                     return System.BitConverter.getViewBytes(view);
                 },
+                /*System.BitConverter.getBytes$8:static end.*/
+
+                /*System.BitConverter.getBytes$9:static start.*/
                 getBytes$9: function (value) {
                     var view = System.BitConverter.getView(System.Int64.clip64(value));
 
                     return System.BitConverter.getViewBytes(view);
                 },
+                /*System.BitConverter.getBytes$9:static end.*/
+
+                /*System.BitConverter.getBytes$6:static start.*/
                 getBytes$6: function (value) {
                     var view = System.BitConverter.view(4);
                     view.setFloat32(0, value);
 
                     return System.BitConverter.getViewBytes(view);
                 },
+                /*System.BitConverter.getBytes$6:static end.*/
+
+                /*System.BitConverter.getBytes$2:static start.*/
                 getBytes$2: function (value) {
                     if (isNaN(value)) {
                         if (System.BitConverter.isLittleEndian) {
@@ -35649,9 +37375,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return System.BitConverter.getViewBytes(view);
                 },
+                /*System.BitConverter.getBytes$2:static end.*/
+
+                /*System.BitConverter.toChar:static start.*/
                 toChar: function (value, startIndex) {
                     return ((System.BitConverter.toInt16(value, startIndex)) & 65535);
                 },
+                /*System.BitConverter.toChar:static end.*/
+
+                /*System.BitConverter.toInt16:static start.*/
                 toInt16: function (value, startIndex) {
                     System.BitConverter.checkArguments(value, startIndex, 2);
 
@@ -35661,6 +37393,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return view.getInt16(0);
                 },
+                /*System.BitConverter.toInt16:static end.*/
+
+                /*System.BitConverter.toInt32:static start.*/
                 toInt32: function (value, startIndex) {
                     System.BitConverter.checkArguments(value, startIndex, 4);
 
@@ -35670,6 +37405,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return view.getInt32(0);
                 },
+                /*System.BitConverter.toInt32:static end.*/
+
+                /*System.BitConverter.toInt64:static start.*/
                 toInt64: function (value, startIndex) {
                     System.BitConverter.checkArguments(value, startIndex, 8);
 
@@ -35682,17 +37420,29 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return System.Int64([high, low]);
                 },
+                /*System.BitConverter.toInt64:static end.*/
+
+                /*System.BitConverter.toUInt16:static start.*/
                 toUInt16: function (value, startIndex) {
                     return ((System.BitConverter.toInt16(value, startIndex)) & 65535);
                 },
+                /*System.BitConverter.toUInt16:static end.*/
+
+                /*System.BitConverter.toUInt32:static start.*/
                 toUInt32: function (value, startIndex) {
                     return ((System.BitConverter.toInt32(value, startIndex)) >>> 0);
                 },
+                /*System.BitConverter.toUInt32:static end.*/
+
+                /*System.BitConverter.toUInt64:static start.*/
                 toUInt64: function (value, startIndex) {
                     var l = System.BitConverter.toInt64(value, startIndex);
 
                     return System.UInt64([l.value.low, l.value.high]);
                 },
+                /*System.BitConverter.toUInt64:static end.*/
+
+                /*System.BitConverter.toSingle:static start.*/
                 toSingle: function (value, startIndex) {
                     System.BitConverter.checkArguments(value, startIndex, 4);
 
@@ -35702,6 +37452,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return view.getFloat32(0);
                 },
+                /*System.BitConverter.toSingle:static end.*/
+
+                /*System.BitConverter.toDouble:static start.*/
                 toDouble: function (value, startIndex) {
                     System.BitConverter.checkArguments(value, startIndex, 8);
 
@@ -35711,6 +37464,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return view.getFloat64(0);
                 },
+                /*System.BitConverter.toDouble:static end.*/
+
+                /*System.BitConverter.toString$2:static start.*/
                 toString$2: function (value, startIndex, length) {
                     if (value == null) {
                         throw new System.ArgumentNullException.$ctor1("value");
@@ -35751,6 +37507,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return System.String.fromCharArray(chArray, 0, ((chArray.length - 1) | 0));
                 },
+                /*System.BitConverter.toString$2:static end.*/
+
+                /*System.BitConverter.toString:static start.*/
                 toString: function (value) {
                     if (value == null) {
                         throw new System.ArgumentNullException.$ctor1("value");
@@ -35758,6 +37517,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return System.BitConverter.toString$2(value, 0, value.length);
                 },
+                /*System.BitConverter.toString:static end.*/
+
+                /*System.BitConverter.toString$1:static start.*/
                 toString$1: function (value, startIndex) {
                     if (value == null) {
                         throw new System.ArgumentNullException.$ctor1("value");
@@ -35765,22 +37527,34 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return System.BitConverter.toString$2(value, startIndex, ((value.length - startIndex) | 0));
                 },
+                /*System.BitConverter.toString$1:static end.*/
+
+                /*System.BitConverter.toBoolean:static start.*/
                 toBoolean: function (value, startIndex) {
                     System.BitConverter.checkArguments(value, startIndex, 1);
 
                     return (value[System.Array.index(startIndex, value)] === 0) ? false : true;
                 },
+                /*System.BitConverter.toBoolean:static end.*/
+
+                /*System.BitConverter.doubleToInt64Bits:static start.*/
                 doubleToInt64Bits: function (value) {
                     var view = System.BitConverter.view(8);
                     view.setFloat64(0, value);
 
                     return System.Int64([view.getInt32(4), view.getInt32(0)]);
                 },
+                /*System.BitConverter.doubleToInt64Bits:static end.*/
+
+                /*System.BitConverter.int64BitsToDouble:static start.*/
                 int64BitsToDouble: function (value) {
                     var view = System.BitConverter.getView(value);
 
                     return view.getFloat64(0);
                 },
+                /*System.BitConverter.int64BitsToDouble:static end.*/
+
+                /*System.BitConverter.getHexValue:static start.*/
                 getHexValue: function (i) {
                     if (i < 10) {
                         return ((((i + 48) | 0)) & 65535);
@@ -35788,6 +37562,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return ((((((i - 10) | 0) + 65) | 0)) & 65535);
                 },
+                /*System.BitConverter.getHexValue:static end.*/
+
+                /*System.BitConverter.getViewBytes:static start.*/
                 getViewBytes: function (view, count, startIndex) {
                     if (count === void 0) { count = -1; }
                     if (startIndex === void 0) { startIndex = 0; }
@@ -35809,6 +37586,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return r;
                 },
+                /*System.BitConverter.getViewBytes:static end.*/
+
+                /*System.BitConverter.setViewBytes:static start.*/
                 setViewBytes: function (view, value, count, startIndex) {
                     if (count === void 0) { count = -1; }
                     if (startIndex === void 0) { startIndex = 0; }
@@ -35826,12 +37606,18 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                         }
                     }
                 },
+                /*System.BitConverter.setViewBytes:static end.*/
+
+                /*System.BitConverter.view:static start.*/
                 view: function (length) {
                     var buffer = new ArrayBuffer(length);
                     var view = new DataView(buffer);
 
                     return view;
                 },
+                /*System.BitConverter.view:static end.*/
+
+                /*System.BitConverter.getView:static start.*/
                 getView: function (value) {
                     var view = System.BitConverter.view(8);
 
@@ -35840,6 +37626,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return view;
                 },
+                /*System.BitConverter.getView:static end.*/
+
+                /*System.BitConverter.getIsLittleEndian:static start.*/
                 getIsLittleEndian: function () {
                     var view = System.BitConverter.view(2);
 
@@ -35852,6 +37641,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return false;
                 },
+                /*System.BitConverter.getIsLittleEndian:static end.*/
+
+                /*System.BitConverter.checkArguments:static start.*/
                 checkArguments: function (value, startIndex, size) {
                     if (value == null) {
                         throw new System.ArgumentNullException.$ctor1("null");
@@ -35864,13 +37656,18 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     if (startIndex > ((value.length - size) | 0)) {
                         throw new System.ArgumentException.$ctor1(System.BitConverter.arg_ArrayPlusOffTooSmall);
                     }
-                }
+                },
+                /*System.BitConverter.checkArguments:static end.*/
+
+
             }
         }
     });
+    /*System.BitConverter end.*/
 
     // @source BitArray.js
 
+    /*System.Collections.BitArray start.*/
     Bridge.define("System.Collections.BitArray", {
         inherits: [System.Collections.ICollection,System.ICloneable],
         statics: {
@@ -35889,9 +37686,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
             },
             methods: {
+                /*System.Collections.BitArray.GetArrayLength:static start.*/
                 GetArrayLength: function (n, div) {
                     return n > 0 ? ((((((Bridge.Int.div((((n - 1) | 0)), div)) | 0)) + 1) | 0)) : 0;
-                }
+                },
+                /*System.Collections.BitArray.GetArrayLength:static end.*/
+
+
             }
         },
         fields: {
@@ -36069,6 +37870,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             setItem: function (index, value) {
                 this.Set(index, value);
             },
+            /*System.Collections.BitArray.copyTo start.*/
             copyTo: function (array, index) {
                 if (array == null) {
                     throw new System.ArgumentNullException.$ctor1("array");
@@ -36107,6 +37909,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     throw new System.ArgumentException.$ctor1("Only supported array types for CopyTo on BitArrays are Boolean[], Int32[] and Byte[].");
                 }
             },
+            /*System.Collections.BitArray.copyTo end.*/
+
+            /*System.Collections.BitArray.Get start.*/
             Get: function (index) {
                 if (index < 0 || index >= this.Length) {
                     throw new System.ArgumentOutOfRangeException.$ctor4("index", "Index was out of range. Must be non-negative and less than the size of the collection.");
@@ -36114,6 +37919,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return (this.m_array[System.Array.index(((Bridge.Int.div(index, 32)) | 0), this.m_array)] & (1 << (index % 32))) !== 0;
             },
+            /*System.Collections.BitArray.Get end.*/
+
+            /*System.Collections.BitArray.Set start.*/
             Set: function (index, value) {
                 var $t, $t1;
                 if (index < 0 || index >= this.Length) {
@@ -36128,6 +37936,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 this._version = (this._version + 1) | 0;
             },
+            /*System.Collections.BitArray.Set end.*/
+
+            /*System.Collections.BitArray.SetAll start.*/
             SetAll: function (value) {
                 var fillValue = value ? (-1) : 0;
                 var ints = System.Collections.BitArray.GetArrayLength(this.m_length, System.Collections.BitArray.BitsPerInt32);
@@ -36137,6 +37948,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 this._version = (this._version + 1) | 0;
             },
+            /*System.Collections.BitArray.SetAll end.*/
+
+            /*System.Collections.BitArray.And start.*/
             And: function (value) {
                 if (value == null) {
                     throw new System.ArgumentNullException.$ctor1("value");
@@ -36153,6 +37967,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._version = (this._version + 1) | 0;
                 return this;
             },
+            /*System.Collections.BitArray.And end.*/
+
+            /*System.Collections.BitArray.Or start.*/
             Or: function (value) {
                 if (value == null) {
                     throw new System.ArgumentNullException.$ctor1("value");
@@ -36169,6 +37986,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._version = (this._version + 1) | 0;
                 return this;
             },
+            /*System.Collections.BitArray.Or end.*/
+
+            /*System.Collections.BitArray.Xor start.*/
             Xor: function (value) {
                 if (value == null) {
                     throw new System.ArgumentNullException.$ctor1("value");
@@ -36185,6 +38005,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._version = (this._version + 1) | 0;
                 return this;
             },
+            /*System.Collections.BitArray.Xor end.*/
+
+            /*System.Collections.BitArray.Not start.*/
             Not: function () {
                 var ints = System.Collections.BitArray.GetArrayLength(this.m_length, System.Collections.BitArray.BitsPerInt32);
                 for (var i = 0; i < ints; i = (i + 1) | 0) {
@@ -36194,20 +38017,31 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._version = (this._version + 1) | 0;
                 return this;
             },
+            /*System.Collections.BitArray.Not end.*/
+
+            /*System.Collections.BitArray.clone start.*/
             clone: function () {
                 var bitArray = new System.Collections.BitArray.$ctor5(this.m_array);
                 bitArray._version = this._version;
                 bitArray.m_length = this.m_length;
                 return bitArray;
             },
+            /*System.Collections.BitArray.clone end.*/
+
+            /*System.Collections.BitArray.GetEnumerator start.*/
             GetEnumerator: function () {
                 return new System.Collections.BitArray.BitArrayEnumeratorSimple(this);
-            }
+            },
+            /*System.Collections.BitArray.GetEnumerator end.*/
+
+
         }
     });
+    /*System.Collections.BitArray end.*/
 
     // @source BitArrayEnumeratorSimple.js
 
+    /*System.Collections.BitArray+BitArrayEnumeratorSimple start.*/
     Bridge.define("System.Collections.BitArray.BitArrayEnumeratorSimple", {
         inherits: [System.Collections.IEnumerator],
         $kind: "nested class",
@@ -36244,6 +38078,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.BitArray+BitArrayEnumeratorSimple.moveNext start.*/
             moveNext: function () {
                 if (this.version !== this.bitarray._version) {
                     throw new System.InvalidOperationException.$ctor1("Collection was modified; enumeration operation may not execute.");
@@ -36258,17 +38093,25 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return false;
             },
+            /*System.Collections.BitArray+BitArrayEnumeratorSimple.moveNext end.*/
+
+            /*System.Collections.BitArray+BitArrayEnumeratorSimple.reset start.*/
             reset: function () {
                 if (this.version !== this.bitarray._version) {
                     throw new System.InvalidOperationException.$ctor1("Collection was modified; enumeration operation may not execute.");
                 }
                 this.index = -1;
-            }
+            },
+            /*System.Collections.BitArray+BitArrayEnumeratorSimple.reset end.*/
+
+
         }
     });
+    /*System.Collections.BitArray+BitArrayEnumeratorSimple end.*/
 
     // @source BitHelper.js
 
+    /*System.Collections.Generic.BitHelper start.*/
     Bridge.define("System.Collections.Generic.BitHelper", {
         statics: {
             fields: {
@@ -36282,9 +38125,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
             },
             methods: {
+                /*System.Collections.Generic.BitHelper.ToIntArrayLength:static start.*/
                 ToIntArrayLength: function (n) {
                     return n > 0 ? (((((Bridge.Int.div((((n - 1) | 0)), System.Collections.Generic.BitHelper.IntSize)) | 0) + 1) | 0)) : 0;
-                }
+                },
+                /*System.Collections.Generic.BitHelper.ToIntArrayLength:static end.*/
+
+
             }
         },
         fields: {
@@ -36299,6 +38146,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.Generic.BitHelper.MarkBit start.*/
             MarkBit: function (bitPosition) {
                 var bitArrayIndex = (Bridge.Int.div(bitPosition, System.Collections.Generic.BitHelper.IntSize)) | 0;
                 if (bitArrayIndex < this._length && bitArrayIndex >= 0) {
@@ -36306,6 +38154,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this._array[System.Array.index(bitArrayIndex, this._array)] = this._array[System.Array.index(bitArrayIndex, this._array)] | flag;
                 }
             },
+            /*System.Collections.Generic.BitHelper.MarkBit end.*/
+
+            /*System.Collections.Generic.BitHelper.IsMarked start.*/
             IsMarked: function (bitPosition) {
                 var bitArrayIndex = (Bridge.Int.div(bitPosition, System.Collections.Generic.BitHelper.IntSize)) | 0;
                 if (bitArrayIndex < this._length && bitArrayIndex >= 0) {
@@ -36313,12 +38164,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     return ((this._array[System.Array.index(bitArrayIndex, this._array)] & flag) !== 0);
                 }
                 return false;
-            }
+            },
+            /*System.Collections.Generic.BitHelper.IsMarked end.*/
+
+
         }
     });
+    /*System.Collections.Generic.BitHelper end.*/
 
     // @source DictionaryKeyCollectionDebugView.js
 
+    /*System.Collections.Generic.DictionaryKeyCollectionDebugView$2 start.*/
     Bridge.define("System.Collections.Generic.DictionaryKeyCollectionDebugView$2", function (TKey, TValue) { return {
         fields: {
             _collection: null
@@ -36345,9 +38201,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.Collections.Generic.DictionaryKeyCollectionDebugView$2 end.*/
 
     // @source DictionaryValueCollectionDebugView.js
 
+    /*System.Collections.Generic.DictionaryValueCollectionDebugView$2 start.*/
     Bridge.define("System.Collections.Generic.DictionaryValueCollectionDebugView$2", function (TKey, TValue) { return {
         fields: {
             _collection: null
@@ -36374,12 +38232,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.Collections.Generic.DictionaryValueCollectionDebugView$2 end.*/
 
     // @source EnumerableHelpers.js
 
+    /*System.Collections.Generic.EnumerableHelpers start.*/
     Bridge.define("Bridge.Collections.EnumerableHelpers", {
         statics: {
             methods: {
+                /*System.Collections.Generic.EnumerableHelpers.ToArray:static start.*/
                 ToArray: function (T, source) {
                     var count = { };
                     var results = { v : Bridge.Collections.EnumerableHelpers.ToArray$1(T, source, count) };
@@ -36388,6 +38249,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }, T);
                     return results.v;
                 },
+                /*System.Collections.Generic.EnumerableHelpers.ToArray:static end.*/
+
+                /*System.Collections.Generic.EnumerableHelpers.ToArray$1:static start.*/
                 ToArray$1: function (T, source, length) {
                     var en = Bridge.getEnumerator(source, T);
                     try {
@@ -36430,13 +38294,18 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     return System.Array.init(0, function (){
                         return Bridge.getDefaultValue(T);
                     }, T);
-                }
+                },
+                /*System.Collections.Generic.EnumerableHelpers.ToArray$1:static end.*/
+
+
             }
         }
     });
+    /*System.Collections.Generic.EnumerableHelpers end.*/
 
     // @source HashSet.js
 
+    /*System.Collections.Generic.HashSet$1 start.*/
     Bridge.define("System.Collections.Generic.HashSet$1", function (T) { return {
         inherits: [System.Collections.Generic.ICollection$1(T),System.Collections.Generic.ISet$1(T),System.Collections.Generic.IReadOnlyCollection$1(T)],
         statics: {
@@ -36451,6 +38320,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
             },
             methods: {
+                /*System.Collections.Generic.HashSet$1.HashSetEquals:static start.*/
                 HashSetEquals: function (set1, set2, comparer) {
                     var $t, $t1, $t2;
                     if (set1 == null) {
@@ -36508,9 +38378,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                         return true;
                     }
                 },
+                /*System.Collections.Generic.HashSet$1.HashSetEquals:static end.*/
+
+                /*System.Collections.Generic.HashSet$1.AreEqualityComparersEqual:static start.*/
                 AreEqualityComparersEqual: function (set1, set2) {
                     return Bridge.equals(set1.Comparer, set2.Comparer);
-                }
+                },
+                /*System.Collections.Generic.HashSet$1.AreEqualityComparersEqual:static end.*/
+
+
             }
         },
         fields: {
@@ -36597,12 +38473,19 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.Generic.HashSet$1.System$Collections$Generic$ICollection$1$add start.*/
             System$Collections$Generic$ICollection$1$add: function (item) {
                 this.AddIfNotPresent(item);
             },
+            /*System.Collections.Generic.HashSet$1.System$Collections$Generic$ICollection$1$add end.*/
+
+            /*System.Collections.Generic.HashSet$1.add start.*/
             add: function (item) {
                 return this.AddIfNotPresent(item);
             },
+            /*System.Collections.Generic.HashSet$1.add end.*/
+
+            /*System.Collections.Generic.HashSet$1.clear start.*/
             clear: function () {
                 if (this._lastIndex > 0) {
                     for (var i = 0; i < this._lastIndex; i = (i + 1) | 0) {
@@ -36619,7 +38502,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 this._version = (this._version + 1) | 0;
             },
+            /*System.Collections.Generic.HashSet$1.clear end.*/
+
+            /*System.Collections.Generic.HashSet$1.ArrayClear start.*/
             ArrayClear: function (array, index, length) { },
+            /*System.Collections.Generic.HashSet$1.ArrayClear end.*/
+
+            /*System.Collections.Generic.HashSet$1.contains start.*/
             contains: function (item) {
                 if (this._buckets != null) {
                     var hashCode = this.InternalGetHashCode(item);
@@ -36631,12 +38520,21 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return false;
             },
+            /*System.Collections.Generic.HashSet$1.contains end.*/
+
+            /*System.Collections.Generic.HashSet$1.copyTo start.*/
             copyTo: function (array, arrayIndex) {
                 this.CopyTo$1(array, arrayIndex, this._count);
             },
+            /*System.Collections.Generic.HashSet$1.copyTo end.*/
+
+            /*System.Collections.Generic.HashSet$1.CopyTo start.*/
             CopyTo: function (array) {
                 this.CopyTo$1(array, 0, this._count);
             },
+            /*System.Collections.Generic.HashSet$1.CopyTo end.*/
+
+            /*System.Collections.Generic.HashSet$1.CopyTo$1 start.*/
             CopyTo$1: function (array, arrayIndex, count) {
                 if (array == null) {
                     throw new System.ArgumentNullException.$ctor1("array");
@@ -36658,6 +38556,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.HashSet$1.CopyTo$1 end.*/
+
+            /*System.Collections.Generic.HashSet$1.remove start.*/
             remove: function (item) {
                 if (this._buckets != null) {
                     var hashCode = this.InternalGetHashCode(item);
@@ -36687,15 +38588,27 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return false;
             },
+            /*System.Collections.Generic.HashSet$1.remove end.*/
+
+            /*System.Collections.Generic.HashSet$1.GetEnumerator start.*/
             GetEnumerator: function () {
                 return new (System.Collections.Generic.HashSet$1.Enumerator(T)).$ctor1(this);
             },
+            /*System.Collections.Generic.HashSet$1.GetEnumerator end.*/
+
+            /*System.Collections.Generic.HashSet$1.System$Collections$Generic$IEnumerable$1$GetEnumerator start.*/
             System$Collections$Generic$IEnumerable$1$GetEnumerator: function () {
                 return new (System.Collections.Generic.HashSet$1.Enumerator(T)).$ctor1(this).$clone();
             },
+            /*System.Collections.Generic.HashSet$1.System$Collections$Generic$IEnumerable$1$GetEnumerator end.*/
+
+            /*System.Collections.Generic.HashSet$1.System$Collections$IEnumerable$GetEnumerator start.*/
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return new (System.Collections.Generic.HashSet$1.Enumerator(T)).$ctor1(this).$clone();
             },
+            /*System.Collections.Generic.HashSet$1.System$Collections$IEnumerable$GetEnumerator end.*/
+
+            /*System.Collections.Generic.HashSet$1.unionWith start.*/
             unionWith: function (other) {
                 var $t;
                 if (other == null) {
@@ -36713,6 +38626,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.HashSet$1.unionWith end.*/
+
+            /*System.Collections.Generic.HashSet$1.intersectWith start.*/
             intersectWith: function (other) {
                 if (other == null) {
                     throw new System.ArgumentNullException.$ctor1("other");
@@ -36734,6 +38650,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 this.IntersectWithEnumerable(other);
             },
+            /*System.Collections.Generic.HashSet$1.intersectWith end.*/
+
+            /*System.Collections.Generic.HashSet$1.exceptWith start.*/
             exceptWith: function (other) {
                 var $t;
                 if (other == null) {
@@ -36758,6 +38677,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.HashSet$1.exceptWith end.*/
+
+            /*System.Collections.Generic.HashSet$1.symmetricExceptWith start.*/
             symmetricExceptWith: function (other) {
                 if (other == null) {
                     throw new System.ArgumentNullException.$ctor1("other");
@@ -36777,6 +38699,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this.SymmetricExceptWithEnumerable(other);
                 }
             },
+            /*System.Collections.Generic.HashSet$1.symmetricExceptWith end.*/
+
+            /*System.Collections.Generic.HashSet$1.isSubsetOf start.*/
             isSubsetOf: function (other) {
                 if (other == null) {
                     throw new System.ArgumentNullException.$ctor1("other");
@@ -36795,6 +38720,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     return (result.uniqueCount === this._count && result.unfoundCount >= 0);
                 }
             },
+            /*System.Collections.Generic.HashSet$1.isSubsetOf end.*/
+
+            /*System.Collections.Generic.HashSet$1.isProperSubsetOf start.*/
             isProperSubsetOf: function (other) {
                 if (other == null) {
                     throw new System.ArgumentNullException.$ctor1("other");
@@ -36815,6 +38743,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 var result = this.CheckUniqueAndUnfoundElements(other, false);
                 return (result.uniqueCount === this._count && result.unfoundCount > 0);
             },
+            /*System.Collections.Generic.HashSet$1.isProperSubsetOf end.*/
+
+            /*System.Collections.Generic.HashSet$1.isSupersetOf start.*/
             isSupersetOf: function (other) {
                 if (other == null) {
                     throw new System.ArgumentNullException.$ctor1("other");
@@ -36833,6 +38764,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return this.ContainsAllElements(other);
             },
+            /*System.Collections.Generic.HashSet$1.isSupersetOf end.*/
+
+            /*System.Collections.Generic.HashSet$1.isProperSupersetOf start.*/
             isProperSupersetOf: function (other) {
                 if (other == null) {
                     throw new System.ArgumentNullException.$ctor1("other");
@@ -36856,6 +38790,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 var result = this.CheckUniqueAndUnfoundElements(other, true);
                 return (result.uniqueCount < this._count && result.unfoundCount === 0);
             },
+            /*System.Collections.Generic.HashSet$1.isProperSupersetOf end.*/
+
+            /*System.Collections.Generic.HashSet$1.overlaps start.*/
             overlaps: function (other) {
                 var $t;
                 if (other == null) {
@@ -36879,6 +38816,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return false;
             },
+            /*System.Collections.Generic.HashSet$1.overlaps end.*/
+
+            /*System.Collections.Generic.HashSet$1.setEquals start.*/
             setEquals: function (other) {
                 if (other == null) {
                     throw new System.ArgumentNullException.$ctor1("other");
@@ -36900,6 +38840,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     return (result.uniqueCount === this._count && result.unfoundCount === 0);
                 }
             },
+            /*System.Collections.Generic.HashSet$1.setEquals end.*/
+
+            /*System.Collections.Generic.HashSet$1.RemoveWhere start.*/
             RemoveWhere: function (match) {
                 if (Bridge.staticEquals(match, null)) {
                     throw new System.ArgumentNullException.$ctor1("match");
@@ -36917,6 +38860,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return numRemoved;
             },
+            /*System.Collections.Generic.HashSet$1.RemoveWhere end.*/
+
+            /*System.Collections.Generic.HashSet$1.TrimExcess start.*/
             TrimExcess: function () {
                 if (this._count === 0) {
                     this._buckets = null;
@@ -36944,6 +38890,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this._freeList = -1;
                 }
             },
+            /*System.Collections.Generic.HashSet$1.TrimExcess end.*/
+
+            /*System.Collections.Generic.HashSet$1.Initialize start.*/
             Initialize: function (capacity) {
                 var size = System.Collections.HashHelpers.GetPrime(capacity);
                 this._buckets = System.Array.init(size, 0, System.Int32);
@@ -36951,6 +38900,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     return new (System.Collections.Generic.HashSet$1.Slot(T))();
                 }, System.Collections.Generic.HashSet$1.Slot(T));
             },
+            /*System.Collections.Generic.HashSet$1.Initialize end.*/
+
+            /*System.Collections.Generic.HashSet$1.IncreaseCapacity start.*/
             IncreaseCapacity: function () {
                 var newSize = System.Collections.HashHelpers.ExpandPrime(this._count);
                 if (newSize <= this._count) {
@@ -36958,6 +38910,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 this.SetCapacity(newSize, false);
             },
+            /*System.Collections.Generic.HashSet$1.IncreaseCapacity end.*/
+
+            /*System.Collections.Generic.HashSet$1.SetCapacity start.*/
             SetCapacity: function (newSize, forceNewHashCodes) {
                 var newSlots = System.Array.init(newSize, function (){
                     return new (System.Collections.Generic.HashSet$1.Slot(T))();
@@ -36983,6 +38938,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._slots = newSlots;
                 this._buckets = newBuckets;
             },
+            /*System.Collections.Generic.HashSet$1.SetCapacity end.*/
+
+            /*System.Collections.Generic.HashSet$1.AddIfNotPresent start.*/
             AddIfNotPresent: function (value) {
                 if (this._buckets == null) {
                     this.Initialize(0);
@@ -37014,6 +38972,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._version = (this._version + 1) | 0;
                 return true;
             },
+            /*System.Collections.Generic.HashSet$1.AddIfNotPresent end.*/
+
+            /*System.Collections.Generic.HashSet$1.ContainsAllElements start.*/
             ContainsAllElements: function (other) {
                 var $t;
                 $t = Bridge.getEnumerator(other, T);
@@ -37031,6 +38992,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return true;
             },
+            /*System.Collections.Generic.HashSet$1.ContainsAllElements end.*/
+
+            /*System.Collections.Generic.HashSet$1.IsSubsetOfHashSetWithSameEC start.*/
             IsSubsetOfHashSetWithSameEC: function (other) {
                 var $t;
                 $t = Bridge.getEnumerator(this);
@@ -37048,6 +39012,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return true;
             },
+            /*System.Collections.Generic.HashSet$1.IsSubsetOfHashSetWithSameEC end.*/
+
+            /*System.Collections.Generic.HashSet$1.IntersectWithHashSetWithSameEC start.*/
             IntersectWithHashSetWithSameEC: function (other) {
                 for (var i = 0; i < this._lastIndex; i = (i + 1) | 0) {
                     if (this._slots[System.Array.index(i, this._slots)].hashCode >= 0) {
@@ -37058,6 +39025,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.HashSet$1.IntersectWithHashSetWithSameEC end.*/
+
+            /*System.Collections.Generic.HashSet$1.IntersectWithEnumerable start.*/
             IntersectWithEnumerable: function (other) {
                 var $t;
                 var originalLastIndex = this._lastIndex;
@@ -37085,6 +39055,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.HashSet$1.IntersectWithEnumerable end.*/
+
+            /*System.Collections.Generic.HashSet$1.InternalIndexOf start.*/
             InternalIndexOf: function (item) {
                 var hashCode = this.InternalGetHashCode(item);
                 for (var i = (this._buckets[System.Array.index(hashCode % this._buckets.length, this._buckets)] - 1) | 0; i >= 0; i = this._slots[System.Array.index(i, this._slots)].next) {
@@ -37094,6 +39067,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return -1;
             },
+            /*System.Collections.Generic.HashSet$1.InternalIndexOf end.*/
+
+            /*System.Collections.Generic.HashSet$1.SymmetricExceptWithUniqueHashSet start.*/
             SymmetricExceptWithUniqueHashSet: function (other) {
                 var $t;
                 $t = Bridge.getEnumerator(other);
@@ -37110,6 +39086,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.HashSet$1.SymmetricExceptWithUniqueHashSet end.*/
+
+            /*System.Collections.Generic.HashSet$1.SymmetricExceptWithEnumerable start.*/
             SymmetricExceptWithEnumerable: function (other) {
                 var $t;
                 var originalLastIndex = this._lastIndex;
@@ -37145,6 +39124,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.Generic.HashSet$1.SymmetricExceptWithEnumerable end.*/
+
+            /*System.Collections.Generic.HashSet$1.AddOrGetLocation start.*/
             AddOrGetLocation: function (value, location) {
                 var hashCode = this.InternalGetHashCode(value);
                 var bucket = hashCode % this._buckets.length;
@@ -37175,6 +39157,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 location.v = index;
                 return true;
             },
+            /*System.Collections.Generic.HashSet$1.AddOrGetLocation end.*/
+
+            /*System.Collections.Generic.HashSet$1.CheckUniqueAndUnfoundElements start.*/
             CheckUniqueAndUnfoundElements: function (other, returnIfUnfound) {
                 var $t, $t1;
                 var result = new (System.Collections.Generic.HashSet$1.ElementCount(T))();
@@ -37229,6 +39214,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 result.unfoundCount = unfoundCount;
                 return result.$clone();
             },
+            /*System.Collections.Generic.HashSet$1.CheckUniqueAndUnfoundElements end.*/
+
+            /*System.Collections.Generic.HashSet$1.ToArray start.*/
             ToArray: function () {
                 var newArray = System.Array.init(this.Count, function (){
                     return Bridge.getDefaultValue(T);
@@ -37236,17 +39224,25 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.CopyTo(newArray);
                 return newArray;
             },
+            /*System.Collections.Generic.HashSet$1.ToArray end.*/
+
+            /*System.Collections.Generic.HashSet$1.InternalGetHashCode start.*/
             InternalGetHashCode: function (item) {
                 if (item == null) {
                     return 0;
                 }
                 return this._comparer[Bridge.geti(this._comparer, "System$Collections$Generic$IEqualityComparer$1$" + Bridge.getTypeAlias(T) + "$getHashCode2", "System$Collections$Generic$IEqualityComparer$1$getHashCode2")](item) & System.Collections.Generic.HashSet$1(T).Lower31BitMask;
-            }
+            },
+            /*System.Collections.Generic.HashSet$1.InternalGetHashCode end.*/
+
+
         }
     }; });
+    /*System.Collections.Generic.HashSet$1 end.*/
 
     // @source ElementCount.js
 
+    /*System.Collections.Generic.HashSet$1+ElementCount start.*/
     Bridge.define("System.Collections.Generic.HashSet$1.ElementCount", function (T) { return {
         $kind: "nested struct",
         statics: {
@@ -37282,9 +39278,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.Collections.Generic.HashSet$1+ElementCount end.*/
 
     // @source Enumerator.js
 
+    /*System.Collections.Generic.HashSet$1+Enumerator start.*/
     Bridge.define("System.Collections.Generic.HashSet$1.Enumerator", function (T) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(T)],
         $kind: "nested struct",
@@ -37332,7 +39330,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.Generic.HashSet$1+Enumerator.Dispose start.*/
             Dispose: function () { },
+            /*System.Collections.Generic.HashSet$1+Enumerator.Dispose end.*/
+
+            /*System.Collections.Generic.HashSet$1+Enumerator.moveNext start.*/
             moveNext: function () {
                 var $t, $t1;
                 if (this._version !== this._set._version) {
@@ -37350,6 +39352,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._current = Bridge.getDefaultValue(T);
                 return false;
             },
+            /*System.Collections.Generic.HashSet$1+Enumerator.moveNext end.*/
+
+            /*System.Collections.Generic.HashSet$1+Enumerator.System$Collections$IEnumerator$reset start.*/
             System$Collections$IEnumerator$reset: function () {
                 if (this._version !== this._set._version) {
                     throw new System.InvalidOperationException.$ctor1("Collection was modified; enumeration operation may not execute.");
@@ -37357,6 +39362,8 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._index = 0;
                 this._current = Bridge.getDefaultValue(T);
             },
+            /*System.Collections.Generic.HashSet$1+Enumerator.System$Collections$IEnumerator$reset end.*/
+
             getHashCode: function () {
                 var h = Bridge.addHash([3788985113, this._set, this._index, this._version, this._current]);
                 return h;
@@ -37377,9 +39384,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.Collections.Generic.HashSet$1+Enumerator end.*/
 
     // @source Slot.js
 
+    /*System.Collections.Generic.HashSet$1+Slot start.*/
     Bridge.define("System.Collections.Generic.HashSet$1.Slot", function (T) { return {
         $kind: "nested struct",
         statics: {
@@ -37417,9 +39426,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.Collections.Generic.HashSet$1+Slot end.*/
 
     // @source Enumerator.js
 
+    /*System.Collections.Generic.List$1+Enumerator start.*/
     Bridge.define("System.Collections.Generic.List$1.Enumerator", function (T) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(T),System.Collections.IEnumerator],
         $kind: "nested struct",
@@ -37467,7 +39478,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.Generic.List$1+Enumerator.Dispose start.*/
             Dispose: function () { },
+            /*System.Collections.Generic.List$1+Enumerator.Dispose end.*/
+
+            /*System.Collections.Generic.List$1+Enumerator.moveNext start.*/
             moveNext: function () {
 
                 var localList = this.list;
@@ -37479,6 +39494,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return this.MoveNextRare();
             },
+            /*System.Collections.Generic.List$1+Enumerator.moveNext end.*/
+
+            /*System.Collections.Generic.List$1+Enumerator.MoveNextRare start.*/
             MoveNextRare: function () {
                 if (this.version !== this.list._version) {
                     throw new System.InvalidOperationException.ctor();
@@ -37488,6 +39506,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.current = Bridge.getDefaultValue(T);
                 return false;
             },
+            /*System.Collections.Generic.List$1+Enumerator.MoveNextRare end.*/
+
+            /*System.Collections.Generic.List$1+Enumerator.System$Collections$IEnumerator$reset start.*/
             System$Collections$IEnumerator$reset: function () {
                 if (this.version !== this.list._version) {
                     throw new System.InvalidOperationException.ctor();
@@ -37496,6 +39517,8 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.index = 0;
                 this.current = Bridge.getDefaultValue(T);
             },
+            /*System.Collections.Generic.List$1+Enumerator.System$Collections$IEnumerator$reset end.*/
+
             getHashCode: function () {
                 var h = Bridge.addHash([3788985113, this.list, this.index, this.version, this.current]);
                 return h;
@@ -37516,9 +39539,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.Collections.Generic.List$1+Enumerator end.*/
 
     // @source Queue.js
 
+    /*System.Collections.Generic.Queue$1 start.*/
     Bridge.define("System.Collections.Generic.Queue$1", function (T) { return {
         inherits: [System.Collections.Generic.IEnumerable$1(T),System.Collections.ICollection,System.Collections.Generic.IReadOnlyCollection$1(T)],
         statics: {
@@ -37610,6 +39635,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.Generic.Queue$1.copyTo start.*/
             copyTo: function (array, index) {
                 if (array == null) {
                     throw new System.ArgumentNullException.$ctor1("array");
@@ -37641,6 +39667,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     System.Array.copy(this._array, 0, array, ((((index + this._array.length) | 0) - this._head) | 0), numToCopy);
                 }
             },
+            /*System.Collections.Generic.Queue$1.copyTo end.*/
+
+            /*System.Collections.Generic.Queue$1.CopyTo start.*/
             CopyTo: function (array, arrayIndex) {
                 if (array == null) {
                     throw new System.ArgumentNullException.$ctor1("array");
@@ -37667,6 +39696,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     System.Array.copy(this._array, 0, array, ((((arrayIndex + this._array.length) | 0) - this._head) | 0), numToCopy);
                 }
             },
+            /*System.Collections.Generic.Queue$1.CopyTo end.*/
+
+            /*System.Collections.Generic.Queue$1.Clear start.*/
             Clear: function () {
                 if (this._head < this._tail) {
                     System.Array.fill(this._array, function () {
@@ -37686,6 +39718,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._size = 0;
                 this._version = (this._version + 1) | 0;
             },
+            /*System.Collections.Generic.Queue$1.Clear end.*/
+
+            /*System.Collections.Generic.Queue$1.Enqueue start.*/
             Enqueue: function (item) {
                 if (this._size === this._array.length) {
                     var newcapacity = (Bridge.Int.div(Bridge.Int.mul(this._array.length, System.Collections.Generic.Queue$1(T).GrowFactor), 100)) | 0;
@@ -37700,15 +39735,27 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._size = (this._size + 1) | 0;
                 this._version = (this._version + 1) | 0;
             },
+            /*System.Collections.Generic.Queue$1.Enqueue end.*/
+
+            /*System.Collections.Generic.Queue$1.GetEnumerator start.*/
             GetEnumerator: function () {
                 return new (System.Collections.Generic.Queue$1.Enumerator(T)).$ctor1(this);
             },
+            /*System.Collections.Generic.Queue$1.GetEnumerator end.*/
+
+            /*System.Collections.Generic.Queue$1.System$Collections$Generic$IEnumerable$1$GetEnumerator start.*/
             System$Collections$Generic$IEnumerable$1$GetEnumerator: function () {
                 return new (System.Collections.Generic.Queue$1.Enumerator(T)).$ctor1(this).$clone();
             },
+            /*System.Collections.Generic.Queue$1.System$Collections$Generic$IEnumerable$1$GetEnumerator end.*/
+
+            /*System.Collections.Generic.Queue$1.System$Collections$IEnumerable$GetEnumerator start.*/
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return new (System.Collections.Generic.Queue$1.Enumerator(T)).$ctor1(this).$clone();
             },
+            /*System.Collections.Generic.Queue$1.System$Collections$IEnumerable$GetEnumerator end.*/
+
+            /*System.Collections.Generic.Queue$1.Dequeue start.*/
             Dequeue: function () {
                 if (this._size === 0) {
                     throw new System.InvalidOperationException.$ctor1("Queue empty.");
@@ -37721,6 +39768,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._version = (this._version + 1) | 0;
                 return removed;
             },
+            /*System.Collections.Generic.Queue$1.Dequeue end.*/
+
+            /*System.Collections.Generic.Queue$1.Peek start.*/
             Peek: function () {
                 if (this._size === 0) {
                     throw new System.InvalidOperationException.$ctor1("Queue empty.");
@@ -37728,6 +39778,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return this._array[System.Array.index(this._head, this._array)];
             },
+            /*System.Collections.Generic.Queue$1.Peek end.*/
+
+            /*System.Collections.Generic.Queue$1.Contains start.*/
             Contains: function (item) {
                 var index = this._head;
                 var count = this._size;
@@ -37746,9 +39799,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return false;
             },
+            /*System.Collections.Generic.Queue$1.Contains end.*/
+
+            /*System.Collections.Generic.Queue$1.GetElement start.*/
             GetElement: function (i) {
                 return this._array[System.Array.index((((this._head + i) | 0)) % this._array.length, this._array)];
             },
+            /*System.Collections.Generic.Queue$1.GetElement end.*/
+
+            /*System.Collections.Generic.Queue$1.ToArray start.*/
             ToArray: function () {
                 var arr = System.Array.init(this._size, function (){
                     return Bridge.getDefaultValue(T);
@@ -37766,6 +39825,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return arr;
             },
+            /*System.Collections.Generic.Queue$1.ToArray end.*/
+
+            /*System.Collections.Generic.Queue$1.SetCapacity start.*/
             SetCapacity: function (capacity) {
                 var newarray = System.Array.init(capacity, function (){
                     return Bridge.getDefaultValue(T);
@@ -37784,21 +39846,32 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._tail = (this._size === capacity) ? 0 : this._size;
                 this._version = (this._version + 1) | 0;
             },
+            /*System.Collections.Generic.Queue$1.SetCapacity end.*/
+
+            /*System.Collections.Generic.Queue$1.MoveNext start.*/
             MoveNext: function (index) {
                 var tmp = (index + 1) | 0;
                 return (tmp === this._array.length) ? 0 : tmp;
             },
+            /*System.Collections.Generic.Queue$1.MoveNext end.*/
+
+            /*System.Collections.Generic.Queue$1.TrimExcess start.*/
             TrimExcess: function () {
                 var threshold = Bridge.Int.clip32(this._array.length * 0.9);
                 if (this._size < threshold) {
                     this.SetCapacity(this._size);
                 }
-            }
+            },
+            /*System.Collections.Generic.Queue$1.TrimExcess end.*/
+
+
         }
     }; });
+    /*System.Collections.Generic.Queue$1 end.*/
 
     // @source ICollectionDebugView.js
 
+    /*System.Collections.Generic.ICollectionDebugView$1 start.*/
     Bridge.define("System.Collections.Generic.ICollectionDebugView$1", function (T) { return {
         fields: {
             _collection: null
@@ -37825,9 +39898,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.Collections.Generic.ICollectionDebugView$1 end.*/
 
     // @source IDictionaryDebugView.js
 
+    /*System.Collections.Generic.IDictionaryDebugView$2 start.*/
     Bridge.define("System.Collections.Generic.IDictionaryDebugView$2", function (K, V) { return {
         fields: {
             _dict: null
@@ -37854,9 +39929,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.Collections.Generic.IDictionaryDebugView$2 end.*/
 
     // @source Enumerator.js
 
+    /*System.Collections.Generic.Queue$1+Enumerator start.*/
     Bridge.define("System.Collections.Generic.Queue$1.Enumerator", function (T) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(T),System.Collections.IEnumerator],
         $kind: "nested struct",
@@ -37908,10 +39985,14 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.Generic.Queue$1+Enumerator.Dispose start.*/
             Dispose: function () {
                 this._index = -2;
                 this._currentElement = Bridge.getDefaultValue(T);
             },
+            /*System.Collections.Generic.Queue$1+Enumerator.Dispose end.*/
+
+            /*System.Collections.Generic.Queue$1+Enumerator.moveNext start.*/
             moveNext: function () {
                 if (this._version !== this._q._version) {
                     throw new System.InvalidOperationException.$ctor1("Collection was modified; enumeration operation may not execute.");
@@ -37932,6 +40013,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._currentElement = this._q.GetElement(this._index);
                 return true;
             },
+            /*System.Collections.Generic.Queue$1+Enumerator.moveNext end.*/
+
+            /*System.Collections.Generic.Queue$1+Enumerator.System$Collections$IEnumerator$reset start.*/
             System$Collections$IEnumerator$reset: function () {
                 if (this._version !== this._q._version) {
                     throw new System.InvalidOperationException.$ctor1("Collection was modified; enumeration operation may not execute.");
@@ -37939,6 +40023,8 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._index = -1;
                 this._currentElement = Bridge.getDefaultValue(T);
             },
+            /*System.Collections.Generic.Queue$1+Enumerator.System$Collections$IEnumerator$reset end.*/
+
             getHashCode: function () {
                 var h = Bridge.addHash([3788985113, this._q, this._index, this._version, this._currentElement]);
                 return h;
@@ -37959,9 +40045,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.Collections.Generic.Queue$1+Enumerator end.*/
 
     // @source Stack.js
 
+    /*System.Collections.Generic.Stack$1 start.*/
     Bridge.define("System.Collections.Generic.Stack$1", function (T) { return {
         inherits: [System.Collections.Generic.IEnumerable$1(T),System.Collections.ICollection,System.Collections.Generic.IReadOnlyCollection$1(T)],
         statics: {
@@ -38034,6 +40122,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.Generic.Stack$1.Clear start.*/
             Clear: function () {
                 System.Array.fill(this._array, function () {
                     return Bridge.getDefaultValue(T);
@@ -38041,6 +40130,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._size = 0;
                 this._version = (this._version + 1) | 0;
             },
+            /*System.Collections.Generic.Stack$1.Clear end.*/
+
+            /*System.Collections.Generic.Stack$1.Contains start.*/
             Contains: function (item) {
                 var count = this._size;
 
@@ -38056,6 +40148,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return false;
             },
+            /*System.Collections.Generic.Stack$1.Contains end.*/
+
+            /*System.Collections.Generic.Stack$1.CopyTo start.*/
             CopyTo: function (array, arrayIndex) {
                 if (array == null) {
                     throw new System.ArgumentNullException.$ctor1("array");
@@ -38080,6 +40175,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     System.Array.reverse(array, arrayIndex, this._size);
                 }
             },
+            /*System.Collections.Generic.Stack$1.CopyTo end.*/
+
+            /*System.Collections.Generic.Stack$1.copyTo start.*/
             copyTo: function (array, arrayIndex) {
                 if (array == null) {
                     throw new System.ArgumentNullException.$ctor1("array");
@@ -38109,15 +40207,27 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     throw new System.ArgumentException.$ctor1("Target array type is not compatible with the type of items in the collection.");
                 }
             },
+            /*System.Collections.Generic.Stack$1.copyTo end.*/
+
+            /*System.Collections.Generic.Stack$1.GetEnumerator start.*/
             GetEnumerator: function () {
                 return new (System.Collections.Generic.Stack$1.Enumerator(T)).$ctor1(this);
             },
+            /*System.Collections.Generic.Stack$1.GetEnumerator end.*/
+
+            /*System.Collections.Generic.Stack$1.System$Collections$Generic$IEnumerable$1$GetEnumerator start.*/
             System$Collections$Generic$IEnumerable$1$GetEnumerator: function () {
                 return new (System.Collections.Generic.Stack$1.Enumerator(T)).$ctor1(this).$clone();
             },
+            /*System.Collections.Generic.Stack$1.System$Collections$Generic$IEnumerable$1$GetEnumerator end.*/
+
+            /*System.Collections.Generic.Stack$1.System$Collections$IEnumerable$GetEnumerator start.*/
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return new (System.Collections.Generic.Stack$1.Enumerator(T)).$ctor1(this).$clone();
             },
+            /*System.Collections.Generic.Stack$1.System$Collections$IEnumerable$GetEnumerator end.*/
+
+            /*System.Collections.Generic.Stack$1.TrimExcess start.*/
             TrimExcess: function () {
                 var threshold = Bridge.Int.clip32(this._array.length * 0.9);
                 if (this._size < threshold) {
@@ -38129,12 +40239,18 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this._version = (this._version + 1) | 0;
                 }
             },
+            /*System.Collections.Generic.Stack$1.TrimExcess end.*/
+
+            /*System.Collections.Generic.Stack$1.Peek start.*/
             Peek: function () {
                 if (this._size === 0) {
                     throw new System.InvalidOperationException.$ctor1("Stack empty.");
                 }
                 return this._array[System.Array.index(((this._size - 1) | 0), this._array)];
             },
+            /*System.Collections.Generic.Stack$1.Peek end.*/
+
+            /*System.Collections.Generic.Stack$1.Pop start.*/
             Pop: function () {
                 if (this._size === 0) {
                     throw new System.InvalidOperationException.$ctor1("Stack empty.");
@@ -38144,6 +40260,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._array[System.Array.index(this._size, this._array)] = Bridge.getDefaultValue(T);
                 return item;
             },
+            /*System.Collections.Generic.Stack$1.Pop end.*/
+
+            /*System.Collections.Generic.Stack$1.Push start.*/
             Push: function (item) {
                 if (this._size === this._array.length) {
                     var localArray = { v : this._array };
@@ -38155,6 +40274,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._array[System.Array.index(Bridge.identity(this._size, ((this._size = (this._size + 1) | 0))), this._array)] = item;
                 this._version = (this._version + 1) | 0;
             },
+            /*System.Collections.Generic.Stack$1.Push end.*/
+
+            /*System.Collections.Generic.Stack$1.ToArray start.*/
             ToArray: function () {
                 var objArray = System.Array.init(this._size, function (){
                     return Bridge.getDefaultValue(T);
@@ -38165,12 +40287,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     i = (i + 1) | 0;
                 }
                 return objArray;
-            }
+            },
+            /*System.Collections.Generic.Stack$1.ToArray end.*/
+
+
         }
     }; });
+    /*System.Collections.Generic.Stack$1 end.*/
 
     // @source Enumerator.js
 
+    /*System.Collections.Generic.Stack$1+Enumerator start.*/
     Bridge.define("System.Collections.Generic.Stack$1.Enumerator", function (T) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(T),System.Collections.IEnumerator],
         $kind: "nested struct",
@@ -38227,9 +40354,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Collections.Generic.Stack$1+Enumerator.Dispose start.*/
             Dispose: function () {
                 this._index = -1;
             },
+            /*System.Collections.Generic.Stack$1+Enumerator.Dispose end.*/
+
+            /*System.Collections.Generic.Stack$1+Enumerator.moveNext start.*/
             moveNext: function () {
                 var $t, $t1;
                 var retval;
@@ -38256,6 +40387,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return retval;
             },
+            /*System.Collections.Generic.Stack$1+Enumerator.moveNext end.*/
+
+            /*System.Collections.Generic.Stack$1+Enumerator.System$Collections$IEnumerator$reset start.*/
             System$Collections$IEnumerator$reset: function () {
                 if (this._version !== this._stack._version) {
                     throw new System.InvalidOperationException.$ctor1("Collection was modified; enumeration operation may not execute.");
@@ -38263,6 +40397,8 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._index = -2;
                 this._currentElement = Bridge.getDefaultValue(T);
             },
+            /*System.Collections.Generic.Stack$1+Enumerator.System$Collections$IEnumerator$reset end.*/
+
             getHashCode: function () {
                 var h = Bridge.addHash([3788985113, this._stack, this._index, this._version, this._currentElement]);
                 return h;
@@ -38283,9 +40419,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.Collections.Generic.Stack$1+Enumerator end.*/
 
     // @source HashHelpers.js
 
+    /*System.Collections.HashHelpers start.*/
     Bridge.define("System.Collections.HashHelpers", {
         statics: {
             fields: {
@@ -38376,10 +40514,14 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
             },
             methods: {
+                /*System.Collections.HashHelpers.Combine:static start.*/
                 Combine: function (h1, h2) {
                     var rol5 = (((((h1 >>> 0) << 5) >>> 0)) | ((h1 >>> 0) >>> 27)) >>> 0;
                     return ((((rol5 | 0) + h1) | 0)) ^ h2;
                 },
+                /*System.Collections.HashHelpers.Combine:static end.*/
+
+                /*System.Collections.HashHelpers.IsPrime:static start.*/
                 IsPrime: function (candidate) {
                     if ((candidate & 1) !== 0) {
                         var limit = Bridge.Int.clip32(Math.sqrt(candidate));
@@ -38392,6 +40534,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                     return (candidate === 2);
                 },
+                /*System.Collections.HashHelpers.IsPrime:static end.*/
+
+                /*System.Collections.HashHelpers.GetPrime:static start.*/
                 GetPrime: function (min) {
                     if (min < 0) {
                         throw new System.ArgumentException.$ctor1("Hashtable's capacity overflowed and went negative. Check load factor, capacity and the current size of the table.");
@@ -38409,29 +40554,44 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                     return min;
                 },
+                /*System.Collections.HashHelpers.GetPrime:static end.*/
+
+                /*System.Collections.HashHelpers.GetMinPrime:static start.*/
                 GetMinPrime: function () {
                     return System.Collections.HashHelpers.primes[System.Array.index(0, System.Collections.HashHelpers.primes)];
                 },
+                /*System.Collections.HashHelpers.GetMinPrime:static end.*/
+
+                /*System.Collections.HashHelpers.ExpandPrime:static start.*/
                 ExpandPrime: function (oldSize) {
                     var newSize = Bridge.Int.mul(2, oldSize);
                     if ((newSize >>> 0) > System.Collections.HashHelpers.MaxPrimeArrayLength && System.Collections.HashHelpers.MaxPrimeArrayLength > oldSize) {
                         return System.Collections.HashHelpers.MaxPrimeArrayLength;
                     }
                     return System.Collections.HashHelpers.GetPrime(newSize);
-                }
+                },
+                /*System.Collections.HashHelpers.ExpandPrime:static end.*/
+
+
             }
         }
     });
+    /*System.Collections.HashHelpers end.*/
 
     // @source Collection.js
 
+    /*System.Collections.ObjectModel.Collection$1 start.*/
     Bridge.define("System.Collections.ObjectModel.Collection$1", function (T) { return {
         inherits: [System.Collections.Generic.IList$1(T),System.Collections.IList,System.Collections.Generic.IReadOnlyList$1(T)],
         statics: {
             methods: {
+                /*System.Collections.ObjectModel.Collection$1.IsCompatibleObject:static start.*/
                 IsCompatibleObject: function (value) {
                     return ((Bridge.is(value, T)) || (value == null && Bridge.getDefaultValue(T) == null));
-                }
+                },
+                /*System.Collections.ObjectModel.Collection$1.IsCompatibleObject:static end.*/
+
+
             }
         },
         fields: {
@@ -38553,6 +40713,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.ObjectModel.Collection$1.add start.*/
             add: function (item) {
                 if (System.Array.getIsReadOnly(this.items, T)) {
                     System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_ReadOnlyCollection);
@@ -38561,6 +40722,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 var index = System.Array.getCount(this.items, T);
                 this.InsertItem(index, item);
             },
+            /*System.Collections.ObjectModel.Collection$1.add end.*/
+
+            /*System.Collections.ObjectModel.Collection$1.System$Collections$IList$add start.*/
             System$Collections$IList$add: function (value) {
                 if (System.Array.getIsReadOnly(this.items, T)) {
                     System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_ReadOnlyCollection);
@@ -38580,6 +40744,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return ((this.Count - 1) | 0);
             },
+            /*System.Collections.ObjectModel.Collection$1.System$Collections$IList$add end.*/
+
+            /*System.Collections.ObjectModel.Collection$1.clear start.*/
             clear: function () {
                 if (System.Array.getIsReadOnly(this.items, T)) {
                     System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_ReadOnlyCollection);
@@ -38587,9 +40754,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 this.ClearItems();
             },
+            /*System.Collections.ObjectModel.Collection$1.clear end.*/
+
+            /*System.Collections.ObjectModel.Collection$1.copyTo start.*/
             copyTo: function (array, index) {
                 System.Array.copyTo(this.items, array, index, T);
             },
+            /*System.Collections.ObjectModel.Collection$1.copyTo end.*/
+
+            /*System.Collections.ObjectModel.Collection$1.System$Collections$ICollection$copyTo start.*/
             System$Collections$ICollection$copyTo: function (array, index) {
                 if (array == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.array);
@@ -38641,30 +40814,51 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.ObjectModel.Collection$1.System$Collections$ICollection$copyTo end.*/
+
+            /*System.Collections.ObjectModel.Collection$1.contains start.*/
             contains: function (item) {
                 return System.Array.contains(this.items, item, T);
             },
+            /*System.Collections.ObjectModel.Collection$1.contains end.*/
+
+            /*System.Collections.ObjectModel.Collection$1.System$Collections$IList$contains start.*/
             System$Collections$IList$contains: function (value) {
                 if (System.Collections.ObjectModel.Collection$1(T).IsCompatibleObject(value)) {
                     return this.contains(Bridge.cast(Bridge.unbox(value, T), T));
                 }
                 return false;
             },
+            /*System.Collections.ObjectModel.Collection$1.System$Collections$IList$contains end.*/
+
+            /*System.Collections.ObjectModel.Collection$1.GetEnumerator start.*/
             GetEnumerator: function () {
                 return Bridge.getEnumerator(this.items, T);
             },
+            /*System.Collections.ObjectModel.Collection$1.GetEnumerator end.*/
+
+            /*System.Collections.ObjectModel.Collection$1.System$Collections$IEnumerable$GetEnumerator start.*/
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return Bridge.getEnumerator(Bridge.cast(this.items, System.Collections.IEnumerable));
             },
+            /*System.Collections.ObjectModel.Collection$1.System$Collections$IEnumerable$GetEnumerator end.*/
+
+            /*System.Collections.ObjectModel.Collection$1.indexOf start.*/
             indexOf: function (item) {
                 return System.Array.indexOf(this.items, item, 0, null, T);
             },
+            /*System.Collections.ObjectModel.Collection$1.indexOf end.*/
+
+            /*System.Collections.ObjectModel.Collection$1.System$Collections$IList$indexOf start.*/
             System$Collections$IList$indexOf: function (value) {
                 if (System.Collections.ObjectModel.Collection$1(T).IsCompatibleObject(value)) {
                     return this.indexOf(Bridge.cast(Bridge.unbox(value, T), T));
                 }
                 return -1;
             },
+            /*System.Collections.ObjectModel.Collection$1.System$Collections$IList$indexOf end.*/
+
+            /*System.Collections.ObjectModel.Collection$1.insert start.*/
             insert: function (index, item) {
                 if (System.Array.getIsReadOnly(this.items, T)) {
                     System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_ReadOnlyCollection);
@@ -38676,6 +40870,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 this.InsertItem(index, item);
             },
+            /*System.Collections.ObjectModel.Collection$1.insert end.*/
+
+            /*System.Collections.ObjectModel.Collection$1.System$Collections$IList$insert start.*/
             System$Collections$IList$insert: function (index, value) {
                 if (System.Array.getIsReadOnly(this.items, T)) {
                     System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_ReadOnlyCollection);
@@ -38693,6 +40890,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.ObjectModel.Collection$1.System$Collections$IList$insert end.*/
+
+            /*System.Collections.ObjectModel.Collection$1.remove start.*/
             remove: function (item) {
                 if (System.Array.getIsReadOnly(this.items, T)) {
                     System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_ReadOnlyCollection);
@@ -38705,6 +40905,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.RemoveItem(index);
                 return true;
             },
+            /*System.Collections.ObjectModel.Collection$1.remove end.*/
+
+            /*System.Collections.ObjectModel.Collection$1.System$Collections$IList$remove start.*/
             System$Collections$IList$remove: function (value) {
                 if (System.Array.getIsReadOnly(this.items, T)) {
                     System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_ReadOnlyCollection);
@@ -38714,6 +40917,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this.remove(Bridge.cast(Bridge.unbox(value, T), T));
                 }
             },
+            /*System.Collections.ObjectModel.Collection$1.System$Collections$IList$remove end.*/
+
+            /*System.Collections.ObjectModel.Collection$1.removeAt start.*/
             removeAt: function (index) {
                 if (System.Array.getIsReadOnly(this.items, T)) {
                     System.ThrowHelper.ThrowNotSupportedException$1(System.ExceptionResource.NotSupported_ReadOnlyCollection);
@@ -38725,30 +40931,51 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 this.RemoveItem(index);
             },
+            /*System.Collections.ObjectModel.Collection$1.removeAt end.*/
+
+            /*System.Collections.ObjectModel.Collection$1.ClearItems start.*/
             ClearItems: function () {
                 System.Array.clear(this.items, T);
             },
+            /*System.Collections.ObjectModel.Collection$1.ClearItems end.*/
+
+            /*System.Collections.ObjectModel.Collection$1.InsertItem start.*/
             InsertItem: function (index, item) {
                 System.Array.insert(this.items, index, item, T);
             },
+            /*System.Collections.ObjectModel.Collection$1.InsertItem end.*/
+
+            /*System.Collections.ObjectModel.Collection$1.RemoveItem start.*/
             RemoveItem: function (index) {
                 System.Array.removeAt(this.items, index, T);
             },
+            /*System.Collections.ObjectModel.Collection$1.RemoveItem end.*/
+
+            /*System.Collections.ObjectModel.Collection$1.SetItem start.*/
             SetItem: function (index, item) {
                 System.Array.setItem(this.items, index, item, T);
-            }
+            },
+            /*System.Collections.ObjectModel.Collection$1.SetItem end.*/
+
+
         }
     }; });
+    /*System.Collections.ObjectModel.Collection$1 end.*/
 
     // @source ReadOnlyCollection.js
 
+    /*System.Collections.ObjectModel.ReadOnlyCollection$1 start.*/
     Bridge.define("System.Collections.ObjectModel.ReadOnlyCollection$1", function (T) { return {
         inherits: [System.Collections.Generic.IList$1(T),System.Collections.IList,System.Collections.Generic.IReadOnlyList$1(T)],
         statics: {
             methods: {
+                /*System.Collections.ObjectModel.ReadOnlyCollection$1.IsCompatibleObject:static start.*/
                 IsCompatibleObject: function (value) {
                     return ((Bridge.is(value, T)) || (value == null && Bridge.getDefaultValue(T) == null));
-                }
+                },
+                /*System.Collections.ObjectModel.ReadOnlyCollection$1.IsCompatibleObject:static end.*/
+
+
             }
         },
         fields: {
@@ -38834,18 +41061,28 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             System$Collections$IList$setItem: function (index, value) {
                 throw new System.NotSupportedException.ctor();
             },
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.contains start.*/
             contains: function (value) {
                 return System.Array.contains(this.list, value, T);
             },
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.contains end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$contains start.*/
             System$Collections$IList$contains: function (value) {
                 if (System.Collections.ObjectModel.ReadOnlyCollection$1(T).IsCompatibleObject(value)) {
                     return this.contains(Bridge.cast(Bridge.unbox(value, T), T));
                 }
                 return false;
             },
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$contains end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.copyTo start.*/
             copyTo: function (array, index) {
                 System.Array.copyTo(this.list, array, index, T);
             },
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.copyTo end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$ICollection$copyTo start.*/
             System$Collections$ICollection$copyTo: function (array, index) {
                 if (array == null) {
                     throw new System.ArgumentNullException.$ctor1("array");
@@ -38888,56 +41125,103 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$ICollection$copyTo end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.GetEnumerator start.*/
             GetEnumerator: function () {
                 return Bridge.getEnumerator(this.list, T);
             },
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.GetEnumerator end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IEnumerable$GetEnumerator start.*/
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return Bridge.getEnumerator(Bridge.cast(this.list, System.Collections.IEnumerable));
             },
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IEnumerable$GetEnumerator end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.indexOf start.*/
             indexOf: function (value) {
                 return System.Array.indexOf(this.list, value, 0, null, T);
             },
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.indexOf end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$indexOf start.*/
             System$Collections$IList$indexOf: function (value) {
                 if (System.Collections.ObjectModel.ReadOnlyCollection$1(T).IsCompatibleObject(value)) {
                     return this.indexOf(Bridge.cast(Bridge.unbox(value, T), T));
                 }
                 return -1;
             },
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$indexOf end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$ICollection$1$add start.*/
             System$Collections$Generic$ICollection$1$add: function (value) {
                 throw new System.NotSupportedException.ctor();
             },
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$ICollection$1$add end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$add start.*/
             System$Collections$IList$add: function (value) {
                 throw new System.NotSupportedException.ctor();
             },
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$add end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$ICollection$1$clear start.*/
             System$Collections$Generic$ICollection$1$clear: function () {
                 throw new System.NotSupportedException.ctor();
             },
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$ICollection$1$clear end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$clear start.*/
             System$Collections$IList$clear: function () {
                 throw new System.NotSupportedException.ctor();
             },
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$clear end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$IList$1$insert start.*/
             System$Collections$Generic$IList$1$insert: function (index, value) {
                 throw new System.NotSupportedException.ctor();
             },
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$IList$1$insert end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$insert start.*/
             System$Collections$IList$insert: function (index, value) {
                 throw new System.NotSupportedException.ctor();
             },
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$insert end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$ICollection$1$remove start.*/
             System$Collections$Generic$ICollection$1$remove: function (value) {
                 throw new System.NotSupportedException.ctor();
             },
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$ICollection$1$remove end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$remove start.*/
             System$Collections$IList$remove: function (value) {
                 throw new System.NotSupportedException.ctor();
             },
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$remove end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$IList$1$removeAt start.*/
             System$Collections$Generic$IList$1$removeAt: function (index) {
                 throw new System.NotSupportedException.ctor();
             },
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$Generic$IList$1$removeAt end.*/
+
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$removeAt start.*/
             System$Collections$IList$removeAt: function (index) {
                 throw new System.NotSupportedException.ctor();
-            }
+            },
+            /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$removeAt end.*/
+
+
         }
     }; });
+    /*System.Collections.ObjectModel.ReadOnlyCollection$1 end.*/
 
     // @source BrowsableAttribute.js
 
+    /*System.ComponentModel.BrowsableAttribute start.*/
     Bridge.define("System.ComponentModel.BrowsableAttribute", {
         inherits: [System.Attribute],
         statics: {
@@ -38975,6 +41259,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.ComponentModel.BrowsableAttribute.equals start.*/
             equals: function (obj) {
                 if (Bridge.referenceEquals(obj, this)) {
                     return true;
@@ -38984,14 +41269,22 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return (other != null) && other.Browsable === this.browsable;
             },
+            /*System.ComponentModel.BrowsableAttribute.equals end.*/
+
+            /*System.ComponentModel.BrowsableAttribute.getHashCode start.*/
             getHashCode: function () {
                 return Bridge.getHashCode(this.browsable);
-            }
+            },
+            /*System.ComponentModel.BrowsableAttribute.getHashCode end.*/
+
+
         }
     });
+    /*System.ComponentModel.BrowsableAttribute end.*/
 
     // @source DefaultValueAttribute.js
 
+    /*System.ComponentModel.DefaultValueAttribute start.*/
     Bridge.define("System.ComponentModel.DefaultValueAttribute", {
         inherits: [System.Attribute],
         fields: {
@@ -39092,6 +41385,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.ComponentModel.DefaultValueAttribute.equals start.*/
             equals: function (obj) {
                 if (Bridge.referenceEquals(obj, this)) {
                     return true;
@@ -39108,20 +41402,32 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return false;
             },
+            /*System.ComponentModel.DefaultValueAttribute.equals end.*/
+
+            /*System.ComponentModel.DefaultValueAttribute.getHashCode start.*/
             getHashCode: function () {
                 return Bridge.getHashCode(this);
             },
+            /*System.ComponentModel.DefaultValueAttribute.getHashCode end.*/
+
+            /*System.ComponentModel.DefaultValueAttribute.setValue start.*/
             setValue: function (value) {
                 this._value = value;
-            }
+            },
+            /*System.ComponentModel.DefaultValueAttribute.setValue end.*/
+
+
         }
     });
+    /*System.ComponentModel.DefaultValueAttribute end.*/
 
     // @source Console.js
 
+    /*System.Console start.*/
     Bridge.define("System.Console", {
         statics: {
             methods: {
+                /*System.Console.Write:static start.*/
                 Write: function (value) {
                     var con = Bridge.global.console;
 
@@ -39129,6 +41435,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                         con.log(!Bridge.isDefined(Bridge.unbox(value)) ? "" : Bridge.unbox(value));
                     }
                 },
+                /*System.Console.Write:static end.*/
+
+                /*System.Console.WriteLine:static start.*/
                 WriteLine: function (value) {
                     var con = Bridge.global.console;
 
@@ -39136,6 +41445,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                         con.log(!Bridge.isDefined(Bridge.unbox(value)) ? "" : Bridge.unbox(value));
                     }
                 },
+                /*System.Console.WriteLine:static end.*/
+
+                /*System.Console.TransformChars:static start.*/
                 TransformChars: function (buffer, all, index, count) {
                     if (all !== 1) {
                         if (buffer == null) {
@@ -39169,19 +41481,27 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return s;
                 },
+                /*System.Console.TransformChars:static end.*/
+
+                /*System.Console.Clear:static start.*/
                 Clear: function () {
                     var con = Bridge.global.console;
 
                     if (con && con.clear) {
                         con.clear();
                     }
-                }
+                },
+                /*System.Console.Clear:static end.*/
+
+
             }
         }
     });
+    /*System.Console end.*/
 
     // @source TokenType.js
 
+    /*System.TokenType start.*/
     Bridge.define("System.TokenType", {
         $kind: "enum",
         statics: {
@@ -39221,9 +41541,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.TokenType end.*/
 
     // @source UnitySerializationHolder.js
 
+    /*System.UnitySerializationHolder start.*/
     Bridge.define("System.UnitySerializationHolder", {
         inherits: [System.Runtime.Serialization.ISerializable,System.Runtime.Serialization.IObjectReference],
         statics: {
@@ -39238,15 +41560,21 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
         },
         alias: ["GetRealObject", "System$Runtime$Serialization$IObjectReference$GetRealObject"],
         methods: {
+            /*System.UnitySerializationHolder.GetRealObject start.*/
             GetRealObject: function (context) {
                 throw System.NotImplemented.ByDesign;
 
-            }
+            },
+            /*System.UnitySerializationHolder.GetRealObject end.*/
+
+
         }
     });
+    /*System.UnitySerializationHolder end.*/
 
     // @source DateTimeKind.js
 
+    /*System.DateTimeKind start.*/
     Bridge.define("System.DateTimeKind", {
         $kind: "enum",
         statics: {
@@ -39257,9 +41585,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.DateTimeKind end.*/
 
     // @source DateTimeOffset.js
 
+    /*System.DateTimeOffset start.*/
     Bridge.define("System.DateTimeOffset", {
         inherits: function () { return [System.IComparable,System.IFormattable,System.Runtime.Serialization.ISerializable,System.Runtime.Serialization.IDeserializationCallback,System.IComparable$1(System.DateTimeOffset),System.IEquatable$1(System.DateTimeOffset)]; },
         $kind: "struct",
@@ -39299,15 +41629,25 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
             },
             methods: {
+                /*System.DateTimeOffset.Compare:static start.*/
                 Compare: function (first, second) {
                     return Bridge.compare(first.UtcDateTime, second.UtcDateTime);
                 },
+                /*System.DateTimeOffset.Compare:static end.*/
+
+                /*System.DateTimeOffset.Equals:static start.*/
                 Equals: function (first, second) {
                     return Bridge.equalsT(first.UtcDateTime, second.UtcDateTime);
                 },
+                /*System.DateTimeOffset.Equals:static end.*/
+
+                /*System.DateTimeOffset.FromFileTime:static start.*/
                 FromFileTime: function (fileTime) {
                     return new System.DateTimeOffset.$ctor1(System.DateTime.FromFileTime(fileTime));
                 },
+                /*System.DateTimeOffset.FromFileTime:static end.*/
+
+                /*System.DateTimeOffset.FromUnixTimeSeconds:static start.*/
                 FromUnixTimeSeconds: function (seconds) {
                     var MinSeconds = System.Int64([-2006054656,-15]);
                     var MaxSeconds = System.Int64([-769665,58]);
@@ -39319,6 +41659,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     var ticks = seconds.mul(System.Int64(10000000)).add(System.DateTimeOffset.UnixEpochTicks);
                     return new System.DateTimeOffset.$ctor5(ticks, System.TimeSpan.zero);
                 },
+                /*System.DateTimeOffset.FromUnixTimeSeconds:static end.*/
+
+                /*System.DateTimeOffset.FromUnixTimeMilliseconds:static start.*/
                 FromUnixTimeMilliseconds: function (milliseconds) {
                     var MinMilliseconds = System.Int64([-304928768,-14468]);
                     var MaxMilliseconds = System.Int64([-769664001,58999]);
@@ -39330,23 +41673,41 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     var ticks = milliseconds.mul(System.Int64(10000)).add(System.DateTimeOffset.UnixEpochTicks);
                     return new System.DateTimeOffset.$ctor5(ticks, System.TimeSpan.zero);
                 },
+                /*System.DateTimeOffset.FromUnixTimeMilliseconds:static end.*/
+
+                /*System.DateTimeOffset.Parse:static start.*/
                 Parse: function (input) {
                     var offset = { };
                     var dateResult = System.DateTimeParse.Parse$1(input, System.Globalization.DateTimeFormatInfo.currentInfo, 0, offset);
                     return new System.DateTimeOffset.$ctor5(System.DateTime.getTicks(dateResult), offset.v);
                 },
+                /*System.DateTimeOffset.Parse:static end.*/
+
+                /*System.DateTimeOffset.Parse$1:static start.*/
                 Parse$1: function (input, formatProvider) {
                     return System.DateTimeOffset.Parse$2(input, formatProvider, 0);
                 },
+                /*System.DateTimeOffset.Parse$1:static end.*/
+
+                /*System.DateTimeOffset.Parse$2:static start.*/
                 Parse$2: function (input, formatProvider, styles) {
                     throw System.NotImplemented.ByDesign;
                 },
+                /*System.DateTimeOffset.Parse$2:static end.*/
+
+                /*System.DateTimeOffset.ParseExact:static start.*/
                 ParseExact: function (input, format, formatProvider) {
                     return System.DateTimeOffset.ParseExact$1(input, format, formatProvider, 0);
                 },
+                /*System.DateTimeOffset.ParseExact:static end.*/
+
+                /*System.DateTimeOffset.ParseExact$1:static start.*/
                 ParseExact$1: function (input, format, formatProvider, styles) {
                     throw System.NotImplemented.ByDesign;
                 },
+                /*System.DateTimeOffset.ParseExact$1:static end.*/
+
+                /*System.DateTimeOffset.TryParse:static start.*/
                 TryParse: function (input, result) {
                     var offset = { };
                     var dateResult = { };
@@ -39354,6 +41715,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     result.v = new System.DateTimeOffset.$ctor5(System.DateTime.getTicks(dateResult.v), offset.v);
                     return parsed;
                 },
+                /*System.DateTimeOffset.TryParse:static end.*/
+
+                /*System.DateTimeOffset.ValidateOffset:static start.*/
                 ValidateOffset: function (offset) {
                     var ticks = offset.getTicks();
                     if (ticks.mod(System.Int64(600000000)).ne(System.Int64(0))) {
@@ -39364,13 +41728,19 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                     return System.Int64.clip16(offset.getTicks().div(System.Int64(600000000)));
                 },
+                /*System.DateTimeOffset.ValidateOffset:static end.*/
+
+                /*System.DateTimeOffset.ValidateDate:static start.*/
                 ValidateDate: function (dateTime, offset) {
+                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return offset.getTicks().gte(System.DateTimeOffset.MinOffset) && offset.getTicks().lte(System.DateTimeOffset.MaxOffset); }, "Offset not validated.");
                     var utcTicks = System.DateTime.getTicks(dateTime).sub(offset.getTicks());
                     if (utcTicks.lt(System.DateTime.getMinTicks()) || utcTicks.gt(System.DateTime.getMaxTicks())) {
                         throw new System.ArgumentOutOfRangeException.$ctor4("offset", System.Environment.GetResourceString("Argument_UTCOutOfRange"));
                     }
                     return System.DateTime.create$2(utcTicks, 0);
                 },
+                /*System.DateTimeOffset.ValidateDate:static end.*/
+
                 op_Implicit: function (dateTime) {
                     return new System.DateTimeOffset.$ctor1(dateTime);
                 },
@@ -39543,36 +41913,67 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.DateTimeOffset.ToOffset start.*/
             ToOffset: function (offset) {
                 return new System.DateTimeOffset.$ctor5(System.DateTime.getTicks((System.DateTime.adddt(this.m_dateTime, offset))), offset);
             },
+            /*System.DateTimeOffset.ToOffset end.*/
+
+            /*System.DateTimeOffset.Add start.*/
             Add: function (timeSpan) {
                 return new System.DateTimeOffset.$ctor2(System.DateTime.add(this.ClockDateTime, timeSpan), this.Offset);
             },
+            /*System.DateTimeOffset.Add end.*/
+
+            /*System.DateTimeOffset.AddDays start.*/
             AddDays: function (days) {
                 return new System.DateTimeOffset.$ctor2(System.DateTime.addDays(this.ClockDateTime, days), this.Offset);
             },
+            /*System.DateTimeOffset.AddDays end.*/
+
+            /*System.DateTimeOffset.AddHours start.*/
             AddHours: function (hours) {
                 return new System.DateTimeOffset.$ctor2(System.DateTime.addHours(this.ClockDateTime, hours), this.Offset);
             },
+            /*System.DateTimeOffset.AddHours end.*/
+
+            /*System.DateTimeOffset.AddMilliseconds start.*/
             AddMilliseconds: function (milliseconds) {
                 return new System.DateTimeOffset.$ctor2(System.DateTime.addMilliseconds(this.ClockDateTime, milliseconds), this.Offset);
             },
+            /*System.DateTimeOffset.AddMilliseconds end.*/
+
+            /*System.DateTimeOffset.AddMinutes start.*/
             AddMinutes: function (minutes) {
                 return new System.DateTimeOffset.$ctor2(System.DateTime.addMinutes(this.ClockDateTime, minutes), this.Offset);
             },
+            /*System.DateTimeOffset.AddMinutes end.*/
+
+            /*System.DateTimeOffset.AddMonths start.*/
             AddMonths: function (months) {
                 return new System.DateTimeOffset.$ctor2(System.DateTime.addMonths(this.ClockDateTime, months), this.Offset);
             },
+            /*System.DateTimeOffset.AddMonths end.*/
+
+            /*System.DateTimeOffset.AddSeconds start.*/
             AddSeconds: function (seconds) {
                 return new System.DateTimeOffset.$ctor2(System.DateTime.addSeconds(this.ClockDateTime, seconds), this.Offset);
             },
+            /*System.DateTimeOffset.AddSeconds end.*/
+
+            /*System.DateTimeOffset.AddTicks start.*/
             AddTicks: function (ticks) {
                 return new System.DateTimeOffset.$ctor2(System.DateTime.addTicks(this.ClockDateTime, ticks), this.Offset);
             },
+            /*System.DateTimeOffset.AddTicks end.*/
+
+            /*System.DateTimeOffset.AddYears start.*/
             AddYears: function (years) {
                 return new System.DateTimeOffset.$ctor2(System.DateTime.addYears(this.ClockDateTime, years), this.Offset);
             },
+            /*System.DateTimeOffset.AddYears end.*/
+
+            /*System.DateTimeOffset.System$IComparable$compareTo start.*/
             System$IComparable$compareTo: function (obj) {
                 if (obj == null) {
                     return 1;
@@ -39591,6 +41992,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return 0;
             },
+            /*System.DateTimeOffset.System$IComparable$compareTo end.*/
+
+            /*System.DateTimeOffset.compareTo start.*/
             compareTo: function (other) {
                 var otherUtc = other.UtcDateTime;
                 var utc = this.UtcDateTime;
@@ -39602,18 +42006,30 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return 0;
             },
+            /*System.DateTimeOffset.compareTo end.*/
+
+            /*System.DateTimeOffset.equals start.*/
             equals: function (obj) {
                 if (Bridge.is(obj, System.DateTimeOffset)) {
                     return Bridge.equalsT(this.UtcDateTime, System.Nullable.getValue(Bridge.cast(Bridge.unbox(obj, System.DateTimeOffset), System.DateTimeOffset)).UtcDateTime);
                 }
                 return false;
             },
+            /*System.DateTimeOffset.equals end.*/
+
+            /*System.DateTimeOffset.equalsT start.*/
             equalsT: function (other) {
                 return Bridge.equalsT(this.UtcDateTime, other.UtcDateTime);
             },
+            /*System.DateTimeOffset.equalsT end.*/
+
+            /*System.DateTimeOffset.EqualsExact start.*/
             EqualsExact: function (other) {
                 return (Bridge.equals(this.ClockDateTime, other.ClockDateTime) && System.TimeSpan.eq(this.Offset, other.Offset) && System.DateTime.getKind(this.ClockDateTime) === System.DateTime.getKind(other.ClockDateTime));
             },
+            /*System.DateTimeOffset.EqualsExact end.*/
+
+            /*System.DateTimeOffset.System$Runtime$Serialization$IDeserializationCallback$OnDeserialization start.*/
             System$Runtime$Serialization$IDeserializationCallback$OnDeserialization: function (sender) {
                 try {
                     this.m_offsetMinutes = System.DateTimeOffset.ValidateOffset(this.Offset);
@@ -39629,51 +42045,92 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.DateTimeOffset.System$Runtime$Serialization$IDeserializationCallback$OnDeserialization end.*/
+
+            /*System.DateTimeOffset.getHashCode start.*/
             getHashCode: function () {
                 return Bridge.getHashCode(this.UtcDateTime);
             },
+            /*System.DateTimeOffset.getHashCode end.*/
+
+            /*System.DateTimeOffset.Subtract$1 start.*/
             Subtract$1: function (value) {
                 return System.DateTime.subdd(this.UtcDateTime, value.UtcDateTime);
             },
+            /*System.DateTimeOffset.Subtract$1 end.*/
+
+            /*System.DateTimeOffset.Subtract start.*/
             Subtract: function (value) {
                 return new System.DateTimeOffset.$ctor2(System.DateTime.subtract(this.ClockDateTime, value), this.Offset);
             },
+            /*System.DateTimeOffset.Subtract end.*/
+
+            /*System.DateTimeOffset.ToFileTime start.*/
             ToFileTime: function () {
                 return System.DateTime.ToFileTime(this.UtcDateTime);
             },
+            /*System.DateTimeOffset.ToFileTime end.*/
+
+            /*System.DateTimeOffset.ToUnixTimeSeconds start.*/
             ToUnixTimeSeconds: function () {
                 var seconds = System.DateTime.getTicks(this.UtcDateTime).div(System.Int64(10000000));
                 return seconds.sub(System.DateTimeOffset.UnixEpochSeconds);
             },
+            /*System.DateTimeOffset.ToUnixTimeSeconds end.*/
+
+            /*System.DateTimeOffset.ToUnixTimeMilliseconds start.*/
             ToUnixTimeMilliseconds: function () {
                 var milliseconds = System.DateTime.getTicks(this.UtcDateTime).div(System.Int64(10000));
                 return milliseconds.sub(System.DateTimeOffset.UnixEpochMilliseconds);
             },
+            /*System.DateTimeOffset.ToUnixTimeMilliseconds end.*/
+
+            /*System.DateTimeOffset.ToLocalTime start.*/
             ToLocalTime: function () {
                 return this.ToLocalTime$1(false);
             },
+            /*System.DateTimeOffset.ToLocalTime end.*/
+
+            /*System.DateTimeOffset.ToLocalTime$1 start.*/
             ToLocalTime$1: function (throwOnOverflow) {
                 return new System.DateTimeOffset.$ctor1(System.DateTime.toLocalTime(this.UtcDateTime, throwOnOverflow));
             },
+            /*System.DateTimeOffset.ToLocalTime$1 end.*/
+
+            /*System.DateTimeOffset.toString start.*/
             toString: function () {
                 return System.DateTime.format(System.DateTime.specifyKind(this.ClockDateTime, 2));
 
             },
+            /*System.DateTimeOffset.toString end.*/
+
+            /*System.DateTimeOffset.ToString$1 start.*/
             ToString$1: function (format) {
                 return System.DateTime.format(System.DateTime.specifyKind(this.ClockDateTime, 2), format);
 
             },
+            /*System.DateTimeOffset.ToString$1 end.*/
+
+            /*System.DateTimeOffset.ToString start.*/
             ToString: function (formatProvider) {
                 return System.DateTime.format(System.DateTime.specifyKind(this.ClockDateTime, 2), null, formatProvider);
 
             },
+            /*System.DateTimeOffset.ToString end.*/
+
+            /*System.DateTimeOffset.format start.*/
             format: function (format, formatProvider) {
                 return System.DateTime.format(System.DateTime.specifyKind(this.ClockDateTime, 2), format, formatProvider);
 
             },
+            /*System.DateTimeOffset.format end.*/
+
+            /*System.DateTimeOffset.ToUniversalTime start.*/
             ToUniversalTime: function () {
                 return new System.DateTimeOffset.$ctor1(this.UtcDateTime);
             },
+            /*System.DateTimeOffset.ToUniversalTime end.*/
+
             $clone: function (to) {
                 var s = to || new System.DateTimeOffset();
                 s.m_dateTime = this.m_dateTime;
@@ -39682,36 +42139,56 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.DateTimeOffset end.*/
 
     // @source DateTimeParse.js
 
+    /*System.DateTimeParse start.*/
     Bridge.define("System.DateTimeParse", {
         statics: {
             methods: {
+                /*System.DateTimeParse.TryParseExact:static start.*/
                 TryParseExact: function (s, format, dtfi, style, result) {
                     return System.DateTime.tryParseExact(s, format, null, result);
 
                 },
+                /*System.DateTimeParse.TryParseExact:static end.*/
+
+                /*System.DateTimeParse.Parse:static start.*/
                 Parse: function (s, dtfi, styles) {
                     return System.DateTime.parse(s, dtfi);
                 },
+                /*System.DateTimeParse.Parse:static end.*/
+
+                /*System.DateTimeParse.Parse$1:static start.*/
                 Parse$1: function (s, dtfi, styles, offset) {
                     throw System.NotImplemented.ByDesign;
 
                 },
+                /*System.DateTimeParse.Parse$1:static end.*/
+
+                /*System.DateTimeParse.TryParse:static start.*/
                 TryParse: function (s, dtfi, styles, result) {
                     return System.DateTime.tryParse(s, null, result);
 
                 },
+                /*System.DateTimeParse.TryParse:static end.*/
+
+                /*System.DateTimeParse.TryParse$1:static start.*/
                 TryParse$1: function (s, dtfi, styles, result, offset) {
                     throw System.NotImplemented.ByDesign;
-                }
+                },
+                /*System.DateTimeParse.TryParse$1:static end.*/
+
+
             }
         }
     });
+    /*System.DateTimeParse end.*/
 
     // @source DateTimeResult.js
 
+    /*System.DateTimeResult start.*/
     Bridge.define("System.DateTimeResult", {
         $kind: "struct",
         statics: {
@@ -39747,6 +42224,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.DateTimeResult.Init start.*/
             Init: function () {
                 this.Year = -1;
                 this.Month = -1;
@@ -39754,22 +42232,33 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.fraction = -1;
                 this.era = -1;
             },
+            /*System.DateTimeResult.Init end.*/
+
+            /*System.DateTimeResult.SetDate start.*/
             SetDate: function (year, month, day) {
                 this.Year = year;
                 this.Month = month;
                 this.Day = day;
             },
+            /*System.DateTimeResult.SetDate end.*/
+
+            /*System.DateTimeResult.SetFailure start.*/
             SetFailure: function (failure, failureMessageID, failureMessageFormatArgument) {
                 this.failure = failure;
                 this.failureMessageID = failureMessageID;
                 this.failureMessageFormatArgument = failureMessageFormatArgument;
             },
+            /*System.DateTimeResult.SetFailure end.*/
+
+            /*System.DateTimeResult.SetFailure$1 start.*/
             SetFailure$1: function (failure, failureMessageID, failureMessageFormatArgument, failureArgumentName) {
                 this.failure = failure;
                 this.failureMessageID = failureMessageID;
                 this.failureMessageFormatArgument = failureMessageFormatArgument;
                 this.failureArgumentName = failureArgumentName;
             },
+            /*System.DateTimeResult.SetFailure$1 end.*/
+
             getHashCode: function () {
                 var h = Bridge.addHash([5374321750, this.Year, this.Month, this.Day, this.Hour, this.Minute, this.Second, this.fraction, this.era, this.flags, this.timeZoneOffset, this.calendar, this.parsedDate, this.failure, this.failureMessageID, this.failureMessageFormatArgument, this.failureArgumentName]);
                 return h;
@@ -39802,9 +42291,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.DateTimeResult end.*/
 
     // @source DayOfWeek.js
 
+    /*System.DayOfWeek start.*/
     Bridge.define("System.DayOfWeek", {
         $kind: "enum",
         statics: {
@@ -39819,9 +42310,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.DayOfWeek end.*/
 
     // @source DBNull.js
 
+    /*System.DBNull start.*/
     Bridge.define("System.DBNull", {
         inherits: [System.Runtime.Serialization.ISerializable,System.IConvertible],
         statics: {
@@ -39844,65 +42337,122 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.DBNull.toString start.*/
             toString: function () {
                 return "";
             },
+            /*System.DBNull.toString end.*/
+
+            /*System.DBNull.ToString start.*/
             ToString: function (provider) {
                 return "";
             },
+            /*System.DBNull.ToString end.*/
+
+            /*System.DBNull.GetTypeCode start.*/
             GetTypeCode: function () {
                 return System.TypeCode.DBNull;
             },
+            /*System.DBNull.GetTypeCode end.*/
+
+            /*System.DBNull.System$IConvertible$ToBoolean start.*/
             System$IConvertible$ToBoolean: function (provider) {
                 throw new System.InvalidCastException.$ctor1("Object cannot be cast from DBNull to other types.");
             },
+            /*System.DBNull.System$IConvertible$ToBoolean end.*/
+
+            /*System.DBNull.System$IConvertible$ToChar start.*/
             System$IConvertible$ToChar: function (provider) {
                 throw new System.InvalidCastException.$ctor1("Object cannot be cast from DBNull to other types.");
             },
+            /*System.DBNull.System$IConvertible$ToChar end.*/
+
+            /*System.DBNull.System$IConvertible$ToSByte start.*/
             System$IConvertible$ToSByte: function (provider) {
                 throw new System.InvalidCastException.$ctor1("Object cannot be cast from DBNull to other types.");
             },
+            /*System.DBNull.System$IConvertible$ToSByte end.*/
+
+            /*System.DBNull.System$IConvertible$ToByte start.*/
             System$IConvertible$ToByte: function (provider) {
                 throw new System.InvalidCastException.$ctor1("Object cannot be cast from DBNull to other types.");
             },
+            /*System.DBNull.System$IConvertible$ToByte end.*/
+
+            /*System.DBNull.System$IConvertible$ToInt16 start.*/
             System$IConvertible$ToInt16: function (provider) {
                 throw new System.InvalidCastException.$ctor1("Object cannot be cast from DBNull to other types.");
             },
+            /*System.DBNull.System$IConvertible$ToInt16 end.*/
+
+            /*System.DBNull.System$IConvertible$ToUInt16 start.*/
             System$IConvertible$ToUInt16: function (provider) {
                 throw new System.InvalidCastException.$ctor1("Object cannot be cast from DBNull to other types.");
             },
+            /*System.DBNull.System$IConvertible$ToUInt16 end.*/
+
+            /*System.DBNull.System$IConvertible$ToInt32 start.*/
             System$IConvertible$ToInt32: function (provider) {
                 throw new System.InvalidCastException.$ctor1("Object cannot be cast from DBNull to other types.");
             },
+            /*System.DBNull.System$IConvertible$ToInt32 end.*/
+
+            /*System.DBNull.System$IConvertible$ToUInt32 start.*/
             System$IConvertible$ToUInt32: function (provider) {
                 throw new System.InvalidCastException.$ctor1("Object cannot be cast from DBNull to other types.");
             },
+            /*System.DBNull.System$IConvertible$ToUInt32 end.*/
+
+            /*System.DBNull.System$IConvertible$ToInt64 start.*/
             System$IConvertible$ToInt64: function (provider) {
                 throw new System.InvalidCastException.$ctor1("Object cannot be cast from DBNull to other types.");
             },
+            /*System.DBNull.System$IConvertible$ToInt64 end.*/
+
+            /*System.DBNull.System$IConvertible$ToUInt64 start.*/
             System$IConvertible$ToUInt64: function (provider) {
                 throw new System.InvalidCastException.$ctor1("Object cannot be cast from DBNull to other types.");
             },
+            /*System.DBNull.System$IConvertible$ToUInt64 end.*/
+
+            /*System.DBNull.System$IConvertible$ToSingle start.*/
             System$IConvertible$ToSingle: function (provider) {
                 throw new System.InvalidCastException.$ctor1("Object cannot be cast from DBNull to other types.");
             },
+            /*System.DBNull.System$IConvertible$ToSingle end.*/
+
+            /*System.DBNull.System$IConvertible$ToDouble start.*/
             System$IConvertible$ToDouble: function (provider) {
                 throw new System.InvalidCastException.$ctor1("Object cannot be cast from DBNull to other types.");
             },
+            /*System.DBNull.System$IConvertible$ToDouble end.*/
+
+            /*System.DBNull.System$IConvertible$ToDecimal start.*/
             System$IConvertible$ToDecimal: function (provider) {
                 throw new System.InvalidCastException.$ctor1("Object cannot be cast from DBNull to other types.");
             },
+            /*System.DBNull.System$IConvertible$ToDecimal end.*/
+
+            /*System.DBNull.System$IConvertible$ToDateTime start.*/
             System$IConvertible$ToDateTime: function (provider) {
                 throw new System.InvalidCastException.$ctor1("Object cannot be cast from DBNull to other types.");
             },
+            /*System.DBNull.System$IConvertible$ToDateTime end.*/
+
+            /*System.DBNull.System$IConvertible$ToType start.*/
             System$IConvertible$ToType: function (type, provider) {
                 return System.Convert.defaultToType(Bridge.cast(this, System.IConvertible), type, provider);
-            }
+            },
+            /*System.DBNull.System$IConvertible$ToType end.*/
+
+
         }
     });
+    /*System.DBNull end.*/
 
     // @source Empty.js
 
+    /*System.Empty start.*/
     Bridge.define("System.Empty", {
         statics: {
             fields: {
@@ -39920,14 +42470,20 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Empty.toString start.*/
             toString: function () {
                 return "";
-            }
+            },
+            /*System.Empty.toString end.*/
+
+
         }
     });
+    /*System.Empty end.*/
 
     // @source ApplicationException.js
 
+    /*System.ApplicationException start.*/
     Bridge.define("System.ApplicationException", {
         inherits: [System.Exception],
         ctors: {
@@ -39948,9 +42504,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.ApplicationException end.*/
 
     // @source ArgumentException.js
 
+    /*System.ArgumentException start.*/
     Bridge.define("System.ArgumentException", {
         inherits: [System.SystemException],
         fields: {
@@ -40004,9 +42562,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.ArgumentException end.*/
 
     // @source ArgumentNullException.js
 
+    /*System.ArgumentNullException start.*/
     Bridge.define("System.ArgumentNullException", {
         inherits: [System.ArgumentException],
         ctors: {
@@ -40032,9 +42592,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.ArgumentNullException end.*/
 
     // @source ArgumentOutOfRangeException.js
 
+    /*System.ArgumentOutOfRangeException start.*/
     Bridge.define("System.ArgumentOutOfRangeException", {
         inherits: [System.ArgumentException],
         fields: {
@@ -40089,9 +42651,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.ArgumentOutOfRangeException end.*/
 
     // @source ArithmeticException.js
 
+    /*System.ArithmeticException start.*/
     Bridge.define("System.ArithmeticException", {
         inherits: [System.SystemException],
         ctors: {
@@ -40112,9 +42676,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.ArithmeticException end.*/
 
     // @source Base64FormattingOptions.js
 
+    /*System.Base64FormattingOptions start.*/
     Bridge.define("System.Base64FormattingOptions", {
         $kind: "enum",
         statics: {
@@ -40125,9 +42691,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
         },
         $flags: true
     });
+    /*System.Base64FormattingOptions end.*/
 
     // @source DivideByZeroException.js
 
+    /*System.DivideByZeroException start.*/
     Bridge.define("System.DivideByZeroException", {
         inherits: [System.ArithmeticException],
         ctors: {
@@ -40148,9 +42716,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.DivideByZeroException end.*/
 
     // @source ExceptionArgument.js
 
+    /*System.ExceptionArgument start.*/
     Bridge.define("System.ExceptionArgument", {
         $kind: "enum",
         statics: {
@@ -40239,9 +42809,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.ExceptionArgument end.*/
 
     // @source ExceptionResource.js
 
+    /*System.ExceptionResource start.*/
     Bridge.define("System.ExceptionResource", {
         $kind: "enum",
         statics: {
@@ -40349,9 +42921,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.ExceptionResource end.*/
 
     // @source FormatException.js
 
+    /*System.FormatException start.*/
     Bridge.define("System.FormatException", {
         inherits: [System.SystemException],
         ctors: {
@@ -40372,34 +42946,49 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.FormatException end.*/
 
     // @source FormattableString.js
 
+    /*System.FormattableString start.*/
     Bridge.define("System.FormattableString", {
         inherits: [System.IFormattable],
         statics: {
             methods: {
+                /*System.FormattableString.Invariant:static start.*/
                 Invariant: function (formattable) {
                     if (formattable == null) {
                         throw new System.ArgumentNullException.$ctor1("formattable");
                     }
 
                     return formattable.ToString(System.Globalization.CultureInfo.invariantCulture);
-                }
+                },
+                /*System.FormattableString.Invariant:static end.*/
+
+
             }
         },
         methods: {
+            /*System.FormattableString.System$IFormattable$format start.*/
             System$IFormattable$format: function (ignored, formatProvider) {
                 return this.ToString(formatProvider);
             },
+            /*System.FormattableString.System$IFormattable$format end.*/
+
+            /*System.FormattableString.toString start.*/
             toString: function () {
                 return this.ToString(System.Globalization.CultureInfo.getCurrentCulture());
-            }
+            },
+            /*System.FormattableString.toString end.*/
+
+
         }
     });
+    /*System.FormattableString end.*/
 
     // @source ConcreteFormattableString.js
 
+    /*System.Runtime.CompilerServices.FormattableStringFactory+ConcreteFormattableString start.*/
     Bridge.define("System.Runtime.CompilerServices.FormattableStringFactory.ConcreteFormattableString", {
         inherits: [System.FormattableString],
         $kind: "nested class",
@@ -40428,23 +43017,36 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Runtime.CompilerServices.FormattableStringFactory+ConcreteFormattableString.GetArguments start.*/
             GetArguments: function () {
                 return this._arguments;
             },
+            /*System.Runtime.CompilerServices.FormattableStringFactory+ConcreteFormattableString.GetArguments end.*/
+
+            /*System.Runtime.CompilerServices.FormattableStringFactory+ConcreteFormattableString.GetArgument start.*/
             GetArgument: function (index) {
                 return this._arguments[System.Array.index(index, this._arguments)];
             },
+            /*System.Runtime.CompilerServices.FormattableStringFactory+ConcreteFormattableString.GetArgument end.*/
+
+            /*System.Runtime.CompilerServices.FormattableStringFactory+ConcreteFormattableString.ToString start.*/
             ToString: function (formatProvider) {
                 return System.String.formatProvider.apply(System.String, [formatProvider, this._format].concat(this._arguments));
-            }
+            },
+            /*System.Runtime.CompilerServices.FormattableStringFactory+ConcreteFormattableString.ToString end.*/
+
+
         }
     });
+    /*System.Runtime.CompilerServices.FormattableStringFactory+ConcreteFormattableString end.*/
 
     // @source FormattableStringFactory.js
 
+    /*System.Runtime.CompilerServices.FormattableStringFactory start.*/
     Bridge.define("System.Runtime.CompilerServices.FormattableStringFactory", {
         statics: {
             methods: {
+                /*System.Runtime.CompilerServices.FormattableStringFactory.Create:static start.*/
                 Create: function (format, $arguments) {
                     if ($arguments === void 0) { $arguments = []; }
                     if (format == null) {
@@ -40456,13 +43058,18 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
 
                     return new System.Runtime.CompilerServices.FormattableStringFactory.ConcreteFormattableString(format, $arguments);
-                }
+                },
+                /*System.Runtime.CompilerServices.FormattableStringFactory.Create:static end.*/
+
+
             }
         }
     });
+    /*System.Runtime.CompilerServices.FormattableStringFactory end.*/
 
     // @source Guid.js
 
+    /*System.Guid start.*/
     Bridge.define("System.Guid", {
         inherits: function () { return [System.IEquatable$1(System.Guid),System.IComparable$1(System.Guid),System.IFormattable]; },
         $kind: "struct",
@@ -40488,21 +43095,34 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
             },
             methods: {
+                /*System.Guid.Parse:static start.*/
                 Parse: function (input) {
                     return System.Guid.ParseExact(input, null);
                 },
+                /*System.Guid.Parse:static end.*/
+
+                /*System.Guid.ParseExact:static start.*/
                 ParseExact: function (input, format) {
                     var r = new System.Guid.ctor();
                     r.ParseInternal(input, format, true);
                     return r;
                 },
+                /*System.Guid.ParseExact:static end.*/
+
+                /*System.Guid.TryParse:static start.*/
                 TryParse: function (input, result) {
                     return System.Guid.TryParseExact(input, null, result);
                 },
+                /*System.Guid.TryParse:static end.*/
+
+                /*System.Guid.TryParseExact:static start.*/
                 TryParseExact: function (input, format, result) {
                     result.v = new System.Guid.ctor();
                     return result.v.ParseInternal(input, format, false);
                 },
+                /*System.Guid.TryParseExact:static end.*/
+
+                /*System.Guid.NewGuid:static start.*/
                 NewGuid: function () {
                     var a = System.Array.init(16, 0, System.Byte);
 
@@ -40513,6 +43133,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return new System.Guid.$ctor1(a);
                 },
+                /*System.Guid.NewGuid:static end.*/
+
+                /*System.Guid.ToHex$1:static start.*/
                 ToHex$1: function (x, precision) {
                     var result = x.toString(16);
                     precision = (precision - result.length) | 0;
@@ -40523,6 +43146,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return result;
                 },
+                /*System.Guid.ToHex$1:static end.*/
+
+                /*System.Guid.ToHex:static start.*/
                 ToHex: function (x) {
                     var result = x.toString(16);
 
@@ -40532,6 +43158,8 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return result;
                 },
+                /*System.Guid.ToHex:static end.*/
+
                 op_Equality: function (a, b) {
                     if (Bridge.referenceEquals(a, null)) {
                         return Bridge.referenceEquals(b, null);
@@ -40647,9 +43275,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Guid.getHashCode start.*/
             getHashCode: function () {
                 return this._a ^ ((this._b << 16) | (this._c & 65535)) ^ ((this._f << 24) | this._k);
             },
+            /*System.Guid.getHashCode end.*/
+
+            /*System.Guid.equals start.*/
             equals: function (o) {
                 if (!(Bridge.is(o, System.Guid))) {
                     return false;
@@ -40657,6 +43289,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return this.equalsT(System.Nullable.getValue(Bridge.cast(Bridge.unbox(o, System.Guid), System.Guid)));
             },
+            /*System.Guid.equals end.*/
+
+            /*System.Guid.equalsT start.*/
             equalsT: function (o) {
                 if ((this._a !== o._a) || (this._b !== o._b) || (this._c !== o._c) || (this._d !== o._d) || (this._e !== o._e) || (this._f !== o._f) || (this._g !== o._g) || (this._h !== o._h) || (this._i !== o._i) || (this._j !== o._j) || (this._k !== o._k)) {
                     return false;
@@ -40664,18 +43299,33 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return true;
             },
+            /*System.Guid.equalsT end.*/
+
+            /*System.Guid.compareTo start.*/
             compareTo: function (value) {
                 return System.String.compare(this.toString(), value.toString());
             },
+            /*System.Guid.compareTo end.*/
+
+            /*System.Guid.toString start.*/
             toString: function () {
                 return this.Format(null);
             },
+            /*System.Guid.toString end.*/
+
+            /*System.Guid.ToString start.*/
             ToString: function (format) {
                 return this.Format(format);
             },
+            /*System.Guid.ToString end.*/
+
+            /*System.Guid.format start.*/
             format: function (format, formatProvider) {
                 return this.Format(format);
             },
+            /*System.Guid.format end.*/
+
+            /*System.Guid.ToByteArray start.*/
             ToByteArray: function () {
                 var g = System.Array.init(16, 0, System.Byte);
 
@@ -40698,6 +43348,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return g;
             },
+            /*System.Guid.ToByteArray end.*/
+
+            /*System.Guid.ParseInternal start.*/
             ParseInternal: function (input, format, check) {
                 var r = null;
 
@@ -40767,6 +43420,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return false;
             },
+            /*System.Guid.ParseInternal end.*/
+
+            /*System.Guid.Format start.*/
             Format: function (format) {
                 var s = (System.Guid.ToHex$1((this._a >>> 0), 8) || "") + (System.Guid.ToHex$1((this._b & 65535), 4) || "") + (System.Guid.ToHex$1((this._c & 65535), 4) || "");
                 s = (s || "") + ((System.Array.init([this._d, this._e, this._f, this._g, this._h, this._i, this._j, this._k], System.Byte)).map(System.Guid.ToHex).join("") || "");
@@ -40794,6 +43450,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                         return s;
                 }
             },
+            /*System.Guid.Format end.*/
+
+            /*System.Guid.FromString start.*/
             FromString: function (s) {
                 if (System.String.isNullOrEmpty(s)) {
                     return;
@@ -40819,110 +43478,185 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._j = r[System.Array.index(6, r)];
                 this._k = r[System.Array.index(7, r)];
             },
+            /*System.Guid.FromString end.*/
+
+            /*System.Guid.toJSON start.*/
             toJSON: function () {
                 return this.toString();
             },
+            /*System.Guid.toJSON end.*/
+
             $clone: function (to) { return this; }
         }
     });
+    /*System.Guid end.*/
 
     // @source ITupleInternal.js
 
+    /*System.ITupleInternal start.*/
     Bridge.define("System.ITupleInternal", {
         $kind: "interface"
     });
+    /*System.ITupleInternal end.*/
 
     // @source Tuple.js
 
+    /*System.Tuple start.*/
     Bridge.define("System.Tuple");
+    /*System.Tuple end.*/
 
+    /*System.Tuple$1 start.*/
     Bridge.define("System.Tuple$1", function (T1) { return {
 
     }; });
+    /*System.Tuple$1 end.*/
 
+    /*System.Tuple$2 start.*/
     Bridge.define("System.Tuple$2", function (T1, T2) { return {
 
     }; });
+    /*System.Tuple$2 end.*/
 
+    /*System.Tuple$3 start.*/
     Bridge.define("System.Tuple$3", function (T1, T2, T3) { return {
 
     }; });
+    /*System.Tuple$3 end.*/
 
+    /*System.Tuple$4 start.*/
     Bridge.define("System.Tuple$4", function (T1, T2, T3, T4) { return {
 
     }; });
+    /*System.Tuple$4 end.*/
 
+    /*System.Tuple$5 start.*/
     Bridge.define("System.Tuple$5", function (T1, T2, T3, T4, T5) { return {
 
     }; });
+    /*System.Tuple$5 end.*/
 
+    /*System.Tuple$6 start.*/
     Bridge.define("System.Tuple$6", function (T1, T2, T3, T4, T5, T6) { return {
 
     }; });
+    /*System.Tuple$6 end.*/
 
+    /*System.Tuple$7 start.*/
     Bridge.define("System.Tuple$7", function (T1, T2, T3, T4, T5, T6, T7) { return {
 
     }; });
+    /*System.Tuple$7 end.*/
 
+    /*System.Tuple$8 start.*/
     Bridge.define("System.Tuple$8", function (T1, T2, T3, T4, T5, T6, T7, TRest) { return {
 
     }; });
+    /*System.Tuple$8 end.*/
 
     // @source ValueTuple.js
 
+    /*System.ValueTuple start.*/
     Bridge.define("System.ValueTuple", {
         inherits: function () { return [System.IEquatable$1(System.ValueTuple),System.Collections.IStructuralEquatable,System.Collections.IStructuralComparable,System.IComparable,System.IComparable$1(System.ValueTuple)]; },
         $kind: "struct",
         statics: {
             methods: {
+                /*System.ValueTuple.Create:static start.*/
                 Create: function () {
                     return new System.ValueTuple();
                 },
+                /*System.ValueTuple.Create:static end.*/
+
+                /*System.ValueTuple.Create$1:static start.*/
                 Create$1: function (T1, item1) {
                     return new (System.ValueTuple$1(T1)).$ctor1(item1);
                 },
+                /*System.ValueTuple.Create$1:static end.*/
+
+                /*System.ValueTuple.Create$2:static start.*/
                 Create$2: function (T1, T2, item1, item2) {
                     return new (System.ValueTuple$2(T1,T2)).$ctor1(item1, item2);
                 },
+                /*System.ValueTuple.Create$2:static end.*/
+
+                /*System.ValueTuple.Create$3:static start.*/
                 Create$3: function (T1, T2, T3, item1, item2, item3) {
                     return new (System.ValueTuple$3(T1,T2,T3)).$ctor1(item1, item2, item3);
                 },
+                /*System.ValueTuple.Create$3:static end.*/
+
+                /*System.ValueTuple.Create$4:static start.*/
                 Create$4: function (T1, T2, T3, T4, item1, item2, item3, item4) {
                     return new (System.ValueTuple$4(T1,T2,T3,T4)).$ctor1(item1, item2, item3, item4);
                 },
+                /*System.ValueTuple.Create$4:static end.*/
+
+                /*System.ValueTuple.Create$5:static start.*/
                 Create$5: function (T1, T2, T3, T4, T5, item1, item2, item3, item4, item5) {
                     return new (System.ValueTuple$5(T1,T2,T3,T4,T5)).$ctor1(item1, item2, item3, item4, item5);
                 },
+                /*System.ValueTuple.Create$5:static end.*/
+
+                /*System.ValueTuple.Create$6:static start.*/
                 Create$6: function (T1, T2, T3, T4, T5, T6, item1, item2, item3, item4, item5, item6) {
                     return new (System.ValueTuple$6(T1,T2,T3,T4,T5,T6)).$ctor1(item1, item2, item3, item4, item5, item6);
                 },
+                /*System.ValueTuple.Create$6:static end.*/
+
+                /*System.ValueTuple.Create$7:static start.*/
                 Create$7: function (T1, T2, T3, T4, T5, T6, T7, item1, item2, item3, item4, item5, item6, item7) {
                     return new (System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7)).$ctor1(item1, item2, item3, item4, item5, item6, item7);
                 },
+                /*System.ValueTuple.Create$7:static end.*/
+
+                /*System.ValueTuple.Create$8:static start.*/
                 Create$8: function (T1, T2, T3, T4, T5, T6, T7, T8, item1, item2, item3, item4, item5, item6, item7, item8) {
                     return new (System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,System.ValueTuple$1(T8))).$ctor1(item1, item2, item3, item4, item5, item6, item7, System.ValueTuple.Create$1(T8, item8));
                 },
+                /*System.ValueTuple.Create$8:static end.*/
+
+                /*System.ValueTuple.CombineHashCodes:static start.*/
                 CombineHashCodes: function (h1, h2) {
                     return System.Collections.HashHelpers.Combine(System.Collections.HashHelpers.Combine(System.Collections.HashHelpers.RandomSeed, h1), h2);
                 },
+                /*System.ValueTuple.CombineHashCodes:static end.*/
+
+                /*System.ValueTuple.CombineHashCodes$1:static start.*/
                 CombineHashCodes$1: function (h1, h2, h3) {
                     return System.Collections.HashHelpers.Combine(System.ValueTuple.CombineHashCodes(h1, h2), h3);
                 },
+                /*System.ValueTuple.CombineHashCodes$1:static end.*/
+
+                /*System.ValueTuple.CombineHashCodes$2:static start.*/
                 CombineHashCodes$2: function (h1, h2, h3, h4) {
                     return System.Collections.HashHelpers.Combine(System.ValueTuple.CombineHashCodes$1(h1, h2, h3), h4);
                 },
+                /*System.ValueTuple.CombineHashCodes$2:static end.*/
+
+                /*System.ValueTuple.CombineHashCodes$3:static start.*/
                 CombineHashCodes$3: function (h1, h2, h3, h4, h5) {
                     return System.Collections.HashHelpers.Combine(System.ValueTuple.CombineHashCodes$2(h1, h2, h3, h4), h5);
                 },
+                /*System.ValueTuple.CombineHashCodes$3:static end.*/
+
+                /*System.ValueTuple.CombineHashCodes$4:static start.*/
                 CombineHashCodes$4: function (h1, h2, h3, h4, h5, h6) {
                     return System.Collections.HashHelpers.Combine(System.ValueTuple.CombineHashCodes$3(h1, h2, h3, h4, h5), h6);
                 },
+                /*System.ValueTuple.CombineHashCodes$4:static end.*/
+
+                /*System.ValueTuple.CombineHashCodes$5:static start.*/
                 CombineHashCodes$5: function (h1, h2, h3, h4, h5, h6, h7) {
                     return System.Collections.HashHelpers.Combine(System.ValueTuple.CombineHashCodes$4(h1, h2, h3, h4, h5, h6), h7);
                 },
+                /*System.ValueTuple.CombineHashCodes$5:static end.*/
+
+                /*System.ValueTuple.CombineHashCodes$6:static start.*/
                 CombineHashCodes$6: function (h1, h2, h3, h4, h5, h6, h7, h8) {
                     return System.Collections.HashHelpers.Combine(System.ValueTuple.CombineHashCodes$5(h1, h2, h3, h4, h5, h6, h7), h8);
                 },
+                /*System.ValueTuple.CombineHashCodes$6:static end.*/
+
                 getDefaultValue: function () { return new System.ValueTuple(); }
             }
         },
@@ -40936,15 +43670,25 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.ValueTuple.equals start.*/
             equals: function (obj) {
                 return Bridge.is(obj, System.ValueTuple);
             },
+            /*System.ValueTuple.equals end.*/
+
+            /*System.ValueTuple.equalsT start.*/
             equalsT: function (other) {
                 return true;
             },
+            /*System.ValueTuple.equalsT end.*/
+
+            /*System.ValueTuple.System$Collections$IStructuralEquatable$Equals start.*/
             System$Collections$IStructuralEquatable$Equals: function (other, comparer) {
                 return Bridge.is(other, System.ValueTuple);
             },
+            /*System.ValueTuple.System$Collections$IStructuralEquatable$Equals end.*/
+
+            /*System.ValueTuple.System$IComparable$compareTo start.*/
             System$IComparable$compareTo: function (other) {
                 if (other == null) {
                     return 1;
@@ -40956,9 +43700,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return 0;
             },
+            /*System.ValueTuple.System$IComparable$compareTo end.*/
+
+            /*System.ValueTuple.compareTo start.*/
             compareTo: function (other) {
                 return 0;
             },
+            /*System.ValueTuple.compareTo end.*/
+
+            /*System.ValueTuple.System$Collections$IStructuralComparable$CompareTo start.*/
             System$Collections$IStructuralComparable$CompareTo: function (other, comparer) {
                 if (other == null) {
                     return 1;
@@ -40970,19 +43720,32 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return 0;
             },
+            /*System.ValueTuple.System$Collections$IStructuralComparable$CompareTo end.*/
+
+            /*System.ValueTuple.getHashCode start.*/
             getHashCode: function () {
                 return 0;
             },
+            /*System.ValueTuple.getHashCode end.*/
+
+            /*System.ValueTuple.System$Collections$IStructuralEquatable$GetHashCode start.*/
             System$Collections$IStructuralEquatable$GetHashCode: function (comparer) {
                 return 0;
             },
+            /*System.ValueTuple.System$Collections$IStructuralEquatable$GetHashCode end.*/
+
+            /*System.ValueTuple.toString start.*/
             toString: function () {
                 return "()";
             },
+            /*System.ValueTuple.toString end.*/
+
             $clone: function (to) { return this; }
         }
     });
+    /*System.ValueTuple end.*/
 
+    /*System.ValueTuple$1 start.*/
     Bridge.define("System.ValueTuple$1", function (T1) { return {
         inherits: function () { return [System.IEquatable$1(System.ValueTuple$1(T1)),System.Collections.IStructuralEquatable,System.Collections.IStructuralComparable,System.IComparable,System.IComparable$1(System.ValueTuple$1(T1)),System.ITupleInternal]; },
         $kind: "struct",
@@ -41023,12 +43786,19 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.ValueTuple$1.equals start.*/
             equals: function (obj) {
                 return Bridge.is(obj, System.ValueTuple$1(T1)) && this.equalsT(System.Nullable.getValue(Bridge.cast(Bridge.unbox(obj, System.ValueTuple$1(T1)), System.ValueTuple$1(T1))));
             },
+            /*System.ValueTuple$1.equals end.*/
+
+            /*System.ValueTuple$1.equalsT start.*/
             equalsT: function (other) {
                 return System.ValueTuple$1(T1).s_t1Comparer.equals2(this.Item1, other.Item1);
             },
+            /*System.ValueTuple$1.equalsT end.*/
+
+            /*System.ValueTuple$1.System$Collections$IStructuralEquatable$Equals start.*/
             System$Collections$IStructuralEquatable$Equals: function (other, comparer) {
                 if (other == null || !(Bridge.is(other, System.ValueTuple$1(T1)))) {
                     return false;
@@ -41038,6 +43808,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return comparer.System$Collections$IEqualityComparer$equals(this.Item1, objTuple.Item1);
             },
+            /*System.ValueTuple$1.System$Collections$IStructuralEquatable$Equals end.*/
+
+            /*System.ValueTuple$1.System$IComparable$compareTo start.*/
             System$IComparable$compareTo: function (other) {
                 if (other == null) {
                     return 1;
@@ -41051,9 +43824,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return new (System.Collections.Generic.Comparer$1(T1))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item1, objTuple.Item1);
             },
+            /*System.ValueTuple$1.System$IComparable$compareTo end.*/
+
+            /*System.ValueTuple$1.compareTo start.*/
             compareTo: function (other) {
                 return new (System.Collections.Generic.Comparer$1(T1))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item1, other.Item1);
             },
+            /*System.ValueTuple$1.compareTo end.*/
+
+            /*System.ValueTuple$1.System$Collections$IStructuralComparable$CompareTo start.*/
             System$Collections$IStructuralComparable$CompareTo: function (other, comparer) {
                 if (other == null) {
                     return 1;
@@ -41067,21 +43846,38 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return comparer.System$Collections$IComparer$compare(this.Item1, objTuple.Item1);
             },
+            /*System.ValueTuple$1.System$Collections$IStructuralComparable$CompareTo end.*/
+
+            /*System.ValueTuple$1.getHashCode start.*/
             getHashCode: function () {
                 return System.ValueTuple$1(T1).s_t1Comparer.getHashCode2(this.Item1);
             },
+            /*System.ValueTuple$1.getHashCode end.*/
+
+            /*System.ValueTuple$1.System$Collections$IStructuralEquatable$GetHashCode start.*/
             System$Collections$IStructuralEquatable$GetHashCode: function (comparer) {
                 return comparer.System$Collections$IEqualityComparer$getHashCode(this.Item1);
             },
+            /*System.ValueTuple$1.System$Collections$IStructuralEquatable$GetHashCode end.*/
+
+            /*System.ValueTuple$1.System$ITupleInternal$GetHashCode start.*/
             System$ITupleInternal$GetHashCode: function (comparer) {
                 return comparer.System$Collections$IEqualityComparer$getHashCode(this.Item1);
             },
+            /*System.ValueTuple$1.System$ITupleInternal$GetHashCode end.*/
+
+            /*System.ValueTuple$1.toString start.*/
             toString: function () {
                 return "(" + ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ")";
             },
+            /*System.ValueTuple$1.toString end.*/
+
+            /*System.ValueTuple$1.System$ITupleInternal$ToStringEnd start.*/
             System$ITupleInternal$ToStringEnd: function () {
                 return ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ")";
             },
+            /*System.ValueTuple$1.System$ITupleInternal$ToStringEnd end.*/
+
             $clone: function (to) {
                 var s = to || new (System.ValueTuple$1(T1))();
                 s.Item1 = this.Item1;
@@ -41089,7 +43885,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.ValueTuple$1 end.*/
 
+    /*System.ValueTuple$2 start.*/
     Bridge.define("System.ValueTuple$2", function (T1, T2) { return {
         inherits: function () { return [System.IEquatable$1(System.ValueTuple$2(T1,T2)),System.Collections.IStructuralEquatable,System.Collections.IStructuralComparable,System.IComparable,System.IComparable$1(System.ValueTuple$2(T1,T2)),System.ITupleInternal]; },
         $kind: "struct",
@@ -41134,12 +43932,19 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.ValueTuple$2.equals start.*/
             equals: function (obj) {
                 return Bridge.is(obj, System.ValueTuple$2(T1,T2)) && this.equalsT(System.Nullable.getValue(Bridge.cast(Bridge.unbox(obj, System.ValueTuple$2(T1,T2)), System.ValueTuple$2(T1,T2))));
             },
+            /*System.ValueTuple$2.equals end.*/
+
+            /*System.ValueTuple$2.equalsT start.*/
             equalsT: function (other) {
                 return System.ValueTuple$2(T1,T2).s_t1Comparer.equals2(this.Item1, other.Item1) && System.ValueTuple$2(T1,T2).s_t2Comparer.equals2(this.Item2, other.Item2);
             },
+            /*System.ValueTuple$2.equalsT end.*/
+
+            /*System.ValueTuple$2.System$Collections$IStructuralEquatable$Equals start.*/
             System$Collections$IStructuralEquatable$Equals: function (other, comparer) {
                 if (other == null || !(Bridge.is(other, System.ValueTuple$2(T1,T2)))) {
                     return false;
@@ -41149,6 +43954,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return comparer.System$Collections$IEqualityComparer$equals(this.Item1, objTuple.Item1) && comparer.System$Collections$IEqualityComparer$equals(this.Item2, objTuple.Item2);
             },
+            /*System.ValueTuple$2.System$Collections$IStructuralEquatable$Equals end.*/
+
+            /*System.ValueTuple$2.System$IComparable$compareTo start.*/
             System$IComparable$compareTo: function (other) {
                 if (other == null) {
                     return 1;
@@ -41160,6 +43968,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return this.compareTo(System.Nullable.getValue(Bridge.cast(Bridge.unbox(other, System.ValueTuple$2(T1,T2)), System.ValueTuple$2(T1,T2))));
             },
+            /*System.ValueTuple$2.System$IComparable$compareTo end.*/
+
+            /*System.ValueTuple$2.compareTo start.*/
             compareTo: function (other) {
                 var c = new (System.Collections.Generic.Comparer$1(T1))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item1, other.Item1);
                 if (c !== 0) {
@@ -41168,6 +43979,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return new (System.Collections.Generic.Comparer$1(T2))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item2, other.Item2);
             },
+            /*System.ValueTuple$2.compareTo end.*/
+
+            /*System.ValueTuple$2.System$Collections$IStructuralComparable$CompareTo start.*/
             System$Collections$IStructuralComparable$CompareTo: function (other, comparer) {
                 if (other == null) {
                     return 1;
@@ -41186,24 +44000,44 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return comparer.System$Collections$IComparer$compare(this.Item2, objTuple.Item2);
             },
+            /*System.ValueTuple$2.System$Collections$IStructuralComparable$CompareTo end.*/
+
+            /*System.ValueTuple$2.getHashCode start.*/
             getHashCode: function () {
                 return System.ValueTuple.CombineHashCodes(System.ValueTuple$2(T1,T2).s_t1Comparer.getHashCode2(this.Item1), System.ValueTuple$2(T1,T2).s_t2Comparer.getHashCode2(this.Item2));
             },
+            /*System.ValueTuple$2.getHashCode end.*/
+
+            /*System.ValueTuple$2.System$Collections$IStructuralEquatable$GetHashCode start.*/
             System$Collections$IStructuralEquatable$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
+            /*System.ValueTuple$2.System$Collections$IStructuralEquatable$GetHashCode end.*/
+
+            /*System.ValueTuple$2.System$ITupleInternal$GetHashCode start.*/
             System$ITupleInternal$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
+            /*System.ValueTuple$2.System$ITupleInternal$GetHashCode end.*/
+
+            /*System.ValueTuple$2.GetHashCodeCore start.*/
             GetHashCodeCore: function (comparer) {
                 return System.ValueTuple.CombineHashCodes(comparer.System$Collections$IEqualityComparer$getHashCode(this.Item1), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item2));
             },
+            /*System.ValueTuple$2.GetHashCodeCore end.*/
+
+            /*System.ValueTuple$2.toString start.*/
             toString: function () {
                 return "(" + ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ")";
             },
+            /*System.ValueTuple$2.toString end.*/
+
+            /*System.ValueTuple$2.System$ITupleInternal$ToStringEnd start.*/
             System$ITupleInternal$ToStringEnd: function () {
                 return ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ")";
             },
+            /*System.ValueTuple$2.System$ITupleInternal$ToStringEnd end.*/
+
             $clone: function (to) {
                 var s = to || new (System.ValueTuple$2(T1,T2))();
                 s.Item1 = this.Item1;
@@ -41212,7 +44046,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.ValueTuple$2 end.*/
 
+    /*System.ValueTuple$3 start.*/
     Bridge.define("System.ValueTuple$3", function (T1, T2, T3) { return {
         inherits: function () { return [System.IEquatable$1(System.ValueTuple$3(T1,T2,T3)),System.Collections.IStructuralEquatable,System.Collections.IStructuralComparable,System.IComparable,System.IComparable$1(System.ValueTuple$3(T1,T2,T3)),System.ITupleInternal]; },
         $kind: "struct",
@@ -41261,12 +44097,19 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.ValueTuple$3.equals start.*/
             equals: function (obj) {
                 return Bridge.is(obj, System.ValueTuple$3(T1,T2,T3)) && this.equalsT(System.Nullable.getValue(Bridge.cast(Bridge.unbox(obj, System.ValueTuple$3(T1,T2,T3)), System.ValueTuple$3(T1,T2,T3))));
             },
+            /*System.ValueTuple$3.equals end.*/
+
+            /*System.ValueTuple$3.equalsT start.*/
             equalsT: function (other) {
                 return System.ValueTuple$3(T1,T2,T3).s_t1Comparer.equals2(this.Item1, other.Item1) && System.ValueTuple$3(T1,T2,T3).s_t2Comparer.equals2(this.Item2, other.Item2) && System.ValueTuple$3(T1,T2,T3).s_t3Comparer.equals2(this.Item3, other.Item3);
             },
+            /*System.ValueTuple$3.equalsT end.*/
+
+            /*System.ValueTuple$3.System$Collections$IStructuralEquatable$Equals start.*/
             System$Collections$IStructuralEquatable$Equals: function (other, comparer) {
                 if (other == null || !(Bridge.is(other, System.ValueTuple$3(T1,T2,T3)))) {
                     return false;
@@ -41276,6 +44119,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return comparer.System$Collections$IEqualityComparer$equals(this.Item1, objTuple.Item1) && comparer.System$Collections$IEqualityComparer$equals(this.Item2, objTuple.Item2) && comparer.System$Collections$IEqualityComparer$equals(this.Item3, objTuple.Item3);
             },
+            /*System.ValueTuple$3.System$Collections$IStructuralEquatable$Equals end.*/
+
+            /*System.ValueTuple$3.System$IComparable$compareTo start.*/
             System$IComparable$compareTo: function (other) {
                 if (other == null) {
                     return 1;
@@ -41287,6 +44133,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return this.compareTo(System.Nullable.getValue(Bridge.cast(Bridge.unbox(other, System.ValueTuple$3(T1,T2,T3)), System.ValueTuple$3(T1,T2,T3))));
             },
+            /*System.ValueTuple$3.System$IComparable$compareTo end.*/
+
+            /*System.ValueTuple$3.compareTo start.*/
             compareTo: function (other) {
                 var c = new (System.Collections.Generic.Comparer$1(T1))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item1, other.Item1);
                 if (c !== 0) {
@@ -41300,6 +44149,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return new (System.Collections.Generic.Comparer$1(T3))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item3, other.Item3);
             },
+            /*System.ValueTuple$3.compareTo end.*/
+
+            /*System.ValueTuple$3.System$Collections$IStructuralComparable$CompareTo start.*/
             System$Collections$IStructuralComparable$CompareTo: function (other, comparer) {
                 if (other == null) {
                     return 1;
@@ -41323,24 +44175,44 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return comparer.System$Collections$IComparer$compare(this.Item3, objTuple.Item3);
             },
+            /*System.ValueTuple$3.System$Collections$IStructuralComparable$CompareTo end.*/
+
+            /*System.ValueTuple$3.getHashCode start.*/
             getHashCode: function () {
                 return System.ValueTuple.CombineHashCodes$1(System.ValueTuple$3(T1,T2,T3).s_t1Comparer.getHashCode2(this.Item1), System.ValueTuple$3(T1,T2,T3).s_t2Comparer.getHashCode2(this.Item2), System.ValueTuple$3(T1,T2,T3).s_t3Comparer.getHashCode2(this.Item3));
             },
+            /*System.ValueTuple$3.getHashCode end.*/
+
+            /*System.ValueTuple$3.System$Collections$IStructuralEquatable$GetHashCode start.*/
             System$Collections$IStructuralEquatable$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
+            /*System.ValueTuple$3.System$Collections$IStructuralEquatable$GetHashCode end.*/
+
+            /*System.ValueTuple$3.System$ITupleInternal$GetHashCode start.*/
             System$ITupleInternal$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
+            /*System.ValueTuple$3.System$ITupleInternal$GetHashCode end.*/
+
+            /*System.ValueTuple$3.GetHashCodeCore start.*/
             GetHashCodeCore: function (comparer) {
                 return System.ValueTuple.CombineHashCodes$1(comparer.System$Collections$IEqualityComparer$getHashCode(this.Item1), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item2), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item3));
             },
+            /*System.ValueTuple$3.GetHashCodeCore end.*/
+
+            /*System.ValueTuple$3.toString start.*/
             toString: function () {
                 return "(" + ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ", " + ((this.Item3 != null ? Bridge.toString(this.Item3) : null) || "") + ")";
             },
+            /*System.ValueTuple$3.toString end.*/
+
+            /*System.ValueTuple$3.System$ITupleInternal$ToStringEnd start.*/
             System$ITupleInternal$ToStringEnd: function () {
                 return ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ", " + ((this.Item3 != null ? Bridge.toString(this.Item3) : null) || "") + ")";
             },
+            /*System.ValueTuple$3.System$ITupleInternal$ToStringEnd end.*/
+
             $clone: function (to) {
                 var s = to || new (System.ValueTuple$3(T1,T2,T3))();
                 s.Item1 = this.Item1;
@@ -41350,7 +44222,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.ValueTuple$3 end.*/
 
+    /*System.ValueTuple$4 start.*/
     Bridge.define("System.ValueTuple$4", function (T1, T2, T3, T4) { return {
         inherits: function () { return [System.IEquatable$1(System.ValueTuple$4(T1,T2,T3,T4)),System.Collections.IStructuralEquatable,System.Collections.IStructuralComparable,System.IComparable,System.IComparable$1(System.ValueTuple$4(T1,T2,T3,T4)),System.ITupleInternal]; },
         $kind: "struct",
@@ -41403,12 +44277,19 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.ValueTuple$4.equals start.*/
             equals: function (obj) {
                 return Bridge.is(obj, System.ValueTuple$4(T1,T2,T3,T4)) && this.equalsT(System.Nullable.getValue(Bridge.cast(Bridge.unbox(obj, System.ValueTuple$4(T1,T2,T3,T4)), System.ValueTuple$4(T1,T2,T3,T4))));
             },
+            /*System.ValueTuple$4.equals end.*/
+
+            /*System.ValueTuple$4.equalsT start.*/
             equalsT: function (other) {
                 return System.ValueTuple$4(T1,T2,T3,T4).s_t1Comparer.equals2(this.Item1, other.Item1) && System.ValueTuple$4(T1,T2,T3,T4).s_t2Comparer.equals2(this.Item2, other.Item2) && System.ValueTuple$4(T1,T2,T3,T4).s_t3Comparer.equals2(this.Item3, other.Item3) && System.ValueTuple$4(T1,T2,T3,T4).s_t4Comparer.equals2(this.Item4, other.Item4);
             },
+            /*System.ValueTuple$4.equalsT end.*/
+
+            /*System.ValueTuple$4.System$Collections$IStructuralEquatable$Equals start.*/
             System$Collections$IStructuralEquatable$Equals: function (other, comparer) {
                 if (other == null || !(Bridge.is(other, System.ValueTuple$4(T1,T2,T3,T4)))) {
                     return false;
@@ -41418,6 +44299,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return comparer.System$Collections$IEqualityComparer$equals(this.Item1, objTuple.Item1) && comparer.System$Collections$IEqualityComparer$equals(this.Item2, objTuple.Item2) && comparer.System$Collections$IEqualityComparer$equals(this.Item3, objTuple.Item3) && comparer.System$Collections$IEqualityComparer$equals(this.Item4, objTuple.Item4);
             },
+            /*System.ValueTuple$4.System$Collections$IStructuralEquatable$Equals end.*/
+
+            /*System.ValueTuple$4.System$IComparable$compareTo start.*/
             System$IComparable$compareTo: function (other) {
                 if (other == null) {
                     return 1;
@@ -41429,6 +44313,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return this.compareTo(System.Nullable.getValue(Bridge.cast(Bridge.unbox(other, System.ValueTuple$4(T1,T2,T3,T4)), System.ValueTuple$4(T1,T2,T3,T4))));
             },
+            /*System.ValueTuple$4.System$IComparable$compareTo end.*/
+
+            /*System.ValueTuple$4.compareTo start.*/
             compareTo: function (other) {
                 var c = new (System.Collections.Generic.Comparer$1(T1))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item1, other.Item1);
                 if (c !== 0) {
@@ -41447,6 +44334,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return new (System.Collections.Generic.Comparer$1(T4))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item4, other.Item4);
             },
+            /*System.ValueTuple$4.compareTo end.*/
+
+            /*System.ValueTuple$4.System$Collections$IStructuralComparable$CompareTo start.*/
             System$Collections$IStructuralComparable$CompareTo: function (other, comparer) {
                 if (other == null) {
                     return 1;
@@ -41475,24 +44365,44 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return comparer.System$Collections$IComparer$compare(this.Item4, objTuple.Item4);
             },
+            /*System.ValueTuple$4.System$Collections$IStructuralComparable$CompareTo end.*/
+
+            /*System.ValueTuple$4.getHashCode start.*/
             getHashCode: function () {
                 return System.ValueTuple.CombineHashCodes$2(System.ValueTuple$4(T1,T2,T3,T4).s_t1Comparer.getHashCode2(this.Item1), System.ValueTuple$4(T1,T2,T3,T4).s_t2Comparer.getHashCode2(this.Item2), System.ValueTuple$4(T1,T2,T3,T4).s_t3Comparer.getHashCode2(this.Item3), System.ValueTuple$4(T1,T2,T3,T4).s_t4Comparer.getHashCode2(this.Item4));
             },
+            /*System.ValueTuple$4.getHashCode end.*/
+
+            /*System.ValueTuple$4.System$Collections$IStructuralEquatable$GetHashCode start.*/
             System$Collections$IStructuralEquatable$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
+            /*System.ValueTuple$4.System$Collections$IStructuralEquatable$GetHashCode end.*/
+
+            /*System.ValueTuple$4.System$ITupleInternal$GetHashCode start.*/
             System$ITupleInternal$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
+            /*System.ValueTuple$4.System$ITupleInternal$GetHashCode end.*/
+
+            /*System.ValueTuple$4.GetHashCodeCore start.*/
             GetHashCodeCore: function (comparer) {
                 return System.ValueTuple.CombineHashCodes$2(comparer.System$Collections$IEqualityComparer$getHashCode(this.Item1), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item2), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item3), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item4));
             },
+            /*System.ValueTuple$4.GetHashCodeCore end.*/
+
+            /*System.ValueTuple$4.toString start.*/
             toString: function () {
                 return "(" + ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ", " + ((this.Item3 != null ? Bridge.toString(this.Item3) : null) || "") + ", " + ((this.Item4 != null ? Bridge.toString(this.Item4) : null) || "") + ")";
             },
+            /*System.ValueTuple$4.toString end.*/
+
+            /*System.ValueTuple$4.System$ITupleInternal$ToStringEnd start.*/
             System$ITupleInternal$ToStringEnd: function () {
                 return ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ", " + ((this.Item3 != null ? Bridge.toString(this.Item3) : null) || "") + ", " + ((this.Item4 != null ? Bridge.toString(this.Item4) : null) || "") + ")";
             },
+            /*System.ValueTuple$4.System$ITupleInternal$ToStringEnd end.*/
+
             $clone: function (to) {
                 var s = to || new (System.ValueTuple$4(T1,T2,T3,T4))();
                 s.Item1 = this.Item1;
@@ -41503,7 +44413,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.ValueTuple$4 end.*/
 
+    /*System.ValueTuple$5 start.*/
     Bridge.define("System.ValueTuple$5", function (T1, T2, T3, T4, T5) { return {
         inherits: function () { return [System.IEquatable$1(System.ValueTuple$5(T1,T2,T3,T4,T5)),System.Collections.IStructuralEquatable,System.Collections.IStructuralComparable,System.IComparable,System.IComparable$1(System.ValueTuple$5(T1,T2,T3,T4,T5)),System.ITupleInternal]; },
         $kind: "struct",
@@ -41560,12 +44472,19 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.ValueTuple$5.equals start.*/
             equals: function (obj) {
                 return Bridge.is(obj, System.ValueTuple$5(T1,T2,T3,T4,T5)) && this.equalsT(System.Nullable.getValue(Bridge.cast(Bridge.unbox(obj, System.ValueTuple$5(T1,T2,T3,T4,T5)), System.ValueTuple$5(T1,T2,T3,T4,T5))));
             },
+            /*System.ValueTuple$5.equals end.*/
+
+            /*System.ValueTuple$5.equalsT start.*/
             equalsT: function (other) {
                 return System.ValueTuple$5(T1,T2,T3,T4,T5).s_t1Comparer.equals2(this.Item1, other.Item1) && System.ValueTuple$5(T1,T2,T3,T4,T5).s_t2Comparer.equals2(this.Item2, other.Item2) && System.ValueTuple$5(T1,T2,T3,T4,T5).s_t3Comparer.equals2(this.Item3, other.Item3) && System.ValueTuple$5(T1,T2,T3,T4,T5).s_t4Comparer.equals2(this.Item4, other.Item4) && System.ValueTuple$5(T1,T2,T3,T4,T5).s_t5Comparer.equals2(this.Item5, other.Item5);
             },
+            /*System.ValueTuple$5.equalsT end.*/
+
+            /*System.ValueTuple$5.System$Collections$IStructuralEquatable$Equals start.*/
             System$Collections$IStructuralEquatable$Equals: function (other, comparer) {
                 if (other == null || !(Bridge.is(other, System.ValueTuple$5(T1,T2,T3,T4,T5)))) {
                     return false;
@@ -41575,6 +44494,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return comparer.System$Collections$IEqualityComparer$equals(this.Item1, objTuple.Item1) && comparer.System$Collections$IEqualityComparer$equals(this.Item2, objTuple.Item2) && comparer.System$Collections$IEqualityComparer$equals(this.Item3, objTuple.Item3) && comparer.System$Collections$IEqualityComparer$equals(this.Item4, objTuple.Item4) && comparer.System$Collections$IEqualityComparer$equals(this.Item5, objTuple.Item5);
             },
+            /*System.ValueTuple$5.System$Collections$IStructuralEquatable$Equals end.*/
+
+            /*System.ValueTuple$5.System$IComparable$compareTo start.*/
             System$IComparable$compareTo: function (other) {
                 if (other == null) {
                     return 1;
@@ -41586,6 +44508,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return this.compareTo(System.Nullable.getValue(Bridge.cast(Bridge.unbox(other, System.ValueTuple$5(T1,T2,T3,T4,T5)), System.ValueTuple$5(T1,T2,T3,T4,T5))));
             },
+            /*System.ValueTuple$5.System$IComparable$compareTo end.*/
+
+            /*System.ValueTuple$5.compareTo start.*/
             compareTo: function (other) {
                 var c = new (System.Collections.Generic.Comparer$1(T1))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item1, other.Item1);
                 if (c !== 0) {
@@ -41609,6 +44534,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return new (System.Collections.Generic.Comparer$1(T5))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item5, other.Item5);
             },
+            /*System.ValueTuple$5.compareTo end.*/
+
+            /*System.ValueTuple$5.System$Collections$IStructuralComparable$CompareTo start.*/
             System$Collections$IStructuralComparable$CompareTo: function (other, comparer) {
                 if (other == null) {
                     return 1;
@@ -41642,24 +44570,44 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return comparer.System$Collections$IComparer$compare(this.Item5, objTuple.Item5);
             },
+            /*System.ValueTuple$5.System$Collections$IStructuralComparable$CompareTo end.*/
+
+            /*System.ValueTuple$5.getHashCode start.*/
             getHashCode: function () {
                 return System.ValueTuple.CombineHashCodes$3(System.ValueTuple$5(T1,T2,T3,T4,T5).s_t1Comparer.getHashCode2(this.Item1), System.ValueTuple$5(T1,T2,T3,T4,T5).s_t2Comparer.getHashCode2(this.Item2), System.ValueTuple$5(T1,T2,T3,T4,T5).s_t3Comparer.getHashCode2(this.Item3), System.ValueTuple$5(T1,T2,T3,T4,T5).s_t4Comparer.getHashCode2(this.Item4), System.ValueTuple$5(T1,T2,T3,T4,T5).s_t5Comparer.getHashCode2(this.Item5));
             },
+            /*System.ValueTuple$5.getHashCode end.*/
+
+            /*System.ValueTuple$5.System$Collections$IStructuralEquatable$GetHashCode start.*/
             System$Collections$IStructuralEquatable$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
+            /*System.ValueTuple$5.System$Collections$IStructuralEquatable$GetHashCode end.*/
+
+            /*System.ValueTuple$5.System$ITupleInternal$GetHashCode start.*/
             System$ITupleInternal$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
+            /*System.ValueTuple$5.System$ITupleInternal$GetHashCode end.*/
+
+            /*System.ValueTuple$5.GetHashCodeCore start.*/
             GetHashCodeCore: function (comparer) {
                 return System.ValueTuple.CombineHashCodes$3(comparer.System$Collections$IEqualityComparer$getHashCode(this.Item1), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item2), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item3), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item4), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item5));
             },
+            /*System.ValueTuple$5.GetHashCodeCore end.*/
+
+            /*System.ValueTuple$5.toString start.*/
             toString: function () {
                 return "(" + ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ", " + ((this.Item3 != null ? Bridge.toString(this.Item3) : null) || "") + ", " + ((this.Item4 != null ? Bridge.toString(this.Item4) : null) || "") + ", " + ((this.Item5 != null ? Bridge.toString(this.Item5) : null) || "") + ")";
             },
+            /*System.ValueTuple$5.toString end.*/
+
+            /*System.ValueTuple$5.System$ITupleInternal$ToStringEnd start.*/
             System$ITupleInternal$ToStringEnd: function () {
                 return ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ", " + ((this.Item3 != null ? Bridge.toString(this.Item3) : null) || "") + ", " + ((this.Item4 != null ? Bridge.toString(this.Item4) : null) || "") + ", " + ((this.Item5 != null ? Bridge.toString(this.Item5) : null) || "") + ")";
             },
+            /*System.ValueTuple$5.System$ITupleInternal$ToStringEnd end.*/
+
             $clone: function (to) {
                 var s = to || new (System.ValueTuple$5(T1,T2,T3,T4,T5))();
                 s.Item1 = this.Item1;
@@ -41671,7 +44619,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.ValueTuple$5 end.*/
 
+    /*System.ValueTuple$6 start.*/
     Bridge.define("System.ValueTuple$6", function (T1, T2, T3, T4, T5, T6) { return {
         inherits: function () { return [System.IEquatable$1(System.ValueTuple$6(T1,T2,T3,T4,T5,T6)),System.Collections.IStructuralEquatable,System.Collections.IStructuralComparable,System.IComparable,System.IComparable$1(System.ValueTuple$6(T1,T2,T3,T4,T5,T6)),System.ITupleInternal]; },
         $kind: "struct",
@@ -41732,12 +44682,19 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.ValueTuple$6.equals start.*/
             equals: function (obj) {
                 return Bridge.is(obj, System.ValueTuple$6(T1,T2,T3,T4,T5,T6)) && this.equalsT(System.Nullable.getValue(Bridge.cast(Bridge.unbox(obj, System.ValueTuple$6(T1,T2,T3,T4,T5,T6)), System.ValueTuple$6(T1,T2,T3,T4,T5,T6))));
             },
+            /*System.ValueTuple$6.equals end.*/
+
+            /*System.ValueTuple$6.equalsT start.*/
             equalsT: function (other) {
                 return System.ValueTuple$6(T1,T2,T3,T4,T5,T6).s_t1Comparer.equals2(this.Item1, other.Item1) && System.ValueTuple$6(T1,T2,T3,T4,T5,T6).s_t2Comparer.equals2(this.Item2, other.Item2) && System.ValueTuple$6(T1,T2,T3,T4,T5,T6).s_t3Comparer.equals2(this.Item3, other.Item3) && System.ValueTuple$6(T1,T2,T3,T4,T5,T6).s_t4Comparer.equals2(this.Item4, other.Item4) && System.ValueTuple$6(T1,T2,T3,T4,T5,T6).s_t5Comparer.equals2(this.Item5, other.Item5) && System.ValueTuple$6(T1,T2,T3,T4,T5,T6).s_t6Comparer.equals2(this.Item6, other.Item6);
             },
+            /*System.ValueTuple$6.equalsT end.*/
+
+            /*System.ValueTuple$6.System$Collections$IStructuralEquatable$Equals start.*/
             System$Collections$IStructuralEquatable$Equals: function (other, comparer) {
                 if (other == null || !(Bridge.is(other, System.ValueTuple$6(T1,T2,T3,T4,T5,T6)))) {
                     return false;
@@ -41747,6 +44704,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return comparer.System$Collections$IEqualityComparer$equals(this.Item1, objTuple.Item1) && comparer.System$Collections$IEqualityComparer$equals(this.Item2, objTuple.Item2) && comparer.System$Collections$IEqualityComparer$equals(this.Item3, objTuple.Item3) && comparer.System$Collections$IEqualityComparer$equals(this.Item4, objTuple.Item4) && comparer.System$Collections$IEqualityComparer$equals(this.Item5, objTuple.Item5) && comparer.System$Collections$IEqualityComparer$equals(this.Item6, objTuple.Item6);
             },
+            /*System.ValueTuple$6.System$Collections$IStructuralEquatable$Equals end.*/
+
+            /*System.ValueTuple$6.System$IComparable$compareTo start.*/
             System$IComparable$compareTo: function (other) {
                 if (other == null) {
                     return 1;
@@ -41758,6 +44718,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return this.compareTo(System.Nullable.getValue(Bridge.cast(Bridge.unbox(other, System.ValueTuple$6(T1,T2,T3,T4,T5,T6)), System.ValueTuple$6(T1,T2,T3,T4,T5,T6))));
             },
+            /*System.ValueTuple$6.System$IComparable$compareTo end.*/
+
+            /*System.ValueTuple$6.compareTo start.*/
             compareTo: function (other) {
                 var c = new (System.Collections.Generic.Comparer$1(T1))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item1, other.Item1);
                 if (c !== 0) {
@@ -41786,6 +44749,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return new (System.Collections.Generic.Comparer$1(T6))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item6, other.Item6);
             },
+            /*System.ValueTuple$6.compareTo end.*/
+
+            /*System.ValueTuple$6.System$Collections$IStructuralComparable$CompareTo start.*/
             System$Collections$IStructuralComparable$CompareTo: function (other, comparer) {
                 if (other == null) {
                     return 1;
@@ -41824,24 +44790,44 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return comparer.System$Collections$IComparer$compare(this.Item6, objTuple.Item6);
             },
+            /*System.ValueTuple$6.System$Collections$IStructuralComparable$CompareTo end.*/
+
+            /*System.ValueTuple$6.getHashCode start.*/
             getHashCode: function () {
                 return System.ValueTuple.CombineHashCodes$4(System.ValueTuple$6(T1,T2,T3,T4,T5,T6).s_t1Comparer.getHashCode2(this.Item1), System.ValueTuple$6(T1,T2,T3,T4,T5,T6).s_t2Comparer.getHashCode2(this.Item2), System.ValueTuple$6(T1,T2,T3,T4,T5,T6).s_t3Comparer.getHashCode2(this.Item3), System.ValueTuple$6(T1,T2,T3,T4,T5,T6).s_t4Comparer.getHashCode2(this.Item4), System.ValueTuple$6(T1,T2,T3,T4,T5,T6).s_t5Comparer.getHashCode2(this.Item5), System.ValueTuple$6(T1,T2,T3,T4,T5,T6).s_t6Comparer.getHashCode2(this.Item6));
             },
+            /*System.ValueTuple$6.getHashCode end.*/
+
+            /*System.ValueTuple$6.System$Collections$IStructuralEquatable$GetHashCode start.*/
             System$Collections$IStructuralEquatable$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
+            /*System.ValueTuple$6.System$Collections$IStructuralEquatable$GetHashCode end.*/
+
+            /*System.ValueTuple$6.System$ITupleInternal$GetHashCode start.*/
             System$ITupleInternal$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
+            /*System.ValueTuple$6.System$ITupleInternal$GetHashCode end.*/
+
+            /*System.ValueTuple$6.GetHashCodeCore start.*/
             GetHashCodeCore: function (comparer) {
                 return System.ValueTuple.CombineHashCodes$4(comparer.System$Collections$IEqualityComparer$getHashCode(this.Item1), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item2), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item3), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item4), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item5), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item6));
             },
+            /*System.ValueTuple$6.GetHashCodeCore end.*/
+
+            /*System.ValueTuple$6.toString start.*/
             toString: function () {
                 return "(" + ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ", " + ((this.Item3 != null ? Bridge.toString(this.Item3) : null) || "") + ", " + ((this.Item4 != null ? Bridge.toString(this.Item4) : null) || "") + ", " + ((this.Item5 != null ? Bridge.toString(this.Item5) : null) || "") + ", " + ((this.Item6 != null ? Bridge.toString(this.Item6) : null) || "") + ")";
             },
+            /*System.ValueTuple$6.toString end.*/
+
+            /*System.ValueTuple$6.System$ITupleInternal$ToStringEnd start.*/
             System$ITupleInternal$ToStringEnd: function () {
                 return ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ", " + ((this.Item3 != null ? Bridge.toString(this.Item3) : null) || "") + ", " + ((this.Item4 != null ? Bridge.toString(this.Item4) : null) || "") + ", " + ((this.Item5 != null ? Bridge.toString(this.Item5) : null) || "") + ", " + ((this.Item6 != null ? Bridge.toString(this.Item6) : null) || "") + ")";
             },
+            /*System.ValueTuple$6.System$ITupleInternal$ToStringEnd end.*/
+
             $clone: function (to) {
                 var s = to || new (System.ValueTuple$6(T1,T2,T3,T4,T5,T6))();
                 s.Item1 = this.Item1;
@@ -41854,7 +44840,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.ValueTuple$6 end.*/
 
+    /*System.ValueTuple$7 start.*/
     Bridge.define("System.ValueTuple$7", function (T1, T2, T3, T4, T5, T6, T7) { return {
         inherits: function () { return [System.IEquatable$1(System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7)),System.Collections.IStructuralEquatable,System.Collections.IStructuralComparable,System.IComparable,System.IComparable$1(System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7)),System.ITupleInternal]; },
         $kind: "struct",
@@ -41919,12 +44907,19 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.ValueTuple$7.equals start.*/
             equals: function (obj) {
                 return Bridge.is(obj, System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7)) && this.equalsT(System.Nullable.getValue(Bridge.cast(Bridge.unbox(obj, System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7)), System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7))));
             },
+            /*System.ValueTuple$7.equals end.*/
+
+            /*System.ValueTuple$7.equalsT start.*/
             equalsT: function (other) {
                 return System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t1Comparer.equals2(this.Item1, other.Item1) && System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t2Comparer.equals2(this.Item2, other.Item2) && System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t3Comparer.equals2(this.Item3, other.Item3) && System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t4Comparer.equals2(this.Item4, other.Item4) && System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t5Comparer.equals2(this.Item5, other.Item5) && System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t6Comparer.equals2(this.Item6, other.Item6) && System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t7Comparer.equals2(this.Item7, other.Item7);
             },
+            /*System.ValueTuple$7.equalsT end.*/
+
+            /*System.ValueTuple$7.System$Collections$IStructuralEquatable$Equals start.*/
             System$Collections$IStructuralEquatable$Equals: function (other, comparer) {
                 if (other == null || !(Bridge.is(other, System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7)))) {
                     return false;
@@ -41934,6 +44929,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return comparer.System$Collections$IEqualityComparer$equals(this.Item1, objTuple.Item1) && comparer.System$Collections$IEqualityComparer$equals(this.Item2, objTuple.Item2) && comparer.System$Collections$IEqualityComparer$equals(this.Item3, objTuple.Item3) && comparer.System$Collections$IEqualityComparer$equals(this.Item4, objTuple.Item4) && comparer.System$Collections$IEqualityComparer$equals(this.Item5, objTuple.Item5) && comparer.System$Collections$IEqualityComparer$equals(this.Item6, objTuple.Item6) && comparer.System$Collections$IEqualityComparer$equals(this.Item7, objTuple.Item7);
             },
+            /*System.ValueTuple$7.System$Collections$IStructuralEquatable$Equals end.*/
+
+            /*System.ValueTuple$7.System$IComparable$compareTo start.*/
             System$IComparable$compareTo: function (other) {
                 if (other == null) {
                     return 1;
@@ -41945,6 +44943,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return this.compareTo(System.Nullable.getValue(Bridge.cast(Bridge.unbox(other, System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7)), System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7))));
             },
+            /*System.ValueTuple$7.System$IComparable$compareTo end.*/
+
+            /*System.ValueTuple$7.compareTo start.*/
             compareTo: function (other) {
                 var c = new (System.Collections.Generic.Comparer$1(T1))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item1, other.Item1);
                 if (c !== 0) {
@@ -41978,6 +44979,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return new (System.Collections.Generic.Comparer$1(T7))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item7, other.Item7);
             },
+            /*System.ValueTuple$7.compareTo end.*/
+
+            /*System.ValueTuple$7.System$Collections$IStructuralComparable$CompareTo start.*/
             System$Collections$IStructuralComparable$CompareTo: function (other, comparer) {
                 if (other == null) {
                     return 1;
@@ -42021,24 +45025,44 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return comparer.System$Collections$IComparer$compare(this.Item7, objTuple.Item7);
             },
+            /*System.ValueTuple$7.System$Collections$IStructuralComparable$CompareTo end.*/
+
+            /*System.ValueTuple$7.getHashCode start.*/
             getHashCode: function () {
                 return System.ValueTuple.CombineHashCodes$5(System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t1Comparer.getHashCode2(this.Item1), System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t2Comparer.getHashCode2(this.Item2), System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t3Comparer.getHashCode2(this.Item3), System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t4Comparer.getHashCode2(this.Item4), System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t5Comparer.getHashCode2(this.Item5), System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t6Comparer.getHashCode2(this.Item6), System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7).s_t7Comparer.getHashCode2(this.Item7));
             },
+            /*System.ValueTuple$7.getHashCode end.*/
+
+            /*System.ValueTuple$7.System$Collections$IStructuralEquatable$GetHashCode start.*/
             System$Collections$IStructuralEquatable$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
+            /*System.ValueTuple$7.System$Collections$IStructuralEquatable$GetHashCode end.*/
+
+            /*System.ValueTuple$7.System$ITupleInternal$GetHashCode start.*/
             System$ITupleInternal$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
+            /*System.ValueTuple$7.System$ITupleInternal$GetHashCode end.*/
+
+            /*System.ValueTuple$7.GetHashCodeCore start.*/
             GetHashCodeCore: function (comparer) {
                 return System.ValueTuple.CombineHashCodes$5(comparer.System$Collections$IEqualityComparer$getHashCode(this.Item1), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item2), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item3), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item4), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item5), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item6), comparer.System$Collections$IEqualityComparer$getHashCode(this.Item7));
             },
+            /*System.ValueTuple$7.GetHashCodeCore end.*/
+
+            /*System.ValueTuple$7.toString start.*/
             toString: function () {
                 return "(" + ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ", " + ((this.Item3 != null ? Bridge.toString(this.Item3) : null) || "") + ", " + ((this.Item4 != null ? Bridge.toString(this.Item4) : null) || "") + ", " + ((this.Item5 != null ? Bridge.toString(this.Item5) : null) || "") + ", " + ((this.Item6 != null ? Bridge.toString(this.Item6) : null) || "") + ", " + ((this.Item7 != null ? Bridge.toString(this.Item7) : null) || "") + ")";
             },
+            /*System.ValueTuple$7.toString end.*/
+
+            /*System.ValueTuple$7.System$ITupleInternal$ToStringEnd start.*/
             System$ITupleInternal$ToStringEnd: function () {
                 return ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ", " + ((this.Item3 != null ? Bridge.toString(this.Item3) : null) || "") + ", " + ((this.Item4 != null ? Bridge.toString(this.Item4) : null) || "") + ", " + ((this.Item5 != null ? Bridge.toString(this.Item5) : null) || "") + ", " + ((this.Item6 != null ? Bridge.toString(this.Item6) : null) || "") + ", " + ((this.Item7 != null ? Bridge.toString(this.Item7) : null) || "") + ")";
             },
+            /*System.ValueTuple$7.System$ITupleInternal$ToStringEnd end.*/
+
             $clone: function (to) {
                 var s = to || new (System.ValueTuple$7(T1,T2,T3,T4,T5,T6,T7))();
                 s.Item1 = this.Item1;
@@ -42052,7 +45076,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.ValueTuple$7 end.*/
 
+    /*System.ValueTuple$8 start.*/
     Bridge.define("System.ValueTuple$8", function (T1, T2, T3, T4, T5, T6, T7, TRest) { return {
         inherits: function () { return [System.IEquatable$1(System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest)),System.Collections.IStructuralEquatable,System.Collections.IStructuralComparable,System.IComparable,System.IComparable$1(System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest)),System.ITupleInternal]; },
         $kind: "struct",
@@ -42126,12 +45152,19 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.ValueTuple$8.equals start.*/
             equals: function (obj) {
                 return Bridge.is(obj, System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest)) && this.equalsT(System.Nullable.getValue(Bridge.cast(Bridge.unbox(obj, System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest)), System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest))));
             },
+            /*System.ValueTuple$8.equals end.*/
+
+            /*System.ValueTuple$8.equalsT start.*/
             equalsT: function (other) {
                 return System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest).s_t1Comparer.equals2(this.Item1, other.Item1) && System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest).s_t2Comparer.equals2(this.Item2, other.Item2) && System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest).s_t3Comparer.equals2(this.Item3, other.Item3) && System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest).s_t4Comparer.equals2(this.Item4, other.Item4) && System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest).s_t5Comparer.equals2(this.Item5, other.Item5) && System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest).s_t6Comparer.equals2(this.Item6, other.Item6) && System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest).s_t7Comparer.equals2(this.Item7, other.Item7) && System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest).s_tRestComparer.equals2(this.Rest, other.Rest);
             },
+            /*System.ValueTuple$8.equalsT end.*/
+
+            /*System.ValueTuple$8.System$Collections$IStructuralEquatable$Equals start.*/
             System$Collections$IStructuralEquatable$Equals: function (other, comparer) {
                 if (other == null || !(Bridge.is(other, System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest)))) {
                     return false;
@@ -42141,6 +45174,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return comparer.System$Collections$IEqualityComparer$equals(this.Item1, objTuple.Item1) && comparer.System$Collections$IEqualityComparer$equals(this.Item2, objTuple.Item2) && comparer.System$Collections$IEqualityComparer$equals(this.Item3, objTuple.Item3) && comparer.System$Collections$IEqualityComparer$equals(this.Item4, objTuple.Item4) && comparer.System$Collections$IEqualityComparer$equals(this.Item5, objTuple.Item5) && comparer.System$Collections$IEqualityComparer$equals(this.Item6, objTuple.Item6) && comparer.System$Collections$IEqualityComparer$equals(this.Item7, objTuple.Item7) && comparer.System$Collections$IEqualityComparer$equals(this.Rest, objTuple.Rest);
             },
+            /*System.ValueTuple$8.System$Collections$IStructuralEquatable$Equals end.*/
+
+            /*System.ValueTuple$8.System$IComparable$compareTo start.*/
             System$IComparable$compareTo: function (other) {
                 if (other == null) {
                     return 1;
@@ -42152,6 +45188,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return this.compareTo(System.Nullable.getValue(Bridge.cast(Bridge.unbox(other, System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest)), System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest))));
             },
+            /*System.ValueTuple$8.System$IComparable$compareTo end.*/
+
+            /*System.ValueTuple$8.compareTo start.*/
             compareTo: function (other) {
                 var c = new (System.Collections.Generic.Comparer$1(T1))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Item1, other.Item1);
                 if (c !== 0) {
@@ -42190,6 +45229,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return new (System.Collections.Generic.Comparer$1(TRest))(System.Collections.Generic.Comparer$1.$default.fn).compare(this.Rest, other.Rest);
             },
+            /*System.ValueTuple$8.compareTo end.*/
+
+            /*System.ValueTuple$8.System$Collections$IStructuralComparable$CompareTo start.*/
             System$Collections$IStructuralComparable$CompareTo: function (other, comparer) {
                 if (other == null) {
                     return 1;
@@ -42238,6 +45280,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return comparer.System$Collections$IComparer$compare(this.Rest, objTuple.Rest);
             },
+            /*System.ValueTuple$8.System$Collections$IStructuralComparable$CompareTo end.*/
+
+            /*System.ValueTuple$8.getHashCode start.*/
             getHashCode: function () {
                 var rest = Bridge.as(this.Rest, System.ITupleInternal);
                 if (rest == null) {
@@ -42270,12 +45315,21 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return -1;
             },
+            /*System.ValueTuple$8.getHashCode end.*/
+
+            /*System.ValueTuple$8.System$Collections$IStructuralEquatable$GetHashCode start.*/
             System$Collections$IStructuralEquatable$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
+            /*System.ValueTuple$8.System$Collections$IStructuralEquatable$GetHashCode end.*/
+
+            /*System.ValueTuple$8.System$ITupleInternal$GetHashCode start.*/
             System$ITupleInternal$GetHashCode: function (comparer) {
                 return this.GetHashCodeCore(comparer);
             },
+            /*System.ValueTuple$8.System$ITupleInternal$GetHashCode end.*/
+
+            /*System.ValueTuple$8.GetHashCodeCore start.*/
             GetHashCodeCore: function (comparer) {
                 var rest = Bridge.as(this.Rest, System.ITupleInternal);
                 if (rest == null) {
@@ -42308,6 +45362,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return -1;
             },
+            /*System.ValueTuple$8.GetHashCodeCore end.*/
+
+            /*System.ValueTuple$8.toString start.*/
             toString: function () {
                 var rest = Bridge.as(this.Rest, System.ITupleInternal);
                 if (rest == null) {
@@ -42316,6 +45373,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     return "(" + ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ", " + ((this.Item3 != null ? Bridge.toString(this.Item3) : null) || "") + ", " + ((this.Item4 != null ? Bridge.toString(this.Item4) : null) || "") + ", " + ((this.Item5 != null ? Bridge.toString(this.Item5) : null) || "") + ", " + ((this.Item6 != null ? Bridge.toString(this.Item6) : null) || "") + ", " + ((this.Item7 != null ? Bridge.toString(this.Item7) : null) || "") + ", " + (rest.System$ITupleInternal$ToStringEnd() || "");
                 }
             },
+            /*System.ValueTuple$8.toString end.*/
+
+            /*System.ValueTuple$8.System$ITupleInternal$ToStringEnd start.*/
             System$ITupleInternal$ToStringEnd: function () {
                 var rest = Bridge.as(this.Rest, System.ITupleInternal);
                 if (rest == null) {
@@ -42324,6 +45384,8 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     return ((this.Item1 != null ? Bridge.toString(this.Item1) : null) || "") + ", " + ((this.Item2 != null ? Bridge.toString(this.Item2) : null) || "") + ", " + ((this.Item3 != null ? Bridge.toString(this.Item3) : null) || "") + ", " + ((this.Item4 != null ? Bridge.toString(this.Item4) : null) || "") + ", " + ((this.Item5 != null ? Bridge.toString(this.Item5) : null) || "") + ", " + ((this.Item6 != null ? Bridge.toString(this.Item6) : null) || "") + ", " + ((this.Item7 != null ? Bridge.toString(this.Item7) : null) || "") + ", " + (rest.System$ITupleInternal$ToStringEnd() || "");
                 }
             },
+            /*System.ValueTuple$8.System$ITupleInternal$ToStringEnd end.*/
+
             $clone: function (to) {
                 var s = to || new (System.ValueTuple$8(T1,T2,T3,T4,T5,T6,T7,TRest))();
                 s.Item1 = this.Item1;
@@ -42338,9 +45400,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     }; });
+    /*System.ValueTuple$8 end.*/
 
     // @source IndexOutOfRangeException.js
 
+    /*System.IndexOutOfRangeException start.*/
     Bridge.define("System.IndexOutOfRangeException", {
         inherits: [System.SystemException],
         ctors: {
@@ -42361,9 +45425,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.IndexOutOfRangeException end.*/
 
     // @source InvalidCastException.js
 
+    /*System.InvalidCastException start.*/
     Bridge.define("System.InvalidCastException", {
         inherits: [System.SystemException],
         ctors: {
@@ -42389,9 +45455,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.InvalidCastException end.*/
 
     // @source InvalidOperationException.js
 
+    /*System.InvalidOperationException start.*/
     Bridge.define("System.InvalidOperationException", {
         inherits: [System.SystemException],
         ctors: {
@@ -42412,9 +45480,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.InvalidOperationException end.*/
 
     // @source ObjectDisposedException.js
 
+    /*System.ObjectDisposedException start.*/
     Bridge.define("System.ObjectDisposedException", {
         inherits: [System.InvalidOperationException],
         fields: {
@@ -42461,9 +45531,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.ObjectDisposedException end.*/
 
     // @source InvalidProgramException.js
 
+    /*System.InvalidProgramException start.*/
     Bridge.define("System.InvalidProgramException", {
         inherits: [System.SystemException],
         ctors: {
@@ -42484,9 +45556,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.InvalidProgramException end.*/
 
     // @source MissingMethodException.js
 
+    /*System.MissingMethodException start.*/
     Bridge.define("System.MissingMethodException", {
         inherits: [System.Exception],
         ctors: {
@@ -42508,9 +45582,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.MissingMethodException end.*/
 
     // @source Calendar.js
 
+    /*System.Globalization.Calendar start.*/
     Bridge.define("System.Globalization.Calendar", {
         inherits: [System.ICloneable],
         statics: {
@@ -42553,6 +45629,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
             },
             methods: {
+                /*System.Globalization.Calendar.ReadOnly:static start.*/
                 ReadOnly: function (calendar) {
                     if (calendar == null) {
                         throw new System.ArgumentNullException.$ctor1("calendar");
@@ -42566,18 +45643,27 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return (clonedCalendar);
                 },
+                /*System.Globalization.Calendar.ReadOnly:static end.*/
+
+                /*System.Globalization.Calendar.CheckAddResult:static start.*/
                 CheckAddResult: function (ticks, minValue, maxValue) {
                     if (ticks.lt(System.DateTime.getTicks(minValue)) || ticks.gt(System.DateTime.getTicks(maxValue))) {
                         throw new System.ArgumentException.$ctor1(System.String.formatProvider(System.Globalization.CultureInfo.invariantCulture, System.SR.Format$1("The result is out of the supported range for this calendar. The result should be between {0} (Gregorian date) and {1} (Gregorian date), inclusive.", Bridge.box(minValue, System.DateTime, System.DateTime.format), Bridge.box(maxValue, System.DateTime, System.DateTime.format)), null));
                     }
                 },
+                /*System.Globalization.Calendar.CheckAddResult:static end.*/
+
+                /*System.Globalization.Calendar.GetSystemTwoDigitYearSetting:static start.*/
                 GetSystemTwoDigitYearSetting: function (CalID, defaultYearValue) {
                     var twoDigitYearMax = 2029;
                     if (twoDigitYearMax < 0) {
                         twoDigitYearMax = defaultYearValue;
                     }
                     return (twoDigitYearMax);
-                }
+                },
+                /*System.Globalization.Calendar.GetSystemTwoDigitYearSetting:static end.*/
+
+
             }
         },
         fields: {
@@ -42646,19 +45732,29 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Globalization.Calendar.clone start.*/
             clone: function () {
                 var o = Bridge.clone(this);
                 Bridge.cast(o, System.Globalization.Calendar).SetReadOnlyState(false);
                 return (o);
             },
+            /*System.Globalization.Calendar.clone end.*/
+
+            /*System.Globalization.Calendar.VerifyWritable start.*/
             VerifyWritable: function () {
                 if (this._isReadOnly) {
                     throw new System.InvalidOperationException.$ctor1("Instance is read-only.");
                 }
             },
+            /*System.Globalization.Calendar.VerifyWritable end.*/
+
+            /*System.Globalization.Calendar.SetReadOnlyState start.*/
             SetReadOnlyState: function (readOnly) {
                 this._isReadOnly = readOnly;
             },
+            /*System.Globalization.Calendar.SetReadOnlyState end.*/
+
+            /*System.Globalization.Calendar.Add start.*/
             Add: function (time, value, scale) {
                 var tempMillis = (value * scale + (value >= 0 ? 0.5 : -0.5));
                 if (!((tempMillis > -315537897600000.0) && (tempMillis < 315537897600000.0))) {
@@ -42670,51 +45766,97 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 System.Globalization.Calendar.CheckAddResult(ticks, this.MinSupportedDateTime, this.MaxSupportedDateTime);
                 return (System.DateTime.create$2(ticks));
             },
+            /*System.Globalization.Calendar.Add end.*/
+
+            /*System.Globalization.Calendar.AddMilliseconds start.*/
             AddMilliseconds: function (time, milliseconds) {
                 return (this.Add(time, milliseconds, 1));
             },
+            /*System.Globalization.Calendar.AddMilliseconds end.*/
+
+            /*System.Globalization.Calendar.AddDays start.*/
             AddDays: function (time, days) {
                 return (this.Add(time, days, System.Globalization.Calendar.MillisPerDay));
             },
+            /*System.Globalization.Calendar.AddDays end.*/
+
+            /*System.Globalization.Calendar.AddHours start.*/
             AddHours: function (time, hours) {
                 return (this.Add(time, hours, System.Globalization.Calendar.MillisPerHour));
             },
+            /*System.Globalization.Calendar.AddHours end.*/
+
+            /*System.Globalization.Calendar.AddMinutes start.*/
             AddMinutes: function (time, minutes) {
                 return (this.Add(time, minutes, System.Globalization.Calendar.MillisPerMinute));
             },
+            /*System.Globalization.Calendar.AddMinutes end.*/
+
+            /*System.Globalization.Calendar.AddSeconds start.*/
             AddSeconds: function (time, seconds) {
                 return this.Add(time, seconds, System.Globalization.Calendar.MillisPerSecond);
             },
+            /*System.Globalization.Calendar.AddSeconds end.*/
+
+            /*System.Globalization.Calendar.AddWeeks start.*/
             AddWeeks: function (time, weeks) {
                 return (this.AddDays(time, Bridge.Int.mul(weeks, 7)));
             },
+            /*System.Globalization.Calendar.AddWeeks end.*/
+
+            /*System.Globalization.Calendar.GetDaysInMonth start.*/
             GetDaysInMonth: function (year, month) {
                 return (this.GetDaysInMonth$1(year, month, System.Globalization.Calendar.CurrentEra));
             },
+            /*System.Globalization.Calendar.GetDaysInMonth end.*/
+
+            /*System.Globalization.Calendar.GetDaysInYear start.*/
             GetDaysInYear: function (year) {
                 return (this.GetDaysInYear$1(year, System.Globalization.Calendar.CurrentEra));
             },
+            /*System.Globalization.Calendar.GetDaysInYear end.*/
+
+            /*System.Globalization.Calendar.GetHour start.*/
             GetHour: function (time) {
                 return (System.Int64.clip32((System.DateTime.getTicks(time).div(System.Globalization.Calendar.TicksPerHour)).mod(System.Int64(24))));
             },
+            /*System.Globalization.Calendar.GetHour end.*/
+
+            /*System.Globalization.Calendar.GetMilliseconds start.*/
             GetMilliseconds: function (time) {
                 return System.Int64.toNumber((System.DateTime.getTicks(time).div(System.Globalization.Calendar.TicksPerMillisecond)).mod(System.Int64(1000)));
             },
+            /*System.Globalization.Calendar.GetMilliseconds end.*/
+
+            /*System.Globalization.Calendar.GetMinute start.*/
             GetMinute: function (time) {
                 return (System.Int64.clip32((System.DateTime.getTicks(time).div(System.Globalization.Calendar.TicksPerMinute)).mod(System.Int64(60))));
             },
+            /*System.Globalization.Calendar.GetMinute end.*/
+
+            /*System.Globalization.Calendar.GetMonthsInYear start.*/
             GetMonthsInYear: function (year) {
                 return (this.GetMonthsInYear$1(year, System.Globalization.Calendar.CurrentEra));
             },
+            /*System.Globalization.Calendar.GetMonthsInYear end.*/
+
+            /*System.Globalization.Calendar.GetSecond start.*/
             GetSecond: function (time) {
                 return (System.Int64.clip32((System.DateTime.getTicks(time).div(System.Globalization.Calendar.TicksPerSecond)).mod(System.Int64(60))));
             },
+            /*System.Globalization.Calendar.GetSecond end.*/
+
+            /*System.Globalization.Calendar.GetFirstDayWeekOfYear start.*/
             GetFirstDayWeekOfYear: function (time, firstDayOfWeek) {
                 var dayOfYear = (this.GetDayOfYear(time) - 1) | 0;
                 var dayForJan1 = (this.GetDayOfWeek(time) - (dayOfYear % 7)) | 0;
                 var offset = (((((dayForJan1 - firstDayOfWeek) | 0) + 14) | 0)) % 7;
+                System.Diagnostics.Debug.Assert$1(offset >= 0, "Calendar.GetFirstDayWeekOfYear(): offset >= 0");
                 return (((((Bridge.Int.div((((dayOfYear + offset) | 0)), 7)) | 0) + 1) | 0));
             },
+            /*System.Globalization.Calendar.GetFirstDayWeekOfYear end.*/
+
+            /*System.Globalization.Calendar.GetWeekOfYearFullDays start.*/
             GetWeekOfYearFullDays: function (time, firstDayOfWeek, fullDays) {
                 var dayForJan1;
                 var offset;
@@ -42739,6 +45881,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return (this.GetWeekOfYearFullDays(System.DateTime.addDays(time, ((-(((dayOfYear + 1) | 0))) | 0)), firstDayOfWeek, fullDays));
             },
+            /*System.Globalization.Calendar.GetWeekOfYearFullDays end.*/
+
+            /*System.Globalization.Calendar.GetWeekOfYearOfMinSupportedDateTime start.*/
             GetWeekOfYearOfMinSupportedDateTime: function (firstDayOfWeek, minimumDaysInFirstWeek) {
                 var dayOfYear = (this.GetDayOfYear(this.MinSupportedDateTime) - 1) | 0;
                 var dayOfWeekOfFirstOfYear = (this.GetDayOfWeek(this.MinSupportedDateTime) - dayOfYear % 7) | 0;
@@ -42759,6 +45904,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return (((((Bridge.Int.div(day, 7)) | 0) + 1) | 0));
             },
+            /*System.Globalization.Calendar.GetWeekOfYearOfMinSupportedDateTime end.*/
+
+            /*System.Globalization.Calendar.GetWeekOfYear start.*/
             GetWeekOfYear: function (time, rule, firstDayOfWeek) {
                 if (firstDayOfWeek < 0 || firstDayOfWeek > 6) {
                     throw new System.ArgumentOutOfRangeException.$ctor4("firstDayOfWeek", System.SR.Format$1("Valid values are between {0} and {1}, inclusive.", Bridge.box(System.DayOfWeek.Sunday, System.DayOfWeek, System.Enum.toStringFn(System.DayOfWeek)), Bridge.box(System.DayOfWeek.Saturday, System.DayOfWeek, System.Enum.toStringFn(System.DayOfWeek))));
@@ -42773,15 +45921,27 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 throw new System.ArgumentOutOfRangeException.$ctor4("rule", System.SR.Format$1("Valid values are between {0} and {1}, inclusive.", Bridge.box(0, System.Globalization.CalendarWeekRule, System.Enum.toStringFn(System.Globalization.CalendarWeekRule)), Bridge.box(2, System.Globalization.CalendarWeekRule, System.Enum.toStringFn(System.Globalization.CalendarWeekRule))));
             },
+            /*System.Globalization.Calendar.GetWeekOfYear end.*/
+
+            /*System.Globalization.Calendar.IsLeapDay start.*/
             IsLeapDay: function (year, month, day) {
                 return (this.IsLeapDay$1(year, month, day, System.Globalization.Calendar.CurrentEra));
             },
+            /*System.Globalization.Calendar.IsLeapDay end.*/
+
+            /*System.Globalization.Calendar.IsLeapMonth start.*/
             IsLeapMonth: function (year, month) {
                 return (this.IsLeapMonth$1(year, month, System.Globalization.Calendar.CurrentEra));
             },
+            /*System.Globalization.Calendar.IsLeapMonth end.*/
+
+            /*System.Globalization.Calendar.GetLeapMonth start.*/
             GetLeapMonth: function (year) {
                 return (this.GetLeapMonth$1(year, System.Globalization.Calendar.CurrentEra));
             },
+            /*System.Globalization.Calendar.GetLeapMonth end.*/
+
+            /*System.Globalization.Calendar.GetLeapMonth$1 start.*/
             GetLeapMonth$1: function (year, era) {
                 if (!this.IsLeapYear$1(year, era)) {
                     return 0;
@@ -42796,12 +45956,21 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return 0;
             },
+            /*System.Globalization.Calendar.GetLeapMonth$1 end.*/
+
+            /*System.Globalization.Calendar.IsLeapYear start.*/
             IsLeapYear: function (year) {
                 return (this.IsLeapYear$1(year, System.Globalization.Calendar.CurrentEra));
             },
+            /*System.Globalization.Calendar.IsLeapYear end.*/
+
+            /*System.Globalization.Calendar.ToDateTime start.*/
             ToDateTime: function (year, month, day, hour, minute, second, millisecond) {
                 return (this.ToDateTime$1(year, month, day, hour, minute, second, millisecond, System.Globalization.Calendar.CurrentEra));
             },
+            /*System.Globalization.Calendar.ToDateTime end.*/
+
+            /*System.Globalization.Calendar.TryToDateTime start.*/
             TryToDateTime: function (year, month, day, hour, minute, second, millisecond, era, result) {
                 result.v = System.DateTime.getMinValue();
                 try {
@@ -42816,15 +45985,27 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Globalization.Calendar.TryToDateTime end.*/
+
+            /*System.Globalization.Calendar.IsValidYear start.*/
             IsValidYear: function (year, era) {
                 return (year >= this.GetYear(this.MinSupportedDateTime) && year <= this.GetYear(this.MaxSupportedDateTime));
             },
+            /*System.Globalization.Calendar.IsValidYear end.*/
+
+            /*System.Globalization.Calendar.IsValidMonth start.*/
             IsValidMonth: function (year, month, era) {
                 return (this.IsValidYear(year, era) && month >= 1 && month <= this.GetMonthsInYear$1(year, era));
             },
+            /*System.Globalization.Calendar.IsValidMonth end.*/
+
+            /*System.Globalization.Calendar.IsValidDay start.*/
             IsValidDay: function (year, month, day, era) {
                 return (this.IsValidMonth(year, month, era) && day >= 1 && day <= this.GetDaysInMonth$1(year, month, era));
             },
+            /*System.Globalization.Calendar.IsValidDay end.*/
+
+            /*System.Globalization.Calendar.ToFourDigitYear start.*/
             ToFourDigitYear: function (year) {
                 if (year < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor4("year", "Non-negative number required.");
@@ -42833,12 +46014,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     return (((Bridge.Int.mul((((((Bridge.Int.div(this.TwoDigitYearMax, 100)) | 0) - (year > this.TwoDigitYearMax % 100 ? 1 : 0)) | 0)), 100) + year) | 0));
                 }
                 return (year);
-            }
+            },
+            /*System.Globalization.Calendar.ToFourDigitYear end.*/
+
+
         }
     });
+    /*System.Globalization.Calendar end.*/
 
     // @source CalendarAlgorithmType.js
 
+    /*System.Globalization.CalendarAlgorithmType start.*/
     Bridge.define("System.Globalization.CalendarAlgorithmType", {
         $kind: "enum",
         statics: {
@@ -42850,9 +46036,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Globalization.CalendarAlgorithmType end.*/
 
     // @source CalendarId.js
 
+    /*System.Globalization.CalendarId start.*/
     Bridge.define("System.Globalization.CalendarId", {
         $kind: "enum",
         statics: {
@@ -42886,9 +46074,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
         },
         $utype: System.UInt16
     });
+    /*System.Globalization.CalendarId end.*/
 
     // @source CalendarWeekRule.js
 
+    /*System.Globalization.CalendarWeekRule start.*/
     Bridge.define("System.Globalization.CalendarWeekRule", {
         $kind: "enum",
         statics: {
@@ -42899,9 +46089,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Globalization.CalendarWeekRule end.*/
 
     // @source CultureNotFoundException.js
 
+    /*System.Globalization.CultureNotFoundException start.*/
     Bridge.define("System.Globalization.CultureNotFoundException", {
         inherits: [System.ArgumentException],
         statics: {
@@ -42987,9 +46179,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Globalization.CultureNotFoundException end.*/
 
     // @source DateTimeFormatInfoScanner.js
 
+    /*System.Globalization.DateTimeFormatInfoScanner start.*/
     Bridge.define("System.Globalization.DateTimeFormatInfoScanner", {
         statics: {
             fields: {
@@ -43059,6 +46253,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
             },
             methods: {
+                /*System.Globalization.DateTimeFormatInfoScanner.SkipWhiteSpacesAndNonLetter:static start.*/
                 SkipWhiteSpacesAndNonLetter: function (pattern, currentIndex) {
                     while (currentIndex < pattern.length) {
                         var ch = pattern.charCodeAt(currentIndex);
@@ -43080,6 +46275,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                     return (currentIndex);
                 },
+                /*System.Globalization.DateTimeFormatInfoScanner.SkipWhiteSpacesAndNonLetter:static end.*/
+
+                /*System.Globalization.DateTimeFormatInfoScanner.ScanRepeatChar:static start.*/
                 ScanRepeatChar: function (pattern, ch, index, count) {
                     count.v = 1;
                     while (((index = (index + 1) | 0)) < pattern.length && pattern.charCodeAt(index) === ch) {
@@ -43087,9 +46285,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                     return (index);
                 },
+                /*System.Globalization.DateTimeFormatInfoScanner.ScanRepeatChar:static end.*/
+
+                /*System.Globalization.DateTimeFormatInfoScanner.GetFormatFlagGenitiveMonth:static start.*/
                 GetFormatFlagGenitiveMonth: function (monthNames, genitveMonthNames, abbrevMonthNames, genetiveAbbrevMonthNames) {
                     return ((!System.Globalization.DateTimeFormatInfoScanner.EqualStringArrays(monthNames, genitveMonthNames) || !System.Globalization.DateTimeFormatInfoScanner.EqualStringArrays(abbrevMonthNames, genetiveAbbrevMonthNames)) ? 1 : 0);
                 },
+                /*System.Globalization.DateTimeFormatInfoScanner.GetFormatFlagGenitiveMonth:static end.*/
+
+                /*System.Globalization.DateTimeFormatInfoScanner.GetFormatFlagUseSpaceInMonthNames:static start.*/
                 GetFormatFlagUseSpaceInMonthNames: function (monthNames, genitveMonthNames, abbrevMonthNames, genetiveAbbrevMonthNames) {
                     var formatFlags = 0;
                     formatFlags |= (System.Globalization.DateTimeFormatInfoScanner.ArrayElementsBeginWithDigit(monthNames) || System.Globalization.DateTimeFormatInfoScanner.ArrayElementsBeginWithDigit(genitveMonthNames) || System.Globalization.DateTimeFormatInfoScanner.ArrayElementsBeginWithDigit(abbrevMonthNames) || System.Globalization.DateTimeFormatInfoScanner.ArrayElementsBeginWithDigit(genetiveAbbrevMonthNames) ? 32 : 0);
@@ -43097,12 +46301,21 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     formatFlags |= (System.Globalization.DateTimeFormatInfoScanner.ArrayElementsHaveSpace(monthNames) || System.Globalization.DateTimeFormatInfoScanner.ArrayElementsHaveSpace(genitveMonthNames) || System.Globalization.DateTimeFormatInfoScanner.ArrayElementsHaveSpace(abbrevMonthNames) || System.Globalization.DateTimeFormatInfoScanner.ArrayElementsHaveSpace(genetiveAbbrevMonthNames) ? 4 : 0);
                     return (formatFlags);
                 },
+                /*System.Globalization.DateTimeFormatInfoScanner.GetFormatFlagUseSpaceInMonthNames:static end.*/
+
+                /*System.Globalization.DateTimeFormatInfoScanner.GetFormatFlagUseSpaceInDayNames:static start.*/
                 GetFormatFlagUseSpaceInDayNames: function (dayNames, abbrevDayNames) {
                     return ((System.Globalization.DateTimeFormatInfoScanner.ArrayElementsHaveSpace(dayNames) || System.Globalization.DateTimeFormatInfoScanner.ArrayElementsHaveSpace(abbrevDayNames)) ? 16 : 0);
                 },
+                /*System.Globalization.DateTimeFormatInfoScanner.GetFormatFlagUseSpaceInDayNames:static end.*/
+
+                /*System.Globalization.DateTimeFormatInfoScanner.GetFormatFlagUseHebrewCalendar:static start.*/
                 GetFormatFlagUseHebrewCalendar: function (calID) {
                     return (calID === 8 ? 10 : 0);
                 },
+                /*System.Globalization.DateTimeFormatInfoScanner.GetFormatFlagUseHebrewCalendar:static end.*/
+
+                /*System.Globalization.DateTimeFormatInfoScanner.EqualStringArrays:static start.*/
                 EqualStringArrays: function (array1, array2) {
                     if (Bridge.referenceEquals(array1, array2)) {
                         return true;
@@ -43120,6 +46333,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return true;
                 },
+                /*System.Globalization.DateTimeFormatInfoScanner.EqualStringArrays:static end.*/
+
+                /*System.Globalization.DateTimeFormatInfoScanner.ArrayElementsHaveSpace:static start.*/
                 ArrayElementsHaveSpace: function (array) {
                     for (var i = 0; i < array.length; i = (i + 1) | 0) {
                         for (var j = 0; j < array[System.Array.index(i, array)].length; j = (j + 1) | 0) {
@@ -43131,6 +46347,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return false;
                 },
+                /*System.Globalization.DateTimeFormatInfoScanner.ArrayElementsHaveSpace:static end.*/
+
+                /*System.Globalization.DateTimeFormatInfoScanner.ArrayElementsBeginWithDigit:static start.*/
                 ArrayElementsBeginWithDigit: function (array) {
                     for (var i = 0; i < array.length; i = (i + 1) | 0) {
                         if (array[System.Array.index(i, array)].length > 0 && array[System.Array.index(i, array)].charCodeAt(0) >= 48 && array[System.Array.index(i, array)].charCodeAt(0) <= 57) {
@@ -43160,7 +46379,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
 
                     return false;
-                }
+                },
+                /*System.Globalization.DateTimeFormatInfoScanner.ArrayElementsBeginWithDigit:static end.*/
+
+
             }
         },
         fields: {
@@ -43174,6 +46396,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Globalization.DateTimeFormatInfoScanner.AddDateWordOrPostfix start.*/
             AddDateWordOrPostfix: function (formatPostfix, str) {
                 if (str.length > 0) {
                     if (System.String.equals(str, ".")) {
@@ -43204,6 +46427,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Globalization.DateTimeFormatInfoScanner.AddDateWordOrPostfix end.*/
+
+            /*System.Globalization.DateTimeFormatInfoScanner.AddDateWords start.*/
             AddDateWords: function (pattern, index, formatPostfix) {
                 var newIndex = System.Globalization.DateTimeFormatInfoScanner.SkipWhiteSpacesAndNonLetter(pattern, index);
                 if (newIndex !== index && formatPostfix != null) {
@@ -43240,6 +46466,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return (index);
             },
+            /*System.Globalization.DateTimeFormatInfoScanner.AddDateWords end.*/
+
+            /*System.Globalization.DateTimeFormatInfoScanner.AddIgnorableSymbols start.*/
             AddIgnorableSymbols: function (text) {
                 if (this.m_dateWords == null) {
                     this.m_dateWords = new (System.Collections.Generic.List$1(System.String)).ctor();
@@ -43249,6 +46478,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this.m_dateWords.add(temp);
                 }
             },
+            /*System.Globalization.DateTimeFormatInfoScanner.AddIgnorableSymbols end.*/
+
+            /*System.Globalization.DateTimeFormatInfoScanner.ScanDateWord start.*/
             ScanDateWord: function (pattern) {
                 this._ymdFlags = System.Globalization.DateTimeFormatInfoScanner.FoundDatePattern.None;
 
@@ -43299,6 +46531,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Globalization.DateTimeFormatInfoScanner.ScanDateWord end.*/
+
+            /*System.Globalization.DateTimeFormatInfoScanner.GetDateWordsOfDTFI start.*/
             GetDateWordsOfDTFI: function (dtfi) {
                 var datePatterns = dtfi.getAllDateTimePatterns(68);
                 var i;
@@ -43336,12 +46571,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
                 return (result);
-            }
+            },
+            /*System.Globalization.DateTimeFormatInfoScanner.GetDateWordsOfDTFI end.*/
+
+
         }
     });
+    /*System.Globalization.DateTimeFormatInfoScanner end.*/
 
     // @source DateTimeStyles.js
 
+    /*System.Globalization.DateTimeStyles start.*/
     Bridge.define("System.Globalization.DateTimeStyles", {
         $kind: "enum",
         statics: {
@@ -43360,9 +46600,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
         },
         $flags: true
     });
+    /*System.Globalization.DateTimeStyles end.*/
 
     // @source FORMATFLAGS.js
 
+    /*System.Globalization.FORMATFLAGS start.*/
     Bridge.define("System.Globalization.FORMATFLAGS", {
         $kind: "enum",
         statics: {
@@ -43377,9 +46619,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Globalization.FORMATFLAGS end.*/
 
     // @source GlobalizationMode.js
 
+    /*System.Globalization.GlobalizationMode start.*/
     Bridge.define("System.Globalization.GlobalizationMode", {
         statics: {
             props: {
@@ -43391,20 +46635,29 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
             },
             methods: {
+                /*System.Globalization.GlobalizationMode.GetInvariantSwitchValue:static start.*/
                 GetInvariantSwitchValue: function () {
                     return true;
 
 
                 },
+                /*System.Globalization.GlobalizationMode.GetInvariantSwitchValue:static end.*/
+
+                /*System.Globalization.GlobalizationMode.GetGlobalizationInvariantMode:static start.*/
                 GetGlobalizationInvariantMode: function () {
                     return System.Globalization.GlobalizationMode.GetInvariantSwitchValue();
-                }
+                },
+                /*System.Globalization.GlobalizationMode.GetGlobalizationInvariantMode:static end.*/
+
+
             }
         }
     });
+    /*System.Globalization.GlobalizationMode end.*/
 
     // @source FoundDatePattern.js
 
+    /*System.Globalization.DateTimeFormatInfoScanner+FoundDatePattern start.*/
     Bridge.define("System.Globalization.DateTimeFormatInfoScanner.FoundDatePattern", {
         $kind: "nested enum",
         statics: {
@@ -43417,9 +46670,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Globalization.DateTimeFormatInfoScanner+FoundDatePattern end.*/
 
     // @source NotImplemented.js
 
+    /*System.NotImplemented start.*/
     Bridge.define("System.NotImplemented", {
         statics: {
             props: {
@@ -43430,15 +46685,21 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
             },
             methods: {
+                /*System.NotImplemented.ByDesignWithMessage:static start.*/
                 ByDesignWithMessage: function (message) {
                     return new System.NotImplementedException.$ctor1(message);
-                }
+                },
+                /*System.NotImplemented.ByDesignWithMessage:static end.*/
+
+
             }
         }
     });
+    /*System.NotImplemented end.*/
 
     // @source NotImplementedException.js
 
+    /*System.NotImplementedException start.*/
     Bridge.define("System.NotImplementedException", {
         inherits: [System.SystemException],
         ctors: {
@@ -43459,9 +46720,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.NotImplementedException end.*/
 
     // @source NotSupportedException.js
 
+    /*System.NotSupportedException start.*/
     Bridge.define("System.NotSupportedException", {
         inherits: [System.SystemException],
         ctors: {
@@ -43482,9 +46745,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.NotSupportedException end.*/
 
     // @source NullReferenceException.js
 
+    /*System.NullReferenceException start.*/
     Bridge.define("System.NullReferenceException", {
         inherits: [System.SystemException],
         ctors: {
@@ -43505,9 +46770,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.NullReferenceException end.*/
 
     // @source OperationCanceledException.js
 
+    /*System.OperationCanceledException start.*/
     Bridge.define("System.OperationCanceledException", {
         inherits: [System.SystemException],
         fields: {
@@ -43556,9 +46823,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.OperationCanceledException end.*/
 
     // @source OverflowException.js
 
+    /*System.OverflowException start.*/
     Bridge.define("System.OverflowException", {
         inherits: [System.ArithmeticException],
         ctors: {
@@ -43579,9 +46848,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.OverflowException end.*/
 
     // @source ParseFailureKind.js
 
+    /*System.ParseFailureKind start.*/
     Bridge.define("System.ParseFailureKind", {
         $kind: "enum",
         statics: {
@@ -43594,9 +46865,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.ParseFailureKind end.*/
 
     // @source ParseFlags.js
 
+    /*System.ParseFlags start.*/
     Bridge.define("System.ParseFlags", {
         $kind: "enum",
         statics: {
@@ -43620,9 +46893,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
         },
         $flags: true
     });
+    /*System.ParseFlags end.*/
 
     // @source StringBuilderCache.js
 
+    /*System.Text.StringBuilderCache start.*/
     Bridge.define("System.Text.StringBuilderCache", {
         statics: {
             fields: {
@@ -43637,6 +46912,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
             },
             methods: {
+                /*System.Text.StringBuilderCache.Acquire:static start.*/
                 Acquire: function (capacity) {
                     if (capacity === void 0) { capacity = 16; }
                     if (capacity <= System.Text.StringBuilderCache.MAX_BUILDER_SIZE) {
@@ -43651,22 +46927,33 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                     return new System.Text.StringBuilder("", capacity);
                 },
+                /*System.Text.StringBuilderCache.Acquire:static end.*/
+
+                /*System.Text.StringBuilderCache.Release:static start.*/
                 Release: function (sb) {
                     if (sb.getCapacity() <= System.Text.StringBuilderCache.MAX_BUILDER_SIZE) {
                         System.Text.StringBuilderCache.t_cachedInstance = sb;
                     }
                 },
+                /*System.Text.StringBuilderCache.Release:static end.*/
+
+                /*System.Text.StringBuilderCache.GetStringAndRelease:static start.*/
                 GetStringAndRelease: function (sb) {
                     var result = sb.toString();
                     System.Text.StringBuilderCache.Release(sb);
                     return result;
-                }
+                },
+                /*System.Text.StringBuilderCache.GetStringAndRelease:static end.*/
+
+
             }
         }
     });
+    /*System.Text.StringBuilderCache end.*/
 
     // @source BinaryReader.js
 
+    /*System.IO.BinaryReader start.*/
     Bridge.define("System.IO.BinaryReader", {
         inherits: [System.IDisposable],
         statics: {
@@ -43734,12 +47021,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.m_isMemoryStream = (Bridge.referenceEquals(Bridge.getType(this.m_stream), System.IO.MemoryStream));
                 this.m_leaveOpen = leaveOpen;
 
+                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this.m_encoding != null; }, "[BinaryReader.ctor]m_encoding!=null");
             }
         },
         methods: {
+            /*System.IO.BinaryReader.Close start.*/
             Close: function () {
                 this.Dispose$1(true);
             },
+            /*System.IO.BinaryReader.Close end.*/
+
+            /*System.IO.BinaryReader.Dispose$1 start.*/
             Dispose$1: function (disposing) {
                 if (disposing) {
                     var copyOfStream = this.m_stream;
@@ -43755,9 +47047,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.m_singleChar = null;
                 this.m_charBuffer = null;
             },
+            /*System.IO.BinaryReader.Dispose$1 end.*/
+
+            /*System.IO.BinaryReader.Dispose start.*/
             Dispose: function () {
                 this.Dispose$1(true);
             },
+            /*System.IO.BinaryReader.Dispose end.*/
+
+            /*System.IO.BinaryReader.PeekChar start.*/
             PeekChar: function () {
 
                 if (this.m_stream == null) {
@@ -43772,6 +47070,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.m_stream.Position = origPos;
                 return ch;
             },
+            /*System.IO.BinaryReader.PeekChar end.*/
+
+            /*System.IO.BinaryReader.Read start.*/
             Read: function () {
 
                 if (this.m_stream == null) {
@@ -43779,6 +47080,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return this.InternalReadOneChar();
             },
+            /*System.IO.BinaryReader.Read end.*/
+
+            /*System.IO.BinaryReader.Read$2 start.*/
             Read$2: function (buffer, index, count) {
                 if (buffer == null) {
                     throw new System.ArgumentNullException.$ctor3("buffer", "ArgumentNull_Buffer");
@@ -43799,6 +47103,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return this.InternalReadChars(buffer, index, count);
             },
+            /*System.IO.BinaryReader.Read$2 end.*/
+
+            /*System.IO.BinaryReader.Read$1 start.*/
             Read$1: function (buffer, index, count) {
                 if (buffer == null) {
                     throw new System.ArgumentNullException.$ctor3("buffer", "ArgumentNull_Buffer");
@@ -43818,10 +47125,16 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return this.m_stream.Read(buffer, index, count);
             },
+            /*System.IO.BinaryReader.Read$1 end.*/
+
+            /*System.IO.BinaryReader.ReadBoolean start.*/
             ReadBoolean: function () {
                 this.FillBuffer(1);
                 return (this.m_buffer[System.Array.index(0, this.m_buffer)] !== 0);
             },
+            /*System.IO.BinaryReader.ReadBoolean end.*/
+
+            /*System.IO.BinaryReader.ReadByte start.*/
             ReadByte: function () {
                 if (this.m_stream == null) {
                     System.IO.__Error.FileNotOpen();
@@ -43833,10 +47146,16 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return (b & 255);
             },
+            /*System.IO.BinaryReader.ReadByte end.*/
+
+            /*System.IO.BinaryReader.ReadSByte start.*/
             ReadSByte: function () {
                 this.FillBuffer(1);
                 return Bridge.Int.sxb((this.m_buffer[System.Array.index(0, this.m_buffer)]) & 255);
             },
+            /*System.IO.BinaryReader.ReadSByte end.*/
+
+            /*System.IO.BinaryReader.ReadChar start.*/
             ReadChar: function () {
                 var value = this.Read();
                 if (value === -1) {
@@ -43844,20 +47163,30 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return (value & 65535);
             },
+            /*System.IO.BinaryReader.ReadChar end.*/
+
+            /*System.IO.BinaryReader.ReadInt16 start.*/
             ReadInt16: function () {
                 this.FillBuffer(2);
                 return Bridge.Int.sxs((this.m_buffer[System.Array.index(0, this.m_buffer)] | this.m_buffer[System.Array.index(1, this.m_buffer)] << 8) & 65535);
             },
+            /*System.IO.BinaryReader.ReadInt16 end.*/
+
+            /*System.IO.BinaryReader.ReadUInt16 start.*/
             ReadUInt16: function () {
                 this.FillBuffer(2);
                 return ((this.m_buffer[System.Array.index(0, this.m_buffer)] | this.m_buffer[System.Array.index(1, this.m_buffer)] << 8) & 65535);
             },
+            /*System.IO.BinaryReader.ReadUInt16 end.*/
+
+            /*System.IO.BinaryReader.ReadInt32 start.*/
             ReadInt32: function () {
                 if (this.m_isMemoryStream) {
                     if (this.m_stream == null) {
                         System.IO.__Error.FileNotOpen();
                     }
                     var mStream = Bridge.as(this.m_stream, System.IO.MemoryStream);
+                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return mStream != null; }, "m_stream as MemoryStream != null");
 
                     return mStream.InternalReadInt32();
                 } else {
@@ -43865,27 +47194,42 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     return this.m_buffer[System.Array.index(0, this.m_buffer)] | this.m_buffer[System.Array.index(1, this.m_buffer)] << 8 | this.m_buffer[System.Array.index(2, this.m_buffer)] << 16 | this.m_buffer[System.Array.index(3, this.m_buffer)] << 24;
                 }
             },
+            /*System.IO.BinaryReader.ReadInt32 end.*/
+
+            /*System.IO.BinaryReader.ReadUInt32 start.*/
             ReadUInt32: function () {
                 this.FillBuffer(4);
                 return ((this.m_buffer[System.Array.index(0, this.m_buffer)] | this.m_buffer[System.Array.index(1, this.m_buffer)] << 8 | this.m_buffer[System.Array.index(2, this.m_buffer)] << 16 | this.m_buffer[System.Array.index(3, this.m_buffer)] << 24) >>> 0);
             },
+            /*System.IO.BinaryReader.ReadUInt32 end.*/
+
+            /*System.IO.BinaryReader.ReadInt64 start.*/
             ReadInt64: function () {
                 this.FillBuffer(8);
                 var lo = (this.m_buffer[System.Array.index(0, this.m_buffer)] | this.m_buffer[System.Array.index(1, this.m_buffer)] << 8 | this.m_buffer[System.Array.index(2, this.m_buffer)] << 16 | this.m_buffer[System.Array.index(3, this.m_buffer)] << 24) >>> 0;
                 var hi = (this.m_buffer[System.Array.index(4, this.m_buffer)] | this.m_buffer[System.Array.index(5, this.m_buffer)] << 8 | this.m_buffer[System.Array.index(6, this.m_buffer)] << 16 | this.m_buffer[System.Array.index(7, this.m_buffer)] << 24) >>> 0;
                 return System.Int64.clip64(System.UInt64(hi)).shl(32).or(System.Int64(lo));
             },
+            /*System.IO.BinaryReader.ReadInt64 end.*/
+
+            /*System.IO.BinaryReader.ReadUInt64 start.*/
             ReadUInt64: function () {
                 this.FillBuffer(8);
                 var lo = (this.m_buffer[System.Array.index(0, this.m_buffer)] | this.m_buffer[System.Array.index(1, this.m_buffer)] << 8 | this.m_buffer[System.Array.index(2, this.m_buffer)] << 16 | this.m_buffer[System.Array.index(3, this.m_buffer)] << 24) >>> 0;
                 var hi = (this.m_buffer[System.Array.index(4, this.m_buffer)] | this.m_buffer[System.Array.index(5, this.m_buffer)] << 8 | this.m_buffer[System.Array.index(6, this.m_buffer)] << 16 | this.m_buffer[System.Array.index(7, this.m_buffer)] << 24) >>> 0;
                 return System.UInt64(hi).shl(32).or(System.UInt64(lo));
             },
+            /*System.IO.BinaryReader.ReadUInt64 end.*/
+
+            /*System.IO.BinaryReader.ReadSingle start.*/
             ReadSingle: function () {
                 this.FillBuffer(4);
                 var tmpBuffer = (this.m_buffer[System.Array.index(0, this.m_buffer)] | this.m_buffer[System.Array.index(1, this.m_buffer)] << 8 | this.m_buffer[System.Array.index(2, this.m_buffer)] << 16 | this.m_buffer[System.Array.index(3, this.m_buffer)] << 24) >>> 0;
                 return System.BitConverter.toSingle(System.BitConverter.getBytes$8(tmpBuffer), 0);
             },
+            /*System.IO.BinaryReader.ReadSingle end.*/
+
+            /*System.IO.BinaryReader.ReadDouble start.*/
             ReadDouble: function () {
                 this.FillBuffer(8);
                 var lo = (this.m_buffer[System.Array.index(0, this.m_buffer)] | this.m_buffer[System.Array.index(1, this.m_buffer)] << 8 | this.m_buffer[System.Array.index(2, this.m_buffer)] << 16 | this.m_buffer[System.Array.index(3, this.m_buffer)] << 24) >>> 0;
@@ -43894,6 +47238,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 var tmpBuffer = System.UInt64(hi).shl(32).or(System.UInt64(lo));
                 return System.BitConverter.toDouble(System.BitConverter.getBytes$9(tmpBuffer), 0);
             },
+            /*System.IO.BinaryReader.ReadDouble end.*/
+
+            /*System.IO.BinaryReader.ReadDecimal start.*/
             ReadDecimal: function () {
                 this.FillBuffer(23);
                 try {
@@ -43909,6 +47256,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.IO.BinaryReader.ReadDecimal end.*/
+
+            /*System.IO.BinaryReader.ReadString start.*/
             ReadString: function () {
 
                 if (this.m_stream == null) {
@@ -43967,7 +47317,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return sb.toString();
             },
+            /*System.IO.BinaryReader.ReadString end.*/
+
+            /*System.IO.BinaryReader.InternalReadChars start.*/
             InternalReadChars: function (buffer, index, count) {
+                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this.m_stream != null; });
 
                 var charsRemaining = count;
 
@@ -43998,9 +47352,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     index = (index + 1) | 0;
                 }
 
+                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return charsRemaining >= 0; }, "We read too many characters.");
 
                 return (((count - charsRemaining) | 0));
             },
+            /*System.IO.BinaryReader.InternalReadChars end.*/
+
+            /*System.IO.BinaryReader.InternalReadOneChar start.*/
             InternalReadOneChar: function (allowSurrogate) {
                 if (allowSurrogate === void 0) { allowSurrogate = false; }
                 var charsRead = 0;
@@ -44107,6 +47465,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
 
                     if (!allowSurrogate) {
+                        System.Diagnostics.Contracts.Contract.assert(4, this, function () { return charsRead < 2; }, "InternalReadOneChar - assuming we only got 0 or 1 char, not 2!");
                     }
                 }
 
@@ -44118,6 +47477,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return this.m_singleChar[System.Array.index(0, this.m_singleChar)];
             },
+            /*System.IO.BinaryReader.InternalReadOneChar end.*/
+
+            /*System.IO.BinaryReader.ReadChars start.*/
             ReadChars: function (count) {
                 if (count < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor4("count", "ArgumentOutOfRange_NeedNonNegNum");
@@ -44140,6 +47502,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return chars;
             },
+            /*System.IO.BinaryReader.ReadChars end.*/
+
+            /*System.IO.BinaryReader.ReadBytes start.*/
             ReadBytes: function (count) {
                 if (count < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor4("count", "ArgumentOutOfRange_NeedNonNegNum");
@@ -44172,6 +47537,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return result;
             },
+            /*System.IO.BinaryReader.ReadBytes end.*/
+
+            /*System.IO.BinaryReader.FillBuffer start.*/
             FillBuffer: function (numBytes) {
                 if (this.m_buffer != null && (numBytes < 0 || numBytes > this.m_buffer.length)) {
                     throw new System.ArgumentOutOfRangeException.$ctor4("numBytes", "ArgumentOutOfRange_BinaryReaderFillBuffer");
@@ -44200,6 +47568,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     bytesRead = (bytesRead + n) | 0;
                 } while (bytesRead < numBytes);
             },
+            /*System.IO.BinaryReader.FillBuffer end.*/
+
+            /*System.IO.BinaryReader.Read7BitEncodedInt start.*/
             Read7BitEncodedInt: function () {
                 var count = 0;
                 var shift = 0;
@@ -44214,12 +47585,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     shift = (shift + 7) | 0;
                 } while ((b & 128) !== 0);
                 return count;
-            }
+            },
+            /*System.IO.BinaryReader.Read7BitEncodedInt end.*/
+
+
         }
     });
+    /*System.IO.BinaryReader end.*/
 
     // @source BinaryWriter.js
 
+    /*System.IO.BinaryWriter start.*/
     Bridge.define("System.IO.BinaryWriter", {
         inherits: [System.IDisposable],
         statics: {
@@ -44282,9 +47658,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.IO.BinaryWriter.Close start.*/
             Close: function () {
                 this.Dispose$1(true);
             },
+            /*System.IO.BinaryWriter.Close end.*/
+
+            /*System.IO.BinaryWriter.Dispose$1 start.*/
             Dispose$1: function (disposing) {
                 if (disposing) {
                     if (this._leaveOpen) {
@@ -44294,44 +47674,75 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.IO.BinaryWriter.Dispose$1 end.*/
+
+            /*System.IO.BinaryWriter.Dispose start.*/
             Dispose: function () {
                 this.Dispose$1(true);
             },
+            /*System.IO.BinaryWriter.Dispose end.*/
+
+            /*System.IO.BinaryWriter.Flush start.*/
             Flush: function () {
                 this.OutStream.Flush();
             },
+            /*System.IO.BinaryWriter.Flush end.*/
+
+            /*System.IO.BinaryWriter.Seek start.*/
             Seek: function (offset, origin) {
                 return this.OutStream.Seek(System.Int64(offset), origin);
             },
+            /*System.IO.BinaryWriter.Seek end.*/
+
+            /*System.IO.BinaryWriter.Write start.*/
             Write: function (value) {
                 this._buffer[System.Array.index(0, this._buffer)] = (value ? 1 : 0) & 255;
                 this.OutStream.Write(this._buffer, 0, 1);
             },
+            /*System.IO.BinaryWriter.Write end.*/
+
+            /*System.IO.BinaryWriter.Write$1 start.*/
             Write$1: function (value) {
                 this.OutStream.WriteByte(value);
             },
+            /*System.IO.BinaryWriter.Write$1 end.*/
+
+            /*System.IO.BinaryWriter.Write$12 start.*/
             Write$12: function (value) {
                 this.OutStream.WriteByte((value & 255));
             },
+            /*System.IO.BinaryWriter.Write$12 end.*/
+
+            /*System.IO.BinaryWriter.Write$2 start.*/
             Write$2: function (buffer) {
                 if (buffer == null) {
                     throw new System.ArgumentNullException.$ctor1("buffer");
                 }
                 this.OutStream.Write(buffer, 0, buffer.length);
             },
+            /*System.IO.BinaryWriter.Write$2 end.*/
+
+            /*System.IO.BinaryWriter.Write$3 start.*/
             Write$3: function (buffer, index, count) {
                 this.OutStream.Write(buffer, index, count);
             },
+            /*System.IO.BinaryWriter.Write$3 end.*/
+
+            /*System.IO.BinaryWriter.Write$4 start.*/
             Write$4: function (ch) {
                 if (System.Char.isSurrogate(ch)) {
                     throw new System.ArgumentException.$ctor1("Arg_SurrogatesNotAllowedAsSingleChar");
                 }
 
+                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._encoding.GetMaxByteCount(1) <= 16; }, "_encoding.GetMaxByteCount(1) <= 16)");
                 var numBytes = 0;
                 numBytes = this._encoding.GetBytes$3(System.Array.init([ch], System.Char), 0, 1, this._buffer, 0);
 
                 this.OutStream.Write(this._buffer, 0, numBytes);
             },
+            /*System.IO.BinaryWriter.Write$4 end.*/
+
+            /*System.IO.BinaryWriter.Write$5 start.*/
             Write$5: function (chars) {
                 if (chars == null) {
                     throw new System.ArgumentNullException.$ctor1("chars");
@@ -44340,10 +47751,16 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 var bytes = this._encoding.GetBytes$1(chars, 0, chars.length);
                 this.OutStream.Write(bytes, 0, bytes.length);
             },
+            /*System.IO.BinaryWriter.Write$5 end.*/
+
+            /*System.IO.BinaryWriter.Write$6 start.*/
             Write$6: function (chars, index, count) {
                 var bytes = this._encoding.GetBytes$1(chars, index, count);
                 this.OutStream.Write(bytes, 0, bytes.length);
             },
+            /*System.IO.BinaryWriter.Write$6 end.*/
+
+            /*System.IO.BinaryWriter.Write$8 start.*/
             Write$8: function (value) {
                 var TmpValue = System.Int64.clipu64(System.BitConverter.doubleToInt64Bits(value));
                 this._buffer[System.Array.index(0, this._buffer)] = System.Int64.clipu8(TmpValue);
@@ -44356,20 +47773,32 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._buffer[System.Array.index(7, this._buffer)] = System.Int64.clipu8(TmpValue.shru(56));
                 this.OutStream.Write(this._buffer, 0, 8);
             },
+            /*System.IO.BinaryWriter.Write$8 end.*/
+
+            /*System.IO.BinaryWriter.Write$7 start.*/
             Write$7: function (value) {
                 var buf = value.getBytes();
                 this.OutStream.Write(buf, 0, 23);
             },
+            /*System.IO.BinaryWriter.Write$7 end.*/
+
+            /*System.IO.BinaryWriter.Write$9 start.*/
             Write$9: function (value) {
                 this._buffer[System.Array.index(0, this._buffer)] = value & 255;
                 this._buffer[System.Array.index(1, this._buffer)] = (value >> 8) & 255;
                 this.OutStream.Write(this._buffer, 0, 2);
             },
+            /*System.IO.BinaryWriter.Write$9 end.*/
+
+            /*System.IO.BinaryWriter.Write$15 start.*/
             Write$15: function (value) {
                 this._buffer[System.Array.index(0, this._buffer)] = value & 255;
                 this._buffer[System.Array.index(1, this._buffer)] = (value >> 8) & 255;
                 this.OutStream.Write(this._buffer, 0, 2);
             },
+            /*System.IO.BinaryWriter.Write$15 end.*/
+
+            /*System.IO.BinaryWriter.Write$10 start.*/
             Write$10: function (value) {
                 this._buffer[System.Array.index(0, this._buffer)] = value & 255;
                 this._buffer[System.Array.index(1, this._buffer)] = (value >> 8) & 255;
@@ -44377,6 +47806,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._buffer[System.Array.index(3, this._buffer)] = (value >> 24) & 255;
                 this.OutStream.Write(this._buffer, 0, 4);
             },
+            /*System.IO.BinaryWriter.Write$10 end.*/
+
+            /*System.IO.BinaryWriter.Write$16 start.*/
             Write$16: function (value) {
                 this._buffer[System.Array.index(0, this._buffer)] = value & 255;
                 this._buffer[System.Array.index(1, this._buffer)] = (value >>> 8) & 255;
@@ -44384,6 +47816,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._buffer[System.Array.index(3, this._buffer)] = (value >>> 24) & 255;
                 this.OutStream.Write(this._buffer, 0, 4);
             },
+            /*System.IO.BinaryWriter.Write$16 end.*/
+
+            /*System.IO.BinaryWriter.Write$11 start.*/
             Write$11: function (value) {
                 this._buffer[System.Array.index(0, this._buffer)] = System.Int64.clipu8(value);
                 this._buffer[System.Array.index(1, this._buffer)] = System.Int64.clipu8(value.shr(8));
@@ -44395,6 +47830,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._buffer[System.Array.index(7, this._buffer)] = System.Int64.clipu8(value.shr(56));
                 this.OutStream.Write(this._buffer, 0, 8);
             },
+            /*System.IO.BinaryWriter.Write$11 end.*/
+
+            /*System.IO.BinaryWriter.Write$17 start.*/
             Write$17: function (value) {
                 this._buffer[System.Array.index(0, this._buffer)] = System.Int64.clipu8(value);
                 this._buffer[System.Array.index(1, this._buffer)] = System.Int64.clipu8(value.shru(8));
@@ -44406,6 +47844,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._buffer[System.Array.index(7, this._buffer)] = System.Int64.clipu8(value.shru(56));
                 this.OutStream.Write(this._buffer, 0, 8);
             },
+            /*System.IO.BinaryWriter.Write$17 end.*/
+
+            /*System.IO.BinaryWriter.Write$13 start.*/
             Write$13: function (value) {
                 var TmpValue = System.BitConverter.toUInt32(System.BitConverter.getBytes$6(value), 0);
                 this._buffer[System.Array.index(0, this._buffer)] = TmpValue & 255;
@@ -44414,6 +47855,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._buffer[System.Array.index(3, this._buffer)] = (TmpValue >>> 24) & 255;
                 this.OutStream.Write(this._buffer, 0, 4);
             },
+            /*System.IO.BinaryWriter.Write$13 end.*/
+
+            /*System.IO.BinaryWriter.Write$14 start.*/
             Write$14: function (value) {
                 if (value == null) {
                     throw new System.ArgumentNullException.$ctor1("value");
@@ -44424,6 +47868,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.Write7BitEncodedInt(len);
                 this.OutStream.Write(buffer, 0, len);
             },
+            /*System.IO.BinaryWriter.Write$14 end.*/
+
+            /*System.IO.BinaryWriter.Write7BitEncodedInt start.*/
             Write7BitEncodedInt: function (value) {
                 var v = value >>> 0;
                 while (v >= 128) {
@@ -44431,12 +47878,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     v = v >>> 7;
                 }
                 this.Write$1((v & 255));
-            }
+            },
+            /*System.IO.BinaryWriter.Write7BitEncodedInt end.*/
+
+
         }
     });
+    /*System.IO.BinaryWriter end.*/
 
     // @source Stream.js
 
+    /*System.IO.Stream start.*/
     Bridge.define("System.IO.Stream", {
         inherits: [System.IDisposable],
         statics: {
@@ -44451,6 +47903,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
             },
             methods: {
+                /*System.IO.Stream.Synchronized:static start.*/
                 Synchronized: function (stream) {
                     if (stream == null) {
                         throw new System.ArgumentNullException.$ctor1("stream");
@@ -44458,13 +47911,22 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return stream;
                 },
+                /*System.IO.Stream.Synchronized:static end.*/
+
+                /*System.IO.Stream.BlockingEndRead:static start.*/
                 BlockingEndRead: function (asyncResult) {
 
                     return System.IO.Stream.SynchronousAsyncResult.EndRead(asyncResult);
                 },
+                /*System.IO.Stream.BlockingEndRead:static end.*/
+
+                /*System.IO.Stream.BlockingEndWrite:static start.*/
                 BlockingEndWrite: function (asyncResult) {
                     System.IO.Stream.SynchronousAsyncResult.EndWrite(asyncResult);
-                }
+                },
+                /*System.IO.Stream.BlockingEndWrite:static end.*/
+
+
             }
         },
         props: {
@@ -44492,6 +47954,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
         },
         alias: ["Dispose", "System$IDisposable$Dispose"],
         methods: {
+            /*System.IO.Stream.CopyTo start.*/
             CopyTo: function (destination) {
                 if (destination == null) {
                     throw new System.ArgumentNullException.$ctor1("destination");
@@ -44511,6 +47974,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 this.InternalCopyTo(destination, System.IO.Stream._DefaultCopyBufferSize);
             },
+            /*System.IO.Stream.CopyTo end.*/
+
+            /*System.IO.Stream.CopyTo$1 start.*/
             CopyTo$1: function (destination, bufferSize) {
                 if (destination == null) {
                     throw new System.ArgumentNullException.$ctor1("destination");
@@ -44533,6 +47999,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 this.InternalCopyTo(destination, bufferSize);
             },
+            /*System.IO.Stream.CopyTo$1 end.*/
+
+            /*System.IO.Stream.InternalCopyTo start.*/
             InternalCopyTo: function (destination, bufferSize) {
 
                 var buffer = System.Array.init(bufferSize, 0, System.Byte);
@@ -44541,6 +48010,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     destination.Write(buffer, 0, read);
                 }
             },
+            /*System.IO.Stream.InternalCopyTo end.*/
+
+            /*System.IO.Stream.Close start.*/
             Close: function () {
                 /* These are correct, but we'd have to fix PipeStream & NetworkStream very carefully.
                 Contract.Ensures(CanRead == false);
@@ -44550,6 +48022,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 this.Dispose$1(true);
             },
+            /*System.IO.Stream.Close end.*/
+
+            /*System.IO.Stream.Dispose start.*/
             Dispose: function () {
                 /* These are correct, but we'd have to fix PipeStream & NetworkStream very carefully.
                 Contract.Ensures(CanRead == false);
@@ -44559,10 +48034,19 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 this.Close();
             },
+            /*System.IO.Stream.Dispose end.*/
+
+            /*System.IO.Stream.Dispose$1 start.*/
             Dispose$1: function (disposing) { },
+            /*System.IO.Stream.Dispose$1 end.*/
+
+            /*System.IO.Stream.BeginRead start.*/
             BeginRead: function (buffer, offset, count, callback, state) {
                 return this.BeginReadInternal(buffer, offset, count, callback, state, false);
             },
+            /*System.IO.Stream.BeginRead end.*/
+
+            /*System.IO.Stream.BeginReadInternal start.*/
             BeginReadInternal: function (buffer, offset, count, callback, state, serializeAsynchronously) {
                 if (!this.CanRead) {
                     System.IO.__Error.ReadNotSupported();
@@ -44570,6 +48054,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return this.BlockingBeginRead(buffer, offset, count, callback, state);
             },
+            /*System.IO.Stream.BeginReadInternal end.*/
+
+            /*System.IO.Stream.EndRead start.*/
             EndRead: function (asyncResult) {
                 if (asyncResult == null) {
                     throw new System.ArgumentNullException.$ctor1("asyncResult");
@@ -44577,15 +48064,24 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return System.IO.Stream.BlockingEndRead(asyncResult);
             },
+            /*System.IO.Stream.EndRead end.*/
+
+            /*System.IO.Stream.BeginWrite start.*/
             BeginWrite: function (buffer, offset, count, callback, state) {
                 return this.BeginWriteInternal(buffer, offset, count, callback, state, false);
             },
+            /*System.IO.Stream.BeginWrite end.*/
+
+            /*System.IO.Stream.BeginWriteInternal start.*/
             BeginWriteInternal: function (buffer, offset, count, callback, state, serializeAsynchronously) {
                 if (!this.CanWrite) {
                     System.IO.__Error.WriteNotSupported();
                 }
                 return this.BlockingBeginWrite(buffer, offset, count, callback, state);
             },
+            /*System.IO.Stream.BeginWriteInternal end.*/
+
+            /*System.IO.Stream.EndWrite start.*/
             EndWrite: function (asyncResult) {
                 if (asyncResult == null) {
                     throw new System.ArgumentNullException.$ctor1("asyncResult");
@@ -44593,6 +48089,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 System.IO.Stream.BlockingEndWrite(asyncResult);
             },
+            /*System.IO.Stream.EndWrite end.*/
+
+            /*System.IO.Stream.ReadByte start.*/
             ReadByte: function () {
 
                 var oneByteArray = System.Array.init(1, 0, System.Byte);
@@ -44602,11 +48101,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return oneByteArray[System.Array.index(0, oneByteArray)];
             },
+            /*System.IO.Stream.ReadByte end.*/
+
+            /*System.IO.Stream.WriteByte start.*/
             WriteByte: function (value) {
                 var oneByteArray = System.Array.init(1, 0, System.Byte);
                 oneByteArray[System.Array.index(0, oneByteArray)] = value;
                 this.Write(oneByteArray, 0, 1);
             },
+            /*System.IO.Stream.WriteByte end.*/
+
+            /*System.IO.Stream.BlockingBeginRead start.*/
             BlockingBeginRead: function (buffer, offset, count, callback, state) {
 
                 var asyncResult;
@@ -44630,6 +48135,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return asyncResult;
             },
+            /*System.IO.Stream.BlockingBeginRead end.*/
+
+            /*System.IO.Stream.BlockingBeginWrite start.*/
             BlockingBeginWrite: function (buffer, offset, count, callback, state) {
 
                 var asyncResult;
@@ -44652,12 +48160,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
 
                 return asyncResult;
-            }
+            },
+            /*System.IO.Stream.BlockingBeginWrite end.*/
+
+
         }
     });
+    /*System.IO.Stream end.*/
 
     // @source BufferedStream.js
 
+    /*System.IO.BufferedStream start.*/
     Bridge.define("System.IO.BufferedStream", {
         inherits: [System.IO.Stream],
         statics: {
@@ -44722,6 +48235,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this.EnsureNotClosed();
                     this.EnsureCanSeek();
 
+                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return !(this._writePos > 0 && this._readPos !== this._readLen); }, "Read and Write buffers cannot both have data in them at the same time.");
                     return this._stream.Position.add(System.Int64((((((this._readPos - this._readLen) | 0) + this._writePos) | 0))));
                 },
                 set: function (value) {
@@ -44772,12 +48286,16 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.IO.BufferedStream.EnsureNotClosed start.*/
             EnsureNotClosed: function () {
 
                 if (this._stream == null) {
                     System.IO.__Error.StreamIsClosed();
                 }
             },
+            /*System.IO.BufferedStream.EnsureNotClosed end.*/
+
+            /*System.IO.BufferedStream.EnsureCanSeek start.*/
             EnsureCanSeek: function () {
 
 
@@ -44785,6 +48303,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     System.IO.__Error.SeekNotSupported();
                 }
             },
+            /*System.IO.BufferedStream.EnsureCanSeek end.*/
+
+            /*System.IO.BufferedStream.EnsureCanRead start.*/
             EnsureCanRead: function () {
 
 
@@ -44792,6 +48313,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     System.IO.__Error.ReadNotSupported();
                 }
             },
+            /*System.IO.BufferedStream.EnsureCanRead end.*/
+
+            /*System.IO.BufferedStream.EnsureCanWrite start.*/
             EnsureCanWrite: function () {
 
 
@@ -44799,8 +48323,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     System.IO.__Error.WriteNotSupported();
                 }
             },
+            /*System.IO.BufferedStream.EnsureCanWrite end.*/
+
+            /*System.IO.BufferedStream.EnsureShadowBufferAllocated start.*/
             EnsureShadowBufferAllocated: function () {
 
+                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._buffer != null; });
+                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._bufferSize > 0; });
 
                 if (this._buffer.length !== this._bufferSize || this._bufferSize >= System.IO.BufferedStream.MaxShadowBufferSize) {
                     return;
@@ -44810,13 +48339,20 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 System.Array.copy(this._buffer, 0, shadowBuffer, 0, this._writePos);
                 this._buffer = shadowBuffer;
             },
+            /*System.IO.BufferedStream.EnsureShadowBufferAllocated end.*/
+
+            /*System.IO.BufferedStream.EnsureBufferAllocated start.*/
             EnsureBufferAllocated: function () {
 
+                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._bufferSize > 0; });
 
                 if (this._buffer == null) {
                     this._buffer = System.Array.init(this._bufferSize, 0, System.Byte);
                 }
             },
+            /*System.IO.BufferedStream.EnsureBufferAllocated end.*/
+
+            /*System.IO.BufferedStream.Dispose$1 start.*/
             Dispose$1: function (disposing) {
 
                 try {
@@ -44834,6 +48370,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     System.IO.Stream.prototype.Dispose$1.call(this, disposing);
                 }
             },
+            /*System.IO.BufferedStream.Dispose$1 end.*/
+
+            /*System.IO.BufferedStream.Flush start.*/
             Flush: function () {
 
                 this.EnsureNotClosed();
@@ -44841,6 +48380,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 if (this._writePos > 0) {
 
                     this.FlushWrite();
+                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._writePos === 0 && this._readPos === 0 && this._readLen === 0; });
                     return;
                 }
 
@@ -44856,6 +48396,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                         this._stream.Flush();
                     }
 
+                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._writePos === 0 && this._readPos === 0 && this._readLen === 0; });
                     return;
                 }
 
@@ -44865,8 +48406,12 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 this._writePos = (this._readPos = (this._readLen = 0));
             },
+            /*System.IO.BufferedStream.Flush end.*/
+
+            /*System.IO.BufferedStream.FlushRead start.*/
             FlushRead: function () {
 
+                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._writePos === 0; }, "BufferedStream: Write buffer must be empty in FlushRead!");
 
                 if (((this._readPos - this._readLen) | 0) !== 0) {
                     this._stream.Seek(System.Int64(this._readPos - this._readLen), 1);
@@ -44875,9 +48420,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._readPos = 0;
                 this._readLen = 0;
             },
+            /*System.IO.BufferedStream.FlushRead end.*/
+
+            /*System.IO.BufferedStream.ClearReadBufferBeforeWrite start.*/
             ClearReadBufferBeforeWrite: function () {
 
 
+                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._readPos <= this._readLen; }, "_readPos <= _readLen [" + this._readPos + " <= " + this._readLen + "]");
 
                 if (this._readPos === this._readLen) {
 
@@ -44885,6 +48434,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     return;
                 }
 
+                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._readPos < this._readLen; });
 
                 if (!this._stream.CanSeek) {
                     throw new System.NotSupportedException.ctor();
@@ -44892,21 +48442,31 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 this.FlushRead();
             },
+            /*System.IO.BufferedStream.ClearReadBufferBeforeWrite end.*/
+
+            /*System.IO.BufferedStream.FlushWrite start.*/
             FlushWrite: function () {
 
+                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._readPos === 0 && this._readLen === 0; }, "BufferedStream: Read buffer must be empty in FlushWrite!");
+                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._buffer != null && this._bufferSize >= this._writePos; }, "BufferedStream: Write buffer must be allocated and write position must be in the bounds of the buffer in FlushWrite!");
 
                 this._stream.Write(this._buffer, 0, this._writePos);
                 this._writePos = 0;
                 this._stream.Flush();
             },
+            /*System.IO.BufferedStream.FlushWrite end.*/
+
+            /*System.IO.BufferedStream.ReadFromBuffer start.*/
             ReadFromBuffer: function (array, offset, count) {
 
                 var readBytes = (this._readLen - this._readPos) | 0;
+                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return readBytes >= 0; });
 
                 if (readBytes === 0) {
                     return 0;
                 }
 
+                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return readBytes > 0; });
 
                 if (readBytes > count) {
                     readBytes = count;
@@ -44917,6 +48477,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return readBytes;
             },
+            /*System.IO.BufferedStream.ReadFromBuffer end.*/
+
+            /*System.IO.BufferedStream.ReadFromBuffer$1 start.*/
             ReadFromBuffer$1: function (array, offset, count, error) {
 
                 try {
@@ -44930,6 +48493,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     return 0;
                 }
             },
+            /*System.IO.BufferedStream.ReadFromBuffer$1 end.*/
+
+            /*System.IO.BufferedStream.Read start.*/
             Read: function (array, offset, count) {
 
                 if (array == null) {
@@ -44961,6 +48527,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     offset = (offset + bytesFromBuffer) | 0;
                 }
 
+                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._readLen === this._readPos; });
                 this._readPos = (this._readLen = 0);
 
                 if (this._writePos > 0) {
@@ -44980,6 +48547,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return ((bytesFromBuffer + alreadySatisfied) | 0);
             },
+            /*System.IO.BufferedStream.Read end.*/
+
+            /*System.IO.BufferedStream.ReadByte start.*/
             ReadByte: function () {
 
                 this.EnsureNotClosed();
@@ -45003,6 +48573,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 var b = this._buffer[System.Array.index(Bridge.identity(this._readPos, ((this._readPos = (this._readPos + 1) | 0))), this._buffer)];
                 return b;
             },
+            /*System.IO.BufferedStream.ReadByte end.*/
+
+            /*System.IO.BufferedStream.WriteToBuffer start.*/
             WriteToBuffer: function (array, offset, count) {
 
                 var bytesToWrite = Math.min(((this._bufferSize - this._writePos) | 0), count.v);
@@ -45018,6 +48591,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 count.v = (count.v - bytesToWrite) | 0;
                 offset.v = (offset.v + bytesToWrite) | 0;
             },
+            /*System.IO.BufferedStream.WriteToBuffer end.*/
+
+            /*System.IO.BufferedStream.WriteToBuffer$1 start.*/
             WriteToBuffer$1: function (array, offset, count, error) {
 
                 try {
@@ -45030,6 +48606,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     error.v = ex;
                 }
             },
+            /*System.IO.BufferedStream.WriteToBuffer$1 end.*/
+
+            /*System.IO.BufferedStream.Write start.*/
             Write: function (array, offset, count) {
                 offset = {v:offset};
                 count = {v:count};
@@ -45055,6 +48634,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
 
 
+                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._writePos < this._bufferSize; });
 
                 var totalUserBytes;
                 var useBuffer;
@@ -45067,20 +48647,28 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     if (this._writePos < this._bufferSize) {
 
+                        System.Diagnostics.Contracts.Contract.assert(4, this, function () { return count.v === 0; });
                         return;
                     }
 
+                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return count.v >= 0; });
+                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._writePos === this._bufferSize; });
+                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._buffer != null; });
 
                     this._stream.Write(this._buffer, 0, this._writePos);
                     this._writePos = 0;
 
                     this.WriteToBuffer(array, offset, count);
 
+                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return count.v === 0; });
+                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._writePos < this._bufferSize; });
 
                 } else {
 
                     if (this._writePos > 0) {
 
+                        System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._buffer != null; });
+                        System.Diagnostics.Contracts.Contract.assert(4, this, function () { return totalUserBytes >= this._bufferSize; });
 
                         if (totalUserBytes <= (((this._bufferSize + this._bufferSize) | 0)) && totalUserBytes <= System.IO.BufferedStream.MaxShadowBufferSize) {
 
@@ -45098,6 +48686,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this._stream.Write(array, offset.v, count.v);
                 }
             },
+            /*System.IO.BufferedStream.Write end.*/
+
+            /*System.IO.BufferedStream.WriteByte start.*/
             WriteByte: function (value) {
 
                 this.EnsureNotClosed();
@@ -45115,7 +48706,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 this._buffer[System.Array.index(Bridge.identity(this._writePos, ((this._writePos = (this._writePos + 1) | 0))), this._buffer)] = value;
 
+                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._writePos < this._bufferSize; });
             },
+            /*System.IO.BufferedStream.WriteByte end.*/
+
+            /*System.IO.BufferedStream.Seek start.*/
             Seek: function (offset, origin) {
 
                 this.EnsureNotClosed();
@@ -45134,6 +48729,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
 
                 var oldPos = this.Position;
+                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return oldPos.equals(this._stream.Position.add(System.Int64((((this._readPos - this._readLen) | 0))))); });
 
                 var newPos = this._stream.Seek(offset, origin);
 
@@ -45149,8 +48745,12 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this._readPos = (this._readLen = 0);
                 }
 
+                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return newPos.equals(this.Position); }, "newPos (=" + newPos + ") == Position (=" + this.Position + ")");
                 return newPos;
             },
+            /*System.IO.BufferedStream.Seek end.*/
+
+            /*System.IO.BufferedStream.SetLength start.*/
             SetLength: function (value) {
 
                 if (value.lt(System.Int64(0))) {
@@ -45163,12 +48763,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 this.Flush();
                 this._stream.SetLength(value);
-            }
+            },
+            /*System.IO.BufferedStream.SetLength end.*/
+
+
         }
     });
+    /*System.IO.BufferedStream end.*/
 
     // @source IOException.js
 
+    /*System.IO.IOException start.*/
     Bridge.define("System.IO.IOException", {
         inherits: [System.SystemException],
         ctors: {
@@ -45194,9 +48799,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.IO.IOException end.*/
 
     // @source EndOfStreamException.js
 
+    /*System.IO.EndOfStreamException start.*/
     Bridge.define("System.IO.EndOfStreamException", {
         inherits: [System.IO.IOException],
         ctors: {
@@ -45214,21 +48821,30 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.IO.EndOfStreamException end.*/
 
     // @source File.js
 
+    /*System.IO.File start.*/
     Bridge.define("System.IO.File", {
         statics: {
             methods: {
+                /*System.IO.File.OpenText:static start.*/
                 OpenText: function (path) {
                     if (path == null) {
                         throw new System.ArgumentNullException.$ctor1("path");
                     }
                     return new System.IO.StreamReader.$ctor7(path);
                 },
+                /*System.IO.File.OpenText:static end.*/
+
+                /*System.IO.File.OpenRead:static start.*/
                 OpenRead: function (path) {
                     return new System.IO.FileStream.$ctor1(path, 3);
                 },
+                /*System.IO.File.OpenRead:static end.*/
+
+                /*System.IO.File.ReadAllText:static start.*/
                 ReadAllText: function (path) {
                     if (path == null) {
                         throw new System.ArgumentNullException.$ctor1("path");
@@ -45239,6 +48855,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return System.IO.File.InternalReadAllText(path, System.Text.Encoding.UTF8, true);
                 },
+                /*System.IO.File.ReadAllText:static end.*/
+
+                /*System.IO.File.ReadAllText$1:static start.*/
                 ReadAllText$1: function (path, encoding) {
                     if (path == null) {
                         throw new System.ArgumentNullException.$ctor1("path");
@@ -45252,6 +48871,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return System.IO.File.InternalReadAllText(path, encoding, true);
                 },
+                /*System.IO.File.ReadAllText$1:static end.*/
+
+                /*System.IO.File.InternalReadAllText:static start.*/
                 InternalReadAllText: function (path, encoding, checkHost) {
 
                     var sr = new System.IO.StreamReader.$ctor12(path, encoding, true, System.IO.StreamReader.DefaultBufferSize, checkHost);
@@ -45264,9 +48886,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                         }
                     }
                 },
+                /*System.IO.File.InternalReadAllText:static end.*/
+
+                /*System.IO.File.ReadAllBytes:static start.*/
                 ReadAllBytes: function (path) {
                     return System.IO.File.InternalReadAllBytes(path, true);
                 },
+                /*System.IO.File.ReadAllBytes:static end.*/
+
+                /*System.IO.File.InternalReadAllBytes:static start.*/
                 InternalReadAllBytes: function (path, checkHost) {
                     var bytes;
                     var fs = new System.IO.FileStream.$ctor1(path, 3);
@@ -45294,6 +48922,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                     return bytes;
                 },
+                /*System.IO.File.InternalReadAllBytes:static end.*/
+
+                /*System.IO.File.ReadAllLines:static start.*/
                 ReadAllLines: function (path) {
                     if (path == null) {
                         throw new System.ArgumentNullException.$ctor1("path");
@@ -45304,6 +48935,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return System.IO.File.InternalReadAllLines(path, System.Text.Encoding.UTF8);
                 },
+                /*System.IO.File.ReadAllLines:static end.*/
+
+                /*System.IO.File.ReadAllLines$1:static start.*/
                 ReadAllLines$1: function (path, encoding) {
                     if (path == null) {
                         throw new System.ArgumentNullException.$ctor1("path");
@@ -45317,6 +48951,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return System.IO.File.InternalReadAllLines(path, encoding);
                 },
+                /*System.IO.File.ReadAllLines$1:static end.*/
+
+                /*System.IO.File.InternalReadAllLines:static start.*/
                 InternalReadAllLines: function (path, encoding) {
 
                     var line;
@@ -45336,6 +48973,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return lines.ToArray();
                 },
+                /*System.IO.File.InternalReadAllLines:static end.*/
+
+                /*System.IO.File.ReadLines:static start.*/
                 ReadLines: function (path) {
                     if (path == null) {
                         throw new System.ArgumentNullException.$ctor1("path");
@@ -45346,6 +48986,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return System.IO.ReadLinesIterator.CreateIterator(path, System.Text.Encoding.UTF8);
                 },
+                /*System.IO.File.ReadLines:static end.*/
+
+                /*System.IO.File.ReadLines$1:static start.*/
                 ReadLines$1: function (path, encoding) {
                     if (path == null) {
                         throw new System.ArgumentNullException.$ctor1("path");
@@ -45358,13 +49001,18 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
 
                     return System.IO.ReadLinesIterator.CreateIterator(path, encoding);
-                }
+                },
+                /*System.IO.File.ReadLines$1:static end.*/
+
+
             }
         }
     });
+    /*System.IO.File end.*/
 
     // @source FileMode.js
 
+    /*System.IO.FileMode start.*/
     Bridge.define("System.IO.FileMode", {
         $kind: "enum",
         statics: {
@@ -45378,9 +49026,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.IO.FileMode end.*/
 
     // @source FileOptions.js
 
+    /*System.IO.FileOptions start.*/
     Bridge.define("System.IO.FileOptions", {
         $kind: "enum",
         statics: {
@@ -45396,9 +49046,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
         },
         $flags: true
     });
+    /*System.IO.FileOptions end.*/
 
     // @source FileShare.js
 
+    /*System.IO.FileShare start.*/
     Bridge.define("System.IO.FileShare", {
         $kind: "enum",
         statics: {
@@ -45413,13 +49065,16 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
         },
         $flags: true
     });
+    /*System.IO.FileShare end.*/
 
     // @source FileStream.js
 
+    /*System.IO.FileStream start.*/
     Bridge.define("System.IO.FileStream", {
         inherits: [System.IO.Stream],
         statics: {
             methods: {
+                /*System.IO.FileStream.FromFile:static start.*/
                 FromFile: function (file) {
                     var completer = new System.Threading.Tasks.TaskCompletionSource();
                     var fileReader = new FileReader();
@@ -45433,6 +49088,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return completer.task;
                 },
+                /*System.IO.FileStream.FromFile:static end.*/
+
+                /*System.IO.FileStream.ReadBytes:static start.*/
                 ReadBytes: function (path) {
                     if (Bridge.isNode) {
                         var fs = require("fs");
@@ -45455,6 +49113,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                         return resultArray.buffer;
                     }
                 },
+                /*System.IO.FileStream.ReadBytes:static end.*/
+
+                /*System.IO.FileStream.ReadBytesAsync:static start.*/
                 ReadBytesAsync: function (path) {
                     var tcs = new System.Threading.Tasks.TaskCompletionSource();
 
@@ -45493,7 +49154,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
 
                     return tcs.task;
-                }
+                },
+                /*System.IO.FileStream.ReadBytesAsync:static end.*/
+
+
             }
         },
         fields: {
@@ -45547,16 +49211,29 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.IO.FileStream.Flush start.*/
             Flush: function () { },
+            /*System.IO.FileStream.Flush end.*/
+
+            /*System.IO.FileStream.Seek start.*/
             Seek: function (offset, origin) {
                 throw new System.NotImplementedException.ctor();
             },
+            /*System.IO.FileStream.Seek end.*/
+
+            /*System.IO.FileStream.SetLength start.*/
             SetLength: function (value) {
                 throw new System.NotImplementedException.ctor();
             },
+            /*System.IO.FileStream.SetLength end.*/
+
+            /*System.IO.FileStream.Write start.*/
             Write: function (buffer, offset, count) {
                 throw new System.NotImplementedException.ctor();
             },
+            /*System.IO.FileStream.Write end.*/
+
+            /*System.IO.FileStream.GetInternalBuffer start.*/
             GetInternalBuffer: function () {
                 if (this._buffer == null) {
                     this._buffer = System.IO.FileStream.ReadBytes(this.name);
@@ -45565,6 +49242,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return this._buffer;
             },
+            /*System.IO.FileStream.GetInternalBuffer end.*/
+
+            /*System.IO.FileStream.EnsureBufferAsync start.*/
             EnsureBufferAsync: function () {
                 var $step = 0,
                     $task1, 
@@ -45620,6 +49300,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 $asyncBody();
                 return $tcs.task;
             },
+            /*System.IO.FileStream.EnsureBufferAsync end.*/
+
+            /*System.IO.FileStream.Read start.*/
             Read: function (buffer, offset, count) {
                 if (buffer == null) {
                     throw new System.ArgumentNullException.$ctor1("buffer");
@@ -45664,12 +49347,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 this.Position = this.Position.add(num);
                 return System.Int64.clip32(num);
-            }
+            },
+            /*System.IO.FileStream.Read end.*/
+
+
         }
     });
+    /*System.IO.FileStream end.*/
 
     // @source Iterator.js
 
+    /*System.IO.Iterator$1 start.*/
     Bridge.define("System.IO.Iterator$1", function (TSource) { return {
         inherits: [System.Collections.Generic.IEnumerable$1(TSource),System.Collections.Generic.IEnumerator$1(TSource)],
         fields: {
@@ -45699,13 +49387,20 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.IO.Iterator$1.Dispose start.*/
             Dispose: function () {
                 this.Dispose$1(true);
             },
+            /*System.IO.Iterator$1.Dispose end.*/
+
+            /*System.IO.Iterator$1.Dispose$1 start.*/
             Dispose$1: function (disposing) {
                 this.current = Bridge.getDefaultValue(TSource);
                 this.state = -1;
             },
+            /*System.IO.Iterator$1.Dispose$1 end.*/
+
+            /*System.IO.Iterator$1.GetEnumerator start.*/
             GetEnumerator: function () {
                 if (this.state === 0) {
                     this.state = 1;
@@ -45716,17 +49411,28 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 duplicate.state = 1;
                 return duplicate;
             },
+            /*System.IO.Iterator$1.GetEnumerator end.*/
+
+            /*System.IO.Iterator$1.System$Collections$IEnumerable$GetEnumerator start.*/
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return this.GetEnumerator();
             },
+            /*System.IO.Iterator$1.System$Collections$IEnumerable$GetEnumerator end.*/
+
+            /*System.IO.Iterator$1.System$Collections$IEnumerator$reset start.*/
             System$Collections$IEnumerator$reset: function () {
                 throw new System.NotSupportedException.ctor();
-            }
+            },
+            /*System.IO.Iterator$1.System$Collections$IEnumerator$reset end.*/
+
+
         }
     }; });
+    /*System.IO.Iterator$1 end.*/
 
     // @source MemoryStream.js
 
+    /*System.IO.MemoryStream start.*/
     Bridge.define("System.IO.MemoryStream", {
         inherits: [System.IO.Stream],
         statics: {
@@ -45897,11 +49603,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.IO.MemoryStream.EnsureWriteable start.*/
             EnsureWriteable: function () {
                 if (!this.CanWrite) {
                     System.IO.__Error.WriteNotSupported();
                 }
             },
+            /*System.IO.MemoryStream.EnsureWriteable end.*/
+
+            /*System.IO.MemoryStream.Dispose$1 start.*/
             Dispose$1: function (disposing) {
                 try {
                     if (disposing) {
@@ -45913,6 +49623,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     System.IO.Stream.prototype.Dispose$1.call(this, disposing);
                 }
             },
+            /*System.IO.MemoryStream.Dispose$1 end.*/
+
+            /*System.IO.MemoryStream.EnsureCapacity start.*/
             EnsureCapacity: function (value) {
                 if (value < 0) {
                     throw new System.IO.IOException.$ctor1("IO.IO_StreamTooLong");
@@ -45934,13 +49647,22 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return false;
             },
+            /*System.IO.MemoryStream.EnsureCapacity end.*/
+
+            /*System.IO.MemoryStream.Flush start.*/
             Flush: function () { },
+            /*System.IO.MemoryStream.Flush end.*/
+
+            /*System.IO.MemoryStream.GetBuffer start.*/
             GetBuffer: function () {
                 if (!this._exposable) {
                     throw new System.Exception("UnauthorizedAccess_MemStreamBuffer");
                 }
                 return this._buffer;
             },
+            /*System.IO.MemoryStream.GetBuffer end.*/
+
+            /*System.IO.MemoryStream.TryGetBuffer start.*/
             TryGetBuffer: function (buffer) {
                 if (!this._exposable) {
                     buffer.v = Bridge.getDefaultValue(System.ArraySegment);
@@ -45950,15 +49672,24 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 buffer.v = new System.ArraySegment(this._buffer, this._origin, (((this._length - this._origin) | 0)));
                 return true;
             },
+            /*System.IO.MemoryStream.TryGetBuffer end.*/
+
+            /*System.IO.MemoryStream.InternalGetBuffer start.*/
             InternalGetBuffer: function () {
                 return this._buffer;
             },
+            /*System.IO.MemoryStream.InternalGetBuffer end.*/
+
+            /*System.IO.MemoryStream.InternalGetPosition start.*/
             InternalGetPosition: function () {
                 if (!this._isOpen) {
                     System.IO.__Error.StreamIsClosed();
                 }
                 return this._position;
             },
+            /*System.IO.MemoryStream.InternalGetPosition end.*/
+
+            /*System.IO.MemoryStream.InternalReadInt32 start.*/
             InternalReadInt32: function () {
                 if (!this._isOpen) {
                     System.IO.__Error.StreamIsClosed();
@@ -45971,6 +49702,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return this._buffer[System.Array.index(((pos - 4) | 0), this._buffer)] | this._buffer[System.Array.index(((pos - 3) | 0), this._buffer)] << 8 | this._buffer[System.Array.index(((pos - 2) | 0), this._buffer)] << 16 | this._buffer[System.Array.index(((pos - 1) | 0), this._buffer)] << 24;
             },
+            /*System.IO.MemoryStream.InternalReadInt32 end.*/
+
+            /*System.IO.MemoryStream.InternalEmulateRead start.*/
             InternalEmulateRead: function (count) {
                 if (!this._isOpen) {
                     System.IO.__Error.StreamIsClosed();
@@ -45984,9 +49718,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     n = 0;
                 }
 
+                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return ((this._position + n) | 0) >= 0; }, "_position + n >= 0");
                 this._position = (this._position + n) | 0;
                 return n;
             },
+            /*System.IO.MemoryStream.InternalEmulateRead end.*/
+
+            /*System.IO.MemoryStream.Read start.*/
             Read: function (buffer, offset, count) {
                 if (buffer == null) {
                     throw new System.ArgumentNullException.$ctor3("buffer", "ArgumentNull_Buffer");
@@ -46013,6 +49751,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     return 0;
                 }
 
+                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return ((this._position + n) | 0) >= 0; }, "_position + n >= 0");
 
                 if (n <= 8) {
                     var byteCount = n;
@@ -46026,6 +49765,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return n;
             },
+            /*System.IO.MemoryStream.Read end.*/
+
+            /*System.IO.MemoryStream.ReadByte start.*/
             ReadByte: function () {
                 if (!this._isOpen) {
                     System.IO.__Error.StreamIsClosed();
@@ -46037,6 +49779,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return this._buffer[System.Array.index(Bridge.identity(this._position, ((this._position = (this._position + 1) | 0))), this._buffer)];
             },
+            /*System.IO.MemoryStream.ReadByte end.*/
+
+            /*System.IO.MemoryStream.Seek start.*/
             Seek: function (offset, loc) {
                 if (!this._isOpen) {
                     System.IO.__Error.StreamIsClosed();
@@ -46077,14 +49822,19 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                         throw new System.ArgumentException.$ctor1("Argument_InvalidSeekOrigin");
                 }
 
+                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._position >= 0; }, "_position >= 0");
                 return System.Int64(this._position);
             },
+            /*System.IO.MemoryStream.Seek end.*/
+
+            /*System.IO.MemoryStream.SetLength start.*/
             SetLength: function (value) {
                 if (value.lt(System.Int64(0)) || value.gt(System.Int64(2147483647))) {
                     throw new System.ArgumentOutOfRangeException.$ctor4("value", "ArgumentOutOfRange_StreamLength");
                 }
                 this.EnsureWriteable();
 
+                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return true; });
                 if (value.gt(System.Int64((((2147483647 - this._origin) | 0))))) {
                     throw new System.ArgumentOutOfRangeException.$ctor4("value", "ArgumentOutOfRange_StreamLength");
                 }
@@ -46100,11 +49850,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
 
             },
+            /*System.IO.MemoryStream.SetLength end.*/
+
+            /*System.IO.MemoryStream.ToArray start.*/
             ToArray: function () {
                 var copy = System.Array.init(((this._length - this._origin) | 0), 0, System.Byte);
                 System.Array.copy(this._buffer, this._origin, copy, 0, ((this._length - this._origin) | 0));
                 return copy;
             },
+            /*System.IO.MemoryStream.ToArray end.*/
+
+            /*System.IO.MemoryStream.Write start.*/
             Write: function (buffer, offset, count) {
                 if (buffer == null) {
                     throw new System.ArgumentNullException.$ctor3("buffer", "ArgumentNull_Buffer");
@@ -46153,6 +49909,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._position = i;
 
             },
+            /*System.IO.MemoryStream.Write end.*/
+
+            /*System.IO.MemoryStream.WriteByte start.*/
             WriteByte: function (value) {
                 if (!this._isOpen) {
                     System.IO.__Error.StreamIsClosed();
@@ -46176,6 +49935,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._buffer[System.Array.index(Bridge.identity(this._position, ((this._position = (this._position + 1) | 0))), this._buffer)] = value;
 
             },
+            /*System.IO.MemoryStream.WriteByte end.*/
+
+            /*System.IO.MemoryStream.WriteTo start.*/
             WriteTo: function (stream) {
                 if (stream == null) {
                     throw new System.ArgumentNullException.$ctor3("stream", "ArgumentNull_Stream");
@@ -46185,22 +49947,34 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     System.IO.__Error.StreamIsClosed();
                 }
                 stream.Write(this._buffer, this._origin, ((this._length - this._origin) | 0));
-            }
+            },
+            /*System.IO.MemoryStream.WriteTo end.*/
+
+
         }
     });
+    /*System.IO.MemoryStream end.*/
 
     // @source ReadLinesIterator.js
 
+    /*System.IO.ReadLinesIterator start.*/
     Bridge.define("System.IO.ReadLinesIterator", {
         inherits: [System.IO.Iterator$1(System.String)],
         statics: {
             methods: {
+                /*System.IO.ReadLinesIterator.CreateIterator:static start.*/
                 CreateIterator: function (path, encoding) {
                     return System.IO.ReadLinesIterator.CreateIterator$1(path, encoding, null);
                 },
+                /*System.IO.ReadLinesIterator.CreateIterator:static end.*/
+
+                /*System.IO.ReadLinesIterator.CreateIterator$1:static start.*/
                 CreateIterator$1: function (path, encoding, reader) {
                     return new System.IO.ReadLinesIterator(path, encoding, reader || new System.IO.StreamReader.$ctor9(path, encoding));
-                }
+                },
+                /*System.IO.ReadLinesIterator.CreateIterator$1:static end.*/
+
+
             }
         },
         fields: {
@@ -46220,6 +49994,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.IO.ReadLinesIterator.moveNext start.*/
             moveNext: function () {
                 if (this._reader != null) {
                     this.current = this._reader.ReadLine();
@@ -46232,9 +50007,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return false;
             },
+            /*System.IO.ReadLinesIterator.moveNext end.*/
+
+            /*System.IO.ReadLinesIterator.Clone start.*/
             Clone: function () {
                 return System.IO.ReadLinesIterator.CreateIterator$1(this._path, this._encoding, this._reader);
             },
+            /*System.IO.ReadLinesIterator.Clone end.*/
+
+            /*System.IO.ReadLinesIterator.Dispose$1 start.*/
             Dispose$1: function (disposing) {
                 try {
                     if (disposing) {
@@ -46246,12 +50027,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this._reader = null;
                     System.IO.Iterator$1(System.String).prototype.Dispose$1.call(this, disposing);
                 }
-            }
+            },
+            /*System.IO.ReadLinesIterator.Dispose$1 end.*/
+
+
         }
     });
+    /*System.IO.ReadLinesIterator end.*/
 
     // @source SeekOrigin.js
 
+    /*System.IO.SeekOrigin start.*/
     Bridge.define("System.IO.SeekOrigin", {
         $kind: "enum",
         statics: {
@@ -46262,9 +50048,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.IO.SeekOrigin end.*/
 
     // @source NullStream.js
 
+    /*System.IO.Stream+NullStream start.*/
     Bridge.define("System.IO.Stream.NullStream", {
         inherits: [System.IO.Stream],
         $kind: "nested class",
@@ -46303,8 +50091,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.IO.Stream+NullStream.Dispose$1 start.*/
             Dispose$1: function (disposing) { },
+            /*System.IO.Stream+NullStream.Dispose$1 end.*/
+
+            /*System.IO.Stream+NullStream.Flush start.*/
             Flush: function () { },
+            /*System.IO.Stream+NullStream.Flush end.*/
+
+            /*System.IO.Stream+NullStream.BeginRead start.*/
             BeginRead: function (buffer, offset, count, callback, state) {
                 if (!this.CanRead) {
                     System.IO.__Error.ReadNotSupported();
@@ -46312,6 +50107,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return this.BlockingBeginRead(buffer, offset, count, callback, state);
             },
+            /*System.IO.Stream+NullStream.BeginRead end.*/
+
+            /*System.IO.Stream+NullStream.EndRead start.*/
             EndRead: function (asyncResult) {
                 if (asyncResult == null) {
                     throw new System.ArgumentNullException.$ctor1("asyncResult");
@@ -46319,6 +50117,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return System.IO.Stream.BlockingEndRead(asyncResult);
             },
+            /*System.IO.Stream+NullStream.EndRead end.*/
+
+            /*System.IO.Stream+NullStream.BeginWrite start.*/
             BeginWrite: function (buffer, offset, count, callback, state) {
                 if (!this.CanWrite) {
                     System.IO.__Error.WriteNotSupported();
@@ -46326,6 +50127,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return this.BlockingBeginWrite(buffer, offset, count, callback, state);
             },
+            /*System.IO.Stream+NullStream.BeginWrite end.*/
+
+            /*System.IO.Stream+NullStream.EndWrite start.*/
             EndWrite: function (asyncResult) {
                 if (asyncResult == null) {
                     throw new System.ArgumentNullException.$ctor1("asyncResult");
@@ -46333,28 +50137,52 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 System.IO.Stream.BlockingEndWrite(asyncResult);
             },
+            /*System.IO.Stream+NullStream.EndWrite end.*/
+
+            /*System.IO.Stream+NullStream.Read start.*/
             Read: function (buffer, offset, count) {
                 return 0;
             },
+            /*System.IO.Stream+NullStream.Read end.*/
+
+            /*System.IO.Stream+NullStream.ReadByte start.*/
             ReadByte: function () {
                 return -1;
             },
+            /*System.IO.Stream+NullStream.ReadByte end.*/
+
+            /*System.IO.Stream+NullStream.Write start.*/
             Write: function (buffer, offset, count) { },
+            /*System.IO.Stream+NullStream.Write end.*/
+
+            /*System.IO.Stream+NullStream.WriteByte start.*/
             WriteByte: function (value) { },
+            /*System.IO.Stream+NullStream.WriteByte end.*/
+
+            /*System.IO.Stream+NullStream.Seek start.*/
             Seek: function (offset, origin) {
                 return System.Int64(0);
             },
-            SetLength: function (length) { }
+            /*System.IO.Stream+NullStream.Seek end.*/
+
+            /*System.IO.Stream+NullStream.SetLength start.*/
+            SetLength: function (length) { },
+            /*System.IO.Stream+NullStream.SetLength end.*/
+
+
         }
     });
+    /*System.IO.Stream+NullStream end.*/
 
     // @source SynchronousAsyncResult.js
 
+    /*System.IO.Stream+SynchronousAsyncResult start.*/
     Bridge.define("System.IO.Stream.SynchronousAsyncResult", {
         inherits: [System.IAsyncResult],
         $kind: "nested class",
         statics: {
             methods: {
+                /*System.IO.Stream+SynchronousAsyncResult.EndRead:static start.*/
                 EndRead: function (asyncResult) {
 
                     var ar = Bridge.as(asyncResult, System.IO.Stream.SynchronousAsyncResult);
@@ -46371,6 +50199,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     ar.ThrowIfError();
                     return ar._bytesRead;
                 },
+                /*System.IO.Stream+SynchronousAsyncResult.EndRead:static end.*/
+
+                /*System.IO.Stream+SynchronousAsyncResult.EndWrite:static start.*/
                 EndWrite: function (asyncResult) {
 
                     var ar = Bridge.as(asyncResult, System.IO.Stream.SynchronousAsyncResult);
@@ -46385,7 +50216,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     ar._endXxxCalled = true;
 
                     ar.ThrowIfError();
-                }
+                },
+                /*System.IO.Stream+SynchronousAsyncResult.EndWrite:static end.*/
+
+
             }
         },
         fields: {
@@ -46436,16 +50270,22 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.IO.Stream+SynchronousAsyncResult.ThrowIfError start.*/
             ThrowIfError: function () {
                 if (this._exceptionInfo != null) {
                     throw this._exceptionInfo;
                 }
-            }
+            },
+            /*System.IO.Stream+SynchronousAsyncResult.ThrowIfError end.*/
+
+
         }
     });
+    /*System.IO.Stream+SynchronousAsyncResult end.*/
 
     // @source TextReader.js
 
+    /*System.IO.TextReader start.*/
     Bridge.define("System.IO.TextReader", {
         inherits: [System.IDisposable],
         statics: {
@@ -46458,13 +50298,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
             },
             methods: {
+                /*System.IO.TextReader.Synchronized:static start.*/
                 Synchronized: function (reader) {
                     if (reader == null) {
                         throw new System.ArgumentNullException.$ctor1("reader");
                     }
 
                     return reader;
-                }
+                },
+                /*System.IO.TextReader.Synchronized:static end.*/
+
+
             }
         },
         alias: ["Dispose", "System$IDisposable$Dispose"],
@@ -46474,20 +50318,36 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.IO.TextReader.Close start.*/
             Close: function () {
                 this.Dispose$1(true);
             },
+            /*System.IO.TextReader.Close end.*/
+
+            /*System.IO.TextReader.Dispose start.*/
             Dispose: function () {
                 this.Dispose$1(true);
             },
+            /*System.IO.TextReader.Dispose end.*/
+
+            /*System.IO.TextReader.Dispose$1 start.*/
             Dispose$1: function (disposing) { },
+            /*System.IO.TextReader.Dispose$1 end.*/
+
+            /*System.IO.TextReader.Peek start.*/
             Peek: function () {
 
                 return -1;
             },
+            /*System.IO.TextReader.Peek end.*/
+
+            /*System.IO.TextReader.Read start.*/
             Read: function () {
                 return -1;
             },
+            /*System.IO.TextReader.Read end.*/
+
+            /*System.IO.TextReader.Read$1 start.*/
             Read$1: function (buffer, index, count) {
                 if (buffer == null) {
                     throw new System.ArgumentNullException.$ctor1("buffer");
@@ -46512,9 +50372,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 } while (n < count);
                 return n;
             },
+            /*System.IO.TextReader.Read$1 end.*/
+
+            /*System.IO.TextReader.ReadToEndAsync start.*/
             ReadToEndAsync: function () {
                 return System.Threading.Tasks.Task.fromResult(this.ReadToEnd(), System.String);
             },
+            /*System.IO.TextReader.ReadToEndAsync end.*/
+
+            /*System.IO.TextReader.ReadToEnd start.*/
             ReadToEnd: function () {
 
                 var chars = System.Array.init(4096, 0, System.Char);
@@ -46525,6 +50391,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return sb.toString();
             },
+            /*System.IO.TextReader.ReadToEnd end.*/
+
+            /*System.IO.TextReader.ReadBlock start.*/
             ReadBlock: function (buffer, index, count) {
 
                 var i, n = 0;
@@ -46533,6 +50402,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 } while (i > 0 && n < count);
                 return n;
             },
+            /*System.IO.TextReader.ReadBlock end.*/
+
+            /*System.IO.TextReader.ReadLine start.*/
             ReadLine: function () {
                 var sb = new System.Text.StringBuilder();
                 while (true) {
@@ -46552,12 +50424,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     return sb.toString();
                 }
                 return null;
-            }
+            },
+            /*System.IO.TextReader.ReadLine end.*/
+
+
         }
     });
+    /*System.IO.TextReader end.*/
 
     // @source StreamReader.js
 
+    /*System.IO.StreamReader start.*/
     Bridge.define("System.IO.StreamReader", {
         inherits: [System.IO.TextReader],
         statics: {
@@ -46695,6 +50572,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.IO.StreamReader.Init$1 start.*/
             Init$1: function (stream, encoding, detectEncodingFromByteOrderMarks, bufferSize, leaveOpen) {
                 this.stream = stream;
                 this.encoding = encoding;
@@ -46710,13 +50588,22 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._isBlocked = false;
                 this._closable = !leaveOpen;
             },
+            /*System.IO.StreamReader.Init$1 end.*/
+
+            /*System.IO.StreamReader.Init start.*/
             Init: function (stream) {
                 this.stream = stream;
                 this._closable = true;
             },
+            /*System.IO.StreamReader.Init end.*/
+
+            /*System.IO.StreamReader.Close start.*/
             Close: function () {
                 this.Dispose$1(true);
             },
+            /*System.IO.StreamReader.Close end.*/
+
+            /*System.IO.StreamReader.Dispose$1 start.*/
             Dispose$1: function (disposing) {
                 try {
                     if (!this.LeaveOpen && disposing && (this.stream != null)) {
@@ -46734,6 +50621,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.IO.StreamReader.Dispose$1 end.*/
+
+            /*System.IO.StreamReader.DiscardBufferedData start.*/
             DiscardBufferedData: function () {
 
                 this.byteLen = 0;
@@ -46741,6 +50631,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.charPos = 0;
                 this._isBlocked = false;
             },
+            /*System.IO.StreamReader.DiscardBufferedData end.*/
+
+            /*System.IO.StreamReader.Peek start.*/
             Peek: function () {
                 if (this.stream == null) {
                     System.IO.__Error.ReaderClosed();
@@ -46753,6 +50646,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return this.charBuffer[System.Array.index(this.charPos, this.charBuffer)];
             },
+            /*System.IO.StreamReader.Peek end.*/
+
+            /*System.IO.StreamReader.Read start.*/
             Read: function () {
                 if (this.stream == null) {
                     System.IO.__Error.ReaderClosed();
@@ -46768,6 +50664,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.charPos = (this.charPos + 1) | 0;
                 return result;
             },
+            /*System.IO.StreamReader.Read end.*/
+
+            /*System.IO.StreamReader.Read$1 start.*/
             Read$1: function (buffer, index, count) {
                 if (buffer == null) {
                     throw new System.ArgumentNullException.$ctor1("buffer");
@@ -46810,6 +50709,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return charsRead;
             },
+            /*System.IO.StreamReader.Read$1 end.*/
+
+            /*System.IO.StreamReader.ReadToEndAsync start.*/
             ReadToEndAsync: function () {
                 var $step = 0,
                     $task1, 
@@ -46875,6 +50777,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 $asyncBody();
                 return $tcs.task;
             },
+            /*System.IO.StreamReader.ReadToEndAsync end.*/
+
+            /*System.IO.StreamReader.ReadToEnd start.*/
             ReadToEnd: function () {
                 if (this.stream == null) {
                     System.IO.__Error.ReaderClosed();
@@ -46888,6 +50793,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 } while (this.charLen > 0);
                 return sb.toString();
             },
+            /*System.IO.StreamReader.ReadToEnd end.*/
+
+            /*System.IO.StreamReader.ReadBlock start.*/
             ReadBlock: function (buffer, index, count) {
                 if (buffer == null) {
                     throw new System.ArgumentNullException.$ctor1("buffer");
@@ -46905,10 +50813,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return System.IO.TextReader.prototype.ReadBlock.call(this, buffer, index, count);
             },
+            /*System.IO.StreamReader.ReadBlock end.*/
+
+            /*System.IO.StreamReader.CompressBuffer start.*/
             CompressBuffer: function (n) {
+                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this.byteLen >= n; }, "CompressBuffer was called with a number of bytes greater than the current buffer length.  Are two threads using this StreamReader at the same time?");
                 System.Array.copy(this.byteBuffer, n, this.byteBuffer, 0, ((this.byteLen - n) | 0));
                 this.byteLen = (this.byteLen - n) | 0;
             },
+            /*System.IO.StreamReader.CompressBuffer end.*/
+
+            /*System.IO.StreamReader.DetectEncoding start.*/
             DetectEncoding: function () {
                 if (this.byteLen < 2) {
                     return;
@@ -46947,16 +50862,24 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this.charBuffer = System.Array.init(this._maxCharsPerBuffer, 0, System.Char);
                 }
             },
+            /*System.IO.StreamReader.DetectEncoding end.*/
+
+            /*System.IO.StreamReader.IsPreamble start.*/
             IsPreamble: function () {
                 return false;
             },
+            /*System.IO.StreamReader.IsPreamble end.*/
+
+            /*System.IO.StreamReader.ReadBuffer start.*/
             ReadBuffer: function () {
                 this.charLen = 0;
                 this.charPos = 0;
 
                 this.byteLen = 0;
                 do {
+                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this.bytePos === 0; }, "bytePos can be non zero only when we are trying to _checkPreamble.  Are two threads using this StreamReader at the same time?");
                     this.byteLen = this.stream.Read(this.byteBuffer, 0, this.byteBuffer.length);
+                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this.byteLen >= 0; }, "Stream.Read returned a negative number!  This is a bug in your stream class.");
 
                     if (this.byteLen === 0) {
                         return this.charLen;
@@ -46976,6 +50899,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 } while (this.charLen === 0);
                 return this.charLen;
             },
+            /*System.IO.StreamReader.ReadBuffer end.*/
+
+            /*System.IO.StreamReader.ReadBuffer$1 start.*/
             ReadBuffer$1: function (userBuffer, userOffset, desiredChars, readToUserBuffer) {
                 this.charLen = 0;
                 this.charPos = 0;
@@ -46987,10 +50913,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 readToUserBuffer.v = desiredChars >= this._maxCharsPerBuffer;
 
                 do {
+                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return charsRead === 0; });
 
+                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this.bytePos === 0; }, "bytePos can be non zero only when we are trying to _checkPreamble.  Are two threads using this StreamReader at the same time?");
 
                     this.byteLen = this.stream.Read(this.byteBuffer, 0, this.byteBuffer.length);
 
+                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this.byteLen >= 0; }, "Stream.Read returned a negative number!  This is a bug in your stream class.");
 
                     if (this.byteLen === 0) {
                         break;
@@ -47021,6 +50950,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return charsRead;
             },
+            /*System.IO.StreamReader.ReadBuffer$1 end.*/
+
+            /*System.IO.StreamReader.ReadLine start.*/
             ReadLine: function () {
                 if (this.stream == null) {
                     System.IO.__Error.ReaderClosed();
@@ -47062,12 +50994,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     sb.append(System.String.fromCharArray(this.charBuffer, this.charPos, i));
                 } while (this.ReadBuffer() > 0);
                 return sb.toString();
-            }
+            },
+            /*System.IO.StreamReader.ReadLine end.*/
+
+
         }
     });
+    /*System.IO.StreamReader end.*/
 
     // @source NullStreamReader.js
 
+    /*System.IO.StreamReader+NullStreamReader start.*/
     Bridge.define("System.IO.StreamReader.NullStreamReader", {
         inherits: [System.IO.StreamReader],
         $kind: "nested class",
@@ -47091,30 +51028,54 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.IO.StreamReader+NullStreamReader.Dispose$1 start.*/
             Dispose$1: function (disposing) { },
+            /*System.IO.StreamReader+NullStreamReader.Dispose$1 end.*/
+
+            /*System.IO.StreamReader+NullStreamReader.Peek start.*/
             Peek: function () {
                 return -1;
             },
+            /*System.IO.StreamReader+NullStreamReader.Peek end.*/
+
+            /*System.IO.StreamReader+NullStreamReader.Read start.*/
             Read: function () {
                 return -1;
             },
+            /*System.IO.StreamReader+NullStreamReader.Read end.*/
+
+            /*System.IO.StreamReader+NullStreamReader.Read$1 start.*/
             Read$1: function (buffer, index, count) {
                 return 0;
             },
+            /*System.IO.StreamReader+NullStreamReader.Read$1 end.*/
+
+            /*System.IO.StreamReader+NullStreamReader.ReadLine start.*/
             ReadLine: function () {
                 return null;
             },
+            /*System.IO.StreamReader+NullStreamReader.ReadLine end.*/
+
+            /*System.IO.StreamReader+NullStreamReader.ReadToEnd start.*/
             ReadToEnd: function () {
                 return "";
             },
+            /*System.IO.StreamReader+NullStreamReader.ReadToEnd end.*/
+
+            /*System.IO.StreamReader+NullStreamReader.ReadBuffer start.*/
             ReadBuffer: function () {
                 return 0;
-            }
+            },
+            /*System.IO.StreamReader+NullStreamReader.ReadBuffer end.*/
+
+
         }
     });
+    /*System.IO.StreamReader+NullStreamReader end.*/
 
     // @source TextWriter.js
 
+    /*System.IO.TextWriter start.*/
     Bridge.define("System.IO.TextWriter", {
         inherits: [System.IDisposable],
         statics: {
@@ -47129,13 +51090,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
             },
             methods: {
+                /*System.IO.TextWriter.Synchronized:static start.*/
                 Synchronized: function (writer) {
                     if (writer == null) {
                         throw new System.ArgumentNullException.$ctor1("writer");
                     }
 
                     return writer;
-                }
+                },
+                /*System.IO.TextWriter.Synchronized:static end.*/
+
+
             }
         },
         fields: {
@@ -47179,20 +51144,39 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.IO.TextWriter.Close start.*/
             Close: function () {
                 this.Dispose$1(true);
             },
+            /*System.IO.TextWriter.Close end.*/
+
+            /*System.IO.TextWriter.Dispose$1 start.*/
             Dispose$1: function (disposing) { },
+            /*System.IO.TextWriter.Dispose$1 end.*/
+
+            /*System.IO.TextWriter.Dispose start.*/
             Dispose: function () {
                 this.Dispose$1(true);
             },
+            /*System.IO.TextWriter.Dispose end.*/
+
+            /*System.IO.TextWriter.Flush start.*/
             Flush: function () { },
+            /*System.IO.TextWriter.Flush end.*/
+
+            /*System.IO.TextWriter.Write$1 start.*/
             Write$1: function (value) { },
+            /*System.IO.TextWriter.Write$1 end.*/
+
+            /*System.IO.TextWriter.Write$2 start.*/
             Write$2: function (buffer) {
                 if (buffer != null) {
                     this.Write$3(buffer, 0, buffer.length);
                 }
             },
+            /*System.IO.TextWriter.Write$2 end.*/
+
+            /*System.IO.TextWriter.Write$3 start.*/
             Write$3: function (buffer, index, count) {
                 if (buffer == null) {
                     throw new System.ArgumentNullException.$ctor1("buffer");
@@ -47211,35 +51195,65 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this.Write$1(buffer[System.Array.index(((index + i) | 0), buffer)]);
                 }
             },
+            /*System.IO.TextWriter.Write$3 end.*/
+
+            /*System.IO.TextWriter.Write start.*/
             Write: function (value) {
                 this.Write$10(value ? System.Boolean.trueString : System.Boolean.falseString);
             },
+            /*System.IO.TextWriter.Write end.*/
+
+            /*System.IO.TextWriter.Write$6 start.*/
             Write$6: function (value) {
                 this.Write$10(System.Int32.format(value, "G", this.FormatProvider));
             },
+            /*System.IO.TextWriter.Write$6 end.*/
+
+            /*System.IO.TextWriter.Write$15 start.*/
             Write$15: function (value) {
                 this.Write$10(System.UInt32.format(value, "G", this.FormatProvider));
             },
+            /*System.IO.TextWriter.Write$15 end.*/
+
+            /*System.IO.TextWriter.Write$7 start.*/
             Write$7: function (value) {
                 this.Write$10(value.format("G", this.FormatProvider));
             },
+            /*System.IO.TextWriter.Write$7 end.*/
+
+            /*System.IO.TextWriter.Write$16 start.*/
             Write$16: function (value) {
                 this.Write$10(value.format("G", this.FormatProvider));
             },
+            /*System.IO.TextWriter.Write$16 end.*/
+
+            /*System.IO.TextWriter.Write$9 start.*/
             Write$9: function (value) {
                 this.Write$10(System.Single.format(value, "G", this.FormatProvider));
             },
+            /*System.IO.TextWriter.Write$9 end.*/
+
+            /*System.IO.TextWriter.Write$5 start.*/
             Write$5: function (value) {
                 this.Write$10(System.Double.format(value, "G", this.FormatProvider));
             },
+            /*System.IO.TextWriter.Write$5 end.*/
+
+            /*System.IO.TextWriter.Write$4 start.*/
             Write$4: function (value) {
                 this.Write$10(Bridge.Int.format(value, "G", this.FormatProvider));
             },
+            /*System.IO.TextWriter.Write$4 end.*/
+
+            /*System.IO.TextWriter.Write$10 start.*/
             Write$10: function (value) {
                 if (value != null) {
                     this.Write$2(System.String.toCharArray(value, 0, value.length));
                 }
             },
+            /*System.IO.TextWriter.Write$10 end.*/
+
+            /*System.IO.TextWriter.Write$8 start.*/
             Write$8: function (value) {
                 if (value != null) {
                     var f = Bridge.as(value, System.IFormattable);
@@ -47250,66 +51264,117 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.IO.TextWriter.Write$8 end.*/
+
+            /*System.IO.TextWriter.Write$11 start.*/
             Write$11: function (format, arg0) {
                 this.Write$10(System.String.formatProvider(this.FormatProvider, format, [arg0]));
             },
+            /*System.IO.TextWriter.Write$11 end.*/
+
+            /*System.IO.TextWriter.Write$12 start.*/
             Write$12: function (format, arg0, arg1) {
                 this.Write$10(System.String.formatProvider(this.FormatProvider, format, arg0, arg1));
             },
+            /*System.IO.TextWriter.Write$12 end.*/
+
+            /*System.IO.TextWriter.Write$13 start.*/
             Write$13: function (format, arg0, arg1, arg2) {
                 this.Write$10(System.String.formatProvider(this.FormatProvider, format, arg0, arg1, arg2));
             },
+            /*System.IO.TextWriter.Write$13 end.*/
+
+            /*System.IO.TextWriter.Write$14 start.*/
             Write$14: function (format, arg) {
                 if (arg === void 0) { arg = []; }
                 this.Write$10(System.String.formatProvider.apply(System.String, [this.FormatProvider, format].concat(arg)));
             },
+            /*System.IO.TextWriter.Write$14 end.*/
+
+            /*System.IO.TextWriter.WriteLine start.*/
             WriteLine: function () {
                 this.Write$2(this.CoreNewLine);
             },
+            /*System.IO.TextWriter.WriteLine end.*/
+
+            /*System.IO.TextWriter.WriteLine$2 start.*/
             WriteLine$2: function (value) {
                 this.Write$1(value);
                 this.WriteLine();
             },
+            /*System.IO.TextWriter.WriteLine$2 end.*/
+
+            /*System.IO.TextWriter.WriteLine$3 start.*/
             WriteLine$3: function (buffer) {
                 this.Write$2(buffer);
                 this.WriteLine();
             },
+            /*System.IO.TextWriter.WriteLine$3 end.*/
+
+            /*System.IO.TextWriter.WriteLine$4 start.*/
             WriteLine$4: function (buffer, index, count) {
                 this.Write$3(buffer, index, count);
                 this.WriteLine();
             },
+            /*System.IO.TextWriter.WriteLine$4 end.*/
+
+            /*System.IO.TextWriter.WriteLine$1 start.*/
             WriteLine$1: function (value) {
                 this.Write(value);
                 this.WriteLine();
             },
+            /*System.IO.TextWriter.WriteLine$1 end.*/
+
+            /*System.IO.TextWriter.WriteLine$7 start.*/
             WriteLine$7: function (value) {
                 this.Write$6(value);
                 this.WriteLine();
             },
+            /*System.IO.TextWriter.WriteLine$7 end.*/
+
+            /*System.IO.TextWriter.WriteLine$16 start.*/
             WriteLine$16: function (value) {
                 this.Write$15(value);
                 this.WriteLine();
             },
+            /*System.IO.TextWriter.WriteLine$16 end.*/
+
+            /*System.IO.TextWriter.WriteLine$8 start.*/
             WriteLine$8: function (value) {
                 this.Write$7(value);
                 this.WriteLine();
             },
+            /*System.IO.TextWriter.WriteLine$8 end.*/
+
+            /*System.IO.TextWriter.WriteLine$17 start.*/
             WriteLine$17: function (value) {
                 this.Write$16(value);
                 this.WriteLine();
             },
+            /*System.IO.TextWriter.WriteLine$17 end.*/
+
+            /*System.IO.TextWriter.WriteLine$10 start.*/
             WriteLine$10: function (value) {
                 this.Write$9(value);
                 this.WriteLine();
             },
+            /*System.IO.TextWriter.WriteLine$10 end.*/
+
+            /*System.IO.TextWriter.WriteLine$6 start.*/
             WriteLine$6: function (value) {
                 this.Write$5(value);
                 this.WriteLine();
             },
+            /*System.IO.TextWriter.WriteLine$6 end.*/
+
+            /*System.IO.TextWriter.WriteLine$5 start.*/
             WriteLine$5: function (value) {
                 this.Write$4(value);
                 this.WriteLine();
             },
+            /*System.IO.TextWriter.WriteLine$5 end.*/
+
+            /*System.IO.TextWriter.WriteLine$11 start.*/
             WriteLine$11: function (value) {
 
                 if (value == null) {
@@ -47334,6 +51399,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 WriteLine();
                 */
             },
+            /*System.IO.TextWriter.WriteLine$11 end.*/
+
+            /*System.IO.TextWriter.WriteLine$9 start.*/
             WriteLine$9: function (value) {
                 if (value == null) {
                     this.WriteLine();
@@ -47346,24 +51414,41 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.IO.TextWriter.WriteLine$9 end.*/
+
+            /*System.IO.TextWriter.WriteLine$12 start.*/
             WriteLine$12: function (format, arg0) {
                 this.WriteLine$11(System.String.formatProvider(this.FormatProvider, format, [arg0]));
             },
+            /*System.IO.TextWriter.WriteLine$12 end.*/
+
+            /*System.IO.TextWriter.WriteLine$13 start.*/
             WriteLine$13: function (format, arg0, arg1) {
                 this.WriteLine$11(System.String.formatProvider(this.FormatProvider, format, arg0, arg1));
             },
+            /*System.IO.TextWriter.WriteLine$13 end.*/
+
+            /*System.IO.TextWriter.WriteLine$14 start.*/
             WriteLine$14: function (format, arg0, arg1, arg2) {
                 this.WriteLine$11(System.String.formatProvider(this.FormatProvider, format, arg0, arg1, arg2));
             },
+            /*System.IO.TextWriter.WriteLine$14 end.*/
+
+            /*System.IO.TextWriter.WriteLine$15 start.*/
             WriteLine$15: function (format, arg) {
                 if (arg === void 0) { arg = []; }
                 this.WriteLine$11(System.String.formatProvider.apply(System.String, [this.FormatProvider, format].concat(arg)));
-            }
+            },
+            /*System.IO.TextWriter.WriteLine$15 end.*/
+
+
         }
     });
+    /*System.IO.TextWriter end.*/
 
     // @source StreamWriter.js
 
+    /*System.IO.StreamWriter start.*/
     Bridge.define("System.IO.StreamWriter", {
         inherits: [System.IO.TextWriter],
         statics: {
@@ -47486,6 +51571,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.IO.StreamWriter.Init start.*/
             Init: function (streamArg, encodingArg, bufferSize, shouldLeaveOpen) {
                 this.stream = streamArg;
                 this.encoding = encodingArg;
@@ -47500,9 +51586,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 this.closable = !shouldLeaveOpen;
             },
+            /*System.IO.StreamWriter.Init end.*/
+
+            /*System.IO.StreamWriter.Close start.*/
             Close: function () {
                 this.Dispose$1(true);
             },
+            /*System.IO.StreamWriter.Close end.*/
+
+            /*System.IO.StreamWriter.Dispose$1 start.*/
             Dispose$1: function (disposing) {
                 try {
                     if (this.stream != null) {
@@ -47527,9 +51619,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.IO.StreamWriter.Dispose$1 end.*/
+
+            /*System.IO.StreamWriter.Flush start.*/
             Flush: function () {
                 this.Flush$1(true, true);
             },
+            /*System.IO.StreamWriter.Flush end.*/
+
+            /*System.IO.StreamWriter.Flush$1 start.*/
             Flush$1: function (flushStream, flushEncoder) {
                 if (this.stream == null) {
                     System.IO.__Error.WriterClosed();
@@ -47555,6 +51653,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this.stream.Flush();
                 }
             },
+            /*System.IO.StreamWriter.Flush$1 end.*/
+
+            /*System.IO.StreamWriter.Write$1 start.*/
             Write$1: function (value) {
                 if (this.charPos === this.charLen) {
                     this.Flush$1(false, false);
@@ -47565,6 +51666,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this.Flush$1(true, false);
                 }
             },
+            /*System.IO.StreamWriter.Write$1 end.*/
+
+            /*System.IO.StreamWriter.Write$2 start.*/
             Write$2: function (buffer) {
                 if (buffer == null) {
                     return;
@@ -47580,6 +51684,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     if (n > count) {
                         n = count;
                     }
+                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return n > 0; }, "StreamWriter::Write(char[]) isn't making progress!  This is most likely a ---- in user code.");
                     System.Array.copy(buffer, index, this.charBuffer, this.charPos, n);
                     this.charPos = (this.charPos + n) | 0;
                     index = (index + n) | 0;
@@ -47589,6 +51694,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this.Flush$1(true, false);
                 }
             },
+            /*System.IO.StreamWriter.Write$2 end.*/
+
+            /*System.IO.StreamWriter.Write$3 start.*/
             Write$3: function (buffer, index, count) {
                 if (buffer == null) {
                     throw new System.ArgumentNullException.$ctor3("buffer", "ArgumentNull_Buffer");
@@ -47611,6 +51719,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     if (n > count) {
                         n = count;
                     }
+                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return n > 0; }, "StreamWriter::Write(char[], int, int) isn't making progress!  This is most likely a race condition in user code.");
                     System.Array.copy(buffer, index, this.charBuffer, this.charPos, n);
                     this.charPos = (this.charPos + n) | 0;
                     index = (index + n) | 0;
@@ -47620,6 +51729,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this.Flush$1(true, false);
                 }
             },
+            /*System.IO.StreamWriter.Write$3 end.*/
+
+            /*System.IO.StreamWriter.Write$10 start.*/
             Write$10: function (value) {
                 if (value != null) {
                     var count = value.length;
@@ -47632,6 +51744,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                         if (n > count) {
                             n = count;
                         }
+                        System.Diagnostics.Contracts.Contract.assert(4, this, function () { return n > 0; }, "StreamWriter::Write(String) isn't making progress!  This is most likely a race condition in user code.");
                         System.String.copyTo(value, index, this.charBuffer, this.charPos, n);
                         this.charPos = (this.charPos + n) | 0;
                         index = (index + n) | 0;
@@ -47641,12 +51754,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                         this.Flush$1(true, false);
                     }
                 }
-            }
+            },
+            /*System.IO.StreamWriter.Write$10 end.*/
+
+
         }
     });
+    /*System.IO.StreamWriter end.*/
 
     // @source StringReader.js
 
+    /*System.IO.StringReader start.*/
     Bridge.define("System.IO.StringReader", {
         inherits: [System.IO.TextReader],
         fields: {
@@ -47666,15 +51784,22 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.IO.StringReader.Close start.*/
             Close: function () {
                 this.Dispose$1(true);
             },
+            /*System.IO.StringReader.Close end.*/
+
+            /*System.IO.StringReader.Dispose$1 start.*/
             Dispose$1: function (disposing) {
                 this._s = null;
                 this._pos = 0;
                 this._length = 0;
                 System.IO.TextReader.prototype.Dispose$1.call(this, disposing);
             },
+            /*System.IO.StringReader.Dispose$1 end.*/
+
+            /*System.IO.StringReader.Peek start.*/
             Peek: function () {
                 if (this._s == null) {
                     System.IO.__Error.ReaderClosed();
@@ -47684,6 +51809,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return this._s.charCodeAt(this._pos);
             },
+            /*System.IO.StringReader.Peek end.*/
+
+            /*System.IO.StringReader.Read start.*/
             Read: function () {
                 if (this._s == null) {
                     System.IO.__Error.ReaderClosed();
@@ -47693,6 +51821,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return this._s.charCodeAt(Bridge.identity(this._pos, ((this._pos = (this._pos + 1) | 0))));
             },
+            /*System.IO.StringReader.Read end.*/
+
+            /*System.IO.StringReader.Read$1 start.*/
             Read$1: function (buffer, index, count) {
                 if (buffer == null) {
                     throw new System.ArgumentNullException.$ctor1("buffer");
@@ -47720,6 +51851,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return n;
             },
+            /*System.IO.StringReader.Read$1 end.*/
+
+            /*System.IO.StringReader.ReadToEnd start.*/
             ReadToEnd: function () {
                 if (this._s == null) {
                     System.IO.__Error.ReaderClosed();
@@ -47733,6 +51867,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this._pos = this._length;
                 return s;
             },
+            /*System.IO.StringReader.ReadToEnd end.*/
+
+            /*System.IO.StringReader.ReadLine start.*/
             ReadLine: function () {
                 if (this._s == null) {
                     System.IO.__Error.ReaderClosed();
@@ -47756,12 +51893,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     return result1;
                 }
                 return null;
-            }
+            },
+            /*System.IO.StringReader.ReadLine end.*/
+
+
         }
     });
+    /*System.IO.StringReader end.*/
 
     // @source StringWriter.js
 
+    /*System.IO.StringWriter start.*/
     Bridge.define("System.IO.StringWriter", {
         inherits: [System.IO.TextWriter],
         statics: {
@@ -47804,22 +51946,35 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.IO.StringWriter.Close start.*/
             Close: function () {
                 this.Dispose$1(true);
             },
+            /*System.IO.StringWriter.Close end.*/
+
+            /*System.IO.StringWriter.Dispose$1 start.*/
             Dispose$1: function (disposing) {
                 this._isOpen = false;
                 System.IO.TextWriter.prototype.Dispose$1.call(this, disposing);
             },
+            /*System.IO.StringWriter.Dispose$1 end.*/
+
+            /*System.IO.StringWriter.GetStringBuilder start.*/
             GetStringBuilder: function () {
                 return this._sb;
             },
+            /*System.IO.StringWriter.GetStringBuilder end.*/
+
+            /*System.IO.StringWriter.Write$1 start.*/
             Write$1: function (value) {
                 if (!this._isOpen) {
                     System.IO.__Error.WriterClosed();
                 }
                 this._sb.append(String.fromCharCode(value));
             },
+            /*System.IO.StringWriter.Write$1 end.*/
+
+            /*System.IO.StringWriter.Write$3 start.*/
             Write$3: function (buffer, index, count) {
                 if (buffer == null) {
                     throw new System.ArgumentNullException.$ctor1("buffer");
@@ -47840,6 +51995,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 this._sb.append(System.String.fromCharArray(buffer, index, count));
             },
+            /*System.IO.StringWriter.Write$3 end.*/
+
+            /*System.IO.StringWriter.Write$10 start.*/
             Write$10: function (value) {
                 if (!this._isOpen) {
                     System.IO.__Error.WriterClosed();
@@ -47848,14 +52006,22 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this._sb.append(value);
                 }
             },
+            /*System.IO.StringWriter.Write$10 end.*/
+
+            /*System.IO.StringWriter.toString start.*/
             toString: function () {
                 return this._sb.toString();
-            }
+            },
+            /*System.IO.StringWriter.toString end.*/
+
+
         }
     });
+    /*System.IO.StringWriter end.*/
 
     // @source NullTextReader.js
 
+    /*System.IO.TextReader+NullTextReader start.*/
     Bridge.define("System.IO.TextReader.NullTextReader", {
         inherits: [System.IO.TextReader],
         $kind: "nested class",
@@ -47866,17 +52032,26 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.IO.TextReader+NullTextReader.Read$1 start.*/
             Read$1: function (buffer, index, count) {
                 return 0;
             },
+            /*System.IO.TextReader+NullTextReader.Read$1 end.*/
+
+            /*System.IO.TextReader+NullTextReader.ReadLine start.*/
             ReadLine: function () {
                 return null;
-            }
+            },
+            /*System.IO.TextReader+NullTextReader.ReadLine end.*/
+
+
         }
     });
+    /*System.IO.TextReader+NullTextReader end.*/
 
     // @source NullTextWriter.js
 
+    /*System.IO.TextWriter+NullTextWriter start.*/
     Bridge.define("System.IO.TextWriter.NullTextWriter", {
         inherits: [System.IO.TextWriter],
         $kind: "nested class",
@@ -47894,61 +52069,118 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.IO.TextWriter+NullTextWriter.Write$3 start.*/
             Write$3: function (buffer, index, count) { },
+            /*System.IO.TextWriter+NullTextWriter.Write$3 end.*/
+
+            /*System.IO.TextWriter+NullTextWriter.Write$10 start.*/
             Write$10: function (value) { },
+            /*System.IO.TextWriter+NullTextWriter.Write$10 end.*/
+
+            /*System.IO.TextWriter+NullTextWriter.WriteLine start.*/
             WriteLine: function () { },
+            /*System.IO.TextWriter+NullTextWriter.WriteLine end.*/
+
+            /*System.IO.TextWriter+NullTextWriter.WriteLine$11 start.*/
             WriteLine$11: function (value) { },
-            WriteLine$9: function (value) { }
+            /*System.IO.TextWriter+NullTextWriter.WriteLine$11 end.*/
+
+            /*System.IO.TextWriter+NullTextWriter.WriteLine$9 start.*/
+            WriteLine$9: function (value) { },
+            /*System.IO.TextWriter+NullTextWriter.WriteLine$9 end.*/
+
+
         }
     });
+    /*System.IO.TextWriter+NullTextWriter end.*/
 
     // @source __Error.js
 
+    /*System.IO.__Error start.*/
     Bridge.define("System.IO.__Error", {
         statics: {
             methods: {
+                /*System.IO.__Error.EndOfFile:static start.*/
                 EndOfFile: function () {
                     throw new System.IO.EndOfStreamException.$ctor1("IO.EOF_ReadBeyondEOF");
                 },
+                /*System.IO.__Error.EndOfFile:static end.*/
+
+                /*System.IO.__Error.FileNotOpen:static start.*/
                 FileNotOpen: function () {
                     throw new System.Exception("ObjectDisposed_FileClosed");
                 },
+                /*System.IO.__Error.FileNotOpen:static end.*/
+
+                /*System.IO.__Error.StreamIsClosed:static start.*/
                 StreamIsClosed: function () {
                     throw new System.Exception("ObjectDisposed_StreamClosed");
                 },
+                /*System.IO.__Error.StreamIsClosed:static end.*/
+
+                /*System.IO.__Error.MemoryStreamNotExpandable:static start.*/
                 MemoryStreamNotExpandable: function () {
                     throw new System.NotSupportedException.$ctor1("NotSupported_MemStreamNotExpandable");
                 },
+                /*System.IO.__Error.MemoryStreamNotExpandable:static end.*/
+
+                /*System.IO.__Error.ReaderClosed:static start.*/
                 ReaderClosed: function () {
                     throw new System.Exception("ObjectDisposed_ReaderClosed");
                 },
+                /*System.IO.__Error.ReaderClosed:static end.*/
+
+                /*System.IO.__Error.ReadNotSupported:static start.*/
                 ReadNotSupported: function () {
                     throw new System.NotSupportedException.$ctor1("NotSupported_UnreadableStream");
                 },
+                /*System.IO.__Error.ReadNotSupported:static end.*/
+
+                /*System.IO.__Error.SeekNotSupported:static start.*/
                 SeekNotSupported: function () {
                     throw new System.NotSupportedException.$ctor1("NotSupported_UnseekableStream");
                 },
+                /*System.IO.__Error.SeekNotSupported:static end.*/
+
+                /*System.IO.__Error.WrongAsyncResult:static start.*/
                 WrongAsyncResult: function () {
                     throw new System.ArgumentException.$ctor1("Arg_WrongAsyncResult");
                 },
+                /*System.IO.__Error.WrongAsyncResult:static end.*/
+
+                /*System.IO.__Error.EndReadCalledTwice:static start.*/
                 EndReadCalledTwice: function () {
                     throw new System.ArgumentException.$ctor1("InvalidOperation_EndReadCalledMultiple");
                 },
+                /*System.IO.__Error.EndReadCalledTwice:static end.*/
+
+                /*System.IO.__Error.EndWriteCalledTwice:static start.*/
                 EndWriteCalledTwice: function () {
                     throw new System.ArgumentException.$ctor1("InvalidOperation_EndWriteCalledMultiple");
                 },
+                /*System.IO.__Error.EndWriteCalledTwice:static end.*/
+
+                /*System.IO.__Error.WriteNotSupported:static start.*/
                 WriteNotSupported: function () {
                     throw new System.NotSupportedException.$ctor1("NotSupported_UnwritableStream");
                 },
+                /*System.IO.__Error.WriteNotSupported:static end.*/
+
+                /*System.IO.__Error.WriterClosed:static start.*/
                 WriterClosed: function () {
                     throw new System.Exception("ObjectDisposed_WriterClosed");
-                }
+                },
+                /*System.IO.__Error.WriterClosed:static end.*/
+
+
             }
         }
     });
+    /*System.IO.__Error end.*/
 
     // @source AmbiguousMatchException.js
 
+    /*System.Reflection.AmbiguousMatchException start.*/
     Bridge.define("System.Reflection.AmbiguousMatchException", {
         inherits: [System.SystemException],
         ctors: {
@@ -47969,9 +52201,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Reflection.AmbiguousMatchException end.*/
 
     // @source Binder.js
 
+    /*System.Reflection.Binder start.*/
     Bridge.define("System.Reflection.Binder", {
         ctors: {
             ctor: function () {
@@ -47979,9 +52213,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Reflection.Binder end.*/
 
     // @source BindingFlags.js
 
+    /*System.Reflection.BindingFlags start.*/
     Bridge.define("System.Reflection.BindingFlags", {
         $kind: "enum",
         statics: {
@@ -48011,9 +52247,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
         },
         $flags: true
     });
+    /*System.Reflection.BindingFlags end.*/
 
     // @source CallingConventions.js
 
+    /*System.Reflection.CallingConventions start.*/
     Bridge.define("System.Reflection.CallingConventions", {
         $kind: "enum",
         statics: {
@@ -48027,15 +52265,19 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
         },
         $flags: true
     });
+    /*System.Reflection.CallingConventions end.*/
 
     // @source ICustomAttributeProvider.js
 
+    /*System.Reflection.ICustomAttributeProvider start.*/
     Bridge.define("System.Reflection.ICustomAttributeProvider", {
         $kind: "interface"
     });
+    /*System.Reflection.ICustomAttributeProvider end.*/
 
     // @source InvalidFilterCriteriaException.js
 
+    /*System.Reflection.InvalidFilterCriteriaException start.*/
     Bridge.define("System.Reflection.InvalidFilterCriteriaException", {
         inherits: [System.ApplicationException],
         ctors: {
@@ -48052,15 +52294,19 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Reflection.InvalidFilterCriteriaException end.*/
 
     // @source IReflect.js
 
+    /*System.Reflection.IReflect start.*/
     Bridge.define("System.Reflection.IReflect", {
         $kind: "interface"
     });
+    /*System.Reflection.IReflect end.*/
 
     // @source MemberTypes.js
 
+    /*System.Reflection.MemberTypes start.*/
     Bridge.define("System.Reflection.MemberTypes", {
         $kind: "enum",
         statics: {
@@ -48078,9 +52324,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
         },
         $flags: true
     });
+    /*System.Reflection.MemberTypes end.*/
 
     // @source Module.js
 
+    /*System.Reflection.Module start.*/
     Bridge.define("System.Reflection.Module", {
         inherits: [System.Reflection.ICustomAttributeProvider,System.Runtime.Serialization.ISerializable],
         statics: {
@@ -48097,6 +52345,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
             },
             methods: {
+                /*System.Reflection.Module.FilterTypeNameImpl:static start.*/
                 FilterTypeNameImpl: function (cls, filterCriteria) {
                     if (filterCriteria == null || !(Bridge.is(filterCriteria, System.String))) {
                         throw new System.Reflection.InvalidFilterCriteriaException.$ctor1("A String must be provided for the filter criteria.");
@@ -48111,6 +52360,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return System.String.equals(Bridge.Reflection.getTypeName(cls), str);
                 },
+                /*System.Reflection.Module.FilterTypeNameImpl:static end.*/
+
+                /*System.Reflection.Module.FilterTypeNameIgnoreCaseImpl:static start.*/
                 FilterTypeNameIgnoreCaseImpl: function (cls, filterCriteria) {
                     var $t;
                     if (filterCriteria == null || !(Bridge.is(filterCriteria, System.String))) {
@@ -48130,6 +52382,8 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                     return (System.String.compare(str, Bridge.Reflection.getTypeName(cls), 5) === 0);
                 },
+                /*System.Reflection.Module.FilterTypeNameIgnoreCaseImpl:static end.*/
+
                 op_Equality: function (left, right) {
                     if (Bridge.referenceEquals(left, right)) {
                         return true;
@@ -48194,18 +52448,31 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Reflection.Module.IsResource start.*/
             IsResource: function () {
                 throw System.NotImplemented.ByDesign;
             },
+            /*System.Reflection.Module.IsResource end.*/
+
+            /*System.Reflection.Module.IsDefined start.*/
             IsDefined: function (attributeType, inherit) {
                 throw System.NotImplemented.ByDesign;
             },
+            /*System.Reflection.Module.IsDefined end.*/
+
+            /*System.Reflection.Module.GetCustomAttributes start.*/
             GetCustomAttributes: function (inherit) {
                 throw System.NotImplemented.ByDesign;
             },
+            /*System.Reflection.Module.GetCustomAttributes end.*/
+
+            /*System.Reflection.Module.GetCustomAttributes$1 start.*/
             GetCustomAttributes$1: function (attributeType, inherit) {
                 throw System.NotImplemented.ByDesign;
             },
+            /*System.Reflection.Module.GetCustomAttributes$1 end.*/
+
+            /*System.Reflection.Module.GetMethod start.*/
             GetMethod: function (name) {
                 if (name == null) {
                     throw new System.ArgumentNullException.$ctor1("name");
@@ -48213,9 +52480,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return this.GetMethodImpl(name, System.Reflection.Module.DefaultLookup, null, 3, null, null);
             },
+            /*System.Reflection.Module.GetMethod end.*/
+
+            /*System.Reflection.Module.GetMethod$2 start.*/
             GetMethod$2: function (name, types) {
                 return this.GetMethod$1(name, System.Reflection.Module.DefaultLookup, null, 3, types, null);
             },
+            /*System.Reflection.Module.GetMethod$2 end.*/
+
+            /*System.Reflection.Module.GetMethod$1 start.*/
             GetMethod$1: function (name, bindingAttr, binder, callConvention, types, modifiers) {
                 if (name == null) {
                     throw new System.ArgumentNullException.$ctor1("name");
@@ -48230,39 +52503,75 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return this.GetMethodImpl(name, bindingAttr, binder, callConvention, types, modifiers);
             },
+            /*System.Reflection.Module.GetMethod$1 end.*/
+
+            /*System.Reflection.Module.GetMethodImpl start.*/
             GetMethodImpl: function (name, bindingAttr, binder, callConvention, types, modifiers) {
                 throw System.NotImplemented.ByDesign;
             },
+            /*System.Reflection.Module.GetMethodImpl end.*/
+
+            /*System.Reflection.Module.GetMethods start.*/
             GetMethods: function () {
                 return this.GetMethods$1(System.Reflection.Module.DefaultLookup);
             },
+            /*System.Reflection.Module.GetMethods end.*/
+
+            /*System.Reflection.Module.GetMethods$1 start.*/
             GetMethods$1: function (bindingFlags) {
                 throw System.NotImplemented.ByDesign;
             },
+            /*System.Reflection.Module.GetMethods$1 end.*/
+
+            /*System.Reflection.Module.GetField start.*/
             GetField: function (name) {
                 return this.GetField$1(name, System.Reflection.Module.DefaultLookup);
             },
+            /*System.Reflection.Module.GetField end.*/
+
+            /*System.Reflection.Module.GetField$1 start.*/
             GetField$1: function (name, bindingAttr) {
                 throw System.NotImplemented.ByDesign;
             },
+            /*System.Reflection.Module.GetField$1 end.*/
+
+            /*System.Reflection.Module.GetFields start.*/
             GetFields: function () {
                 return this.GetFields$1(System.Reflection.Module.DefaultLookup);
             },
+            /*System.Reflection.Module.GetFields end.*/
+
+            /*System.Reflection.Module.GetFields$1 start.*/
             GetFields$1: function (bindingFlags) {
                 throw System.NotImplemented.ByDesign;
             },
+            /*System.Reflection.Module.GetFields$1 end.*/
+
+            /*System.Reflection.Module.GetTypes start.*/
             GetTypes: function () {
                 throw System.NotImplemented.ByDesign;
             },
+            /*System.Reflection.Module.GetTypes end.*/
+
+            /*System.Reflection.Module.GetType start.*/
             GetType: function (className) {
                 return this.GetType$2(className, false, false);
             },
+            /*System.Reflection.Module.GetType end.*/
+
+            /*System.Reflection.Module.GetType$1 start.*/
             GetType$1: function (className, ignoreCase) {
                 return this.GetType$2(className, false, ignoreCase);
             },
+            /*System.Reflection.Module.GetType$1 end.*/
+
+            /*System.Reflection.Module.GetType$2 start.*/
             GetType$2: function (className, throwOnError, ignoreCase) {
                 throw System.NotImplemented.ByDesign;
             },
+            /*System.Reflection.Module.GetType$2 end.*/
+
+            /*System.Reflection.Module.FindTypes start.*/
             FindTypes: function (filter, filterCriteria) {
                 var c = this.GetTypes();
                 var cnt = 0;
@@ -48286,50 +52595,94 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return ret;
             },
+            /*System.Reflection.Module.FindTypes end.*/
+
+            /*System.Reflection.Module.ResolveField start.*/
             ResolveField: function (metadataToken) {
                 return this.ResolveField$1(metadataToken, null, null);
             },
+            /*System.Reflection.Module.ResolveField end.*/
+
+            /*System.Reflection.Module.ResolveField$1 start.*/
             ResolveField$1: function (metadataToken, genericTypeArguments, genericMethodArguments) {
                 throw System.NotImplemented.ByDesign;
             },
+            /*System.Reflection.Module.ResolveField$1 end.*/
+
+            /*System.Reflection.Module.ResolveMember start.*/
             ResolveMember: function (metadataToken) {
                 return this.ResolveMember$1(metadataToken, null, null);
             },
+            /*System.Reflection.Module.ResolveMember end.*/
+
+            /*System.Reflection.Module.ResolveMember$1 start.*/
             ResolveMember$1: function (metadataToken, genericTypeArguments, genericMethodArguments) {
                 throw System.NotImplemented.ByDesign;
             },
+            /*System.Reflection.Module.ResolveMember$1 end.*/
+
+            /*System.Reflection.Module.ResolveMethod start.*/
             ResolveMethod: function (metadataToken) {
                 return this.ResolveMethod$1(metadataToken, null, null);
             },
+            /*System.Reflection.Module.ResolveMethod end.*/
+
+            /*System.Reflection.Module.ResolveMethod$1 start.*/
             ResolveMethod$1: function (metadataToken, genericTypeArguments, genericMethodArguments) {
                 throw System.NotImplemented.ByDesign;
             },
+            /*System.Reflection.Module.ResolveMethod$1 end.*/
+
+            /*System.Reflection.Module.ResolveSignature start.*/
             ResolveSignature: function (metadataToken) {
                 throw System.NotImplemented.ByDesign;
             },
+            /*System.Reflection.Module.ResolveSignature end.*/
+
+            /*System.Reflection.Module.ResolveString start.*/
             ResolveString: function (metadataToken) {
                 throw System.NotImplemented.ByDesign;
             },
+            /*System.Reflection.Module.ResolveString end.*/
+
+            /*System.Reflection.Module.ResolveType start.*/
             ResolveType: function (metadataToken) {
                 return this.ResolveType$1(metadataToken, null, null);
             },
+            /*System.Reflection.Module.ResolveType end.*/
+
+            /*System.Reflection.Module.ResolveType$1 start.*/
             ResolveType$1: function (metadataToken, genericTypeArguments, genericMethodArguments) {
                 throw System.NotImplemented.ByDesign;
             },
+            /*System.Reflection.Module.ResolveType$1 end.*/
+
+            /*System.Reflection.Module.equals start.*/
             equals: function (o) {
                 return Bridge.equals(this, o);
             },
+            /*System.Reflection.Module.equals end.*/
+
+            /*System.Reflection.Module.getHashCode start.*/
             getHashCode: function () {
                 return Bridge.getHashCode(this);
             },
+            /*System.Reflection.Module.getHashCode end.*/
+
+            /*System.Reflection.Module.toString start.*/
             toString: function () {
                 return this.ScopeName;
-            }
+            },
+            /*System.Reflection.Module.toString end.*/
+
+
         }
     });
+    /*System.Reflection.Module end.*/
 
     // @source ParameterModifier.js
 
+    /*System.Reflection.ParameterModifier start.*/
     Bridge.define("System.Reflection.ParameterModifier", {
         $kind: "struct",
         statics: {
@@ -48377,9 +52730,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Reflection.ParameterModifier end.*/
 
     // @source TypeAttributes.js
 
+    /*System.Reflection.TypeAttributes start.*/
     Bridge.define("System.Reflection.TypeAttributes", {
         $kind: "enum",
         statics: {
@@ -48420,9 +52775,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
         },
         $flags: true
     });
+    /*System.Reflection.TypeAttributes end.*/
 
     // @source Random.js
 
+    /*System.Random start.*/
     Bridge.define("System.Random", {
         statics: {
             fields: {
@@ -48482,9 +52839,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Random.Sample start.*/
             Sample: function () {
                 return (this.InternalSample() * (4.6566128752457969E-10));
             },
+            /*System.Random.Sample end.*/
+
+            /*System.Random.InternalSample start.*/
             InternalSample: function () {
                 var retVal;
                 var locINext = this.inext;
@@ -48515,9 +52876,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return retVal;
             },
+            /*System.Random.InternalSample end.*/
+
+            /*System.Random.Next start.*/
             Next: function () {
                 return this.InternalSample();
             },
+            /*System.Random.Next end.*/
+
+            /*System.Random.Next$2 start.*/
             Next$2: function (minValue, maxValue) {
                 if (minValue > maxValue) {
                     throw new System.ArgumentOutOfRangeException.$ctor4("minValue", "'minValue' cannot be greater than maxValue.");
@@ -48530,12 +52897,18 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     return System.Int64.clip32(Bridge.Int.clip64((this.GetSampleForLargeRange() * System.Int64.toNumber(range))).add(System.Int64(minValue)));
                 }
             },
+            /*System.Random.Next$2 end.*/
+
+            /*System.Random.Next$1 start.*/
             Next$1: function (maxValue) {
                 if (maxValue < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor4("maxValue", "'maxValue' must be greater than zero.");
                 }
                 return Bridge.Int.clip32(this.Sample() * maxValue);
             },
+            /*System.Random.Next$1 end.*/
+
+            /*System.Random.GetSampleForLargeRange start.*/
             GetSampleForLargeRange: function () {
 
                 var result = this.InternalSample();
@@ -48548,9 +52921,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 d /= 4294967293;
                 return d;
             },
+            /*System.Random.GetSampleForLargeRange end.*/
+
+            /*System.Random.NextDouble start.*/
             NextDouble: function () {
                 return this.Sample();
             },
+            /*System.Random.NextDouble end.*/
+
+            /*System.Random.NextBytes start.*/
             NextBytes: function (buffer) {
                 if (buffer == null) {
                     throw new System.ArgumentNullException.$ctor1("buffer");
@@ -48558,12 +52937,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 for (var i = 0; i < buffer.length; i = (i + 1) | 0) {
                     buffer[System.Array.index(i, buffer)] = (this.InternalSample() % (256)) & 255;
                 }
-            }
+            },
+            /*System.Random.NextBytes end.*/
+
+
         }
     });
+    /*System.Random end.*/
 
     // @source RankException.js
 
+    /*System.RankException start.*/
     Bridge.define("System.RankException", {
         inherits: [System.SystemException],
         ctors: {
@@ -48584,9 +52968,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.RankException end.*/
 
     // @source SR.js
 
+    /*System.SR start.*/
     Bridge.define("System.SR", {
         statics: {
             fields: {
@@ -48605,12 +52991,19 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
             },
             methods: {
+                /*System.SR.UsingResourceKeys:static start.*/
                 UsingResourceKeys: function () {
                     return false;
                 },
+                /*System.SR.UsingResourceKeys:static end.*/
+
+                /*System.SR.GetResourceString:static start.*/
                 GetResourceString: function (resourceKey) {
                     return System.SR.GetResourceString$1(resourceKey, "");
                 },
+                /*System.SR.GetResourceString:static end.*/
+
+                /*System.SR.GetResourceString$1:static start.*/
                 GetResourceString$1: function (resourceKey, defaultString) {
                     var resourceString = null;
                     try {
@@ -48629,8 +53022,12 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return resourceString;
                 },
+                /*System.SR.GetResourceString$1:static end.*/
+
+                /*System.SR.InternalGetResourceString:static start.*/
                 InternalGetResourceString: function (key) {
                     if (key == null || key.length === 0) {
+                        System.Diagnostics.Debug.Fail("SR::GetResourceString with null or empty key.  Bug in caller, or weird recursive loading problem?");
                         return key;
                     }
 
@@ -48646,6 +53043,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
 
                 },
+                /*System.SR.InternalGetResourceString:static end.*/
+
+                /*System.SR.Format$3:static start.*/
                 Format$3: function (resourceFormat, args) {
                     if (args === void 0) { args = []; }
                     if (args != null) {
@@ -48658,6 +53058,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return resourceFormat;
                 },
+                /*System.SR.Format$3:static end.*/
+
+                /*System.SR.Format:static start.*/
                 Format: function (resourceFormat, p1) {
                     if (System.SR.UsingResourceKeys()) {
                         return [resourceFormat, p1].join(", ");
@@ -48665,6 +53068,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return System.String.format(resourceFormat, [p1]);
                 },
+                /*System.SR.Format:static end.*/
+
+                /*System.SR.Format$1:static start.*/
                 Format$1: function (resourceFormat, p1, p2) {
                     if (System.SR.UsingResourceKeys()) {
                         return [resourceFormat, p1, p2].join(", ");
@@ -48672,18 +53078,26 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return System.String.format(resourceFormat, p1, p2);
                 },
+                /*System.SR.Format$1:static end.*/
+
+                /*System.SR.Format$2:static start.*/
                 Format$2: function (resourceFormat, p1, p2, p3) {
                     if (System.SR.UsingResourceKeys()) {
                         return [resourceFormat, p1, p2, p3].join(", ");
                     }
                     return System.String.format(resourceFormat, p1, p2, p3);
-                }
+                },
+                /*System.SR.Format$2:static end.*/
+
+
             }
         }
     });
+    /*System.SR end.*/
 
     // @source StringComparison.js
 
+    /*System.StringComparison start.*/
     Bridge.define("System.StringComparison", {
         $kind: "enum",
         statics: {
@@ -48697,6 +53111,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.StringComparison end.*/
 
     // @source AggregateException.js
 
@@ -48815,150 +53230,293 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
     // @source ThrowHelper.js
 
+    /*System.ThrowHelper start.*/
     Bridge.define("System.ThrowHelper", {
         statics: {
             methods: {
+                /*System.ThrowHelper.ThrowArrayTypeMismatchException:static start.*/
                 ThrowArrayTypeMismatchException: function () {
                     throw new System.ArrayTypeMismatchException.ctor();
                 },
+                /*System.ThrowHelper.ThrowArrayTypeMismatchException:static end.*/
+
+                /*System.ThrowHelper.ThrowInvalidTypeWithPointersNotSupported:static start.*/
                 ThrowInvalidTypeWithPointersNotSupported: function (targetType) {
                     throw new System.ArgumentException.$ctor1(System.SR.Format("Cannot use type '{0}'. Only value types without pointers or references are supported.", targetType));
                 },
+                /*System.ThrowHelper.ThrowInvalidTypeWithPointersNotSupported:static end.*/
+
+                /*System.ThrowHelper.ThrowIndexOutOfRangeException:static start.*/
                 ThrowIndexOutOfRangeException: function () {
                     throw new System.IndexOutOfRangeException.ctor();
                 },
+                /*System.ThrowHelper.ThrowIndexOutOfRangeException:static end.*/
+
+                /*System.ThrowHelper.ThrowArgumentOutOfRangeException:static start.*/
                 ThrowArgumentOutOfRangeException: function () {
                     throw new System.ArgumentOutOfRangeException.ctor();
                 },
+                /*System.ThrowHelper.ThrowArgumentOutOfRangeException:static end.*/
+
+                /*System.ThrowHelper.ThrowArgumentOutOfRangeException$1:static start.*/
                 ThrowArgumentOutOfRangeException$1: function (argument) {
                     throw new System.ArgumentOutOfRangeException.$ctor1(System.ThrowHelper.GetArgumentName(argument));
                 },
+                /*System.ThrowHelper.ThrowArgumentOutOfRangeException$1:static end.*/
+
+                /*System.ThrowHelper.ThrowArgumentOutOfRangeException$2:static start.*/
                 ThrowArgumentOutOfRangeException$2: function (argument, resource) {
                     throw System.ThrowHelper.GetArgumentOutOfRangeException(argument, resource);
                 },
+                /*System.ThrowHelper.ThrowArgumentOutOfRangeException$2:static end.*/
+
+                /*System.ThrowHelper.ThrowArgumentOutOfRangeException$3:static start.*/
                 ThrowArgumentOutOfRangeException$3: function (argument, paramNumber, resource) {
                     throw System.ThrowHelper.GetArgumentOutOfRangeException$1(argument, paramNumber, resource);
                 },
+                /*System.ThrowHelper.ThrowArgumentOutOfRangeException$3:static end.*/
+
+                /*System.ThrowHelper.ThrowArgumentException_DestinationTooShort:static start.*/
                 ThrowArgumentException_DestinationTooShort: function () {
                     throw new System.ArgumentException.$ctor1("Destination is too short.");
                 },
+                /*System.ThrowHelper.ThrowArgumentException_DestinationTooShort:static end.*/
+
+                /*System.ThrowHelper.ThrowArgumentException_OverlapAlignmentMismatch:static start.*/
                 ThrowArgumentException_OverlapAlignmentMismatch: function () {
                     throw new System.ArgumentException.$ctor1("Overlapping spans have mismatching alignment.");
                 },
+                /*System.ThrowHelper.ThrowArgumentException_OverlapAlignmentMismatch:static end.*/
+
+                /*System.ThrowHelper.ThrowArgumentOutOfRange_IndexException:static start.*/
                 ThrowArgumentOutOfRange_IndexException: function () {
                     throw System.ThrowHelper.GetArgumentOutOfRangeException(System.ExceptionArgument.index, System.ExceptionResource.ArgumentOutOfRange_Index);
                 },
+                /*System.ThrowHelper.ThrowArgumentOutOfRange_IndexException:static end.*/
+
+                /*System.ThrowHelper.ThrowIndexArgumentOutOfRange_NeedNonNegNumException:static start.*/
                 ThrowIndexArgumentOutOfRange_NeedNonNegNumException: function () {
                     throw System.ThrowHelper.GetArgumentOutOfRangeException(System.ExceptionArgument.index, System.ExceptionResource.ArgumentOutOfRange_NeedNonNegNum);
                 },
+                /*System.ThrowHelper.ThrowIndexArgumentOutOfRange_NeedNonNegNumException:static end.*/
+
+                /*System.ThrowHelper.ThrowLengthArgumentOutOfRange_ArgumentOutOfRange_NeedNonNegNum:static start.*/
                 ThrowLengthArgumentOutOfRange_ArgumentOutOfRange_NeedNonNegNum: function () {
                     throw System.ThrowHelper.GetArgumentOutOfRangeException(System.ExceptionArgument.$length, System.ExceptionResource.ArgumentOutOfRange_NeedNonNegNum);
                 },
+                /*System.ThrowHelper.ThrowLengthArgumentOutOfRange_ArgumentOutOfRange_NeedNonNegNum:static end.*/
+
+                /*System.ThrowHelper.ThrowStartIndexArgumentOutOfRange_ArgumentOutOfRange_Index:static start.*/
                 ThrowStartIndexArgumentOutOfRange_ArgumentOutOfRange_Index: function () {
                     throw System.ThrowHelper.GetArgumentOutOfRangeException(System.ExceptionArgument.startIndex, System.ExceptionResource.ArgumentOutOfRange_Index);
                 },
+                /*System.ThrowHelper.ThrowStartIndexArgumentOutOfRange_ArgumentOutOfRange_Index:static end.*/
+
+                /*System.ThrowHelper.ThrowCountArgumentOutOfRange_ArgumentOutOfRange_Count:static start.*/
                 ThrowCountArgumentOutOfRange_ArgumentOutOfRange_Count: function () {
                     throw System.ThrowHelper.GetArgumentOutOfRangeException(System.ExceptionArgument.count, System.ExceptionResource.ArgumentOutOfRange_Count);
                 },
+                /*System.ThrowHelper.ThrowCountArgumentOutOfRange_ArgumentOutOfRange_Count:static end.*/
+
+                /*System.ThrowHelper.ThrowWrongKeyTypeArgumentException:static start.*/
                 ThrowWrongKeyTypeArgumentException: function (T, key, targetType) {
                     throw System.ThrowHelper.GetWrongKeyTypeArgumentException(key, targetType);
                 },
+                /*System.ThrowHelper.ThrowWrongKeyTypeArgumentException:static end.*/
+
+                /*System.ThrowHelper.ThrowWrongValueTypeArgumentException:static start.*/
                 ThrowWrongValueTypeArgumentException: function (T, value, targetType) {
                     throw System.ThrowHelper.GetWrongValueTypeArgumentException(value, targetType);
                 },
+                /*System.ThrowHelper.ThrowWrongValueTypeArgumentException:static end.*/
+
+                /*System.ThrowHelper.GetAddingDuplicateWithKeyArgumentException:static start.*/
                 GetAddingDuplicateWithKeyArgumentException: function (key) {
                     return new System.ArgumentException.$ctor1(System.SR.Format("An item with the same key has already been added. Key: {0}", key));
                 },
+                /*System.ThrowHelper.GetAddingDuplicateWithKeyArgumentException:static end.*/
+
+                /*System.ThrowHelper.ThrowAddingDuplicateWithKeyArgumentException:static start.*/
                 ThrowAddingDuplicateWithKeyArgumentException: function (T, key) {
                     throw System.ThrowHelper.GetAddingDuplicateWithKeyArgumentException(key);
                 },
+                /*System.ThrowHelper.ThrowAddingDuplicateWithKeyArgumentException:static end.*/
+
+                /*System.ThrowHelper.ThrowKeyNotFoundException:static start.*/
                 ThrowKeyNotFoundException: function (T, key) {
                     throw System.ThrowHelper.GetKeyNotFoundException(key);
                 },
+                /*System.ThrowHelper.ThrowKeyNotFoundException:static end.*/
+
+                /*System.ThrowHelper.ThrowArgumentException:static start.*/
                 ThrowArgumentException: function (resource) {
                     throw System.ThrowHelper.GetArgumentException(resource);
                 },
+                /*System.ThrowHelper.ThrowArgumentException:static end.*/
+
+                /*System.ThrowHelper.ThrowArgumentException$1:static start.*/
                 ThrowArgumentException$1: function (resource, argument) {
                     throw System.ThrowHelper.GetArgumentException$1(resource, argument);
                 },
+                /*System.ThrowHelper.ThrowArgumentException$1:static end.*/
+
+                /*System.ThrowHelper.GetArgumentNullException:static start.*/
                 GetArgumentNullException: function (argument) {
                     return new System.ArgumentNullException.$ctor1(System.ThrowHelper.GetArgumentName(argument));
                 },
+                /*System.ThrowHelper.GetArgumentNullException:static end.*/
+
+                /*System.ThrowHelper.ThrowArgumentNullException:static start.*/
                 ThrowArgumentNullException: function (argument) {
                     throw System.ThrowHelper.GetArgumentNullException(argument);
                 },
+                /*System.ThrowHelper.ThrowArgumentNullException:static end.*/
+
+                /*System.ThrowHelper.ThrowArgumentNullException$2:static start.*/
                 ThrowArgumentNullException$2: function (resource) {
                     throw new System.ArgumentNullException.$ctor1(System.ThrowHelper.GetResourceString(resource));
                 },
+                /*System.ThrowHelper.ThrowArgumentNullException$2:static end.*/
+
+                /*System.ThrowHelper.ThrowArgumentNullException$1:static start.*/
                 ThrowArgumentNullException$1: function (argument, resource) {
                     throw new System.ArgumentNullException.$ctor3(System.ThrowHelper.GetArgumentName(argument), System.ThrowHelper.GetResourceString(resource));
                 },
+                /*System.ThrowHelper.ThrowArgumentNullException$1:static end.*/
+
+                /*System.ThrowHelper.ThrowInvalidOperationException:static start.*/
                 ThrowInvalidOperationException: function (resource) {
                     throw System.ThrowHelper.GetInvalidOperationException(resource);
                 },
+                /*System.ThrowHelper.ThrowInvalidOperationException:static end.*/
+
+                /*System.ThrowHelper.ThrowInvalidOperationException$1:static start.*/
                 ThrowInvalidOperationException$1: function (resource, e) {
                     throw new System.InvalidOperationException.$ctor2(System.ThrowHelper.GetResourceString(resource), e);
                 },
+                /*System.ThrowHelper.ThrowInvalidOperationException$1:static end.*/
+
+                /*System.ThrowHelper.ThrowInvalidOperationException_OutstandingReferences:static start.*/
                 ThrowInvalidOperationException_OutstandingReferences: function () {
                     System.ThrowHelper.ThrowInvalidOperationException(System.ExceptionResource.Memory_OutstandingReferences);
                 },
+                /*System.ThrowHelper.ThrowInvalidOperationException_OutstandingReferences:static end.*/
+
+                /*System.ThrowHelper.ThrowSerializationException:static start.*/
                 ThrowSerializationException: function (resource) {
                     throw new System.Runtime.Serialization.SerializationException.$ctor1(System.ThrowHelper.GetResourceString(resource));
                 },
+                /*System.ThrowHelper.ThrowSerializationException:static end.*/
+
+                /*System.ThrowHelper.ThrowSecurityException:static start.*/
                 ThrowSecurityException: function (resource) {
                     throw new System.Security.SecurityException.$ctor1(System.ThrowHelper.GetResourceString(resource));
                 },
+                /*System.ThrowHelper.ThrowSecurityException:static end.*/
+
+                /*System.ThrowHelper.ThrowRankException:static start.*/
                 ThrowRankException: function (resource) {
                     throw new System.RankException.$ctor1(System.ThrowHelper.GetResourceString(resource));
                 },
+                /*System.ThrowHelper.ThrowRankException:static end.*/
+
+                /*System.ThrowHelper.ThrowNotSupportedException$1:static start.*/
                 ThrowNotSupportedException$1: function (resource) {
                     throw new System.NotSupportedException.$ctor1(System.ThrowHelper.GetResourceString(resource));
                 },
+                /*System.ThrowHelper.ThrowNotSupportedException$1:static end.*/
+
+                /*System.ThrowHelper.ThrowNotSupportedException:static start.*/
                 ThrowNotSupportedException: function () {
                     throw new System.NotSupportedException.ctor();
                 },
+                /*System.ThrowHelper.ThrowNotSupportedException:static end.*/
+
+                /*System.ThrowHelper.ThrowUnauthorizedAccessException:static start.*/
                 ThrowUnauthorizedAccessException: function (resource) {
                     throw new System.UnauthorizedAccessException.$ctor1(System.ThrowHelper.GetResourceString(resource));
                 },
+                /*System.ThrowHelper.ThrowUnauthorizedAccessException:static end.*/
+
+                /*System.ThrowHelper.ThrowObjectDisposedException$1:static start.*/
                 ThrowObjectDisposedException$1: function (objectName, resource) {
                     throw new System.ObjectDisposedException.$ctor3(objectName, System.ThrowHelper.GetResourceString(resource));
                 },
+                /*System.ThrowHelper.ThrowObjectDisposedException$1:static end.*/
+
+                /*System.ThrowHelper.ThrowObjectDisposedException:static start.*/
                 ThrowObjectDisposedException: function (resource) {
                     throw new System.ObjectDisposedException.$ctor3(null, System.ThrowHelper.GetResourceString(resource));
                 },
+                /*System.ThrowHelper.ThrowObjectDisposedException:static end.*/
+
+                /*System.ThrowHelper.ThrowObjectDisposedException_MemoryDisposed:static start.*/
                 ThrowObjectDisposedException_MemoryDisposed: function () {
                     throw new System.ObjectDisposedException.$ctor3("OwnedMemory<T>", System.ThrowHelper.GetResourceString(System.ExceptionResource.MemoryDisposed));
                 },
+                /*System.ThrowHelper.ThrowObjectDisposedException_MemoryDisposed:static end.*/
+
+                /*System.ThrowHelper.ThrowAggregateException:static start.*/
                 ThrowAggregateException: function (exceptions) {
                     throw new System.AggregateException(null, exceptions);
                 },
+                /*System.ThrowHelper.ThrowAggregateException:static end.*/
+
+                /*System.ThrowHelper.ThrowOutOfMemoryException:static start.*/
                 ThrowOutOfMemoryException: function () {
                     throw new System.OutOfMemoryException.ctor();
                 },
+                /*System.ThrowHelper.ThrowOutOfMemoryException:static end.*/
+
+                /*System.ThrowHelper.ThrowArgumentException_Argument_InvalidArrayType:static start.*/
                 ThrowArgumentException_Argument_InvalidArrayType: function () {
                     throw System.ThrowHelper.GetArgumentException(System.ExceptionResource.Argument_InvalidArrayType);
                 },
+                /*System.ThrowHelper.ThrowArgumentException_Argument_InvalidArrayType:static end.*/
+
+                /*System.ThrowHelper.ThrowInvalidOperationException_InvalidOperation_EnumNotStarted:static start.*/
                 ThrowInvalidOperationException_InvalidOperation_EnumNotStarted: function () {
                     throw System.ThrowHelper.GetInvalidOperationException(System.ExceptionResource.InvalidOperation_EnumNotStarted);
                 },
+                /*System.ThrowHelper.ThrowInvalidOperationException_InvalidOperation_EnumNotStarted:static end.*/
+
+                /*System.ThrowHelper.ThrowInvalidOperationException_InvalidOperation_EnumEnded:static start.*/
                 ThrowInvalidOperationException_InvalidOperation_EnumEnded: function () {
                     throw System.ThrowHelper.GetInvalidOperationException(System.ExceptionResource.InvalidOperation_EnumEnded);
                 },
+                /*System.ThrowHelper.ThrowInvalidOperationException_InvalidOperation_EnumEnded:static end.*/
+
+                /*System.ThrowHelper.ThrowInvalidOperationException_EnumCurrent:static start.*/
                 ThrowInvalidOperationException_EnumCurrent: function (index) {
                     throw System.ThrowHelper.GetInvalidOperationException_EnumCurrent(index);
                 },
+                /*System.ThrowHelper.ThrowInvalidOperationException_EnumCurrent:static end.*/
+
+                /*System.ThrowHelper.ThrowInvalidOperationException_InvalidOperation_EnumFailedVersion:static start.*/
                 ThrowInvalidOperationException_InvalidOperation_EnumFailedVersion: function () {
                     throw System.ThrowHelper.GetInvalidOperationException(System.ExceptionResource.InvalidOperation_EnumFailedVersion);
                 },
+                /*System.ThrowHelper.ThrowInvalidOperationException_InvalidOperation_EnumFailedVersion:static end.*/
+
+                /*System.ThrowHelper.ThrowInvalidOperationException_InvalidOperation_EnumOpCantHappen:static start.*/
                 ThrowInvalidOperationException_InvalidOperation_EnumOpCantHappen: function () {
                     throw System.ThrowHelper.GetInvalidOperationException(System.ExceptionResource.InvalidOperation_EnumOpCantHappen);
                 },
+                /*System.ThrowHelper.ThrowInvalidOperationException_InvalidOperation_EnumOpCantHappen:static end.*/
+
+                /*System.ThrowHelper.ThrowInvalidOperationException_InvalidOperation_NoValue:static start.*/
                 ThrowInvalidOperationException_InvalidOperation_NoValue: function () {
                     throw System.ThrowHelper.GetInvalidOperationException(System.ExceptionResource.InvalidOperation_NoValue);
                 },
+                /*System.ThrowHelper.ThrowInvalidOperationException_InvalidOperation_NoValue:static end.*/
+
+                /*System.ThrowHelper.ThrowArraySegmentCtorValidationFailedExceptions:static start.*/
                 ThrowArraySegmentCtorValidationFailedExceptions: function (array, offset, count) {
                     throw System.ThrowHelper.GetArraySegmentCtorValidationFailedException(array, offset, count);
                 },
+                /*System.ThrowHelper.ThrowArraySegmentCtorValidationFailedExceptions:static end.*/
+
+                /*System.ThrowHelper.GetArraySegmentCtorValidationFailedException:static start.*/
                 GetArraySegmentCtorValidationFailedException: function (array, offset, count) {
                     if (array == null) {
                         return System.ThrowHelper.GetArgumentNullException(System.ExceptionArgument.array);
@@ -48970,59 +53528,106 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                         return System.ThrowHelper.GetArgumentOutOfRangeException(System.ExceptionArgument.count, System.ExceptionResource.ArgumentOutOfRange_NeedNonNegNum);
                     }
 
+                    System.Diagnostics.Debug.Assert(((array.length - offset) | 0) < count);
                     return System.ThrowHelper.GetArgumentException(System.ExceptionResource.Argument_InvalidOffLen);
                 },
+                /*System.ThrowHelper.GetArraySegmentCtorValidationFailedException:static end.*/
+
+                /*System.ThrowHelper.GetArgumentException:static start.*/
                 GetArgumentException: function (resource) {
                     return new System.ArgumentException.$ctor1(System.ThrowHelper.GetResourceString(resource));
                 },
+                /*System.ThrowHelper.GetArgumentException:static end.*/
+
+                /*System.ThrowHelper.GetArgumentException$1:static start.*/
                 GetArgumentException$1: function (resource, argument) {
                     return new System.ArgumentException.$ctor3(System.ThrowHelper.GetResourceString(resource), System.ThrowHelper.GetArgumentName(argument));
                 },
+                /*System.ThrowHelper.GetArgumentException$1:static end.*/
+
+                /*System.ThrowHelper.GetInvalidOperationException:static start.*/
                 GetInvalidOperationException: function (resource) {
                     return new System.InvalidOperationException.$ctor1(System.ThrowHelper.GetResourceString(resource));
                 },
+                /*System.ThrowHelper.GetInvalidOperationException:static end.*/
+
+                /*System.ThrowHelper.GetWrongKeyTypeArgumentException:static start.*/
                 GetWrongKeyTypeArgumentException: function (key, targetType) {
                     return new System.ArgumentException.$ctor3(System.SR.Format$1("The value \"{0}\" is not of type \"{1}\" and cannot be used in this generic collection.", key, targetType), "key");
                 },
+                /*System.ThrowHelper.GetWrongKeyTypeArgumentException:static end.*/
+
+                /*System.ThrowHelper.GetWrongValueTypeArgumentException:static start.*/
                 GetWrongValueTypeArgumentException: function (value, targetType) {
                     return new System.ArgumentException.$ctor3(System.SR.Format$1("The value \"{0}\" is not of type \"{1}\" and cannot be used in this generic collection.", value, targetType), "value");
                 },
+                /*System.ThrowHelper.GetWrongValueTypeArgumentException:static end.*/
+
+                /*System.ThrowHelper.GetKeyNotFoundException:static start.*/
                 GetKeyNotFoundException: function (key) {
                     return new System.Collections.Generic.KeyNotFoundException.$ctor1(System.SR.Format("The given key '{0}' was not present in the dictionary.", Bridge.toString(key)));
                 },
+                /*System.ThrowHelper.GetKeyNotFoundException:static end.*/
+
+                /*System.ThrowHelper.GetArgumentOutOfRangeException:static start.*/
                 GetArgumentOutOfRangeException: function (argument, resource) {
                     return new System.ArgumentOutOfRangeException.$ctor4(System.ThrowHelper.GetArgumentName(argument), System.ThrowHelper.GetResourceString(resource));
                 },
+                /*System.ThrowHelper.GetArgumentOutOfRangeException:static end.*/
+
+                /*System.ThrowHelper.GetArgumentOutOfRangeException$1:static start.*/
                 GetArgumentOutOfRangeException$1: function (argument, paramNumber, resource) {
                     return new System.ArgumentOutOfRangeException.$ctor4((System.ThrowHelper.GetArgumentName(argument) || "") + "[" + (Bridge.toString(paramNumber) || "") + "]", System.ThrowHelper.GetResourceString(resource));
                 },
+                /*System.ThrowHelper.GetArgumentOutOfRangeException$1:static end.*/
+
+                /*System.ThrowHelper.GetInvalidOperationException_EnumCurrent:static start.*/
                 GetInvalidOperationException_EnumCurrent: function (index) {
                     return System.ThrowHelper.GetInvalidOperationException(index < 0 ? System.ExceptionResource.InvalidOperation_EnumNotStarted : System.ExceptionResource.InvalidOperation_EnumEnded);
                 },
+                /*System.ThrowHelper.GetInvalidOperationException_EnumCurrent:static end.*/
+
+                /*System.ThrowHelper.IfNullAndNullsAreIllegalThenThrow:static start.*/
                 IfNullAndNullsAreIllegalThenThrow: function (T, value, argName) {
                     if (!(Bridge.getDefaultValue(T) == null) && value == null) {
                         System.ThrowHelper.ThrowArgumentNullException(argName);
                     }
                 },
+                /*System.ThrowHelper.IfNullAndNullsAreIllegalThenThrow:static end.*/
+
+                /*System.ThrowHelper.GetArgumentName:static start.*/
                 GetArgumentName: function (argument) {
+                    System.Diagnostics.Debug.Assert$1(System.Enum.isDefined(System.ExceptionArgument, Bridge.box(argument, System.ExceptionArgument, System.Enum.toStringFn(System.ExceptionArgument))), "The enum value is not defined, please check the ExceptionArgument Enum.");
 
                     return System.Enum.toString(System.ExceptionArgument, argument);
                 },
+                /*System.ThrowHelper.GetArgumentName:static end.*/
+
+                /*System.ThrowHelper.GetResourceString:static start.*/
                 GetResourceString: function (resource) {
+                    System.Diagnostics.Debug.Assert$1(System.Enum.isDefined(System.ExceptionResource, Bridge.box(resource, System.ExceptionResource, System.Enum.toStringFn(System.ExceptionResource))), "The enum value is not defined, please check the ExceptionResource Enum.");
 
                     return System.SR.GetResourceString(System.Enum.toString(System.ExceptionResource, resource));
                 },
+                /*System.ThrowHelper.GetResourceString:static end.*/
+
+                /*System.ThrowHelper.ThrowNotSupportedExceptionIfNonNumericType:static start.*/
                 ThrowNotSupportedExceptionIfNonNumericType: function (T) {
                     if (!Bridge.referenceEquals(T, System.Byte) && !Bridge.referenceEquals(T, System.SByte) && !Bridge.referenceEquals(T, System.Int16) && !Bridge.referenceEquals(T, System.UInt16) && !Bridge.referenceEquals(T, System.Int32) && !Bridge.referenceEquals(T, System.UInt32) && !Bridge.referenceEquals(T, System.Int64) && !Bridge.referenceEquals(T, System.UInt64) && !Bridge.referenceEquals(T, System.Single) && !Bridge.referenceEquals(T, System.Double)) {
                         throw new System.NotSupportedException.$ctor1("Specified type is not supported");
                     }
-                }
+                },
+                /*System.ThrowHelper.ThrowNotSupportedExceptionIfNonNumericType:static end.*/
+
+
             }
         }
     });
+    /*System.ThrowHelper end.*/
 
     // @source TimeoutException.js
 
+    /*System.TimeoutException start.*/
     Bridge.define("System.TimeoutException", {
         inherits: [System.SystemException],
         ctors: {
@@ -49043,6 +53648,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.TimeoutException end.*/
 
     // @source RegexMatchTimeoutException.js
 
@@ -49091,6 +53697,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
     // @source Encoding.js
 
+    /*System.Text.Encoding start.*/
     Bridge.define("System.Text.Encoding", {
         statics: {
             fields: {
@@ -49117,9 +53724,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
             },
             methods: {
+                /*System.Text.Encoding.Convert:static start.*/
                 Convert: function (srcEncoding, dstEncoding, bytes) {
                     return System.Text.Encoding.Convert$1(srcEncoding, dstEncoding, bytes, 0, bytes.length);
                 },
+                /*System.Text.Encoding.Convert:static end.*/
+
+                /*System.Text.Encoding.Convert$1:static start.*/
                 Convert$1: function (srcEncoding, dstEncoding, bytes, index, count) {
                     if (srcEncoding == null || dstEncoding == null) {
                         throw new System.ArgumentNullException.$ctor1(srcEncoding == null ? "srcEncoding" : "dstEncoding");
@@ -49131,6 +53742,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return dstEncoding.GetBytes(srcEncoding.GetChars$1(bytes, index, count));
                 },
+                /*System.Text.Encoding.Convert$1:static end.*/
+
+                /*System.Text.Encoding.GetEncoding:static start.*/
                 GetEncoding: function (codepage) {
                     switch (codepage) {
                         case 1200: 
@@ -49148,6 +53762,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                     throw new System.NotSupportedException.ctor();
                 },
+                /*System.Text.Encoding.GetEncoding:static end.*/
+
+                /*System.Text.Encoding.GetEncoding$1:static start.*/
                 GetEncoding$1: function (codepage) {
                     switch (codepage) {
                         case "utf-16": 
@@ -49165,6 +53782,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                     throw new System.NotSupportedException.ctor();
                 },
+                /*System.Text.Encoding.GetEncoding$1:static end.*/
+
+                /*System.Text.Encoding.GetEncodings:static start.*/
                 GetEncodings: function () {
                     if (System.Text.Encoding._encodings != null) {
                         return System.Text.Encoding._encodings;
@@ -49179,7 +53799,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     result[System.Array.index(4, result)] = new System.Text.EncodingInfo(65001, "utf-8", "Unicode (UTF-8)");
                     result[System.Array.index(5, result)] = new System.Text.EncodingInfo(1200, "utf-32", "Unicode (UTF-32)");
                     return result;
-                }
+                },
+                /*System.Text.Encoding.GetEncodings:static end.*/
+
+
             }
         },
         fields: {
@@ -49204,72 +53827,130 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Text.Encoding.Encode$1 start.*/
             Encode$1: function (chars, index, count) {
                 var writtenCount = { };
                 return this.Encode$3(System.String.fromCharArray(chars, index, count), null, 0, writtenCount);
             },
+            /*System.Text.Encoding.Encode$1 end.*/
+
+            /*System.Text.Encoding.Encode$5 start.*/
             Encode$5: function (s, index, count, outputBytes, outputIndex) {
                 var writtenBytes = { };
                 this.Encode$3(s.substr(index, count), outputBytes, outputIndex, writtenBytes);
                 return writtenBytes.v;
             },
+            /*System.Text.Encoding.Encode$5 end.*/
+
+            /*System.Text.Encoding.Encode$4 start.*/
             Encode$4: function (chars, index, count, outputBytes, outputIndex) {
                 var writtenBytes = { };
                 this.Encode$3(System.String.fromCharArray(chars, index, count), outputBytes, outputIndex, writtenBytes);
                 return writtenBytes.v;
             },
+            /*System.Text.Encoding.Encode$4 end.*/
+
+            /*System.Text.Encoding.Encode start.*/
             Encode: function (chars) {
                 var count = { };
                 return this.Encode$3(System.String.fromCharArray(chars), null, 0, count);
             },
+            /*System.Text.Encoding.Encode end.*/
+
+            /*System.Text.Encoding.Encode$2 start.*/
             Encode$2: function (str) {
                 var count = { };
                 return this.Encode$3(str, null, 0, count);
             },
+            /*System.Text.Encoding.Encode$2 end.*/
+
+            /*System.Text.Encoding.Decode$1 start.*/
             Decode$1: function (bytes, index, count) {
                 return this.Decode$2(bytes, index, count, null, 0);
             },
+            /*System.Text.Encoding.Decode$1 end.*/
+
+            /*System.Text.Encoding.Decode start.*/
             Decode: function (bytes) {
                 return this.Decode$2(bytes, 0, bytes.length, null, 0);
             },
+            /*System.Text.Encoding.Decode end.*/
+
+            /*System.Text.Encoding.GetByteCount start.*/
             GetByteCount: function (chars) {
                 return this.GetByteCount$1(chars, 0, chars.length);
             },
+            /*System.Text.Encoding.GetByteCount end.*/
+
+            /*System.Text.Encoding.GetByteCount$2 start.*/
             GetByteCount$2: function (s) {
                 return this.Encode$2(s).length;
             },
+            /*System.Text.Encoding.GetByteCount$2 end.*/
+
+            /*System.Text.Encoding.GetByteCount$1 start.*/
             GetByteCount$1: function (chars, index, count) {
                 return this.Encode$1(chars, index, count).length;
             },
+            /*System.Text.Encoding.GetByteCount$1 end.*/
+
+            /*System.Text.Encoding.GetBytes start.*/
             GetBytes: function (chars) {
                 return this.GetBytes$1(chars, 0, chars.length);
             },
+            /*System.Text.Encoding.GetBytes end.*/
+
+            /*System.Text.Encoding.GetBytes$1 start.*/
             GetBytes$1: function (chars, index, count) {
                 return this.Encode$2(System.String.fromCharArray(chars, index, count));
             },
+            /*System.Text.Encoding.GetBytes$1 end.*/
+
+            /*System.Text.Encoding.GetBytes$3 start.*/
             GetBytes$3: function (chars, charIndex, charCount, bytes, byteIndex) {
                 return this.Encode$4(chars, charIndex, charCount, bytes, byteIndex);
             },
+            /*System.Text.Encoding.GetBytes$3 end.*/
+
+            /*System.Text.Encoding.GetBytes$2 start.*/
             GetBytes$2: function (s) {
                 return this.Encode$2(s);
             },
+            /*System.Text.Encoding.GetBytes$2 end.*/
+
+            /*System.Text.Encoding.GetBytes$4 start.*/
             GetBytes$4: function (s, charIndex, charCount, bytes, byteIndex) {
                 return this.Encode$5(s, charIndex, charCount, bytes, byteIndex);
             },
+            /*System.Text.Encoding.GetBytes$4 end.*/
+
+            /*System.Text.Encoding.GetCharCount start.*/
             GetCharCount: function (bytes) {
                 return this.Decode(bytes).length;
             },
+            /*System.Text.Encoding.GetCharCount end.*/
+
+            /*System.Text.Encoding.GetCharCount$1 start.*/
             GetCharCount$1: function (bytes, index, count) {
                 return this.Decode$1(bytes, index, count).length;
             },
+            /*System.Text.Encoding.GetCharCount$1 end.*/
+
+            /*System.Text.Encoding.GetChars start.*/
             GetChars: function (bytes) {
                 var $t;
                 return ($t = this.Decode(bytes), System.String.toCharArray($t, 0, $t.length));
             },
+            /*System.Text.Encoding.GetChars end.*/
+
+            /*System.Text.Encoding.GetChars$1 start.*/
             GetChars$1: function (bytes, index, count) {
                 var $t;
                 return ($t = this.Decode$1(bytes, index, count), System.String.toCharArray($t, 0, $t.length));
             },
+            /*System.Text.Encoding.GetChars$1 end.*/
+
+            /*System.Text.Encoding.GetChars$2 start.*/
             GetChars$2: function (bytes, byteIndex, byteCount, chars, charIndex) {
                 var s = this.Decode$1(bytes, byteIndex, byteCount);
                 var arr = System.String.toCharArray(s, 0, s.length);
@@ -49284,17 +53965,28 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return arr.length;
             },
+            /*System.Text.Encoding.GetChars$2 end.*/
+
+            /*System.Text.Encoding.GetString start.*/
             GetString: function (bytes) {
                 return this.Decode(bytes);
             },
+            /*System.Text.Encoding.GetString end.*/
+
+            /*System.Text.Encoding.GetString$1 start.*/
             GetString$1: function (bytes, index, count) {
                 return this.Decode$1(bytes, index, count);
-            }
+            },
+            /*System.Text.Encoding.GetString$1 end.*/
+
+
         }
     });
+    /*System.Text.Encoding end.*/
 
     // @source ASCIIEncoding.js
 
+    /*System.Text.ASCIIEncoding start.*/
     Bridge.define("System.Text.ASCIIEncoding", {
         inherits: [System.Text.Encoding],
         props: {
@@ -49310,6 +54002,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Text.ASCIIEncoding.Encode$3 start.*/
             Encode$3: function (s, outputBytes, outputIndex, writtenBytes) {
                 var hasBuffer = outputBytes != null;
 
@@ -49341,6 +54034,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return outputBytes;
             },
+            /*System.Text.ASCIIEncoding.Encode$3 end.*/
+
+            /*System.Text.ASCIIEncoding.Decode$2 start.*/
             Decode$2: function (bytes, index, count, chars, charIndex) {
                 var position = index;
                 var result = "";
@@ -49358,6 +54054,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return result;
             },
+            /*System.Text.ASCIIEncoding.Decode$2 end.*/
+
+            /*System.Text.ASCIIEncoding.GetMaxByteCount start.*/
             GetMaxByteCount: function (charCount) {
                 if (charCount < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("charCount");
@@ -49371,6 +54070,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return System.Int64.clip32(byteCount);
             },
+            /*System.Text.ASCIIEncoding.GetMaxByteCount end.*/
+
+            /*System.Text.ASCIIEncoding.GetMaxCharCount start.*/
             GetMaxCharCount: function (byteCount) {
                 if (byteCount < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("byteCount");
@@ -49383,12 +54085,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
 
                 return System.Int64.clip32(charCount);
-            }
+            },
+            /*System.Text.ASCIIEncoding.GetMaxCharCount end.*/
+
+
         }
     });
+    /*System.Text.ASCIIEncoding end.*/
 
     // @source EncodingInfo.js
 
+    /*System.Text.EncodingInfo start.*/
     Bridge.define("System.Text.EncodingInfo", {
         props: {
             CodePage: 0,
@@ -49405,21 +54112,33 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Text.EncodingInfo.GetEncoding start.*/
             GetEncoding: function () {
                 return System.Text.Encoding.GetEncoding(this.CodePage);
             },
+            /*System.Text.EncodingInfo.GetEncoding end.*/
+
+            /*System.Text.EncodingInfo.getHashCode start.*/
             getHashCode: function () {
                 return this.CodePage;
             },
+            /*System.Text.EncodingInfo.getHashCode end.*/
+
+            /*System.Text.EncodingInfo.equals start.*/
             equals: function (o) {
                 var that = Bridge.as(o, System.Text.EncodingInfo);
                 return System.Nullable.eq(this.CodePage, (that != null ? that.CodePage : null));
-            }
+            },
+            /*System.Text.EncodingInfo.equals end.*/
+
+
         }
     });
+    /*System.Text.EncodingInfo end.*/
 
     // @source UnicodeEncoding.js
 
+    /*System.Text.UnicodeEncoding start.*/
     Bridge.define("System.Text.UnicodeEncoding", {
         inherits: [System.Text.Encoding],
         fields: {
@@ -49456,6 +54175,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Text.UnicodeEncoding.Encode$3 start.*/
             Encode$3: function (s, outputBytes, outputIndex, writtenBytes) {
                 var hasBuffer = outputBytes != null;
                 var recorded = 0;
@@ -49559,6 +54279,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return outputBytes;
             },
+            /*System.Text.UnicodeEncoding.Encode$3 end.*/
+
+            /*System.Text.UnicodeEncoding.Decode$2 start.*/
             Decode$2: function (bytes, index, count, chars, charIndex) {
                 var position = index;
                 var result = "";
@@ -49627,6 +54350,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return result;
             },
+            /*System.Text.UnicodeEncoding.Decode$2 end.*/
+
+            /*System.Text.UnicodeEncoding.GetMaxByteCount start.*/
             GetMaxByteCount: function (charCount) {
                 if (charCount < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("charCount");
@@ -49641,6 +54367,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return System.Int64.clip32(byteCount);
             },
+            /*System.Text.UnicodeEncoding.GetMaxByteCount end.*/
+
+            /*System.Text.UnicodeEncoding.GetMaxCharCount start.*/
             GetMaxCharCount: function (byteCount) {
                 if (byteCount < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("byteCount");
@@ -49653,7 +54382,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
 
                 return System.Int64.clip32(charCount);
-            }
+            },
+            /*System.Text.UnicodeEncoding.GetMaxCharCount end.*/
+
+
         }
     });
 
@@ -49667,9 +54399,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             return ((((ch & 255) << 8) | (((ch >> 8)) & 255)) & 65535);
         }
     });
+    /*System.Text.UnicodeEncoding end.*/
 
     // @source UTF32Encoding.js
 
+    /*System.Text.UTF32Encoding start.*/
     Bridge.define("System.Text.UTF32Encoding", {
         inherits: [System.Text.Encoding],
         fields: {
@@ -49706,6 +54440,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Text.UTF32Encoding.ToCodePoints start.*/
             ToCodePoints: function (str) {
                 var surrogate_1st = 0;
                 var unicode_codes = System.Array.init(0, 0, System.Char);
@@ -49744,6 +54479,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return unicode_codes;
             },
+            /*System.Text.UTF32Encoding.ToCodePoints end.*/
+
+            /*System.Text.UTF32Encoding.Encode$3 start.*/
             Encode$3: function (s, outputBytes, outputIndex, writtenBytes) {
                 var hasBuffer = outputBytes != null;
                 var recorded = 0;
@@ -49795,6 +54533,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return outputBytes;
             },
+            /*System.Text.UTF32Encoding.Encode$3 end.*/
+
+            /*System.Text.UTF32Encoding.Decode$2 start.*/
             Decode$2: function (bytes, index, count, chars, charIndex) {
                 var position = index;
                 var result = "";
@@ -49856,6 +54597,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return result;
             },
+            /*System.Text.UTF32Encoding.Decode$2 end.*/
+
+            /*System.Text.UTF32Encoding.GetMaxByteCount start.*/
             GetMaxByteCount: function (charCount) {
                 if (charCount < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("charCount");
@@ -49870,6 +54614,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return System.Int64.clip32(byteCount);
             },
+            /*System.Text.UTF32Encoding.GetMaxByteCount end.*/
+
+            /*System.Text.UTF32Encoding.GetMaxCharCount start.*/
             GetMaxCharCount: function (byteCount) {
                 if (byteCount < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("byteCount");
@@ -49882,19 +54629,28 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
 
                 return charCount;
-            }
+            },
+            /*System.Text.UTF32Encoding.GetMaxCharCount end.*/
+
+
         }
     });
+    /*System.Text.UTF32Encoding end.*/
 
     // @source UTF7Encoding.js
 
+    /*System.Text.UTF7Encoding start.*/
     Bridge.define("System.Text.UTF7Encoding", {
         inherits: [System.Text.Encoding],
         statics: {
             methods: {
+                /*System.Text.UTF7Encoding.Escape:static start.*/
                 Escape: function (chars) {
                     return chars.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-                }
+                },
+                /*System.Text.UTF7Encoding.Escape:static end.*/
+
+
             }
         },
         fields: {
@@ -49924,6 +54680,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Text.UTF7Encoding.Encode$3 start.*/
             Encode$3: function (s, outputBytes, outputIndex, writtenBytes) {
                 var setD = "A-Za-z0-9" + (System.Text.UTF7Encoding.Escape("'(),-./:?") || "");
 
@@ -49956,6 +54713,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return arr;
             },
+            /*System.Text.UTF7Encoding.Encode$3 end.*/
+
+            /*System.Text.UTF7Encoding.Decode$2 start.*/
             Decode$2: function (bytes, index, count, chars, charIndex) {
                 var _base64ToArrayBuffer = $asm.$.System.Text.UTF7Encoding.f2;
 
@@ -49971,6 +54731,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 var str = System.String.fromCharArray(bytes, index, count);
                 return str.replace(/\+([A-Za-z0-9\/]*)-?/gi, function (_, chunk) { if (chunk === "") { return _ == "+-" ? "+" : ""; } return decode(chunk); });
             },
+            /*System.Text.UTF7Encoding.Decode$2 end.*/
+
+            /*System.Text.UTF7Encoding.GetMaxByteCount start.*/
             GetMaxByteCount: function (charCount) {
                 if (charCount < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("charCount");
@@ -49984,6 +54747,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return System.Int64.clip32(byteCount);
             },
+            /*System.Text.UTF7Encoding.GetMaxByteCount end.*/
+
+            /*System.Text.UTF7Encoding.GetMaxCharCount start.*/
             GetMaxCharCount: function (byteCount) {
                 if (byteCount < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("byteCount");
@@ -49995,7 +54761,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
 
                 return charCount | 0;
-            }
+            },
+            /*System.Text.UTF7Encoding.GetMaxCharCount end.*/
+
+
         }
     });
 
@@ -50035,9 +54804,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Text.UTF7Encoding end.*/
 
     // @source UTF8Encoding.js
 
+    /*System.Text.UTF8Encoding start.*/
     Bridge.define("System.Text.UTF8Encoding", {
         inherits: [System.Text.Encoding],
         fields: {
@@ -50072,6 +54843,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Text.UTF8Encoding.Encode$3 start.*/
             Encode$3: function (s, outputBytes, outputIndex, writtenBytes) {
                 var hasBuffer = outputBytes != null;
                 var record = 0;
@@ -50132,6 +54904,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return outputBytes;
             },
+            /*System.Text.UTF8Encoding.Encode$3 end.*/
+
+            /*System.Text.UTF8Encoding.Decode$2 start.*/
             Decode$2: function (bytes, index, count, chars, charIndex) {
                 this._hasError = false;
                 var position = index;
@@ -50242,6 +55017,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return result;
             },
+            /*System.Text.UTF8Encoding.Decode$2 end.*/
+
+            /*System.Text.UTF8Encoding.GetMaxByteCount start.*/
             GetMaxByteCount: function (charCount) {
                 if (charCount < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("charCount");
@@ -50257,6 +55035,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return System.Int64.clip32(byteCount);
             },
+            /*System.Text.UTF8Encoding.GetMaxByteCount end.*/
+
+            /*System.Text.UTF8Encoding.GetMaxCharCount start.*/
             GetMaxCharCount: function (byteCount) {
                 if (byteCount < 0) {
                     throw new System.ArgumentOutOfRangeException.$ctor1("byteCount");
@@ -50269,7 +55050,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
 
                 return System.Int64.clip32(charCount);
-            }
+            },
+            /*System.Text.UTF8Encoding.GetMaxCharCount end.*/
+
+
         }
     });
 
@@ -50284,9 +55068,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             return this.fallbackCharacter;
         }
     });
+    /*System.Text.UTF8Encoding end.*/
 
     // @source Timer.js
 
+    /*System.Threading.Timer start.*/
     Bridge.define("System.Threading.Timer", {
         inherits: [System.IDisposable],
         statics: {
@@ -50343,6 +55129,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Threading.Timer.TimerSetup start.*/
             TimerSetup: function (callback, state, dueTime, period) {
                 if (this.disposed) {
                     throw new System.InvalidOperationException.$ctor1(System.Threading.Timer.EXC_DISPOSED);
@@ -50373,6 +55160,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return this.RunTimer(this.dueTime);
             },
+            /*System.Threading.Timer.TimerSetup end.*/
+
+            /*System.Threading.Timer.HandleCallback start.*/
             HandleCallback: function () {
                 if (this.disposed) {
                     return;
@@ -50387,6 +55177,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                 }
             },
+            /*System.Threading.Timer.HandleCallback end.*/
+
+            /*System.Threading.Timer.RunTimer start.*/
             RunTimer: function (period, checkDispose) {
                 if (checkDispose === void 0) { checkDispose = true; }
                 if (checkDispose && this.disposed) {
@@ -50401,37 +55194,63 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return false;
             },
+            /*System.Threading.Timer.RunTimer end.*/
+
+            /*System.Threading.Timer.Change start.*/
             Change: function (dueTime, period) {
                 return this.ChangeTimer(System.Int64(dueTime), System.Int64(period));
             },
+            /*System.Threading.Timer.Change end.*/
+
+            /*System.Threading.Timer.Change$2 start.*/
             Change$2: function (dueTime, period) {
                 return this.ChangeTimer(Bridge.Int.clip64(dueTime.getTotalMilliseconds()), Bridge.Int.clip64(period.getTotalMilliseconds()));
             },
+            /*System.Threading.Timer.Change$2 end.*/
+
+            /*System.Threading.Timer.Change$3 start.*/
             Change$3: function (dueTime, period) {
                 return this.ChangeTimer(System.Int64(dueTime), System.Int64(period));
             },
+            /*System.Threading.Timer.Change$3 end.*/
+
+            /*System.Threading.Timer.Change$1 start.*/
             Change$1: function (dueTime, period) {
                 return this.ChangeTimer(dueTime, period);
             },
+            /*System.Threading.Timer.Change$1 end.*/
+
+            /*System.Threading.Timer.ChangeTimer start.*/
             ChangeTimer: function (dueTime, period) {
                 this.ClearTimeout();
                 return this.TimerSetup(this.timerCallback, this.state, dueTime, period);
             },
+            /*System.Threading.Timer.ChangeTimer end.*/
+
+            /*System.Threading.Timer.ClearTimeout start.*/
             ClearTimeout: function () {
                 if (System.Nullable.hasValue(this.id)) {
                     Bridge.global.clearTimeout(System.Nullable.getValue(this.id));
                     this.id = null;
                 }
             },
+            /*System.Threading.Timer.ClearTimeout end.*/
+
+            /*System.Threading.Timer.Dispose start.*/
             Dispose: function () {
                 this.ClearTimeout();
                 this.disposed = true;
-            }
+            },
+            /*System.Threading.Timer.Dispose end.*/
+
+
         }
     });
+    /*System.Threading.Timer end.*/
 
     // @source TaskCanceledException.js
 
+    /*System.Threading.Tasks.TaskCanceledException start.*/
     Bridge.define("System.Threading.Tasks.TaskCanceledException", {
         inherits: [System.OperationCanceledException],
         fields: {
@@ -50464,9 +55283,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Threading.Tasks.TaskCanceledException end.*/
 
     // @source TaskSchedulerException.js
 
+    /*System.Threading.Tasks.TaskSchedulerException start.*/
     Bridge.define("System.Threading.Tasks.TaskSchedulerException", {
         inherits: [System.Exception],
         ctors: {
@@ -50488,9 +55309,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Threading.Tasks.TaskSchedulerException end.*/
 
     // @source Version.js
 
+    /*System.Version start.*/
     Bridge.define("System.Version", {
         inherits: function () { return [System.ICloneable,System.IComparable$1(System.Version),System.IEquatable$1(System.Version)]; },
         statics: {
@@ -50505,6 +55328,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
             },
             methods: {
+                /*System.Version.appendPositiveNumber:static start.*/
                 appendPositiveNumber: function (num, sb) {
                     var index = sb.getLength();
                     var reminder;
@@ -50515,6 +55339,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                         sb.insert(index, String.fromCharCode(((((System.Version.ZERO_CHAR_VALUE + reminder) | 0)) & 65535)));
                     } while (num > 0);
                 },
+                /*System.Version.appendPositiveNumber:static end.*/
+
+                /*System.Version.parse:static start.*/
                 parse: function (input) {
                     if (input == null) {
                         throw new System.ArgumentNullException.$ctor1("input");
@@ -50527,6 +55354,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
                     return r.v.m_parsedVersion;
                 },
+                /*System.Version.parse:static end.*/
+
+                /*System.Version.tryParse:static start.*/
                 tryParse: function (input, result) {
                     var r = { v : new System.Version.VersionResult() };
                     r.v.init("input", false);
@@ -50534,6 +55364,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     result.v = r.v.m_parsedVersion;
                     return b;
                 },
+                /*System.Version.tryParse:static end.*/
+
+                /*System.Version.tryParseVersion:static start.*/
                 tryParseVersion: function (version, result) {
                     var major = { }, minor = { }, build = { }, revision = { };
 
@@ -50583,6 +55416,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return true;
                 },
+                /*System.Version.tryParseVersion:static end.*/
+
+                /*System.Version.tryParseComponent:static start.*/
                 tryParseComponent: function (component, componentName, result, parsedComponent) {
                     if (!System.Int32.tryParse(component, parsedComponent)) {
                         result.v.setFailure$1(System.Version.ParseFailureKind.FormatException, component);
@@ -50596,6 +55432,8 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     return true;
                 },
+                /*System.Version.tryParseComponent:static end.*/
+
                 op_Equality: function (v1, v2) {
                     if (Bridge.referenceEquals(v1, null)) {
                         return Bridge.referenceEquals(v2, null);
@@ -50745,6 +55583,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Version.clone start.*/
             clone: function () {
                 var v = new System.Version.ctor();
                 v._Major = this._Major;
@@ -50753,6 +55592,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 v._Revision = this._Revision;
                 return (v);
             },
+            /*System.Version.clone end.*/
+
+            /*System.Version.compareTo$1 start.*/
             compareTo$1: function (version) {
                 if (version == null) {
                     return 1;
@@ -50797,6 +55639,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return 0;
             },
+            /*System.Version.compareTo$1 end.*/
+
+            /*System.Version.compareTo start.*/
             compareTo: function (value) {
                 if (System.Version.op_Equality(value, null)) {
                     return 1;
@@ -50836,9 +55681,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return 0;
             },
+            /*System.Version.compareTo end.*/
+
+            /*System.Version.equals start.*/
             equals: function (obj) {
                 return this.equalsT(Bridge.as(obj, System.Version));
             },
+            /*System.Version.equals end.*/
+
+            /*System.Version.equalsT start.*/
             equalsT: function (obj) {
                 if (System.Version.op_Equality(obj, null)) {
                     return false;
@@ -50850,6 +55701,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return true;
             },
+            /*System.Version.equalsT end.*/
+
+            /*System.Version.getHashCode start.*/
             getHashCode: function () {
 
                 var accumulator = 0;
@@ -50861,6 +55715,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 return accumulator;
             },
+            /*System.Version.getHashCode end.*/
+
+            /*System.Version.toString start.*/
             toString: function () {
                 if (this._Build === -1) {
                     return (this.toString$1(2));
@@ -50870,6 +55727,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 return (this.toString$1(4));
             },
+            /*System.Version.toString end.*/
+
+            /*System.Version.toString$1 start.*/
             toString$1: function (fieldCount) {
                 var sb;
                 switch (fieldCount) {
@@ -50912,12 +55772,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                         }
                         throw new System.ArgumentException.$ctor3("Should be < 5", "fieldCount");
                 }
-            }
+            },
+            /*System.Version.toString$1 end.*/
+
+
         }
     });
+    /*System.Version end.*/
 
     // @source ParseFailureKind.js
 
+    /*System.Version+ParseFailureKind start.*/
     Bridge.define("System.Version.ParseFailureKind", {
         $kind: "nested enum",
         statics: {
@@ -50929,9 +55794,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Version+ParseFailureKind end.*/
 
     // @source VersionResult.js
 
+    /*System.Version+VersionResult start.*/
     Bridge.define("System.Version.VersionResult", {
         $kind: "nested struct",
         statics: {
@@ -50952,13 +55819,20 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         methods: {
+            /*System.Version+VersionResult.init start.*/
             init: function (argumentName, canThrow) {
                 this.m_canThrow = canThrow;
                 this.m_argumentName = argumentName;
             },
+            /*System.Version+VersionResult.init end.*/
+
+            /*System.Version+VersionResult.setFailure start.*/
             setFailure: function (failure) {
                 this.setFailure$1(failure, "");
             },
+            /*System.Version+VersionResult.setFailure end.*/
+
+            /*System.Version+VersionResult.setFailure$1 start.*/
             setFailure$1: function (failure, argument) {
                 this.m_failure = failure;
                 this.m_exceptionArgument = argument;
@@ -50966,6 +55840,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     throw this.getVersionParseException();
                 }
             },
+            /*System.Version+VersionResult.setFailure$1 end.*/
+
+            /*System.Version+VersionResult.getVersionParseException start.*/
             getVersionParseException: function () {
                 switch (this.m_failure) {
                     case System.Version.ParseFailureKind.ArgumentNullException: 
@@ -50995,6 +55872,8 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                         return new System.ArgumentException.$ctor1("VersionString");
                 }
             },
+            /*System.Version+VersionResult.getVersionParseException end.*/
+
             getHashCode: function () {
                 var h = Bridge.addHash([5139482776, this.m_parsedVersion, this.m_failure, this.m_exceptionArgument, this.m_argumentName, this.m_canThrow]);
                 return h;
@@ -51016,6 +55895,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         }
     });
+    /*System.Version+VersionResult end.*/
 
     // @source End.js
 

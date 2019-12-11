@@ -18,19 +18,19 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             s.testField = 1;
         }
 
-        [Pure]
+        [Ref]
         private static void TestMethod2(TestStruct s)
         {
             s.testField = 2;
         }
 
-        private static void TestMethod3([Pure] TestStruct s)
+        private static void TestMethod3([Ref] TestStruct s)
         {
             s.testField = 3;
         }
 
         [Test(ExpectedCount = 1)]
-        public static void TestNoPureAttribute()
+        public static void TestNoRefAttribute()
         {
             var s = new TestStruct();
             TestMethod1(s);
@@ -38,7 +38,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         }
 
         [Test(ExpectedCount = 1)]
-        public static void TestPureAttributeOnMethod()
+        public static void TestRefAttributeOnMethod()
         {
             var s = new TestStruct();
             TestMethod2(s);
@@ -46,7 +46,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         }
 
         [Test(ExpectedCount = 1)]
-        public static void TestPureAttributeOnParameter()
+        public static void TestRefAttributeOnParameter()
         {
             var s = new TestStruct();
             TestMethod3(s);
