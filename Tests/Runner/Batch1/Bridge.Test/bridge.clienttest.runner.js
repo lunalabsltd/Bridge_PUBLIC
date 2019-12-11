@@ -1,5 +1,5 @@
 /**
- * @compiler Bridge.NET 17.9.2-luna
+ * @compiler Bridge.NET 17.9.3-luna
  */
 Bridge.assembly("Bridge.Test.Bridge.ClientTest", function ($asm, globals) {
     
@@ -2796,6 +2796,11 @@ Bridge.assembly("Bridge.Test.Bridge.ClientTest", function ($asm, globals) {
             QUnit.test("TestWorks", Bridge.Test.Runtime.BridgeClientTestRunner.BridgeRegexTests.TestWorks);
             QUnit.module("Runtime helpers");
             QUnit.test("GetHashCodeWoksForObject_SPI_1570", Bridge.Test.Runtime.BridgeClientTestRunner.RuntimeHelpersTests.GetHashCodeWoksForObject_SPI_1570);
+            QUnit.module("RValue");
+            QUnit.test("RValue - TestSimpleStruct", Bridge.Test.Runtime.BridgeClientTestRunner.RValueTests.TestSimpleStruct);
+            QUnit.test("RValue - TestSimpleClass", Bridge.Test.Runtime.BridgeClientTestRunner.RValueTests.TestSimpleClass);
+            QUnit.test("RValue - TestSimpleType", Bridge.Test.Runtime.BridgeClientTestRunner.RValueTests.TestSimpleType);
+            QUnit.test("RValue - RefOutGenericCheck", Bridge.Test.Runtime.BridgeClientTestRunner.RValueTests.RefOutGenericCheck);
             QUnit.module("Script");
             QUnit.test("BooleanWorks_SPI_1619", Bridge.Test.Runtime.BridgeClientTestRunner.ScriptTests.BooleanWorks_SPI_1619);
             QUnit.test("EvalWorks", Bridge.Test.Runtime.BridgeClientTestRunner.ScriptTests.EvalWorks);
@@ -29947,6 +29952,66 @@ Bridge.assembly("Bridge.Test.Bridge.ClientTest", function ($asm, globals) {
         }
     });
     /*Bridge.Test.Runtime.BridgeClientTestRunner+RuntimeHelpersTests end.*/
+
+    /*Bridge.Test.Runtime.BridgeClientTestRunner+RValueTests start.*/
+    Bridge.define("Bridge.Test.Runtime.BridgeClientTestRunner.RValueTests", {
+        inherits: [Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.Batch1.RValueTests)],
+        $kind: "nested class",
+        statics: {
+            methods: {
+                /*Bridge.Test.Runtime.BridgeClientTestRunner+RValueTests.TestSimpleStruct:static start.*/
+                TestSimpleStruct: function (assert) {
+                    var $t;
+                    var t = Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.Batch1.RValueTests).BeforeTest(true, assert, Bridge.Test.Runtime.BridgeClientTestRunner.RValueTests, void 0, ($t = new Bridge.Test.Runtime.TestContext(), $t.Method = "TestSimpleStruct()", $t.Line = "54", $t));
+                    t.Fixture.TestSimpleStruct();
+                },
+                /*Bridge.Test.Runtime.BridgeClientTestRunner+RValueTests.TestSimpleStruct:static end.*/
+
+                /*Bridge.Test.Runtime.BridgeClientTestRunner+RValueTests.TestSimpleClass:static start.*/
+                TestSimpleClass: function (assert) {
+                    var $t;
+                    var t = Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.Batch1.RValueTests).BeforeTest(true, assert, Bridge.Test.Runtime.BridgeClientTestRunner.RValueTests, void 0, ($t = new Bridge.Test.Runtime.TestContext(), $t.Method = "TestSimpleClass()", $t.Line = "91", $t));
+                    t.Fixture.TestSimpleClass();
+                },
+                /*Bridge.Test.Runtime.BridgeClientTestRunner+RValueTests.TestSimpleClass:static end.*/
+
+                /*Bridge.Test.Runtime.BridgeClientTestRunner+RValueTests.TestSimpleType:static start.*/
+                TestSimpleType: function (assert) {
+                    var $t;
+                    var t = Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.Batch1.RValueTests).BeforeTest(true, assert, Bridge.Test.Runtime.BridgeClientTestRunner.RValueTests, void 0, ($t = new Bridge.Test.Runtime.TestContext(), $t.Method = "TestSimpleType()", $t.Line = "118", $t));
+                    t.Fixture.TestSimpleType();
+                },
+                /*Bridge.Test.Runtime.BridgeClientTestRunner+RValueTests.TestSimpleType:static end.*/
+
+                /*Bridge.Test.Runtime.BridgeClientTestRunner+RValueTests.RefOutGenericCheck:static start.*/
+                RefOutGenericCheck: function (assert) {
+                    var $t;
+                    var t = Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.Batch1.RValueTests).BeforeTest(true, assert, Bridge.Test.Runtime.BridgeClientTestRunner.RValueTests, void 0, ($t = new Bridge.Test.Runtime.TestContext(), $t.Method = "RefOutGenericCheck()", $t.Line = "127", $t));
+                    t.Fixture.RefOutGenericCheck();
+                },
+                /*Bridge.Test.Runtime.BridgeClientTestRunner+RValueTests.RefOutGenericCheck:static end.*/
+
+
+            }
+        },
+        fields: {
+            context: null
+        },
+        methods: {
+            /*Bridge.Test.Runtime.BridgeClientTestRunner+RValueTests.GetContext start.*/
+            GetContext: function () {
+                var $t;
+                if (this.context == null) {
+                    this.context = ($t = new Bridge.Test.Runtime.FixtureContext(), $t.Project = "Batch1", $t.ClassName = "Bridge.ClientTest.Batch1.RValueTests", $t.File = "file:///Z:/Users/stepanberesnev/Work/Bridge/Tests/Batch1/RValueTests.cs", $t);
+                }
+                return this.context;
+            },
+            /*Bridge.Test.Runtime.BridgeClientTestRunner+RValueTests.GetContext end.*/
+
+
+        }
+    });
+    /*Bridge.Test.Runtime.BridgeClientTestRunner+RValueTests end.*/
 
     /*Bridge.Test.Runtime.BridgeClientTestRunner+SByteTests start.*/
     Bridge.define("Bridge.Test.Runtime.BridgeClientTestRunner.SByteTests", {

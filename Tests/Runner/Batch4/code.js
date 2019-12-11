@@ -1,18 +1,23 @@
 /**
  * Bridge Test library - general C# language tests for Portarelle
- * @version 17.9.0
+ * @version 17.9.2-luna
  * @author Object.NET, Inc.
  * @copyright Copyright 2008-2019 Object.NET, Inc.
- * @compiler Bridge.NET 17.9.0
+ * @compiler Bridge.NET 17.9.2-luna
  */
 Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
     "use strict";
 
+    /*Bridge.ClientTest.Batch4.ActivatorTests start.*/
     Bridge.define("Bridge.ClientTest.Batch4.ActivatorTests", {
         methods: {
+            /*Bridge.ClientTest.Batch4.ActivatorTests.Instantiate start.*/
             Instantiate: function (T) {
                 return Bridge.createInstance(T);
             },
+            /*Bridge.ClientTest.Batch4.ActivatorTests.Instantiate end.*/
+
+            /*Bridge.ClientTest.Batch4.ActivatorTests.CreateInstanceWithNoArgumentsWorksForClassWithJsonDefaultConstructor start.*/
             CreateInstanceWithNoArgumentsWorksForClassWithJsonDefaultConstructor: function () {
                 var c1 = Bridge.createInstance(System.Object);
                 var c2 = Bridge.createInstance(System.Object);
@@ -21,12 +26,18 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                 Bridge.Test.NUnit.Assert.AreEqual(Object, c1.constructor);
                 Bridge.Test.NUnit.Assert.AreEqual(Object, c2.constructor);
                 Bridge.Test.NUnit.Assert.AreEqual(Object, c3.constructor);
-            }
+            },
+            /*Bridge.ClientTest.Batch4.ActivatorTests.CreateInstanceWithNoArgumentsWorksForClassWithJsonDefaultConstructor end.*/
+
+
         }
     });
+    /*Bridge.ClientTest.Batch4.ActivatorTests end.*/
 
+    /*Bridge.ClientTest.Batch4.AppDomainTests start.*/
     Bridge.define("Bridge.ClientTest.Batch4.AppDomainTests", {
         methods: {
+            /*Bridge.ClientTest.Batch4.AppDomainTests.GetAssembliesWorks_SPI_1646 start.*/
             GetAssembliesWorks_SPI_1646: function () {
                 // #1646
                 //var arr = AppDomain.CurrentDomain.GetAssemblies();
@@ -37,10 +48,15 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                 Bridge.Test.NUnit.Assert.AreEqual(2, 0);
                 Bridge.Test.NUnit.Assert.True(false, "#1");
                 Bridge.Test.NUnit.Assert.True(false, "#2");
-            }
+            },
+            /*Bridge.ClientTest.Batch4.AppDomainTests.GetAssembliesWorks_SPI_1646 end.*/
+
+
         }
     });
+    /*Bridge.ClientTest.Batch4.AppDomainTests end.*/
 
+    /*Bridge.ClientTest.Batch4.DelegateTests start.*/
     Bridge.define("Bridge.ClientTest.Batch4.DelegateTests", {
         fields: {
             testField: 0
@@ -51,9 +67,13 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
             }
         },
         methods: {
+            /*Bridge.ClientTest.Batch4.DelegateTests.AddForCreateWorks start.*/
             AddForCreateWorks: function (x) {
                 return ((x + this.testField) | 0);
             },
+            /*Bridge.ClientTest.Batch4.DelegateTests.AddForCreateWorks end.*/
+
+            /*Bridge.ClientTest.Batch4.DelegateTests.CreateWorks start.*/
             CreateWorks: function () {
                 // Not C# API
                 //var d = (Func<int, int>)Delegate.CreateDelegate(this, new Function("x", "{ return x + this.testField; }"));
@@ -61,6 +81,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                 var d = Bridge.Reflection.createDelegate(Bridge.Reflection.getMembers(Bridge.getType(this), 8, 284, "AddForCreateWorks"), this);
                 Bridge.Test.NUnit.Assert.AreEqual(25, d(13));
             },
+            /*Bridge.ClientTest.Batch4.DelegateTests.CreateWorks end.*/
+
+            /*Bridge.ClientTest.Batch4.DelegateTests.RemoveDoesNotAffectOriginal_SPI_1563 start.*/
             RemoveDoesNotAffectOriginal_SPI_1563: function () {
                 // #1563
                 var c = new Bridge.ClientTest.Batch4.DelegateTests.C();
@@ -86,7 +109,13 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                 });
                 Bridge.Test.NUnit.Assert.AreEqual(1, l3);
             },
+            /*Bridge.ClientTest.Batch4.DelegateTests.RemoveDoesNotAffectOriginal_SPI_1563 end.*/
+
+            /*Bridge.ClientTest.Batch4.DelegateTests.A start.*/
             A: function () { },
+            /*Bridge.ClientTest.Batch4.DelegateTests.A end.*/
+
+            /*Bridge.ClientTest.Batch4.DelegateTests.RemoveWorksWithMethodGroupConversion_SPI_1563 start.*/
             RemoveWorksWithMethodGroupConversion_SPI_1563: function () {
                 // #1563
 
@@ -98,6 +127,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                 Bridge.Test.NUnit.Assert.False(Bridge.equals(a, a2));
                 Bridge.Test.NUnit.Assert.True(Bridge.equals(a, a3));
             },
+            /*Bridge.ClientTest.Batch4.DelegateTests.RemoveWorksWithMethodGroupConversion_SPI_1563 end.*/
+
+            /*Bridge.ClientTest.Batch4.DelegateTests.CloneWorks_SPI_1563 start.*/
             CloneWorks_SPI_1563: function () {
                 var sb = new System.Text.StringBuilder();
                 var d1 = function () {
@@ -112,6 +144,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                 d2();
                 Bridge.Test.NUnit.Assert.AreEqual("1", sb.toString());
             },
+            /*Bridge.ClientTest.Batch4.DelegateTests.CloneWorks_SPI_1563 end.*/
+
+            /*Bridge.ClientTest.Batch4.DelegateTests.CloningDelegateToTheSameTypeCreatesANewClone_SPI_1563 start.*/
             CloningDelegateToTheSameTypeCreatesANewClone_SPI_1563: function () {
                 // #1563
                 var x = 0;
@@ -125,6 +160,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                 Bridge.Test.NUnit.Assert.False(Bridge.staticEquals(d1, d2));
                 Bridge.Test.NUnit.Assert.AreEqual(2, x);
             },
+            /*Bridge.ClientTest.Batch4.DelegateTests.CloningDelegateToTheSameTypeCreatesANewClone_SPI_1563 end.*/
+
+            /*Bridge.ClientTest.Batch4.DelegateTests.EqualityAndInequalityOperatorsAndEqualsMethod_SPI_1563 start.*/
             EqualityAndInequalityOperatorsAndEqualsMethod_SPI_1563: function () {
                 var c1 = new Bridge.ClientTest.Batch4.DelegateTests.C(), c2 = new Bridge.ClientTest.Batch4.DelegateTests.C();
                 var n = null;
@@ -168,7 +206,10 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                 Bridge.Test.NUnit.Assert.False(Bridge.staticEquals(m1, f11), "m1 == f11");
                 Bridge.Test.NUnit.Assert.False(Bridge.equals(m1, f11), "m1.Equals(f11)");
                 Bridge.Test.NUnit.Assert.True(!Bridge.staticEquals(m1, f11), "m1 != f11");
-            }
+            },
+            /*Bridge.ClientTest.Batch4.DelegateTests.EqualityAndInequalityOperatorsAndEqualsMethod_SPI_1563 end.*/
+
+
         }
     });
 
@@ -177,17 +218,29 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
     Bridge.apply($asm.$.Bridge.ClientTest.Batch4.DelegateTests, {
         f1: function () { }
     });
+    /*Bridge.ClientTest.Batch4.DelegateTests end.*/
 
+    /*Bridge.ClientTest.Batch4.DelegateTests+C start.*/
     Bridge.define("Bridge.ClientTest.Batch4.DelegateTests.C", {
         $kind: "nested class",
         methods: {
+            /*Bridge.ClientTest.Batch4.DelegateTests+C.F1 start.*/
             F1: function () { },
-            F2: function () { }
+            /*Bridge.ClientTest.Batch4.DelegateTests+C.F1 end.*/
+
+            /*Bridge.ClientTest.Batch4.DelegateTests+C.F2 start.*/
+            F2: function () { },
+            /*Bridge.ClientTest.Batch4.DelegateTests+C.F2 end.*/
+
+
         }
     });
+    /*Bridge.ClientTest.Batch4.DelegateTests+C end.*/
 
+    /*Bridge.ClientTest.Batch4.Exceptions.ContractExceptionTests start.*/
     Bridge.define("Bridge.ClientTest.Batch4.Exceptions.ContractExceptionTests", {
         methods: {
+            /*Bridge.ClientTest.Batch4.Exceptions.ContractExceptionTests.TypePropertiesAreCorrect start.*/
             TypePropertiesAreCorrect: function () {
                 Bridge.Test.NUnit.Assert.AreEqual("System.Diagnostics.Contracts.ContractException", Bridge.Reflection.getTypeFullName(System.Diagnostics.Contracts.ContractException), "Name");
                 Bridge.Test.NUnit.Assert.True(Bridge.Reflection.isClass(System.Diagnostics.Contracts.ContractException), "IsClass");
@@ -199,6 +252,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                 var interfaces = Bridge.Reflection.getInterfaces(System.Diagnostics.Contracts.ContractException);
                 Bridge.Test.NUnit.Assert.AreEqual(0, interfaces.length, "Interfaces length");
             },
+            /*Bridge.ClientTest.Batch4.Exceptions.ContractExceptionTests.TypePropertiesAreCorrect end.*/
+
+            /*Bridge.ClientTest.Batch4.Exceptions.ContractExceptionTests.DefaultConstructorWorks start.*/
             DefaultConstructorWorks: function () {
                 var ex = new System.Diagnostics.Contracts.ContractException(System.Diagnostics.Contracts.ContractFailureKind.assert, "Contract failed", null, null, null);
                 Bridge.Test.NUnit.Assert.True(Bridge.is(ex, System.Diagnostics.Contracts.ContractException), "is ContractException");
@@ -207,50 +263,77 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                 Bridge.Test.NUnit.Assert.True(ex.Condition == null, "Condition");
                 Bridge.Test.NUnit.Assert.True(ex.UserMessage == null, "UserMessage");
                 Bridge.Test.NUnit.Assert.AreEqual("Contract failed", ex.Message);
-            }
+            },
+            /*Bridge.ClientTest.Batch4.Exceptions.ContractExceptionTests.DefaultConstructorWorks end.*/
+
+
         }
     });
+    /*Bridge.ClientTest.Batch4.Exceptions.ContractExceptionTests end.*/
 
+    /*Bridge.ClientTest.Batch4.FormattableStringTests start.*/
     Bridge.define("Bridge.ClientTest.Batch4.FormattableStringTests", {
         methods: {
+            /*Bridge.ClientTest.Batch4.FormattableStringTests.ToStringWithFormatProviderWorks_SPI_1651 start.*/
             ToStringWithFormatProviderWorks_SPI_1651: function () {
                 var s = System.Runtime.CompilerServices.FormattableStringFactory.Create("x = {0}, y = {0:FMT}", [new Bridge.ClientTest.Batch4.FormattableStringTests.MyFormattable()]);
                 // #1651
                 Bridge.Test.NUnit.Assert.AreEqual("x = Formatted: MyFormatProvider, y = Formatted: FMT, MyFormatProvider", s.ToString(new Bridge.ClientTest.Batch4.FormattableStringTests.MyFormatProvider()));
             },
+            /*Bridge.ClientTest.Batch4.FormattableStringTests.ToStringWithFormatProviderWorks_SPI_1651 end.*/
+
+            /*Bridge.ClientTest.Batch4.FormattableStringTests.IFormattableToStringWorks_SPI_1633_1651 start.*/
             IFormattableToStringWorks_SPI_1633_1651: function () {
                 var s = System.Runtime.CompilerServices.FormattableStringFactory.Create("x = {0}, y = {0:FMT}", [new Bridge.ClientTest.Batch4.FormattableStringTests.MyFormattable()]);
                 // #1633
                 // #1651
                 Bridge.Test.NUnit.Assert.AreEqual("x = Formatted: MyFormatProvider, y = Formatted: FMT, MyFormatProvider", Bridge.format(s, null, new Bridge.ClientTest.Batch4.FormattableStringTests.MyFormatProvider()));
-            }
+            },
+            /*Bridge.ClientTest.Batch4.FormattableStringTests.IFormattableToStringWorks_SPI_1633_1651 end.*/
+
+
         }
     });
+    /*Bridge.ClientTest.Batch4.FormattableStringTests end.*/
 
+    /*Bridge.ClientTest.Batch4.FormattableStringTests+MyFormatProvider start.*/
     Bridge.define("Bridge.ClientTest.Batch4.FormattableStringTests.MyFormatProvider", {
         inherits: [System.IFormatProvider],
         $kind: "nested class",
         alias: ["getFormat", "System$IFormatProvider$getFormat"],
         methods: {
+            /*Bridge.ClientTest.Batch4.FormattableStringTests+MyFormatProvider.getFormat start.*/
             getFormat: function (type) {
                 return System.Globalization.CultureInfo.invariantCulture.getFormat(type);
-            }
+            },
+            /*Bridge.ClientTest.Batch4.FormattableStringTests+MyFormatProvider.getFormat end.*/
+
+
         }
     });
+    /*Bridge.ClientTest.Batch4.FormattableStringTests+MyFormatProvider end.*/
 
+    /*Bridge.ClientTest.Batch4.FormattableStringTests+MyFormattable start.*/
     Bridge.define("Bridge.ClientTest.Batch4.FormattableStringTests.MyFormattable", {
         inherits: [System.IFormattable],
         $kind: "nested class",
         alias: ["format", "System$IFormattable$format"],
         methods: {
+            /*Bridge.ClientTest.Batch4.FormattableStringTests+MyFormattable.format start.*/
             format: function (format, formatProvider) {
                 return "Formatted: " + ((!System.String.isNullOrEmpty(format) ? (format || "") + ", " : "") || "") + (Bridge.Reflection.getTypeName(Bridge.getType(formatProvider)) || "");
-            }
+            },
+            /*Bridge.ClientTest.Batch4.FormattableStringTests+MyFormattable.format end.*/
+
+
         }
     });
+    /*Bridge.ClientTest.Batch4.FormattableStringTests+MyFormattable end.*/
 
+    /*Bridge.ClientTest.Batch4.Runtime.CompilerServices.RuntimeHelpersTests start.*/
     Bridge.define("Bridge.ClientTest.Batch4.Runtime.CompilerServices.RuntimeHelpersTests", {
         methods: {
+            /*Bridge.ClientTest.Batch4.Runtime.CompilerServices.RuntimeHelpersTests.GetHashCodeCallsGetHashCodeNonVirtually_SPI_1570 start.*/
             GetHashCodeCallsGetHashCodeNonVirtually_SPI_1570: function () {
                 // #1570
                 var isOK = false;
@@ -263,21 +346,33 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                     }
                 }
                 Bridge.Test.NUnit.Assert.True(isOK, "GetHashCode should be invoked non-virtually");
-            }
+            },
+            /*Bridge.ClientTest.Batch4.Runtime.CompilerServices.RuntimeHelpersTests.GetHashCodeCallsGetHashCodeNonVirtually_SPI_1570 end.*/
+
+
         }
     });
+    /*Bridge.ClientTest.Batch4.Runtime.CompilerServices.RuntimeHelpersTests end.*/
 
+    /*Bridge.ClientTest.Batch4.Runtime.CompilerServices.RuntimeHelpersTests+C start.*/
     Bridge.define("Bridge.ClientTest.Batch4.Runtime.CompilerServices.RuntimeHelpersTests.C", {
         $kind: "nested class",
         methods: {
+            /*Bridge.ClientTest.Batch4.Runtime.CompilerServices.RuntimeHelpersTests+C.getHashCode start.*/
             getHashCode: function () {
                 return 0;
-            }
+            },
+            /*Bridge.ClientTest.Batch4.Runtime.CompilerServices.RuntimeHelpersTests+C.getHashCode end.*/
+
+
         }
     });
+    /*Bridge.ClientTest.Batch4.Runtime.CompilerServices.RuntimeHelpersTests+C end.*/
 
+    /*Bridge.ClientTest.Batch4.Serialization.JsonTests start.*/
     Bridge.define("Bridge.ClientTest.Batch4.Serialization.JsonTests", {
         methods: {
+            /*Bridge.ClientTest.Batch4.Serialization.JsonTests.NonGenericParseWorks_SPI_1574 start.*/
             NonGenericParseWorks_SPI_1574: function () {
                 // #1574
                 // Test restructure to keep assertion count correct (prevent uncaught test exception)
@@ -298,11 +393,17 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                 });
                 Bridge.Test.NUnit.Assert.AreEqual("test", vs);
             },
+            /*Bridge.ClientTest.Batch4.Serialization.JsonTests.NonGenericParseWorks_SPI_1574 end.*/
+
+            /*Bridge.ClientTest.Batch4.Serialization.JsonTests.GenericParseWorks start.*/
             GenericParseWorks: function () {
                 var o = Bridge.cast(JSON.parse("{ \"i\": 3, \"s\": \"test\" }"), Bridge.ClientTest.Batch4.Serialization.JsonTests.TestClass2);
                 Bridge.Test.NUnit.Assert.AreEqual(3, o.i);
                 Bridge.Test.NUnit.Assert.AreEqual("test", o.s);
             },
+            /*Bridge.ClientTest.Batch4.Serialization.JsonTests.GenericParseWorks end.*/
+
+            /*Bridge.ClientTest.Batch4.Serialization.JsonTests.NonGenericParseWithCallbackWorks_SPI_1574 start.*/
             NonGenericParseWithCallbackWorks_SPI_1574: function () {
                 // #1574
                 // Test restructure to keep assertion count correct (prevent uncaught test exception)
@@ -325,6 +426,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                 });
                 Bridge.Test.NUnit.Assert.AreEqual("test", vs);
             },
+            /*Bridge.ClientTest.Batch4.Serialization.JsonTests.NonGenericParseWithCallbackWorks_SPI_1574 end.*/
+
+            /*Bridge.ClientTest.Batch4.Serialization.JsonTests.GenericParseWithCallbackWorks_SPI_1574 start.*/
             GenericParseWithCallbackWorks_SPI_1574: function () {
                 // #1574
                 // Test restructure to keep assertion count correct (prevent uncaught test exception)
@@ -344,7 +448,10 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                     vs = o.s;
                 });
                 Bridge.Test.NUnit.Assert.AreEqual("test", vs);
-            }
+            },
+            /*Bridge.ClientTest.Batch4.Serialization.JsonTests.GenericParseWithCallbackWorks_SPI_1574 end.*/
+
+
         }
     });
 
@@ -356,7 +463,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
             return x;
         }
     });
+    /*Bridge.ClientTest.Batch4.Serialization.JsonTests end.*/
 
+    /*Bridge.ClientTest.Batch4.Serialization.JsonTests+TestClass2 start.*/
     Bridge.define("Bridge.ClientTest.Batch4.Serialization.JsonTests.TestClass2", {
         $kind: "nested class",
         fields: {
@@ -364,20 +473,29 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
             s: null
         }
     });
+    /*Bridge.ClientTest.Batch4.Serialization.JsonTests+TestClass2 end.*/
 
+    /*Bridge.ClientTest.Batch4.SimpleTypes.CharTests start.*/
     Bridge.define("Bridge.ClientTest.Batch4.SimpleTypes.CharTests", {
         methods: {
+            /*Bridge.ClientTest.Batch4.SimpleTypes.CharTests.TypePropertiesAreInt32_SPI_1603 start.*/
             TypePropertiesAreInt32_SPI_1603: function () {
                 // #1603
                 Bridge.Test.NUnit.Assert.False(Bridge.Reflection.isAssignableFrom(System.IFormattable, System.Char));
                 var interfaces = Bridge.Reflection.getInterfaces(System.Char);
                 Bridge.Test.NUnit.Assert.False(System.Array.contains(interfaces, System.IFormattable, System.Type));
-            }
+            },
+            /*Bridge.ClientTest.Batch4.SimpleTypes.CharTests.TypePropertiesAreInt32_SPI_1603 end.*/
+
+
         }
     });
+    /*Bridge.ClientTest.Batch4.SimpleTypes.CharTests end.*/
 
+    /*Bridge.ClientTest.Batch4.SimpleTypes.DateTests start.*/
     Bridge.define("Bridge.ClientTest.Batch4.SimpleTypes.DateTests", {
         methods: {
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DateTests.ParseWorks_SPI_1624 start.*/
             ParseWorks_SPI_1624: function () {
                 // #1624
                 var utc = Date.UTC(2017, 7, 12);
@@ -395,16 +513,25 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                 Bridge.Test.NUnit.Assert.AreEqual(1394150400000.0 - offset, d3);
                 Bridge.Test.NUnit.Assert.AreEqual(807926400000.0, d4);
                 Bridge.Test.NUnit.Assert.AreEqual(14400000.0, d5);
-            }
+            },
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DateTests.ParseWorks_SPI_1624 end.*/
+
+
         }
     });
+    /*Bridge.ClientTest.Batch4.SimpleTypes.DateTests end.*/
 
+    /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests start.*/
     Bridge.define("Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests", {
         methods: {
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.AssertDecimal start.*/
             AssertDecimal: function (expected, actual) {
                 Bridge.Test.NUnit.Assert.True(Bridge.is(actual, System.Decimal));
                 Bridge.Test.NUnit.Assert.AreStrictEqual(System.Double.format(expected), Bridge.toString(actual));
             },
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.AssertDecimal end.*/
+
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.ConversionsToDecimalWork_SPI_1580 start.*/
             ConversionsToDecimalWork_SPI_1580: function () {
                 var x = 0;
 
@@ -422,6 +549,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                     var _ = System.Decimal(x - 7.9228162514264338E+28, null, System.Double);
                 });
             },
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.ConversionsToDecimalWork_SPI_1580 end.*/
+
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.NullableConversionsToDecimalWork_SPI_1580_1581_1587 start.*/
             NullableConversionsToDecimalWork_SPI_1580_1581_1587: function () {
                 var x1 = 0, x2 = null;
                 // #1587
@@ -477,6 +607,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                     var _ = System.Decimal(System.Nullable.sub(x1, 7.9228162514264338E+28), null, System.Nullable$1(System.Double));
                 });
             },
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.NullableConversionsToDecimalWork_SPI_1580_1581_1587 end.*/
+
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.DecimalToSByte_SPI_1580 start.*/
             DecimalToSByte_SPI_1580: function () {
                 var x = System.Decimal(0);
                 // #1580
@@ -487,6 +620,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                     var _ = System.Decimal.toInt(x.add(System.Decimal(128)));
                 });
             },
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.DecimalToSByte_SPI_1580 end.*/
+
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.DecimalToByte_SPI_1580 start.*/
             DecimalToByte_SPI_1580: function () {
                 var x = System.Decimal(0);
                 // #1580
@@ -497,6 +633,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                     var _ = System.Decimal.toInt(x.add(System.Decimal(256)));
                 });
             },
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.DecimalToByte_SPI_1580 end.*/
+
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.DecimalToShort_SPI_1580 start.*/
             DecimalToShort_SPI_1580: function () {
                 var x = System.Decimal(0);
                 // #1580
@@ -507,6 +646,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                     var _ = System.Decimal.toInt(x.add(System.Decimal(32768)));
                 });
             },
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.DecimalToShort_SPI_1580 end.*/
+
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.DecimalToUShort_SPI_1580 start.*/
             DecimalToUShort_SPI_1580: function () {
                 var x = System.Decimal(0);
                 // #1580
@@ -517,6 +659,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                     var _ = System.Decimal.toInt(x.add(System.Decimal(65536)));
                 });
             },
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.DecimalToUShort_SPI_1580 end.*/
+
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.DecimalToInt_SPI_1580 start.*/
             DecimalToInt_SPI_1580: function () {
                 var x = System.Decimal(0);
                 // #1580
@@ -527,6 +672,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                     var _ = System.Decimal.toInt(x.add(System.Decimal(2147483648)));
                 });
             },
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.DecimalToInt_SPI_1580 end.*/
+
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.DecimalToUInt_SPI_1580 start.*/
             DecimalToUInt_SPI_1580: function () {
                 var x = System.Decimal(0);
                 // #1580
@@ -537,6 +685,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                     var _ = System.Decimal.toInt(x.add(System.Decimal(System.Int64([0,1]))));
                 });
             },
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.DecimalToUInt_SPI_1580 end.*/
+
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.DecimalToLong_SPI_1578 start.*/
             DecimalToLong_SPI_1578: function () {
                 var x = System.Decimal(0);
 
@@ -544,6 +695,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                 Bridge.Test.NUnit.Assert.AreEqual(System.Int64([0,-5]), System.Decimal.toInt(x.sub(System.Decimal(21474836480.9, 1)), System.Int64));
                 Bridge.Test.NUnit.Assert.AreEqual(System.Int64([-10,4]), System.Decimal.toInt(x.add(System.Decimal(21474836470.9, 1)), System.Int64));
             },
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.DecimalToLong_SPI_1578 end.*/
+
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.DecimalToULong_SPI_1584_1585 start.*/
             DecimalToULong_SPI_1584_1585: function () {
                 var x = System.Decimal(0);
 
@@ -564,6 +718,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                     var _ = System.Decimal.toInt(x.sub(System.Decimal(1)), System.UInt64);
                 });
             },
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.DecimalToULong_SPI_1584_1585 end.*/
+
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.NullableDecimalToLong_SPI_1582 start.*/
             NullableDecimalToLong_SPI_1582: function () {
                 var x1 = System.Decimal(0), x2 = System.Decimal.lift(null);
                 Bridge.Test.NUnit.Assert.AreEqual(System.Int64([0,-5]), System.Decimal.toInt(System.Nullable.lift2("sub", x1, System.Decimal(System.Int64([0,5]))), System.Nullable$1(System.Int64)));
@@ -577,6 +734,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                     var _ = System.Decimal.toInt(x2, System.Int64);
                 });
             },
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.NullableDecimalToLong_SPI_1582 end.*/
+
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.NullableDecimalToULong_SPI_1582 start.*/
             NullableDecimalToULong_SPI_1582: function () {
                 var x1 = System.Decimal(0), x2 = System.Decimal.lift(null);
                 Bridge.Test.NUnit.Assert.AreEqual(System.UInt64(0), System.Decimal.toInt(x1, System.Nullable$1(System.UInt64)));
@@ -596,6 +756,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                     var _ = System.Decimal.toInt(x2, System.UInt64);
                 });
             },
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.NullableDecimalToULong_SPI_1582 end.*/
+
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.OperatorsWork_SPI_1583 start.*/
             OperatorsWork_SPI_1583: function () {
                 var x = System.Decimal(3);
                 // #1583
@@ -607,6 +770,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                     var _ = x.mod(System.Decimal(0.0));
                 });
             },
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.OperatorsWork_SPI_1583 end.*/
+
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.LiftedOperatorsWork_SPI_1583 start.*/
             LiftedOperatorsWork_SPI_1583: function () {
                 var x1 = System.Decimal(3);
 
@@ -619,6 +785,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                     var _ = System.Nullable.lift2("mod", x1, System.Decimal(0.0));
                 });
             },
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.LiftedOperatorsWork_SPI_1583 end.*/
+
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.ParseWorks_SPI_1586 start.*/
             ParseWorks_SPI_1586: function () {
                 // #1586
                 // Test restructure to keep assertion count correct (prevent uncaught test exception)
@@ -635,6 +804,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
 
                 //Assert.Throws<OverflowException>(() => decimal.Parse("999999999999999999999999999999"));
             },
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.ParseWorks_SPI_1586 end.*/
+
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.TryParseWorks_SPI_1586 start.*/
             TryParseWorks_SPI_1586: function () {
                 var d = { };
                 var b;
@@ -652,6 +824,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                 //Assert.False(b);
                 //AssertIsDecimalAndEqualTo(d, 0);
             },
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.TryParseWorks_SPI_1586 end.*/
+
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.ImplementationTests_SPI_1588_1590_1650 start.*/
             ImplementationTests_SPI_1588_1590_1650: function () {
                 // #1650
                 Bridge.Test.NUnit.Assert.AreEqual("0.0000000000000184016013412280", ((System.Decimal("0.00000070385779892274")).mul(System.Decimal("0.00000002614391908336"))).toString(), "(new Decimal(\"0.00000070385779892274\")).mul(\"0.00000002614391908336\").toString() == \"0.0000000000000184016013412280\" FAILED");
@@ -679,76 +854,118 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                 Bridge.Test.NUnit.Assert.AreEqual("0.0344964205226649308283349310", ((System.Decimal("0.0000244098234104038")).mul(System.Decimal("1413.21876617764"))).toString(), "(new Decimal(\"0.0000244098234104038\")).mul(\"1413.21876617764\").toString() == \"0.0344964205226649308283349310\" FAILED");
                 // #1650
                 Bridge.Test.NUnit.Assert.AreEqual("0.0000000000429259949352215200", ((System.Decimal("0.00000008143559702739")).mul(System.Decimal("0.000527115862130707"))).toString(), "(new Decimal(\"0.00000008143559702739\")).mul(\"0.000527115862130707\").toString() == \"0.0000000000429259949352215200\" FAILED");
-            }
+            },
+            /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests.ImplementationTests_SPI_1588_1590_1650 end.*/
+
+
         }
     });
+    /*Bridge.ClientTest.Batch4.SimpleTypes.DecimalTests end.*/
 
+    /*Bridge.ClientTest.Batch4.SimpleTypes.Int32Tests start.*/
     Bridge.define("Bridge.ClientTest.Batch4.SimpleTypes.Int32Tests", {
         methods: {
+            /*Bridge.ClientTest.Batch4.SimpleTypes.Int32Tests.IntegerModuloWorks_SPI_1602 start.*/
             IntegerModuloWorks_SPI_1602: function () {
                 var a = 17, b = 4, c = 0;
                 // #1602
                 Bridge.Test.NUnit.Assert.Throws$2(System.DivideByZeroException, function () {
                     var x = a % c;
                 });
-            }
+            },
+            /*Bridge.ClientTest.Batch4.SimpleTypes.Int32Tests.IntegerModuloWorks_SPI_1602 end.*/
+
+
         }
     });
+    /*Bridge.ClientTest.Batch4.SimpleTypes.Int32Tests end.*/
 
+    /*Bridge.ClientTest.Batch4.SimpleTypes.StringTests start.*/
     Bridge.define("Bridge.ClientTest.Batch4.SimpleTypes.StringTests", {
         methods: {
+            /*Bridge.ClientTest.Batch4.SimpleTypes.StringTests.FormatWorksWithIFormattable_SPI_1598 start.*/
             FormatWorksWithIFormattable_SPI_1598: function () {
                 // #1598
                 Bridge.Test.NUnit.Assert.AreEqual("Formatted: FMT, null formatProvider", System.String.format("{0:FMT}", [new Bridge.ClientTest.Batch4.SimpleTypes.StringTests.MyFormattable()]));
             },
+            /*Bridge.ClientTest.Batch4.SimpleTypes.StringTests.FormatWorksWithIFormattable_SPI_1598 end.*/
+
+            /*Bridge.ClientTest.Batch4.SimpleTypes.StringTests.FormatWorksWithIFormattableAndFormatProvider_SPI_1598 start.*/
             FormatWorksWithIFormattableAndFormatProvider_SPI_1598: function () {
                 // #1598
                 Bridge.Test.NUnit.Assert.AreEqual("Formatted: FMT, StringTests+MyFormatProvider", System.String.formatProvider(new Bridge.ClientTest.Batch4.SimpleTypes.StringTests.MyFormatProvider(), "{0:FMT}", [new Bridge.ClientTest.Batch4.SimpleTypes.StringTests.MyFormattable()]));
-            }
+            },
+            /*Bridge.ClientTest.Batch4.SimpleTypes.StringTests.FormatWorksWithIFormattableAndFormatProvider_SPI_1598 end.*/
+
+
         }
     });
+    /*Bridge.ClientTest.Batch4.SimpleTypes.StringTests end.*/
 
+    /*Bridge.ClientTest.Batch4.SimpleTypes.StringTests+MyFormatProvider start.*/
     Bridge.define("Bridge.ClientTest.Batch4.SimpleTypes.StringTests.MyFormatProvider", {
         inherits: [System.IFormatProvider],
         $kind: "nested class",
         alias: ["getFormat", "System$IFormatProvider$getFormat"],
         methods: {
+            /*Bridge.ClientTest.Batch4.SimpleTypes.StringTests+MyFormatProvider.getFormat start.*/
             getFormat: function (type) {
                 return System.Globalization.CultureInfo.invariantCulture.getFormat(type);
-            }
+            },
+            /*Bridge.ClientTest.Batch4.SimpleTypes.StringTests+MyFormatProvider.getFormat end.*/
+
+
         }
     });
+    /*Bridge.ClientTest.Batch4.SimpleTypes.StringTests+MyFormatProvider end.*/
 
+    /*Bridge.ClientTest.Batch4.SimpleTypes.StringTests+MyFormattable start.*/
     Bridge.define("Bridge.ClientTest.Batch4.SimpleTypes.StringTests.MyFormattable", {
         inherits: [System.IFormattable],
         $kind: "nested class",
         alias: ["format", "System$IFormattable$format"],
         methods: {
+            /*Bridge.ClientTest.Batch4.SimpleTypes.StringTests+MyFormattable.format start.*/
             format: function (format, formatProvider) {
                 return "Formatted: " + (format || "") + ", " + ((formatProvider == null ? "null formatProvider" : Bridge.Reflection.getTypeFullName(Bridge.getType(formatProvider))) || "");
-            }
+            },
+            /*Bridge.ClientTest.Batch4.SimpleTypes.StringTests+MyFormattable.format end.*/
+
+
         }
     });
+    /*Bridge.ClientTest.Batch4.SimpleTypes.StringTests+MyFormattable end.*/
 
+    /*Bridge.ClientTest.Batch4.TestHelper start.*/
     Bridge.define("Bridge.ClientTest.Batch4.TestHelper", {
         statics: {
             methods: {
+                /*Bridge.ClientTest.Batch4.TestHelper.Safe:static start.*/
                 Safe: function (a) {
                     try {
                         a();
                     } catch ($e1) {
                         $e1 = System.Exception.create($e1);
                     }
-                }
+                },
+                /*Bridge.ClientTest.Batch4.TestHelper.Safe:static end.*/
+
+
             }
         }
     });
+    /*Bridge.ClientTest.Batch4.TestHelper end.*/
 
+    /*Bridge.ClientTest.Batch4.UserDefinedStructTests start.*/
     Bridge.define("Bridge.ClientTest.Batch4.UserDefinedStructTests", {
         methods: {
+            /*Bridge.ClientTest.Batch4.UserDefinedStructTests.Create start.*/
             Create: function (T) {
                 return Bridge.createInstance(T);
             },
+            /*Bridge.ClientTest.Batch4.UserDefinedStructTests.Create end.*/
+
+            /*Bridge.ClientTest.Batch4.UserDefinedStructTests.DefaultValueOfStructWithInlineCodeDefaultConstructorWorks_SPI_1610 start.*/
             DefaultValueOfStructWithInlineCodeDefaultConstructorWorks_SPI_1610: function () {
                 var s1 = Bridge.getDefaultValue(Bridge.ClientTest.Batch4.UserDefinedStructTests.S6);
                 var s2 = this.Create(Bridge.ClientTest.Batch4.UserDefinedStructTests.S6);
@@ -756,6 +973,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                 Bridge.Test.NUnit.Assert.AreEqual(42, s1.i, "#1");
                 Bridge.Test.NUnit.Assert.AreEqual(42, s2.i, "#2");
             },
+            /*Bridge.ClientTest.Batch4.UserDefinedStructTests.DefaultValueOfStructWithInlineCodeDefaultConstructorWorks_SPI_1610 end.*/
+
+            /*Bridge.ClientTest.Batch4.UserDefinedStructTests.DefaultValueOfStructWithInlineCodeDefaultConstructorWorksGeneric_SPI_1610 start.*/
             DefaultValueOfStructWithInlineCodeDefaultConstructorWorksGeneric_SPI_1610: function () {
                 var s1 = Bridge.getDefaultValue(Bridge.ClientTest.Batch4.UserDefinedStructTests.S6G$1(System.Int32));
                 var s2 = this.Create(Bridge.ClientTest.Batch4.UserDefinedStructTests.S6G$1(System.Int32));
@@ -763,6 +983,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                 Bridge.Test.NUnit.Assert.AreEqual(42, s1.i, "#1");
                 Bridge.Test.NUnit.Assert.AreEqual(42, s2.i, "#2");
             },
+            /*Bridge.ClientTest.Batch4.UserDefinedStructTests.DefaultValueOfStructWithInlineCodeDefaultConstructorWorksGeneric_SPI_1610 end.*/
+
+            /*Bridge.ClientTest.Batch4.UserDefinedStructTests.CanLiftUserDefinedConversionOperator_SPI_1611 start.*/
             CanLiftUserDefinedConversionOperator_SPI_1611: function () {
                 var a = new Bridge.ClientTest.Batch4.UserDefinedStructTests.S7.$ctor1(42), b = null;
                 var d1 = null;
@@ -777,6 +1000,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                 });
                 Bridge.Test.NUnit.Assert.Null(d2, "#2");
             },
+            /*Bridge.ClientTest.Batch4.UserDefinedStructTests.CanLiftUserDefinedConversionOperator_SPI_1611 end.*/
+
+            /*Bridge.ClientTest.Batch4.UserDefinedStructTests.AutoEventBackingFieldsAreClonedWhenValueTypeIsCopied_SPI_1612 start.*/
             AutoEventBackingFieldsAreClonedWhenValueTypeIsCopied_SPI_1612: function () {
                 var count = 0;
                 var a = function () {
@@ -793,10 +1019,15 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
                 s2.RaiseE();
                 // #1612
                 Bridge.Test.NUnit.Assert.AreEqual(3, count);
-            }
+            },
+            /*Bridge.ClientTest.Batch4.UserDefinedStructTests.AutoEventBackingFieldsAreClonedWhenValueTypeIsCopied_SPI_1612 end.*/
+
+
         }
     });
+    /*Bridge.ClientTest.Batch4.UserDefinedStructTests end.*/
 
+    /*Bridge.ClientTest.Batch4.UserDefinedStructTests+MS1 start.*/
     Bridge.define("Bridge.ClientTest.Batch4.UserDefinedStructTests.MS1", {
         $kind: "nested struct",
         statics: {
@@ -824,9 +1055,12 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
             }
         },
         methods: {
+            /*Bridge.ClientTest.Batch4.UserDefinedStructTests+MS1.RaiseE start.*/
             RaiseE: function () {
                 this.E();
             },
+            /*Bridge.ClientTest.Batch4.UserDefinedStructTests+MS1.RaiseE end.*/
+
             getHashCode: function () {
                 var h = Bridge.addHash([3232589, this.i, this.N, this.P1, this.P2]);
                 return h;
@@ -847,7 +1081,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
             }
         }
     });
+    /*Bridge.ClientTest.Batch4.UserDefinedStructTests+MS1 end.*/
 
+    /*Bridge.ClientTest.Batch4.UserDefinedStructTests+MS2 start.*/
     Bridge.define("Bridge.ClientTest.Batch4.UserDefinedStructTests.MS2", {
         $kind: "nested struct",
         statics: {
@@ -881,7 +1117,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
             }
         }
     });
+    /*Bridge.ClientTest.Batch4.UserDefinedStructTests+MS2 end.*/
 
+    /*Bridge.ClientTest.Batch4.UserDefinedStructTests+MS4 start.*/
     Bridge.define("Bridge.ClientTest.Batch4.UserDefinedStructTests.MS4", {
         $kind: "nested struct",
         statics: {
@@ -918,7 +1156,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
             }
         }
     });
+    /*Bridge.ClientTest.Batch4.UserDefinedStructTests+MS4 end.*/
 
+    /*Bridge.ClientTest.Batch4.UserDefinedStructTests+S6 start.*/
     Bridge.define("Bridge.ClientTest.Batch4.UserDefinedStructTests.S6", {
         $kind: "nested struct",
         statics: {
@@ -952,7 +1192,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
             }
         }
     });
+    /*Bridge.ClientTest.Batch4.UserDefinedStructTests+S6 end.*/
 
+    /*Bridge.ClientTest.Batch4.UserDefinedStructTests+S6G$1 start.*/
     Bridge.define("Bridge.ClientTest.Batch4.UserDefinedStructTests.S6G$1", function (TT) { return {
         $kind: "nested struct",
         statics: {
@@ -986,7 +1228,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
             }
         }
     }; });
+    /*Bridge.ClientTest.Batch4.UserDefinedStructTests+S6G$1 end.*/
 
+    /*Bridge.ClientTest.Batch4.UserDefinedStructTests+S7 start.*/
     Bridge.define("Bridge.ClientTest.Batch4.UserDefinedStructTests.S7", {
         $kind: "nested struct",
         statics: {
@@ -1033,8 +1277,13 @@ Bridge.assembly("Bridge.ClientTest.Batch4", function ($asm, globals) {
             }
         }
     });
+    /*Bridge.ClientTest.Batch4.UserDefinedStructTests+S7 end.*/
 
     var $m = Bridge.setMetadata,
         $n = ["Bridge.ClientTest.Batch4","System"];
+
+    /*Bridge.ClientTest.Batch4.DelegateTests start.*/
     $m("Bridge.ClientTest.Batch4.DelegateTests", function () { return {"nested":[Function,Function,$n[0].DelegateTests.C],"att":1048577,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":1,"n":"A","t":8,"sn":"A","rt":$n[1].Void},{"a":1,"n":"AddForCreateWorks","t":8,"pi":[{"n":"x","pt":$n[1].Int32,"ps":0}],"sn":"AddForCreateWorks","rt":$n[1].Int32,"p":[$n[1].Int32],"box":function ($v) { return Bridge.box($v, System.Int32);}},{"a":2,"n":"Call","t":8,"pi":[{"n":"t","pt":$n[1].Object,"ps":0},{"n":"d","pt":Function,"ps":1},{"n":"args","ip":true,"pt":$n[1].Array.type(System.Object),"ps":2}],"tpc":0,"def":function (t, d, args) { return this.d.apply(t, args); },"rt":$n[1].Object,"p":[$n[1].Object,Function,$n[1].Array.type(System.Object)]},{"a":2,"n":"CloneWorks_SPI_1563","t":8,"sn":"CloneWorks_SPI_1563","rt":$n[1].Void},{"a":2,"n":"CloningDelegateToTheSameTypeCreatesANewClone_SPI_1563","t":8,"sn":"CloningDelegateToTheSameTypeCreatesANewClone_SPI_1563","rt":$n[1].Void},{"a":2,"n":"CreateWorks","t":8,"sn":"CreateWorks","rt":$n[1].Void},{"a":2,"n":"EqualityAndInequalityOperatorsAndEqualsMethod_SPI_1563","t":8,"sn":"EqualityAndInequalityOperatorsAndEqualsMethod_SPI_1563","rt":$n[1].Void},{"a":2,"n":"RemoveDoesNotAffectOriginal_SPI_1563","t":8,"sn":"RemoveDoesNotAffectOriginal_SPI_1563","rt":$n[1].Void},{"a":2,"n":"RemoveWorksWithMethodGroupConversion_SPI_1563","t":8,"sn":"RemoveWorksWithMethodGroupConversion_SPI_1563","rt":$n[1].Void},{"a":1,"n":"testField","t":4,"rt":$n[1].Int32,"sn":"testField","box":function ($v) { return Bridge.box($v, System.Int32);}}]}; }, $n);
+    /*Bridge.ClientTest.Batch4.DelegateTests end.*/
+
 });

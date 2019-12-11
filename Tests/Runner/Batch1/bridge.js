@@ -1,5 +1,5 @@
 /**
- * @version   : 17.9.2-luna - Bridge.NET
+ * @version   : 17.9.3-luna - Bridge.NET
  * @author    : Object.NET, Inc. http://bridge.net/
  * @copyright : Copyright 2008-2019 Object.NET, Inc. http://object.net/
  * @license   : See license.txt and https://github.com/bridgedotnet/Bridge/blob/master/LICENSE.md
@@ -33,6 +33,11 @@
             for (var i = 0; i < args.length; i++) {
                 args[i].v = i == 7 ? obj["Rest"] : obj["Item" + (i + 1)];
             }
+        },
+
+
+        rValue: function (type) {
+            return type && type.$clone && type.constructor && type.constructor.$kind === "struct" ? type.$clone() : type;
         },
 
         toString: function (instance) {
@@ -3500,8 +3505,8 @@
 
     /*Bridge.Utils.SystemAssemblyVersion start.*/
     Bridge.init(function () {
-        Bridge.SystemAssembly.version = "17.9.2-luna";
-        Bridge.SystemAssembly.compiler = "17.9.2-luna";
+        Bridge.SystemAssembly.version = "17.9.3-luna";
+        Bridge.SystemAssembly.compiler = "17.9.3-luna";
     });
 
     Bridge.define("Bridge.Utils.SystemAssemblyVersion");
@@ -4262,13 +4267,7 @@
                 }
             }
 
-            var f = function () {
-                constructor.apply(this, args);
-            };
-
-            f.prototype = constructor.prototype;
-
-            return new f();
+            return new constructor( ...args );
         },
 
         getAttributes: function (type, attrType, inherit) {
