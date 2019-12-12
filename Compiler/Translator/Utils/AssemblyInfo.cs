@@ -357,11 +357,13 @@ namespace Bridge.Translator
 
         public DeadCodeConfig DeadCode
         {
-            get; set;
+            get;
+            set;
         }
 
         /// <summary>
-        /// Make additional check for generic value types for adding $clone 
+        /// Clones value types when used as generics' parameters.
+        /// If false value types are never cloned (i.e. treated as reference types) when used as parameters in generic types.
         /// </summary>
         public bool SafeStructsInGenerics
         {
