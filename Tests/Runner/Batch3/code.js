@@ -37531,6 +37531,7 @@ Bridge.$N1391Result =                     r;
                  * @return  {void}
                  */
                 TestUsingStaticWithDirective: function () {
+                    Bridge.Test.NUnit.Assert.AreEqual(7, Bridge.ClientTest.Batch3.BridgeIssues.Bridge3421.Logger.Log("Success"), "The Log function is enabled via a compile-time constant.");
                     Bridge.Test.NUnit.Assert.True(Bridge.ClientTest.Batch3.BridgeIssues.Bridge3421.NoLoggerElse.NoLog(), "The expected using static was triggered for unset compile-time constat.");
                 },
                 /*Bridge.ClientTest.Batch3.BridgeIssues.Bridge3421.TestUsingStaticWithDirective:static end.*/
@@ -41415,7 +41416,6 @@ Bridge.$N1391Result =                     r;
                     var keys = this.keys;
                     System.Array.copyTo(dictionary["System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TK) + "$" + Bridge.getTypeAlias(TV) + "$Keys"], keys, 0, TK);
                     System.Array.copyTo(dictionary["System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TK) + "$" + Bridge.getTypeAlias(TV) + "$Values"], this.values, 0, TV);
-                    System.Diagnostics.Debug.Assert(count === this.keys.length);
                     if (count > 1) {
                         comparer = this.Comparer; // obtain default if this is null.
 

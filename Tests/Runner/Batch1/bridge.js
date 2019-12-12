@@ -17060,7 +17060,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 /*System.Collections.Generic.SortedSet$1.Is2Node:static start.*/
                 Is2Node: function (node) {
-                    System.Diagnostics.Debug.Assert$1(node != null, "node cannot be null!");
                     return System.Collections.Generic.SortedSet$1(T).IsBlack(node) && System.Collections.Generic.SortedSet$1(T).IsNullOrBlack(node.Left) && System.Collections.Generic.SortedSet$1(T).IsNullOrBlack(node.Right);
                 },
                 /*System.Collections.Generic.SortedSet$1.Is2Node:static end.*/
@@ -17091,7 +17090,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 /*System.Collections.Generic.SortedSet$1.Merge2Nodes:static start.*/
                 Merge2Nodes: function (parent, child1, child2) {
-                    System.Diagnostics.Debug.Assert$1(System.Collections.Generic.SortedSet$1(T).IsRed(parent), "parent must be be red");
                     parent.IsRed = false;
                     child1.IsRed = true;
                     child2.IsRed = true;
@@ -17144,7 +17142,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 /*System.Collections.Generic.SortedSet$1.RotationNeeded:static start.*/
                 RotationNeeded: function (parent, current, sibling) {
-                    System.Diagnostics.Debug.Assert$1(System.Collections.Generic.SortedSet$1(T).IsRed(sibling.Left) || System.Collections.Generic.SortedSet$1(T).IsRed(sibling.Right), "sibling must have at least one red child");
                     if (System.Collections.Generic.SortedSet$1(T).IsRed(sibling.Left)) {
                         if (Bridge.referenceEquals(parent.Left, current)) {
                             return System.Collections.Generic.TreeRotation.RightLeftRotation;
@@ -17640,7 +17637,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     current = (order < 0) ? current.Left : current.Right;
                 }
 
-                System.Diagnostics.Debug.Assert$1(parent.v != null, "Parent node cannot be null here!");
                 var node = new (System.Collections.Generic.SortedSet$1.Node(T)).ctor(item);
                 if (order > 0) {
                     parent.v.Right = node;
@@ -17688,7 +17684,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                         } else {
                             var sibling = System.Collections.Generic.SortedSet$1(T).GetSibling(current, parent);
                             if (sibling.IsRed) {
-                                System.Diagnostics.Debug.Assert$1(!parent.IsRed, "parent must be a black node!");
                                 if (Bridge.referenceEquals(parent.Right, sibling)) {
                                     System.Collections.Generic.SortedSet$1(T).RotateLeft(parent);
                                 } else {
@@ -17705,7 +17700,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                                 sibling = (Bridge.referenceEquals(parent.Left, current)) ? parent.Right : parent.Left;
                             }
-                            System.Diagnostics.Debug.Assert$1(sibling != null || sibling.IsRed === false, "sibling must not be null and it must be black!");
 
                             if (System.Collections.Generic.SortedSet$1(T).Is2Node(sibling)) {
                                 System.Collections.Generic.SortedSet$1(T).Merge2Nodes(parent, current, sibling);
@@ -17714,25 +17708,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                                 var newGrandParent = null;
                                 switch (rotation) {
                                     case System.Collections.Generic.TreeRotation.RightRotation: 
-                                        System.Diagnostics.Debug.Assert$1(Bridge.referenceEquals(parent.Left, sibling), "sibling must be left child of parent!");
-                                        System.Diagnostics.Debug.Assert$1(sibling.Left.IsRed, "Left child of sibling must be red!");
                                         sibling.Left.IsRed = false;
                                         newGrandParent = System.Collections.Generic.SortedSet$1(T).RotateRight(parent);
                                         break;
                                     case System.Collections.Generic.TreeRotation.LeftRotation: 
-                                        System.Diagnostics.Debug.Assert$1(Bridge.referenceEquals(parent.Right, sibling), "sibling must be left child of parent!");
-                                        System.Diagnostics.Debug.Assert$1(sibling.Right.IsRed, "Right child of sibling must be red!");
                                         sibling.Right.IsRed = false;
                                         newGrandParent = System.Collections.Generic.SortedSet$1(T).RotateLeft(parent);
                                         break;
                                     case System.Collections.Generic.TreeRotation.RightLeftRotation: 
-                                        System.Diagnostics.Debug.Assert$1(Bridge.referenceEquals(parent.Right, sibling), "sibling must be left child of parent!");
-                                        System.Diagnostics.Debug.Assert$1(sibling.Left.IsRed, "Left child of sibling must be red!");
                                         newGrandParent = System.Collections.Generic.SortedSet$1(T).RotateRightLeft(parent);
                                         break;
                                     case System.Collections.Generic.TreeRotation.LeftRightRotation: 
-                                        System.Diagnostics.Debug.Assert$1(Bridge.referenceEquals(parent.Left, sibling), "sibling must be left child of parent!");
-                                        System.Diagnostics.Debug.Assert$1(sibling.Right.IsRed, "Right child of sibling must be red!");
                                         newGrandParent = System.Collections.Generic.SortedSet$1(T).RotateLeftRight(parent);
                                         break;
                                 }
@@ -17903,7 +17889,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
             /*System.Collections.Generic.SortedSet$1.InsertionBalance start.*/
             InsertionBalance: function (current, parent, grandParent, greatGrandParent) {
-                System.Diagnostics.Debug.Assert$1(grandParent != null, "Grand parent cannot be null here!");
                 var parentIsOnRight = (Bridge.referenceEquals(grandParent.Right, parent.v));
                 var currentIsOnRight = (Bridge.referenceEquals(parent.v.Right, current));
 
@@ -17938,12 +17923,8 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.Generic.SortedSet$1.ReplaceNode start.*/
             ReplaceNode: function (match, parentOfMatch, succesor, parentOfSuccesor) {
                 if (Bridge.referenceEquals(succesor, match)) {
-                    System.Diagnostics.Debug.Assert$1(match.Right == null, "Right child must be null!");
                     succesor = match.Left;
                 } else {
-                    System.Diagnostics.Debug.Assert$1(parentOfSuccesor != null, "parent of successor cannot be null!");
-                    System.Diagnostics.Debug.Assert$1(succesor.Left == null, "Left child of succesor must be null!");
-                    System.Diagnostics.Debug.Assert$1((succesor.Right == null && succesor.IsRed) || (succesor.Right.IsRed && !succesor.IsRed), "Succesor must be in valid state");
                     if (succesor.Right != null) {
                         succesor.Right.IsRed = false;
                     }
@@ -18707,12 +18688,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             },
             /*System.Collections.Generic.SortedSet$1.GetViewBetween end.*/
 
-            /*System.Collections.Generic.SortedSet$1.versionUpToDate start.*/
-            versionUpToDate: function () {
-                return true;
-            },
-            /*System.Collections.Generic.SortedSet$1.versionUpToDate end.*/
-
             /*System.Collections.Generic.SortedSet$1.TryGetValue start.*/
             TryGetValue: function (equalValue, actualValue) {
                 var node = this.FindNode(equalValue);
@@ -19294,7 +19269,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
             /*System.Collections.Generic.SortedSet$1+TreeSubSet.VersionCheckImpl start.*/
             VersionCheckImpl: function () {
-                System.Diagnostics.Debug.Assert$1(this.underlying != null, "Underlying set no longer exists");
                 if (this.version !== this.underlying.version) {
                     this.root = this.underlying.FindRange$1(this.min, this.max, this.lBoundActive, this.uBoundActive);
                     this.version = this.underlying.version;
@@ -19774,7 +19748,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
             /*System.Collections.Generic.LinkedList$1.InternalInsertNodeToEmptyList start.*/
             InternalInsertNodeToEmptyList: function (newNode) {
-                System.Diagnostics.Debug.Assert$1(this.head == null && this.count === 0, "LinkedList must be empty when this method is called!");
                 newNode.next = newNode;
                 newNode.prev = newNode;
                 this.head = newNode;
@@ -19785,10 +19758,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
             /*System.Collections.Generic.LinkedList$1.InternalRemoveNode start.*/
             InternalRemoveNode: function (node) {
-                System.Diagnostics.Debug.Assert$1(Bridge.referenceEquals(node.list, this), "Deleting the node from another list!");
-                System.Diagnostics.Debug.Assert$1(this.head != null, "This method shouldn't be called on empty list!");
                 if (Bridge.referenceEquals(node.next, node)) {
-                    System.Diagnostics.Debug.Assert$1(this.count === 1 && Bridge.referenceEquals(this.head, node), "this should only be true for a list with only one node");
                     this.head = null;
                 } else {
                     node.next.prev = node.prev;
@@ -30932,13 +30902,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
         ctors: {
             ctor: function (members, info, types, numItems) {
                 this.$initialize();
-                System.Diagnostics.Debug.Assert$1(members != null, "[SerializationInfoEnumerator.ctor]members!=null");
-                System.Diagnostics.Debug.Assert$1(info != null, "[SerializationInfoEnumerator.ctor]info!=null");
-                System.Diagnostics.Debug.Assert$1(types != null, "[SerializationInfoEnumerator.ctor]types!=null");
-                System.Diagnostics.Debug.Assert$1(numItems >= 0, "[SerializationInfoEnumerator.ctor]numItems>=0");
-                System.Diagnostics.Debug.Assert$1(members.length >= numItems, "[SerializationInfoEnumerator.ctor]members.Length>=numItems");
-                System.Diagnostics.Debug.Assert$1(info.length >= numItems, "[SerializationInfoEnumerator.ctor]info.Length>=numItems");
-                System.Diagnostics.Debug.Assert$1(types.length >= numItems, "[SerializationInfoEnumerator.ctor]types.Length>=numItems");
 
                 this._members = members;
                 this._data = info;
@@ -41731,7 +41694,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 /*System.DateTimeOffset.ValidateDate:static start.*/
                 ValidateDate: function (dateTime, offset) {
-                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return offset.getTicks().gte(System.DateTimeOffset.MinOffset) && offset.getTicks().lte(System.DateTimeOffset.MaxOffset); }, "Offset not validated.");
                     var utcTicks = System.DateTime.getTicks(dateTime).sub(offset.getTicks());
                     if (utcTicks.lt(System.DateTime.getMinTicks()) || utcTicks.gt(System.DateTime.getMaxTicks())) {
                         throw new System.ArgumentOutOfRangeException.$ctor4("offset", System.Environment.GetResourceString("Argument_UTCOutOfRange"));
@@ -45850,7 +45812,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 var dayOfYear = (this.GetDayOfYear(time) - 1) | 0;
                 var dayForJan1 = (this.GetDayOfWeek(time) - (dayOfYear % 7)) | 0;
                 var offset = (((((dayForJan1 - firstDayOfWeek) | 0) + 14) | 0)) % 7;
-                System.Diagnostics.Debug.Assert$1(offset >= 0, "Calendar.GetFirstDayWeekOfYear(): offset >= 0");
                 return (((((Bridge.Int.div((((dayOfYear + offset) | 0)), 7)) | 0) + 1) | 0));
             },
             /*System.Globalization.Calendar.GetFirstDayWeekOfYear end.*/
@@ -47020,7 +46981,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 this.m_isMemoryStream = (Bridge.referenceEquals(Bridge.getType(this.m_stream), System.IO.MemoryStream));
                 this.m_leaveOpen = leaveOpen;
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this.m_encoding != null; }, "[BinaryReader.ctor]m_encoding!=null");
             }
         },
         methods: {
@@ -47185,7 +47145,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                         System.IO.__Error.FileNotOpen();
                     }
                     var mStream = Bridge.as(this.m_stream, System.IO.MemoryStream);
-                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return mStream != null; }, "m_stream as MemoryStream != null");
 
                     return mStream.InternalReadInt32();
                 } else {
@@ -47320,7 +47279,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
             /*System.IO.BinaryReader.InternalReadChars start.*/
             InternalReadChars: function (buffer, index, count) {
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this.m_stream != null; });
 
                 var charsRemaining = count;
 
@@ -47351,7 +47309,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     index = (index + 1) | 0;
                 }
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return charsRemaining >= 0; }, "We read too many characters.");
 
                 return (((count - charsRemaining) | 0));
             },
@@ -47464,7 +47421,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
 
                     if (!allowSurrogate) {
-                        System.Diagnostics.Contracts.Contract.assert(4, this, function () { return charsRead < 2; }, "InternalReadOneChar - assuming we only got 0 or 1 char, not 2!");
                     }
                 }
 
@@ -47733,7 +47689,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     throw new System.ArgumentException.$ctor1("Arg_SurrogatesNotAllowedAsSingleChar");
                 }
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._encoding.GetMaxByteCount(1) <= 16; }, "_encoding.GetMaxByteCount(1) <= 16)");
                 var numBytes = 0;
                 numBytes = this._encoding.GetBytes$3(System.Array.init([ch], System.Char), 0, 1, this._buffer, 0);
 
@@ -48234,7 +48189,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this.EnsureNotClosed();
                     this.EnsureCanSeek();
 
-                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return !(this._writePos > 0 && this._readPos !== this._readLen); }, "Read and Write buffers cannot both have data in them at the same time.");
                     return this._stream.Position.add(System.Int64((((((this._readPos - this._readLen) | 0) + this._writePos) | 0))));
                 },
                 set: function (value) {
@@ -48327,8 +48281,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.IO.BufferedStream.EnsureShadowBufferAllocated start.*/
             EnsureShadowBufferAllocated: function () {
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._buffer != null; });
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._bufferSize > 0; });
 
                 if (this._buffer.length !== this._bufferSize || this._bufferSize >= System.IO.BufferedStream.MaxShadowBufferSize) {
                     return;
@@ -48343,7 +48295,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.IO.BufferedStream.EnsureBufferAllocated start.*/
             EnsureBufferAllocated: function () {
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._bufferSize > 0; });
 
                 if (this._buffer == null) {
                     this._buffer = System.Array.init(this._bufferSize, 0, System.Byte);
@@ -48379,7 +48330,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 if (this._writePos > 0) {
 
                     this.FlushWrite();
-                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._writePos === 0 && this._readPos === 0 && this._readLen === 0; });
                     return;
                 }
 
@@ -48395,7 +48345,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                         this._stream.Flush();
                     }
 
-                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._writePos === 0 && this._readPos === 0 && this._readLen === 0; });
                     return;
                 }
 
@@ -48410,7 +48359,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.IO.BufferedStream.FlushRead start.*/
             FlushRead: function () {
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._writePos === 0; }, "BufferedStream: Write buffer must be empty in FlushRead!");
 
                 if (((this._readPos - this._readLen) | 0) !== 0) {
                     this._stream.Seek(System.Int64(this._readPos - this._readLen), 1);
@@ -48425,7 +48373,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             ClearReadBufferBeforeWrite: function () {
 
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._readPos <= this._readLen; }, "_readPos <= _readLen [" + this._readPos + " <= " + this._readLen + "]");
 
                 if (this._readPos === this._readLen) {
 
@@ -48433,7 +48380,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     return;
                 }
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._readPos < this._readLen; });
 
                 if (!this._stream.CanSeek) {
                     throw new System.NotSupportedException.ctor();
@@ -48446,8 +48392,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.IO.BufferedStream.FlushWrite start.*/
             FlushWrite: function () {
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._readPos === 0 && this._readLen === 0; }, "BufferedStream: Read buffer must be empty in FlushWrite!");
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._buffer != null && this._bufferSize >= this._writePos; }, "BufferedStream: Write buffer must be allocated and write position must be in the bounds of the buffer in FlushWrite!");
 
                 this._stream.Write(this._buffer, 0, this._writePos);
                 this._writePos = 0;
@@ -48459,13 +48403,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             ReadFromBuffer: function (array, offset, count) {
 
                 var readBytes = (this._readLen - this._readPos) | 0;
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return readBytes >= 0; });
 
                 if (readBytes === 0) {
                     return 0;
                 }
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return readBytes > 0; });
 
                 if (readBytes > count) {
                     readBytes = count;
@@ -48526,7 +48468,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     offset = (offset + bytesFromBuffer) | 0;
                 }
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._readLen === this._readPos; });
                 this._readPos = (this._readLen = 0);
 
                 if (this._writePos > 0) {
@@ -48633,7 +48574,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
 
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._writePos < this._bufferSize; });
 
                 var totalUserBytes;
                 var useBuffer;
@@ -48646,28 +48586,20 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     if (this._writePos < this._bufferSize) {
 
-                        System.Diagnostics.Contracts.Contract.assert(4, this, function () { return count.v === 0; });
                         return;
                     }
 
-                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return count.v >= 0; });
-                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._writePos === this._bufferSize; });
-                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._buffer != null; });
 
                     this._stream.Write(this._buffer, 0, this._writePos);
                     this._writePos = 0;
 
                     this.WriteToBuffer(array, offset, count);
 
-                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return count.v === 0; });
-                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._writePos < this._bufferSize; });
 
                 } else {
 
                     if (this._writePos > 0) {
 
-                        System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._buffer != null; });
-                        System.Diagnostics.Contracts.Contract.assert(4, this, function () { return totalUserBytes >= this._bufferSize; });
 
                         if (totalUserBytes <= (((this._bufferSize + this._bufferSize) | 0)) && totalUserBytes <= System.IO.BufferedStream.MaxShadowBufferSize) {
 
@@ -48705,7 +48637,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 this._buffer[System.Array.index(Bridge.identity(this._writePos, ((this._writePos = (this._writePos + 1) | 0))), this._buffer)] = value;
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._writePos < this._bufferSize; });
             },
             /*System.IO.BufferedStream.WriteByte end.*/
 
@@ -48728,7 +48659,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
 
                 var oldPos = this.Position;
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return oldPos.equals(this._stream.Position.add(System.Int64((((this._readPos - this._readLen) | 0))))); });
 
                 var newPos = this._stream.Seek(offset, origin);
 
@@ -48744,7 +48674,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     this._readPos = (this._readLen = 0);
                 }
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return newPos.equals(this.Position); }, "newPos (=" + newPos + ") == Position (=" + this.Position + ")");
                 return newPos;
             },
             /*System.IO.BufferedStream.Seek end.*/
@@ -49717,7 +49646,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     n = 0;
                 }
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return ((this._position + n) | 0) >= 0; }, "_position + n >= 0");
                 this._position = (this._position + n) | 0;
                 return n;
             },
@@ -49750,7 +49678,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     return 0;
                 }
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return ((this._position + n) | 0) >= 0; }, "_position + n >= 0");
 
                 if (n <= 8) {
                     var byteCount = n;
@@ -49821,7 +49748,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                         throw new System.ArgumentException.$ctor1("Argument_InvalidSeekOrigin");
                 }
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._position >= 0; }, "_position >= 0");
                 return System.Int64(this._position);
             },
             /*System.IO.MemoryStream.Seek end.*/
@@ -49833,7 +49759,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 }
                 this.EnsureWriteable();
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return true; });
                 if (value.gt(System.Int64((((2147483647 - this._origin) | 0))))) {
                     throw new System.ArgumentOutOfRangeException.$ctor4("value", "ArgumentOutOfRange_StreamLength");
                 }
@@ -50816,7 +50741,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
             /*System.IO.StreamReader.CompressBuffer start.*/
             CompressBuffer: function (n) {
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this.byteLen >= n; }, "CompressBuffer was called with a number of bytes greater than the current buffer length.  Are two threads using this StreamReader at the same time?");
                 System.Array.copy(this.byteBuffer, n, this.byteBuffer, 0, ((this.byteLen - n) | 0));
                 this.byteLen = (this.byteLen - n) | 0;
             },
@@ -50876,9 +50800,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 this.byteLen = 0;
                 do {
-                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this.bytePos === 0; }, "bytePos can be non zero only when we are trying to _checkPreamble.  Are two threads using this StreamReader at the same time?");
                     this.byteLen = this.stream.Read(this.byteBuffer, 0, this.byteBuffer.length);
-                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this.byteLen >= 0; }, "Stream.Read returned a negative number!  This is a bug in your stream class.");
 
                     if (this.byteLen === 0) {
                         return this.charLen;
@@ -50912,13 +50834,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 readToUserBuffer.v = desiredChars >= this._maxCharsPerBuffer;
 
                 do {
-                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return charsRead === 0; });
 
-                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this.bytePos === 0; }, "bytePos can be non zero only when we are trying to _checkPreamble.  Are two threads using this StreamReader at the same time?");
 
                     this.byteLen = this.stream.Read(this.byteBuffer, 0, this.byteBuffer.length);
 
-                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this.byteLen >= 0; }, "Stream.Read returned a negative number!  This is a bug in your stream class.");
 
                     if (this.byteLen === 0) {
                         break;
@@ -51683,7 +51602,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     if (n > count) {
                         n = count;
                     }
-                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return n > 0; }, "StreamWriter::Write(char[]) isn't making progress!  This is most likely a ---- in user code.");
                     System.Array.copy(buffer, index, this.charBuffer, this.charPos, n);
                     this.charPos = (this.charPos + n) | 0;
                     index = (index + n) | 0;
@@ -51718,7 +51636,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     if (n > count) {
                         n = count;
                     }
-                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return n > 0; }, "StreamWriter::Write(char[], int, int) isn't making progress!  This is most likely a race condition in user code.");
                     System.Array.copy(buffer, index, this.charBuffer, this.charPos, n);
                     this.charPos = (this.charPos + n) | 0;
                     index = (index + n) | 0;
@@ -51743,7 +51660,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                         if (n > count) {
                             n = count;
                         }
-                        System.Diagnostics.Contracts.Contract.assert(4, this, function () { return n > 0; }, "StreamWriter::Write(String) isn't making progress!  This is most likely a race condition in user code.");
                         System.String.copyTo(value, index, this.charBuffer, this.charPos, n);
                         this.charPos = (this.charPos + n) | 0;
                         index = (index + n) | 0;
@@ -53026,7 +52942,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 /*System.SR.InternalGetResourceString:static start.*/
                 InternalGetResourceString: function (key) {
                     if (key == null || key.length === 0) {
-                        System.Diagnostics.Debug.Fail("SR::GetResourceString with null or empty key.  Bug in caller, or weird recursive loading problem?");
                         return key;
                     }
 
@@ -53527,7 +53442,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                         return System.ThrowHelper.GetArgumentOutOfRangeException(System.ExceptionArgument.count, System.ExceptionResource.ArgumentOutOfRange_NeedNonNegNum);
                     }
 
-                    System.Diagnostics.Debug.Assert(((array.length - offset) | 0) < count);
                     return System.ThrowHelper.GetArgumentException(System.ExceptionResource.Argument_InvalidOffLen);
                 },
                 /*System.ThrowHelper.GetArraySegmentCtorValidationFailedException:static end.*/
@@ -53596,7 +53510,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 /*System.ThrowHelper.GetArgumentName:static start.*/
                 GetArgumentName: function (argument) {
-                    System.Diagnostics.Debug.Assert$1(System.Enum.isDefined(System.ExceptionArgument, Bridge.box(argument, System.ExceptionArgument, System.Enum.toStringFn(System.ExceptionArgument))), "The enum value is not defined, please check the ExceptionArgument Enum.");
 
                     return System.Enum.toString(System.ExceptionArgument, argument);
                 },
@@ -53604,7 +53517,6 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                 /*System.ThrowHelper.GetResourceString:static start.*/
                 GetResourceString: function (resource) {
-                    System.Diagnostics.Debug.Assert$1(System.Enum.isDefined(System.ExceptionResource, Bridge.box(resource, System.ExceptionResource, System.Enum.toStringFn(System.ExceptionResource))), "The enum value is not defined, please check the ExceptionResource Enum.");
 
                     return System.SR.GetResourceString(System.Enum.toString(System.ExceptionResource, resource));
                 },
