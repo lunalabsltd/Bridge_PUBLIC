@@ -48,7 +48,6 @@
 
                 /*System.Collections.Generic.SortedSet$1.Is2Node:static start.*/
                 Is2Node: function (node) {
-                    System.Diagnostics.Debug.Assert$1(node != null, "node cannot be null!");
                     return System.Collections.Generic.SortedSet$1(T).IsBlack(node) && System.Collections.Generic.SortedSet$1(T).IsNullOrBlack(node.Left) && System.Collections.Generic.SortedSet$1(T).IsNullOrBlack(node.Right);
                 },
                 /*System.Collections.Generic.SortedSet$1.Is2Node:static end.*/
@@ -79,7 +78,6 @@
 
                 /*System.Collections.Generic.SortedSet$1.Merge2Nodes:static start.*/
                 Merge2Nodes: function (parent, child1, child2) {
-                    System.Diagnostics.Debug.Assert$1(System.Collections.Generic.SortedSet$1(T).IsRed(parent), "parent must be be red");
                     parent.IsRed = false;
                     child1.IsRed = true;
                     child2.IsRed = true;
@@ -132,7 +130,6 @@
 
                 /*System.Collections.Generic.SortedSet$1.RotationNeeded:static start.*/
                 RotationNeeded: function (parent, current, sibling) {
-                    System.Diagnostics.Debug.Assert$1(System.Collections.Generic.SortedSet$1(T).IsRed(sibling.Left) || System.Collections.Generic.SortedSet$1(T).IsRed(sibling.Right), "sibling must have at least one red child");
                     if (System.Collections.Generic.SortedSet$1(T).IsRed(sibling.Left)) {
                         if (Bridge.referenceEquals(parent.Left, current)) {
                             return System.Collections.Generic.TreeRotation.RightLeftRotation;
@@ -628,7 +625,6 @@
                     current = (order < 0) ? current.Left : current.Right;
                 }
 
-                System.Diagnostics.Debug.Assert$1(parent.v != null, "Parent node cannot be null here!");
                 var node = new (System.Collections.Generic.SortedSet$1.Node(T)).ctor(item);
                 if (order > 0) {
                     parent.v.Right = node;
@@ -676,7 +672,6 @@
                         } else {
                             var sibling = System.Collections.Generic.SortedSet$1(T).GetSibling(current, parent);
                             if (sibling.IsRed) {
-                                System.Diagnostics.Debug.Assert$1(!parent.IsRed, "parent must be a black node!");
                                 if (Bridge.referenceEquals(parent.Right, sibling)) {
                                     System.Collections.Generic.SortedSet$1(T).RotateLeft(parent);
                                 } else {
@@ -693,7 +688,6 @@
 
                                 sibling = (Bridge.referenceEquals(parent.Left, current)) ? parent.Right : parent.Left;
                             }
-                            System.Diagnostics.Debug.Assert$1(sibling != null || sibling.IsRed === false, "sibling must not be null and it must be black!");
 
                             if (System.Collections.Generic.SortedSet$1(T).Is2Node(sibling)) {
                                 System.Collections.Generic.SortedSet$1(T).Merge2Nodes(parent, current, sibling);
@@ -702,25 +696,17 @@
                                 var newGrandParent = null;
                                 switch (rotation) {
                                     case System.Collections.Generic.TreeRotation.RightRotation: 
-                                        System.Diagnostics.Debug.Assert$1(Bridge.referenceEquals(parent.Left, sibling), "sibling must be left child of parent!");
-                                        System.Diagnostics.Debug.Assert$1(sibling.Left.IsRed, "Left child of sibling must be red!");
                                         sibling.Left.IsRed = false;
                                         newGrandParent = System.Collections.Generic.SortedSet$1(T).RotateRight(parent);
                                         break;
                                     case System.Collections.Generic.TreeRotation.LeftRotation: 
-                                        System.Diagnostics.Debug.Assert$1(Bridge.referenceEquals(parent.Right, sibling), "sibling must be left child of parent!");
-                                        System.Diagnostics.Debug.Assert$1(sibling.Right.IsRed, "Right child of sibling must be red!");
                                         sibling.Right.IsRed = false;
                                         newGrandParent = System.Collections.Generic.SortedSet$1(T).RotateLeft(parent);
                                         break;
                                     case System.Collections.Generic.TreeRotation.RightLeftRotation: 
-                                        System.Diagnostics.Debug.Assert$1(Bridge.referenceEquals(parent.Right, sibling), "sibling must be left child of parent!");
-                                        System.Diagnostics.Debug.Assert$1(sibling.Left.IsRed, "Left child of sibling must be red!");
                                         newGrandParent = System.Collections.Generic.SortedSet$1(T).RotateRightLeft(parent);
                                         break;
                                     case System.Collections.Generic.TreeRotation.LeftRightRotation: 
-                                        System.Diagnostics.Debug.Assert$1(Bridge.referenceEquals(parent.Left, sibling), "sibling must be left child of parent!");
-                                        System.Diagnostics.Debug.Assert$1(sibling.Right.IsRed, "Right child of sibling must be red!");
                                         newGrandParent = System.Collections.Generic.SortedSet$1(T).RotateLeftRight(parent);
                                         break;
                                 }
@@ -891,7 +877,6 @@
 
             /*System.Collections.Generic.SortedSet$1.InsertionBalance start.*/
             InsertionBalance: function (current, parent, grandParent, greatGrandParent) {
-                System.Diagnostics.Debug.Assert$1(grandParent != null, "Grand parent cannot be null here!");
                 var parentIsOnRight = (Bridge.referenceEquals(grandParent.Right, parent.v));
                 var currentIsOnRight = (Bridge.referenceEquals(parent.v.Right, current));
 
@@ -926,12 +911,8 @@
             /*System.Collections.Generic.SortedSet$1.ReplaceNode start.*/
             ReplaceNode: function (match, parentOfMatch, succesor, parentOfSuccesor) {
                 if (Bridge.referenceEquals(succesor, match)) {
-                    System.Diagnostics.Debug.Assert$1(match.Right == null, "Right child must be null!");
                     succesor = match.Left;
                 } else {
-                    System.Diagnostics.Debug.Assert$1(parentOfSuccesor != null, "parent of successor cannot be null!");
-                    System.Diagnostics.Debug.Assert$1(succesor.Left == null, "Left child of succesor must be null!");
-                    System.Diagnostics.Debug.Assert$1((succesor.Right == null && succesor.IsRed) || (succesor.Right.IsRed && !succesor.IsRed), "Succesor must be in valid state");
                     if (succesor.Right != null) {
                         succesor.Right.IsRed = false;
                     }
@@ -1694,12 +1675,6 @@
                 return new (System.Collections.Generic.SortedSet$1.TreeSubSet(T)).$ctor1(this, lowerValue, upperValue, true, true);
             },
             /*System.Collections.Generic.SortedSet$1.GetViewBetween end.*/
-
-            /*System.Collections.Generic.SortedSet$1.versionUpToDate start.*/
-            versionUpToDate: function () {
-                return true;
-            },
-            /*System.Collections.Generic.SortedSet$1.versionUpToDate end.*/
 
             /*System.Collections.Generic.SortedSet$1.TryGetValue start.*/
             TryGetValue: function (equalValue, actualValue) {

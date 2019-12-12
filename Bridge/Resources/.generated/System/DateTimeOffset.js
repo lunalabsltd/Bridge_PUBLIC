@@ -141,7 +141,6 @@
 
                 /*System.DateTimeOffset.ValidateDate:static start.*/
                 ValidateDate: function (dateTime, offset) {
-                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return offset.getTicks().gte(System.DateTimeOffset.MinOffset) && offset.getTicks().lte(System.DateTimeOffset.MaxOffset); }, "Offset not validated.");
                     var utcTicks = System.DateTime.getTicks(dateTime).sub(offset.getTicks());
                     if (utcTicks.lt(System.DateTime.getMinTicks()) || utcTicks.gt(System.DateTime.getMaxTicks())) {
                         throw new System.ArgumentOutOfRangeException.$ctor4("offset", System.Environment.GetResourceString("Argument_UTCOutOfRange"));

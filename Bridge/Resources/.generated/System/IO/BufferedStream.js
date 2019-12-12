@@ -63,7 +63,6 @@
                     this.EnsureNotClosed();
                     this.EnsureCanSeek();
 
-                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return !(this._writePos > 0 && this._readPos !== this._readLen); }, "Read and Write buffers cannot both have data in them at the same time.");
                     return this._stream.Position.add(System.Int64((((((this._readPos - this._readLen) | 0) + this._writePos) | 0))));
                 },
                 set: function (value) {
@@ -156,8 +155,6 @@
             /*System.IO.BufferedStream.EnsureShadowBufferAllocated start.*/
             EnsureShadowBufferAllocated: function () {
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._buffer != null; });
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._bufferSize > 0; });
 
                 if (this._buffer.length !== this._bufferSize || this._bufferSize >= System.IO.BufferedStream.MaxShadowBufferSize) {
                     return;
@@ -172,7 +169,6 @@
             /*System.IO.BufferedStream.EnsureBufferAllocated start.*/
             EnsureBufferAllocated: function () {
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._bufferSize > 0; });
 
                 if (this._buffer == null) {
                     this._buffer = System.Array.init(this._bufferSize, 0, System.Byte);
@@ -208,7 +204,6 @@
                 if (this._writePos > 0) {
 
                     this.FlushWrite();
-                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._writePos === 0 && this._readPos === 0 && this._readLen === 0; });
                     return;
                 }
 
@@ -224,7 +219,6 @@
                         this._stream.Flush();
                     }
 
-                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._writePos === 0 && this._readPos === 0 && this._readLen === 0; });
                     return;
                 }
 
@@ -239,7 +233,6 @@
             /*System.IO.BufferedStream.FlushRead start.*/
             FlushRead: function () {
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._writePos === 0; }, "BufferedStream: Write buffer must be empty in FlushRead!");
 
                 if (((this._readPos - this._readLen) | 0) !== 0) {
                     this._stream.Seek(System.Int64(this._readPos - this._readLen), 1);
@@ -254,7 +247,6 @@
             ClearReadBufferBeforeWrite: function () {
 
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._readPos <= this._readLen; }, "_readPos <= _readLen [" + this._readPos + " <= " + this._readLen + "]");
 
                 if (this._readPos === this._readLen) {
 
@@ -262,7 +254,6 @@
                     return;
                 }
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._readPos < this._readLen; });
 
                 if (!this._stream.CanSeek) {
                     throw new System.NotSupportedException.ctor();
@@ -275,8 +266,6 @@
             /*System.IO.BufferedStream.FlushWrite start.*/
             FlushWrite: function () {
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._readPos === 0 && this._readLen === 0; }, "BufferedStream: Read buffer must be empty in FlushWrite!");
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._buffer != null && this._bufferSize >= this._writePos; }, "BufferedStream: Write buffer must be allocated and write position must be in the bounds of the buffer in FlushWrite!");
 
                 this._stream.Write(this._buffer, 0, this._writePos);
                 this._writePos = 0;
@@ -288,13 +277,11 @@
             ReadFromBuffer: function (array, offset, count) {
 
                 var readBytes = (this._readLen - this._readPos) | 0;
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return readBytes >= 0; });
 
                 if (readBytes === 0) {
                     return 0;
                 }
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return readBytes > 0; });
 
                 if (readBytes > count) {
                     readBytes = count;
@@ -355,7 +342,6 @@
                     offset = (offset + bytesFromBuffer) | 0;
                 }
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._readLen === this._readPos; });
                 this._readPos = (this._readLen = 0);
 
                 if (this._writePos > 0) {
@@ -462,7 +448,6 @@
                 }
 
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._writePos < this._bufferSize; });
 
                 var totalUserBytes;
                 var useBuffer;
@@ -475,28 +460,20 @@
 
                     if (this._writePos < this._bufferSize) {
 
-                        System.Diagnostics.Contracts.Contract.assert(4, this, function () { return count.v === 0; });
                         return;
                     }
 
-                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return count.v >= 0; });
-                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._writePos === this._bufferSize; });
-                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._buffer != null; });
 
                     this._stream.Write(this._buffer, 0, this._writePos);
                     this._writePos = 0;
 
                     this.WriteToBuffer(array, offset, count);
 
-                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return count.v === 0; });
-                    System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._writePos < this._bufferSize; });
 
                 } else {
 
                     if (this._writePos > 0) {
 
-                        System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._buffer != null; });
-                        System.Diagnostics.Contracts.Contract.assert(4, this, function () { return totalUserBytes >= this._bufferSize; });
 
                         if (totalUserBytes <= (((this._bufferSize + this._bufferSize) | 0)) && totalUserBytes <= System.IO.BufferedStream.MaxShadowBufferSize) {
 
@@ -534,7 +511,6 @@
 
                 this._buffer[System.Array.index(Bridge.identity(this._writePos, ((this._writePos = (this._writePos + 1) | 0))), this._buffer)] = value;
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._writePos < this._bufferSize; });
             },
             /*System.IO.BufferedStream.WriteByte end.*/
 
@@ -557,7 +533,6 @@
                 }
 
                 var oldPos = this.Position;
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return oldPos.equals(this._stream.Position.add(System.Int64((((this._readPos - this._readLen) | 0))))); });
 
                 var newPos = this._stream.Seek(offset, origin);
 
@@ -573,7 +548,6 @@
                     this._readPos = (this._readLen = 0);
                 }
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return newPos.equals(this.Position); }, "newPos (=" + newPos + ") == Position (=" + this.Position + ")");
                 return newPos;
             },
             /*System.IO.BufferedStream.Seek end.*/

@@ -413,7 +413,6 @@
 
             /*System.Collections.Generic.LinkedList$1.InternalInsertNodeToEmptyList start.*/
             InternalInsertNodeToEmptyList: function (newNode) {
-                System.Diagnostics.Debug.Assert$1(this.head == null && this.count === 0, "LinkedList must be empty when this method is called!");
                 newNode.next = newNode;
                 newNode.prev = newNode;
                 this.head = newNode;
@@ -424,10 +423,7 @@
 
             /*System.Collections.Generic.LinkedList$1.InternalRemoveNode start.*/
             InternalRemoveNode: function (node) {
-                System.Diagnostics.Debug.Assert$1(Bridge.referenceEquals(node.list, this), "Deleting the node from another list!");
-                System.Diagnostics.Debug.Assert$1(this.head != null, "This method shouldn't be called on empty list!");
                 if (Bridge.referenceEquals(node.next, node)) {
-                    System.Diagnostics.Debug.Assert$1(this.count === 1 && Bridge.referenceEquals(this.head, node), "this should only be true for a list with only one node");
                     this.head = null;
                 } else {
                     node.next.prev = node.prev;

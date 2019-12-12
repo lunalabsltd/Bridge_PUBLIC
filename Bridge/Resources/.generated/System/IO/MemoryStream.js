@@ -284,7 +284,6 @@
                     n = 0;
                 }
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return ((this._position + n) | 0) >= 0; }, "_position + n >= 0");
                 this._position = (this._position + n) | 0;
                 return n;
             },
@@ -317,7 +316,6 @@
                     return 0;
                 }
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return ((this._position + n) | 0) >= 0; }, "_position + n >= 0");
 
                 if (n <= 8) {
                     var byteCount = n;
@@ -388,7 +386,6 @@
                         throw new System.ArgumentException.$ctor1("Argument_InvalidSeekOrigin");
                 }
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return this._position >= 0; }, "_position >= 0");
                 return System.Int64(this._position);
             },
             /*System.IO.MemoryStream.Seek end.*/
@@ -400,7 +397,6 @@
                 }
                 this.EnsureWriteable();
 
-                System.Diagnostics.Contracts.Contract.assert(4, this, function () { return true; });
                 if (value.gt(System.Int64((((2147483647 - this._origin) | 0))))) {
                     throw new System.ArgumentOutOfRangeException.$ctor4("value", "ArgumentOutOfRange_StreamLength");
                 }
