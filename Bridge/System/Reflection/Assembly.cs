@@ -16,6 +16,12 @@ namespace System.Reflection
         }
 
         /// <summary>
+        /// Gets an AssemblyName for this assembly.
+        /// </summary>
+        /// <returns>An object that contains the fully parsed display name for this assembly.</returns>
+        public extern AssemblyName GetName();
+
+        /// <summary>
         /// Creates the name of a type qualified by the display name of its assembly.
         /// </summary>
         /// <param name="assemblyName">The display name of an assembly.</param>

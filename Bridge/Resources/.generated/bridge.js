@@ -3373,6 +3373,31 @@
     Bridge.definei = Bridge.Class.definei;
     Bridge.init = Bridge.Class.init;
 
+    // @source AssemblyName.js
+
+    /*System.Reflection.AssemblyName start.*/
+    Bridge.define("System.Reflection.AssemblyName", {
+        fields: {
+            displayName: null
+        },
+        ctors: {
+            ctor: function (assemblyName) {
+                this.$initialize();
+                this.displayName = assemblyName;
+            }
+        },
+        methods: {
+            /*System.Reflection.AssemblyName.toString start.*/
+            toString: function () {
+                return this.displayName;
+            },
+            /*System.Reflection.AssemblyName.toString end.*/
+
+
+        }
+    });
+    /*System.Reflection.AssemblyName end.*/
+
     // @source ReflectionAssembly.js
 
     Bridge.assembly = function (assemblyName, res, callback, restore) {
@@ -3428,6 +3453,10 @@
 
         toString: function () {
             return this.name;
+        },
+
+        getName: function() {
+            return new System.Reflection.AssemblyName(this.name);
         },
 
         getManifestResourceNames: function () {
@@ -5664,6 +5693,32 @@ Bridge.define("System.ValueType", {
     Bridge.define("System.HResults");
     /*System.HResults end.*/
 
+    // @source TargetSite.js
+
+    /*System.Reflection.TargetSite start.*/
+    Bridge.define("System.Reflection.TargetSite", {
+        fields: {
+            methodName: null
+        },
+        ctors: {
+            ctor: function (methodName) {
+                this.$initialize();
+                System.Object.call(this);
+                this.methodName = methodName;
+            }
+        },
+        methods: {
+            /*System.Reflection.TargetSite.toString start.*/
+            toString: function () {
+                return this.methodName;
+            },
+            /*System.Reflection.TargetSite.toString end.*/
+
+
+        }
+    });
+    /*System.Reflection.TargetSite end.*/
+
     // @source Exception.js
 
     Bridge.define("System.Exception", {
@@ -5684,6 +5739,12 @@ Bridge.define("System.ValueType", {
                 StackTrace: {
                     get: function () {
                         return this.errorStack.stack;
+                    }
+                },
+
+                TargetSite: {
+                    get: function() {
+                        return new System.Reflection.TargetSite(this.errorStack.stack.split('\n')[0] || '')
                     }
                 },
 
