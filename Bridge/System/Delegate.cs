@@ -16,7 +16,7 @@ namespace System
 
         public extern object Target
         {
-            [Bridge.Template("function(){throw new System.NotImplemented.ByDesign()}()")]
+            [Bridge.Template("(function(){throw new System.NotImplemented.ByDesign()}({this}))")]
             get;
         }
 

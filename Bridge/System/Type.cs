@@ -441,7 +441,7 @@ namespace System
             get;
         }
 
-        [Bridge.Template("Bridge.isArray(null, {this}) ? {this}.$rank : function(){throw new System.ArgumentException()}()")]
+        [Bridge.Template("(Bridge.isArray(null, {this}) ? {this}.$rank : function(){throw new System.ArgumentException()}())")]
         public virtual extern int GetArrayRank();
 
         public static extern TypeCode GetTypeCode(Type type);
