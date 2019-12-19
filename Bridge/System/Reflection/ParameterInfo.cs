@@ -25,7 +25,7 @@ namespace System.Reflection
 
         public extern bool HasDefaultValue
         {
-            [Bridge.Template("({this}.isOptional || false)")]
+            [Bridge.Template("({this}.o || false)")]
             get;
         }
 
@@ -50,6 +50,12 @@ namespace System.Reflection
         public extern bool IsParams
         {
             [Bridge.Template("({this}.ip || false)")]
+            get;
+        }
+
+        public extern ParameterAttributes Attributes
+        {
+            [Bridge.Template("({this}.o ? System.Reflection.ParameterAttributes.HasDefault | System.Reflection.ParameterAttributes.Optional : 0) | ({this}.out ? System.Reflection.ParameterAttributes.Out : 0) | ({this}.ref ? System.Reflection.ParameterAttributes.Retval : 0)")]
             get;
         }
 

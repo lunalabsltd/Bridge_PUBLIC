@@ -328,6 +328,7 @@
     <Compile Include="shared\System\NotImplementedException.cs" />
     <Compile Include="shared\System\NotSupportedException.cs" />
     <Compile Include="System\Reflection\AssemblyName.cs" />
+    <Compile Include="System\Reflection\ParameterAttributes.cs" />
     <Compile Include="System\Reflection\TargetSite.cs" />
     <Compile Include="System\RegexMatchTimeoutException.cs" />
     <Compile Include="Attributes\UnboxAttribute.cs" />

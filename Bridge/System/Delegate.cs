@@ -14,6 +14,18 @@ namespace System
             get;
         }
 
+        public extern object Target
+        {
+            [Bridge.Template("function(){throw new System.NotImplemented.ByDesign()}()")]
+            get;
+        }
+
+        public extern MethodInfo Method
+        {
+            [Bridge.Template("{this}.mi")]
+            get;
+        }
+
         protected extern Delegate(object target, string method);
 
         protected extern Delegate(Type target, string method);
@@ -46,6 +58,9 @@ namespace System
 
         [Bridge.Template("Bridge.Reflection.createDelegate({method}, {firstArgument})")]
         public static extern Delegate CreateDelegate(Type type, object firstArgument, MethodInfo method);
+
+        [Bridge.Template("Bridge.Reflection.createDelegate({method})")]
+        public static extern Delegate CreateDelegate(Type type, MethodInfo method);
 
         [Bridge.Template("Bridge.fn.getInvocationList({this})")]
         public extern Delegate[] GetInvocationList();
