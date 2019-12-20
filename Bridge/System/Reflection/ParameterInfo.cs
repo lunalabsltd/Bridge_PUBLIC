@@ -55,7 +55,7 @@ namespace System.Reflection
 
         public extern ParameterAttributes Attributes
         {
-            [Bridge.Template("({this}.o ? System.Reflection.ParameterAttributes.HasDefault | System.Reflection.ParameterAttributes.Optional : 0) | ({this}.out ? System.Reflection.ParameterAttributes.Out : 0) | ({this}.ref ? System.Reflection.ParameterAttributes.Retval : 0)")]
+            [Bridge.Template("(({this}.o ? (System.Reflection.ParameterAttributes.HasDefault | System.Reflection.ParameterAttributes.Optional) : 0) | ({this}.out ? System.Reflection.ParameterAttributes.Out : 0) | ({this}.ref ? System.Reflection.ParameterAttributes.Retval : 0))")]
             get;
         }
 
