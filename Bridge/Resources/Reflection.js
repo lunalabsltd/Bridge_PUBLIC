@@ -992,7 +992,9 @@
                 return v != null && mi.box ? mi.box(v) : v;
             };
 
-            return bind !== false ? Bridge.fn.bind(target, method) : method;
+            method = bind !== false ? Bridge.fn.bind(target, method) : method;
+            method.mi = mi;
+            return method;
         },
 
         invokeCI: function (ci, args) {

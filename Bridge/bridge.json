@@ -339,6 +339,7 @@
         "Resources/.generated/System/Reflection/Module.js",
         "Resources/.generated/System/Reflection/ParameterModifier.js",
         "Resources/.generated/System/Reflection/TypeAttributes.js",
+        "Resources/.generated/System/Reflection/ParameterAttributes.js",
 
         "Resources/.generated/System/Random.js",
         "Resources/.generated/System/RankException.js",

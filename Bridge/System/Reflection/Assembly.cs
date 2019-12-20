@@ -77,6 +77,14 @@ namespace System.Reflection
         public static extern Assembly GetExecutingAssembly();
 
         /// <summary>
+        /// Returns the assembly of the method that invoked the currently executing method.
+        /// (Workaround, returns the same as GetExecutingAssembly, works as long as we are in a single assembly.)
+        /// </summary>
+        /// <returns>The assembly of the method that invoked the currently executing method.</returns>
+        [Bridge.Template("$asm")]
+        public static extern Assembly GetCallingAssembly();
+
+        /// <summary>
         /// Retrieves a collection of custom attributes that are applied to a specified assembly.
         /// </summary>
         /// <returns>A collection of the custom attributes that are applied to element, or an empty collection if no such attributes exist.</returns>

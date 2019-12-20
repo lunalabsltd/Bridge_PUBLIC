@@ -1,5 +1,5 @@
 /**
- * @version   : 17.9.3-luna - Bridge.NET
+ * @version   : 17.9.4-luna - Bridge.NET
  * @author    : Object.NET, Inc. http://bridge.net/
  * @copyright : Copyright 2008-2019 Object.NET, Inc. http://object.net/
  * @license   : See license.txt and https://github.com/bridgedotnet/Bridge/blob/master/LICENSE.md
@@ -3533,8 +3533,8 @@
 
     /*Bridge.Utils.SystemAssemblyVersion start.*/
     Bridge.init(function () {
-        Bridge.SystemAssembly.version = "17.9.3-luna";
-        Bridge.SystemAssembly.compiler = "17.9.3-luna";
+        Bridge.SystemAssembly.version = "17.9.4-luna";
+        Bridge.SystemAssembly.compiler = "17.9.4-luna";
     });
 
     Bridge.define("Bridge.Utils.SystemAssemblyVersion");
@@ -4536,7 +4536,9 @@
                 return v != null && mi.box ? mi.box(v) : v;
             };
 
-            return bind !== false ? Bridge.fn.bind(target, method) : method;
+            method = bind !== false ? Bridge.fn.bind(target, method) : method;
+            method.mi = mi;
+            return method;
         },
 
         invokeCI: function (ci, args) {
@@ -52751,6 +52753,29 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
         $flags: true
     });
     /*System.Reflection.TypeAttributes end.*/
+
+    // @source ParameterAttributes.js
+
+    /*System.Reflection.ParameterAttributes start.*/
+    Bridge.define("System.Reflection.ParameterAttributes", {
+        $kind: "enum",
+        statics: {
+            fields: {
+                None: 0,
+                In: 1,
+                Out: 2,
+                Lcid: 4,
+                Retval: 8,
+                Optional: 16,
+                HasDefault: 4096,
+                HasFieldMarshal: 8192,
+                Reserved3: 16384,
+                Reserved4: 32768,
+                ReservedMask: 61440
+            }
+        }
+    });
+    /*System.Reflection.ParameterAttributes end.*/
 
     // @source Random.js
 
