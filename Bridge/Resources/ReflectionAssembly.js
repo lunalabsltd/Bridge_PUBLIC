@@ -53,6 +53,10 @@
             return this.name;
         },
 
+        getName: function() {
+            return new System.Reflection.AssemblyName(this.name);
+        },
+
         getManifestResourceNames: function () {
             return Object.keys(this.res);
         },

@@ -19,6 +19,12 @@
                     }
                 },
 
+                TargetSite: {
+                    get: function() {
+                        return new System.Reflection.TargetSite(this.errorStack.stack.split('\n')[0] || '')
+                    }
+                },
+
                 Data: {
                     get: function () {
                         return this.data;

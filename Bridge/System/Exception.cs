@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace System
 {
@@ -42,6 +43,14 @@ namespace System
         /// Gets a string representation of the immediate frames on the call stack.
         /// </summary>
         public virtual extern string StackTrace
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Gets the method that throws the current exception.
+        /// </summary>
+        public extern MethodBase TargetSite
         {
             get;
         }
