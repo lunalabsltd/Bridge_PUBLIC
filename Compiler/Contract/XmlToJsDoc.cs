@@ -1023,7 +1023,7 @@ namespace Bridge.Contract
 
             if (!string.IsNullOrEmpty((Namespace)))
             {
-                comment.Append("/** @namespace " + this.Namespace + " */" + newLine + newLine);
+                comment.Append("/** @namespace " + this.EscapeComments(this.Namespace) + " */" + newLine + newLine);
             }
 
             comment.Append("/**" + newLine);
@@ -1051,12 +1051,12 @@ namespace Bridge.Contract
 
             if (this.Descriptions.Count > 0 && this.Descriptions.Any(v => !string.IsNullOrWhiteSpace(v)))
             {
-                comment.Append(" * " + string.Join(newLine + " * ", this.Descriptions.ToArray()) + newLine + " *" + newLine);
+                comment.Append(" * " + string.Join(newLine + " * ", this.Descriptions.Select(this.EscapeComments).ToArray()) + newLine + " *" + newLine);
             }
 
             if (this.Remarks.Count > 0 && this.Remarks.Any(v=> !string.IsNullOrWhiteSpace(v)))
             {
-                comment.Append(" * " + string.Join(newLine + " * ", this.Remarks) + newLine + " *" + newLine);
+                comment.Append(" * " + string.Join(newLine + " * ", this.Remarks.Select(this.EscapeComments)) + newLine + " *" + newLine);
             }
 
             if (this.IsStatic)
@@ -1100,22 +1100,22 @@ namespace Bridge.Contract
 
             if (!string.IsNullOrEmpty(this.This))
             {
-                comment.Append(" * @this ").Append(this.This + newLine);
+                comment.Append(" * @this ").Append(this.EscapeComments(this.This) + newLine);
             }
 
             if (!string.IsNullOrEmpty(this.MemberOf))
             {
-                comment.Append(" * @memberof ").Append(this.MemberOf + newLine);
+                comment.Append(" * @memberof ").Append(this.EscapeComments(this.MemberOf) + newLine);
             }
 
             if (!string.IsNullOrEmpty(this.Class))
             {
-                comment.Append(" * @class " + this.Class + newLine);
+                comment.Append(" * @class " + this.EscapeComments(this.Class) + newLine);
             }
 
             if (!string.IsNullOrEmpty(this.Event))
             {
-                comment.Append(" * @event " + this.Event + newLine);
+                comment.Append(" * @event " + this.EscapeComments(this.Event) + newLine);
             }
 
             /*if (!string.IsNullOrEmpty(this.Constructs))
@@ -1135,22 +1135,22 @@ namespace Bridge.Contract
 
             if (this.Default != null)
             {
-                comment.Append(" * @default " + JsonConvert.SerializeObject(this.Default) + newLine);
+                comment.Append(" * @default " + this.EscapeComments(JsonConvert.SerializeObject(this.Default)) + newLine);
             }
 
             if (!string.IsNullOrEmpty(this.Callback))
             {
-                comment.Append(" * @callback " + this.Callback + newLine);
+                comment.Append(" * @callback " + this.EscapeComments(this.Callback) + newLine);
             }
 
             if (!string.IsNullOrEmpty(this.Function))
             {
-                comment.Append(" * @function " + this.Function + newLine);
+                comment.Append(" * @function " + this.EscapeComments(this.Function) + newLine);
             }
 
             if (!string.IsNullOrEmpty(this.MemberType))
             {
-                comment.Append(" * @type " + this.MemberType + newLine);
+                comment.Append(" * @type " + this.EscapeComments(this.MemberType) + newLine);
             }
 
             if (this.Augments != null && this.Augments.Length > 0)
@@ -1159,11 +1159,11 @@ namespace Bridge.Contract
                 {
                     if (augment.StartsWith("+"))
                     {
-                        comment.Append(" * @implements  " + augment.Substring(1) + newLine);
+                        comment.Append(" * @implements  " + this.EscapeComments(augment.Substring(1)) + newLine);
                     }
                     else
                     {
-                        comment.Append(" * @augments " + augment + newLine);
+                        comment.Append(" * @augments " + this.EscapeComments(augment) + newLine);
                     }
                 }
             }
@@ -1172,37 +1172,37 @@ namespace Bridge.Contract
             {
                 if (!string.IsNullOrEmpty(example.Item1))
                 {
-                    comment.Append(" * @example " + example.Item1 + newLine);
+                    comment.Append(" * @example " + this.EscapeComments(example.Item1) + newLine);
                 }
                 else
                 {
                     comment.Append(" * @example" + newLine);
                 }
 
-                comment.Append(" *" + string.Join(newLine + " *", example.Item2.Split(newLine)) + newLine + " *" + newLine);
+                comment.Append(" *" + string.Join(newLine + " *", example.Item2.Split(newLine).Select(this.EscapeComments)) + newLine + " *" + newLine);
             }
 
             foreach (var exception in this.Throws)
             {
                 if (!string.IsNullOrEmpty(exception.Item2))
                 {
-                    comment.Append(" * @throws {" + exception.Item2 + "} ");
+                    comment.Append(" * @throws {" + this.EscapeComments(exception.Item2) + "} ");
                 }
                 else
                 {
                     comment.Append(" * @throws ");
                 }
 
-                comment.Append(exception.Item1 + newLine);
+                comment.Append(this.EscapeComments(exception.Item1) + newLine);
             }
 
             int argCount = 0;
             foreach (JsDocParam param in this.Parameters)
             {
-                comment.Append(" * @param   {" + param.Type + "}");
+                comment.Append(" * @param   {" + this.EscapeComments(param.Type) + "}");
 
                 comment.Append(new String(' ', typeColumnWidth - (param.Type != null ? param.Type.Length : 0)));
-                comment.Append(param.Name);
+                comment.Append(this.EscapeComments(param.Name));
 
                 var desc = param.Desc;
                 if (desc != null)
@@ -1217,13 +1217,13 @@ namespace Bridge.Contract
                     comment.Append(new String(' ', nameColumnWidth - param.Name.Length));
                 }
 
-                comment.Append(desc + newLine);
+                comment.Append(this.EscapeComments(desc) + newLine);
             }
 
             argCount = 0;
             foreach (JsDocParam param in this.Returns)
             {
-                comment.Append(" * @return  {" + param.Type + "}");
+                comment.Append(" * @return  {" + this.EscapeComments(param.Type) + "}");
 
                 var desc = param.Desc;
                 if (desc != null)
@@ -1239,17 +1239,22 @@ namespace Bridge.Contract
                     comment.Append(new String(' ', nameColumnWidth));
                 }
 
-                comment.Append(desc + newLine);
+                comment.Append(this.EscapeComments(desc) + newLine);
             }
 
             foreach (var see in this.SeeAlso)
             {
-                comment.Append(" * @see {@link " + see + "}" + newLine);
+                comment.Append(" * @see {@link " + this.EscapeComments(see) + "}" + newLine);
             }
 
             comment.Append(" */");
 
             return comment.ToString();
+        }
+
+        private string EscapeComments(string line)
+        {
+            return line?.Replace("/*", "/\\*").Replace("*/", "*\\/");
         }
     }
 
