@@ -1,5 +1,5 @@
 /**
- * @version   : 17.9.4-luna - Bridge.NET
+ * @version   : 17.9.5-luna - Bridge.NET
  * @author    : Object.NET, Inc. http://bridge.net/
  * @copyright : Copyright 2008-2019 Object.NET, Inc. http://object.net/
  * @license   : See license.txt and https://github.com/bridgedotnet/Bridge/blob/master/LICENSE.md
@@ -3533,8 +3533,8 @@
 
     /*Bridge.Utils.SystemAssemblyVersion start.*/
     Bridge.init(function () {
-        Bridge.SystemAssembly.version = "17.9.4-luna";
-        Bridge.SystemAssembly.compiler = "17.9.4-luna";
+        Bridge.SystemAssembly.version = "17.9.5-luna";
+        Bridge.SystemAssembly.compiler = "17.9.5-luna";
     });
 
     Bridge.define("Bridge.Utils.SystemAssemblyVersion");
