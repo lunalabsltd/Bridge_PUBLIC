@@ -1,3 +1,4 @@
+    /*System.Text.Encoding start.*/
     Bridge.define("System.Text.Encoding", {
         statics: {
             fields: {
@@ -24,9 +25,13 @@
                 }
             },
             methods: {
+                /*System.Text.Encoding.Convert:static start.*/
                 Convert: function (srcEncoding, dstEncoding, bytes) {
                     return System.Text.Encoding.Convert$1(srcEncoding, dstEncoding, bytes, 0, bytes.length);
                 },
+                /*System.Text.Encoding.Convert:static end.*/
+
+                /*System.Text.Encoding.Convert$1:static start.*/
                 Convert$1: function (srcEncoding, dstEncoding, bytes, index, count) {
                     if (srcEncoding == null || dstEncoding == null) {
                         throw new System.ArgumentNullException.$ctor1(srcEncoding == null ? "srcEncoding" : "dstEncoding");
@@ -38,6 +43,9 @@
 
                     return dstEncoding.GetBytes(srcEncoding.GetChars$1(bytes, index, count));
                 },
+                /*System.Text.Encoding.Convert$1:static end.*/
+
+                /*System.Text.Encoding.GetEncoding:static start.*/
                 GetEncoding: function (codepage) {
                     switch (codepage) {
                         case 1200: 
@@ -55,6 +63,9 @@
                     }
                     throw new System.NotSupportedException.ctor();
                 },
+                /*System.Text.Encoding.GetEncoding:static end.*/
+
+                /*System.Text.Encoding.GetEncoding$1:static start.*/
                 GetEncoding$1: function (codepage) {
                     switch (codepage) {
                         case "utf-16": 
@@ -72,6 +83,9 @@
                     }
                     throw new System.NotSupportedException.ctor();
                 },
+                /*System.Text.Encoding.GetEncoding$1:static end.*/
+
+                /*System.Text.Encoding.GetEncodings:static start.*/
                 GetEncodings: function () {
                     if (System.Text.Encoding._encodings != null) {
                         return System.Text.Encoding._encodings;
@@ -86,7 +100,10 @@
                     result[System.Array.index(4, result)] = new System.Text.EncodingInfo(65001, "utf-8", "Unicode (UTF-8)");
                     result[System.Array.index(5, result)] = new System.Text.EncodingInfo(1200, "utf-32", "Unicode (UTF-32)");
                     return result;
-                }
+                },
+                /*System.Text.Encoding.GetEncodings:static end.*/
+
+
             }
         },
         fields: {
@@ -111,72 +128,130 @@
             }
         },
         methods: {
+            /*System.Text.Encoding.Encode$1 start.*/
             Encode$1: function (chars, index, count) {
                 var writtenCount = { };
                 return this.Encode$3(System.String.fromCharArray(chars, index, count), null, 0, writtenCount);
             },
+            /*System.Text.Encoding.Encode$1 end.*/
+
+            /*System.Text.Encoding.Encode$5 start.*/
             Encode$5: function (s, index, count, outputBytes, outputIndex) {
                 var writtenBytes = { };
                 this.Encode$3(s.substr(index, count), outputBytes, outputIndex, writtenBytes);
                 return writtenBytes.v;
             },
+            /*System.Text.Encoding.Encode$5 end.*/
+
+            /*System.Text.Encoding.Encode$4 start.*/
             Encode$4: function (chars, index, count, outputBytes, outputIndex) {
                 var writtenBytes = { };
                 this.Encode$3(System.String.fromCharArray(chars, index, count), outputBytes, outputIndex, writtenBytes);
                 return writtenBytes.v;
             },
+            /*System.Text.Encoding.Encode$4 end.*/
+
+            /*System.Text.Encoding.Encode start.*/
             Encode: function (chars) {
                 var count = { };
                 return this.Encode$3(System.String.fromCharArray(chars), null, 0, count);
             },
+            /*System.Text.Encoding.Encode end.*/
+
+            /*System.Text.Encoding.Encode$2 start.*/
             Encode$2: function (str) {
                 var count = { };
                 return this.Encode$3(str, null, 0, count);
             },
+            /*System.Text.Encoding.Encode$2 end.*/
+
+            /*System.Text.Encoding.Decode$1 start.*/
             Decode$1: function (bytes, index, count) {
                 return this.Decode$2(bytes, index, count, null, 0);
             },
+            /*System.Text.Encoding.Decode$1 end.*/
+
+            /*System.Text.Encoding.Decode start.*/
             Decode: function (bytes) {
                 return this.Decode$2(bytes, 0, bytes.length, null, 0);
             },
+            /*System.Text.Encoding.Decode end.*/
+
+            /*System.Text.Encoding.GetByteCount start.*/
             GetByteCount: function (chars) {
                 return this.GetByteCount$1(chars, 0, chars.length);
             },
+            /*System.Text.Encoding.GetByteCount end.*/
+
+            /*System.Text.Encoding.GetByteCount$2 start.*/
             GetByteCount$2: function (s) {
                 return this.Encode$2(s).length;
             },
+            /*System.Text.Encoding.GetByteCount$2 end.*/
+
+            /*System.Text.Encoding.GetByteCount$1 start.*/
             GetByteCount$1: function (chars, index, count) {
                 return this.Encode$1(chars, index, count).length;
             },
+            /*System.Text.Encoding.GetByteCount$1 end.*/
+
+            /*System.Text.Encoding.GetBytes start.*/
             GetBytes: function (chars) {
                 return this.GetBytes$1(chars, 0, chars.length);
             },
+            /*System.Text.Encoding.GetBytes end.*/
+
+            /*System.Text.Encoding.GetBytes$1 start.*/
             GetBytes$1: function (chars, index, count) {
                 return this.Encode$2(System.String.fromCharArray(chars, index, count));
             },
+            /*System.Text.Encoding.GetBytes$1 end.*/
+
+            /*System.Text.Encoding.GetBytes$3 start.*/
             GetBytes$3: function (chars, charIndex, charCount, bytes, byteIndex) {
                 return this.Encode$4(chars, charIndex, charCount, bytes, byteIndex);
             },
+            /*System.Text.Encoding.GetBytes$3 end.*/
+
+            /*System.Text.Encoding.GetBytes$2 start.*/
             GetBytes$2: function (s) {
                 return this.Encode$2(s);
             },
+            /*System.Text.Encoding.GetBytes$2 end.*/
+
+            /*System.Text.Encoding.GetBytes$4 start.*/
             GetBytes$4: function (s, charIndex, charCount, bytes, byteIndex) {
                 return this.Encode$5(s, charIndex, charCount, bytes, byteIndex);
             },
+            /*System.Text.Encoding.GetBytes$4 end.*/
+
+            /*System.Text.Encoding.GetCharCount start.*/
             GetCharCount: function (bytes) {
                 return this.Decode(bytes).length;
             },
+            /*System.Text.Encoding.GetCharCount end.*/
+
+            /*System.Text.Encoding.GetCharCount$1 start.*/
             GetCharCount$1: function (bytes, index, count) {
                 return this.Decode$1(bytes, index, count).length;
             },
+            /*System.Text.Encoding.GetCharCount$1 end.*/
+
+            /*System.Text.Encoding.GetChars start.*/
             GetChars: function (bytes) {
                 var $t;
                 return ($t = this.Decode(bytes), System.String.toCharArray($t, 0, $t.length));
             },
+            /*System.Text.Encoding.GetChars end.*/
+
+            /*System.Text.Encoding.GetChars$1 start.*/
             GetChars$1: function (bytes, index, count) {
                 var $t;
                 return ($t = this.Decode$1(bytes, index, count), System.String.toCharArray($t, 0, $t.length));
             },
+            /*System.Text.Encoding.GetChars$1 end.*/
+
+            /*System.Text.Encoding.GetChars$2 start.*/
             GetChars$2: function (bytes, byteIndex, byteCount, chars, charIndex) {
                 var s = this.Decode$1(bytes, byteIndex, byteCount);
                 var arr = System.String.toCharArray(s, 0, s.length);
@@ -191,11 +266,21 @@
 
                 return arr.length;
             },
+            /*System.Text.Encoding.GetChars$2 end.*/
+
+            /*System.Text.Encoding.GetString start.*/
             GetString: function (bytes) {
                 return this.Decode(bytes);
             },
+            /*System.Text.Encoding.GetString end.*/
+
+            /*System.Text.Encoding.GetString$1 start.*/
             GetString$1: function (bytes, index, count) {
                 return this.Decode$1(bytes, index, count);
-            }
+            },
+            /*System.Text.Encoding.GetString$1 end.*/
+
+
         }
     });
+    /*System.Text.Encoding end.*/

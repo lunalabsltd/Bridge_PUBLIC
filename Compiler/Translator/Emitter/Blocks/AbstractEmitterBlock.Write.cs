@@ -742,6 +742,26 @@ namespace Bridge.Translator
             }
         }
 
+        public virtual void EnsureNewLine()
+        {
+            if (this.Emitter.NewLine)
+            {
+                this.WriteNewLine();
+                this.Emitter.NewLine = false;
+            }
+        }
+
+        public virtual void EnsureEndingComment()
+        {
+            if (this.Emitter.EndingComment != null)
+            {
+                this.Write(this.Emitter.EndingComment);
+                this.WriteNewLine();
+                this.WriteNewLine();
+                this.Emitter.EndingComment = null;
+            }
+        }
+
         public IWriterInfo SaveWriter()
         {
             /*if (this.Emitter.LastSavedWriter != null && this.Emitter.LastSavedWriter.Output == this.Emitter.Output)

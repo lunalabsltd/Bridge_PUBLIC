@@ -1,3 +1,4 @@
+    /*System.IO.TextReader start.*/
     Bridge.define("System.IO.TextReader", {
         inherits: [System.IDisposable],
         statics: {
@@ -10,13 +11,17 @@
                 }
             },
             methods: {
+                /*System.IO.TextReader.Synchronized:static start.*/
                 Synchronized: function (reader) {
                     if (reader == null) {
                         throw new System.ArgumentNullException.$ctor1("reader");
                     }
 
                     return reader;
-                }
+                },
+                /*System.IO.TextReader.Synchronized:static end.*/
+
+
             }
         },
         alias: ["Dispose", "System$IDisposable$Dispose"],
@@ -26,20 +31,36 @@
             }
         },
         methods: {
+            /*System.IO.TextReader.Close start.*/
             Close: function () {
                 this.Dispose$1(true);
             },
+            /*System.IO.TextReader.Close end.*/
+
+            /*System.IO.TextReader.Dispose start.*/
             Dispose: function () {
                 this.Dispose$1(true);
             },
+            /*System.IO.TextReader.Dispose end.*/
+
+            /*System.IO.TextReader.Dispose$1 start.*/
             Dispose$1: function (disposing) { },
+            /*System.IO.TextReader.Dispose$1 end.*/
+
+            /*System.IO.TextReader.Peek start.*/
             Peek: function () {
 
                 return -1;
             },
+            /*System.IO.TextReader.Peek end.*/
+
+            /*System.IO.TextReader.Read start.*/
             Read: function () {
                 return -1;
             },
+            /*System.IO.TextReader.Read end.*/
+
+            /*System.IO.TextReader.Read$1 start.*/
             Read$1: function (buffer, index, count) {
                 if (buffer == null) {
                     throw new System.ArgumentNullException.$ctor1("buffer");
@@ -64,9 +85,15 @@
                 } while (n < count);
                 return n;
             },
+            /*System.IO.TextReader.Read$1 end.*/
+
+            /*System.IO.TextReader.ReadToEndAsync start.*/
             ReadToEndAsync: function () {
                 return System.Threading.Tasks.Task.fromResult(this.ReadToEnd(), System.String);
             },
+            /*System.IO.TextReader.ReadToEndAsync end.*/
+
+            /*System.IO.TextReader.ReadToEnd start.*/
             ReadToEnd: function () {
 
                 var chars = System.Array.init(4096, 0, System.Char);
@@ -77,6 +104,9 @@
                 }
                 return sb.toString();
             },
+            /*System.IO.TextReader.ReadToEnd end.*/
+
+            /*System.IO.TextReader.ReadBlock start.*/
             ReadBlock: function (buffer, index, count) {
 
                 var i, n = 0;
@@ -85,6 +115,9 @@
                 } while (i > 0 && n < count);
                 return n;
             },
+            /*System.IO.TextReader.ReadBlock end.*/
+
+            /*System.IO.TextReader.ReadLine start.*/
             ReadLine: function () {
                 var sb = new System.Text.StringBuilder();
                 while (true) {
@@ -104,6 +137,10 @@
                     return sb.toString();
                 }
                 return null;
-            }
+            },
+            /*System.IO.TextReader.ReadLine end.*/
+
+
         }
     });
+    /*System.IO.TextReader end.*/

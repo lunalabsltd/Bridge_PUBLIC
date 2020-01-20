@@ -406,6 +406,7 @@ namespace Bridge.Translator
 
         protected virtual void EmitMethodsGroup(List<MethodDeclaration> group)
         {
+            this.Emitter.IsStaticBlock = this.StaticBlock;
             if (group.Count == 1)
             {
                 if ((!group[0].Body.IsNull || this.Emitter.GetScript(group[0]) != null) && (!this.StaticBlock || !Helpers.IsEntryPointMethod(this.Emitter, group[0])))
@@ -432,6 +433,8 @@ namespace Bridge.Translator
                 this.Emitter.MethodsGroup = null;
                 this.Emitter.MethodsGroupBuilder = null;
             }
+            this.EnsureComma();
+            this.EnsureEndingComment();
         }
 
         protected virtual void EmitOperatorGroup(List<OperatorDeclaration> group)

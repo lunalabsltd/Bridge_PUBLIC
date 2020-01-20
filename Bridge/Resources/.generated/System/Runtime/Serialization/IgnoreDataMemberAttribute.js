@@ -1,3 +1,4 @@
+    /*System.Runtime.Serialization.IgnoreDataMemberAttribute start.*/
     Bridge.define("System.Runtime.Serialization.IgnoreDataMemberAttribute", {
         inherits: [System.Attribute],
         ctors: {
@@ -7,3 +8,4 @@
             }
         }
     });
+    /*System.Runtime.Serialization.IgnoreDataMemberAttribute end.*/

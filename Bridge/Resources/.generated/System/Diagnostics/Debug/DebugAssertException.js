@@ -1,3 +1,4 @@
+    /*System.Diagnostics.Debug+DebugAssertException start.*/
     Bridge.define("System.Diagnostics.Debug.DebugAssertException", {
         inherits: [System.Exception],
         $kind: "nested class",
@@ -8,3 +9,4 @@
             }
         }
     });
+    /*System.Diagnostics.Debug+DebugAssertException end.*/

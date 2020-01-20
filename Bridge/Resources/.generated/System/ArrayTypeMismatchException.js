@@ -1,3 +1,4 @@
+    /*System.ArrayTypeMismatchException start.*/
     Bridge.define("System.ArrayTypeMismatchException", {
         inherits: [System.SystemException],
         ctors: {
@@ -18,3 +19,4 @@
             }
         }
     });
+    /*System.ArrayTypeMismatchException end.*/

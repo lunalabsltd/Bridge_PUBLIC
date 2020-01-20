@@ -68,6 +68,18 @@ namespace Bridge.Contract
             set;
         }
 
+        bool NewLine
+        {
+            get;
+            set;
+        }
+
+        string EndingComment
+        {
+            get;
+            set;
+        }
+
         int CompareTypeInfosByName(ITypeInfo x, ITypeInfo y);
 
         int CompareTypeInfosByPriority(ITypeInfo x, ITypeInfo y);
@@ -340,6 +352,12 @@ namespace Bridge.Contract
         }
 
         ITypeInfo TypeInfo
+        {
+            get;
+            set;
+        }
+
+        bool IsStaticBlock
         {
             get;
             set;

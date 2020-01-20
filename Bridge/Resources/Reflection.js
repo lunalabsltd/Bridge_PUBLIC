@@ -751,13 +751,7 @@
                 }
             }
 
-            var f = function () {
-                constructor.apply(this, args);
-            };
-
-            f.prototype = constructor.prototype;
-
-            return new f();
+            return new constructor( ...args );
         },
 
         getAttributes: function (type, attrType, inherit) {
@@ -998,7 +992,9 @@
                 return v != null && mi.box ? mi.box(v) : v;
             };
 
-            return bind !== false ? Bridge.fn.bind(target, method) : method;
+            method = bind !== false ? Bridge.fn.bind(target, method) : method;
+            method.mi = mi;
+            return method;
         },
 
         invokeCI: function (ci, args) {

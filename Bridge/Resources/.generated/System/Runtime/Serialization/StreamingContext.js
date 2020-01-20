@@ -1,3 +1,4 @@
+    /*System.Runtime.Serialization.StreamingContext start.*/
     Bridge.define("System.Runtime.Serialization.StreamingContext", {
         $kind: "struct",
         statics: {
@@ -35,6 +36,7 @@
             }
         },
         methods: {
+            /*System.Runtime.Serialization.StreamingContext.equals start.*/
             equals: function (obj) {
                 if (!(Bridge.is(obj, System.Runtime.Serialization.StreamingContext))) {
                     return false;
@@ -42,9 +44,14 @@
                 var ctx = System.Nullable.getValue(Bridge.cast(Bridge.unbox(obj, System.Runtime.Serialization.StreamingContext), System.Runtime.Serialization.StreamingContext));
                 return Bridge.referenceEquals(ctx._additionalContext, this._additionalContext) && ctx._state === this._state;
             },
+            /*System.Runtime.Serialization.StreamingContext.equals end.*/
+
+            /*System.Runtime.Serialization.StreamingContext.getHashCode start.*/
             getHashCode: function () {
                 return this._state;
             },
+            /*System.Runtime.Serialization.StreamingContext.getHashCode end.*/
+
             $clone: function (to) {
                 var s = to || new System.Runtime.Serialization.StreamingContext();
                 s._additionalContext = this._additionalContext;
@@ -53,3 +60,4 @@
             }
         }
     });
+    /*System.Runtime.Serialization.StreamingContext end.*/

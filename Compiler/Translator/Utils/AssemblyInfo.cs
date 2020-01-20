@@ -25,6 +25,8 @@ namespace Bridge.Translator
             this.Report = new ReportConfig();
             this.Rules = new CompilerRule();
             this.IgnoreDuplicateTypes = false;
+            this.DeadCode = new DeadCodeConfig();
+            this.SafeStructsInGenerics = false;
         }
 
         /// <summary>
@@ -348,6 +350,22 @@ namespace Bridge.Translator
         /// one assembly.
         /// </summary>
         public bool IgnoreDuplicateTypes
+        {
+            get;
+            set;
+        }
+
+        public DeadCodeConfig DeadCode
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Clones value types when used as generics' parameters.
+        /// If false value types are never cloned (i.e. treated as reference types) when used as parameters in generic types.
+        /// </summary>
+        public bool SafeStructsInGenerics
         {
             get;
             set;

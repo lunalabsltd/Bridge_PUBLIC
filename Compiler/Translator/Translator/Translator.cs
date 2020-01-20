@@ -199,6 +199,7 @@ namespace Bridge.Translator
 
             logger.Info("Before emitting...");
             this.Plugins.BeforeEmit(emitter, this);
+            this.BridgeTypes.BuildDependenciesGraph();
             logger.Info("Before emitting done");
 
             this.AddMainOutputs(emitter.Emit());

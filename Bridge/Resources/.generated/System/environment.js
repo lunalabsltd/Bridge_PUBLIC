@@ -1,3 +1,4 @@
+    /*System.Environment start.*/
     Bridge.define("System.Environment", {
         statics: {
             fields: {
@@ -95,22 +96,35 @@
                 }
             },
             methods: {
+                /*System.Environment.GetResourceString:static start.*/
                 GetResourceString: function (key) {
                     return key;
                 },
+                /*System.Environment.GetResourceString:static end.*/
+
+                /*System.Environment.GetResourceString$1:static start.*/
                 GetResourceString$1: function (key, values) {
                     if (values === void 0) { values = []; }
                     var s = System.Environment.GetResourceString(key);
                     return System.String.formatProvider.apply(System.String, [System.Globalization.CultureInfo.getCurrentCulture(), s].concat(values));
                 },
+                /*System.Environment.GetResourceString$1:static end.*/
+
+                /*System.Environment.PatchDictionary:static start.*/
                 PatchDictionary: function (d) {
                     d.noKeyCheck = true;
 
                     return d;
                 },
+                /*System.Environment.PatchDictionary:static end.*/
+
+                /*System.Environment.Exit:static start.*/
                 Exit: function (exitCode) {
                     System.Environment.ExitCode = exitCode;
                 },
+                /*System.Environment.Exit:static end.*/
+
+                /*System.Environment.ExpandEnvironmentVariables:static start.*/
                 ExpandEnvironmentVariables: function (name) {
                     var $t;
                     if (name == null) {
@@ -131,12 +145,21 @@
 
                     return name;
                 },
+                /*System.Environment.ExpandEnvironmentVariables:static end.*/
+
+                /*System.Environment.FailFast:static start.*/
                 FailFast: function (message) {
                     throw new System.Exception(message);
                 },
+                /*System.Environment.FailFast:static end.*/
+
+                /*System.Environment.FailFast$1:static start.*/
                 FailFast$1: function (message, exception) {
                     throw new System.Exception(message, exception);
                 },
+                /*System.Environment.FailFast$1:static end.*/
+
+                /*System.Environment.GetCommandLineArgs:static start.*/
                 GetCommandLineArgs: function () {
                     var l = System.Environment.Location;
 
@@ -168,6 +191,9 @@
 
                     return System.Array.init(0, null, System.String);
                 },
+                /*System.Environment.GetCommandLineArgs:static end.*/
+
+                /*System.Environment.GetEnvironmentVariable:static start.*/
                 GetEnvironmentVariable: function (variable) {
                     if (variable == null) {
                         throw new System.ArgumentNullException.$ctor1("variable");
@@ -181,18 +207,33 @@
 
                     return null;
                 },
+                /*System.Environment.GetEnvironmentVariable:static end.*/
+
+                /*System.Environment.GetEnvironmentVariable$1:static start.*/
                 GetEnvironmentVariable$1: function (variable, target) {
                     return System.Environment.GetEnvironmentVariable(variable);
                 },
+                /*System.Environment.GetEnvironmentVariable$1:static end.*/
+
+                /*System.Environment.GetEnvironmentVariables:static start.*/
                 GetEnvironmentVariables: function () {
                     return System.Environment.PatchDictionary(new (System.Collections.Generic.Dictionary$2(System.String,System.String)).$ctor1(System.Environment.Variables));
                 },
+                /*System.Environment.GetEnvironmentVariables:static end.*/
+
+                /*System.Environment.GetEnvironmentVariables$1:static start.*/
                 GetEnvironmentVariables$1: function (target) {
                     return System.Environment.GetEnvironmentVariables();
                 },
+                /*System.Environment.GetEnvironmentVariables$1:static end.*/
+
+                /*System.Environment.GetLogicalDrives:static start.*/
                 GetLogicalDrives: function () {
                     return System.Array.init(0, null, System.String);
                 },
+                /*System.Environment.GetLogicalDrives:static end.*/
+
+                /*System.Environment.SetEnvironmentVariable:static start.*/
                 SetEnvironmentVariable: function (variable, value) {
                     if (variable == null) {
                         throw new System.ArgumentNullException.$ctor1("variable");
@@ -212,9 +253,16 @@
                         System.Environment.Variables.setItem(variable, value);
                     }
                 },
+                /*System.Environment.SetEnvironmentVariable:static end.*/
+
+                /*System.Environment.SetEnvironmentVariable$1:static start.*/
                 SetEnvironmentVariable$1: function (variable, value, target) {
                     System.Environment.SetEnvironmentVariable(variable, value);
-                }
+                },
+                /*System.Environment.SetEnvironmentVariable$1:static end.*/
+
+
             }
         }
     });
+    /*System.Environment end.*/

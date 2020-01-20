@@ -1,3 +1,4 @@
+    /*System.Collections.Generic.Dictionary$2+Entry start.*/
     Bridge.define("System.Collections.Generic.Dictionary$2.Entry", function (TKey, TValue) { return {
         $kind: "nested struct",
         statics: {
@@ -37,3 +38,4 @@
             }
         }
     }; });
+    /*System.Collections.Generic.Dictionary$2+Entry end.*/

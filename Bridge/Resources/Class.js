@@ -293,7 +293,7 @@
 
             var isNested = false;
 
-            if (prop.$kind.match("^nested ") !== null) {
+            if (prop.$kind.substring(0, 7) === "nested ") {
                 isNested = true;
                 prop.$kind = prop.$kind.substr(7);
             }
@@ -359,13 +359,13 @@
 
             if (prop.$noRegister === true) {
                 registerT = false;
-                delete prop.$noRegister;
+                prop.$noRegister = null;
             }
 
             if (prop.$inherits) {
-                delete prop.$inherits;
+                prop.$inherits = null;
             } else {
-                delete prop.inherits;
+                prop.inherits = null;
             }
 
             if (isEntryPoint) {
@@ -375,9 +375,9 @@
             if (Bridge.isFunction(statics)) {
                 statics = null;
             } else if (prop.$statics) {
-                delete prop.$statics;
+                prop.$statics = null;
             } else {
-                delete prop.statics;
+                prop.statics = null;
             }
 
             var Class,
@@ -426,7 +426,7 @@
                 }
 
                 Class.$literal = true;
-                delete prop.$literal;
+                prop.$literal = null;
             }
 
             if (!isGenericInstance && registerT) {
@@ -513,9 +513,9 @@
                     Bridge.Class.initConfig(extend, base, staticsConfig, true, Class);
 
                     if (statics.$config) {
-                        delete statics.$config;
+                        statics.$config = null;
                     } else {
-                        delete statics.config;
+                        statics.config = null;
                     }
                 }
             }
@@ -526,9 +526,9 @@
                 Bridge.Class.initConfig(extend, base, instanceConfig, false, prop, prototype);
 
                 if (prop.$config) {
-                    delete prop.$config;
+                    prop.$config = null;
                 } else {
-                    delete prop.config;
+                    prop.config = null;
                 }
             } else if (extend && base.$initMembers) {
                 prop.$initMembers = function () {
@@ -538,32 +538,22 @@
 
             prop.$initialize = Bridge.Class._initialize;
 
-            var keys = [];
-
             for (name in prop) {
-                keys.push(name);
-            }
-
-            for (i = 0; i < keys.length; i++) {
-                name = keys[i];
-
                 v = prop[name];
                 isCtor = name === "ctor";
                 ctorName = name;
 
-                if (Bridge.isFunction(v) && (isCtor || name.match("^\\$ctor") !== null)) {
+                if (Bridge.isFunction(v) && (isCtor || name.substring(0, 5) === "$ctor")) {
                     isCtor = true;
                 }
 
-                var member = prop[name];
-
                 if (isCtor) {
-                    Class[ctorName] = member;
+                    Class[ctorName] = v;
                     Class[ctorName].prototype = prototype;
                     Class[ctorName].prototype.constructor = Class;
-                    prototype[ctorName] = member;
+                    prototype[ctorName] = v;
                 } else {
-                    prototype[ctorName] = member;
+                    prototype[ctorName] = v;
                 }
             }
 

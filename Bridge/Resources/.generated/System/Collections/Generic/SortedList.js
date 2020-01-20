@@ -1,3 +1,4 @@
+    /*System.Collections.Generic.SortedList$2 start.*/
     Bridge.define("System.Collections.Generic.SortedList$2", function (TKey, TValue) { return {
         inherits: [System.Collections.Generic.IDictionary$2(TKey,TValue),System.Collections.IDictionary,System.Collections.Generic.IReadOnlyDictionary$2(TKey,TValue)],
         statics: {
@@ -20,13 +21,17 @@
                 }
             },
             methods: {
+                /*System.Collections.Generic.SortedList$2.IsCompatibleKey:static start.*/
                 IsCompatibleKey: function (key) {
                     if (key == null) {
                         System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.key);
                     }
 
                     return (Bridge.is(key, TKey));
-                }
+                },
+                /*System.Collections.Generic.SortedList$2.IsCompatibleKey:static end.*/
+
+
             }
         },
         fields: {
@@ -279,6 +284,7 @@
                     }
                 }
             },
+            /*System.Collections.Generic.SortedList$2.add start.*/
             add: function (key, value) {
                 if (key == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.key);
@@ -289,9 +295,15 @@
                 }
                 this.Insert(~i, key, value);
             },
+            /*System.Collections.Generic.SortedList$2.add end.*/
+
+            /*System.Collections.Generic.SortedList$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$add start.*/
             System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$add: function (keyValuePair) {
                 this.add(keyValuePair.key, keyValuePair.value);
             },
+            /*System.Collections.Generic.SortedList$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$add end.*/
+
+            /*System.Collections.Generic.SortedList$2.System$Collections$IDictionary$add start.*/
             System$Collections$IDictionary$add: function (key, value) {
                 if (key == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.key);
@@ -321,6 +333,9 @@
                     }
                 }
             },
+            /*System.Collections.Generic.SortedList$2.System$Collections$IDictionary$add end.*/
+
+            /*System.Collections.Generic.SortedList$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$contains start.*/
             System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$contains: function (keyValuePair) {
                 var index = this.IndexOfKey(keyValuePair.key);
                 if (index >= 0 && System.Collections.Generic.EqualityComparer$1(TValue).def.equals2(this.values[System.Array.index(index, this.values)], keyValuePair.value)) {
@@ -328,12 +343,18 @@
                 }
                 return false;
             },
+            /*System.Collections.Generic.SortedList$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$contains end.*/
+
+            /*System.Collections.Generic.SortedList$2.System$Collections$IDictionary$contains start.*/
             System$Collections$IDictionary$contains: function (key) {
                 if (System.Collections.Generic.SortedList$2(TKey,TValue).IsCompatibleKey(key)) {
                     return this.containsKey(Bridge.cast(Bridge.unbox(key, TKey), TKey));
                 }
                 return false;
             },
+            /*System.Collections.Generic.SortedList$2.System$Collections$IDictionary$contains end.*/
+
+            /*System.Collections.Generic.SortedList$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$remove start.*/
             System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$remove: function (keyValuePair) {
                 var index = this.IndexOfKey(keyValuePair.key);
                 if (index >= 0 && System.Collections.Generic.EqualityComparer$1(TValue).def.equals2(this.values[System.Array.index(index, this.values)], keyValuePair.value)) {
@@ -342,6 +363,9 @@
                 }
                 return false;
             },
+            /*System.Collections.Generic.SortedList$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$remove end.*/
+
+            /*System.Collections.Generic.SortedList$2.remove start.*/
             remove: function (key) {
                 var i = this.IndexOfKey(key);
                 if (i >= 0) {
@@ -349,23 +373,35 @@
                 }
                 return i >= 0;
             },
+            /*System.Collections.Generic.SortedList$2.remove end.*/
+
+            /*System.Collections.Generic.SortedList$2.System$Collections$IDictionary$remove start.*/
             System$Collections$IDictionary$remove: function (key) {
                 if (System.Collections.Generic.SortedList$2(TKey,TValue).IsCompatibleKey(key)) {
                     this.remove(Bridge.cast(Bridge.unbox(key, TKey), TKey));
                 }
             },
+            /*System.Collections.Generic.SortedList$2.System$Collections$IDictionary$remove end.*/
+
+            /*System.Collections.Generic.SortedList$2.GetKeyListHelper start.*/
             GetKeyListHelper: function () {
                 if (this.keyList == null) {
                     this.keyList = new (System.Collections.Generic.SortedList$2.KeyList(TKey,TValue))(this);
                 }
                 return this.keyList;
             },
+            /*System.Collections.Generic.SortedList$2.GetKeyListHelper end.*/
+
+            /*System.Collections.Generic.SortedList$2.GetValueListHelper start.*/
             GetValueListHelper: function () {
                 if (this.valueList == null) {
                     this.valueList = new (System.Collections.Generic.SortedList$2.ValueList(TKey,TValue))(this);
                 }
                 return this.valueList;
             },
+            /*System.Collections.Generic.SortedList$2.GetValueListHelper end.*/
+
+            /*System.Collections.Generic.SortedList$2.clear start.*/
             clear: function () {
                 this.version = (this.version + 1) | 0;
                 System.Array.fill(this.keys, function () {
@@ -376,12 +412,21 @@
                 }, 0, this._size);
                 this._size = 0;
             },
+            /*System.Collections.Generic.SortedList$2.clear end.*/
+
+            /*System.Collections.Generic.SortedList$2.containsKey start.*/
             containsKey: function (key) {
                 return this.IndexOfKey(key) >= 0;
             },
+            /*System.Collections.Generic.SortedList$2.containsKey end.*/
+
+            /*System.Collections.Generic.SortedList$2.ContainsValue start.*/
             ContainsValue: function (value) {
                 return this.IndexOfValue(value) >= 0;
             },
+            /*System.Collections.Generic.SortedList$2.ContainsValue end.*/
+
+            /*System.Collections.Generic.SortedList$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$copyTo start.*/
             System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$copyTo: function (array, arrayIndex) {
                 if (array == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.array);
@@ -400,6 +445,9 @@
                     array[System.Array.index(((arrayIndex + i) | 0), array)] = entry;
                 }
             },
+            /*System.Collections.Generic.SortedList$2.System$Collections$Generic$ICollection$1$System$Collections$Generic$KeyValuePair$2$copyTo end.*/
+
+            /*System.Collections.Generic.SortedList$2.System$Collections$ICollection$copyTo start.*/
             System$Collections$ICollection$copyTo: function (array, arrayIndex) {
                 if (array == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.array);
@@ -447,6 +495,9 @@
 
                 }
             },
+            /*System.Collections.Generic.SortedList$2.System$Collections$ICollection$copyTo end.*/
+
+            /*System.Collections.Generic.SortedList$2.EnsureCapacity start.*/
             EnsureCapacity: function (min) {
                 var newCapacity = this.keys.length === 0 ? System.Collections.Generic.SortedList$2(TKey,TValue)._defaultCapacity : Bridge.Int.mul(this.keys.length, 2);
                 if ((newCapacity >>> 0) > System.Collections.Generic.SortedList$2(TKey,TValue).MaxArrayLength) {
@@ -457,30 +508,51 @@
                 }
                 this.Capacity = newCapacity;
             },
+            /*System.Collections.Generic.SortedList$2.EnsureCapacity end.*/
+
+            /*System.Collections.Generic.SortedList$2.GetByIndex start.*/
             GetByIndex: function (index) {
                 if (index < 0 || index >= this._size) {
                     System.ThrowHelper.ThrowArgumentOutOfRangeException$2(System.ExceptionArgument.index, System.ExceptionResource.ArgumentOutOfRange_Index);
                 }
                 return this.values[System.Array.index(index, this.values)];
             },
+            /*System.Collections.Generic.SortedList$2.GetByIndex end.*/
+
+            /*System.Collections.Generic.SortedList$2.GetEnumerator start.*/
             GetEnumerator: function () {
                 return new (System.Collections.Generic.SortedList$2.Enumerator(TKey,TValue)).$ctor1(this, System.Collections.Generic.SortedList$2.Enumerator(TKey,TValue).KeyValuePair).$clone();
             },
+            /*System.Collections.Generic.SortedList$2.GetEnumerator end.*/
+
+            /*System.Collections.Generic.SortedList$2.System$Collections$Generic$IEnumerable$1$System$Collections$Generic$KeyValuePair$2$GetEnumerator start.*/
             System$Collections$Generic$IEnumerable$1$System$Collections$Generic$KeyValuePair$2$GetEnumerator: function () {
                 return new (System.Collections.Generic.SortedList$2.Enumerator(TKey,TValue)).$ctor1(this, System.Collections.Generic.SortedList$2.Enumerator(TKey,TValue).KeyValuePair).$clone();
             },
+            /*System.Collections.Generic.SortedList$2.System$Collections$Generic$IEnumerable$1$System$Collections$Generic$KeyValuePair$2$GetEnumerator end.*/
+
+            /*System.Collections.Generic.SortedList$2.System$Collections$IDictionary$GetEnumerator start.*/
             System$Collections$IDictionary$GetEnumerator: function () {
                 return new (System.Collections.Generic.SortedList$2.Enumerator(TKey,TValue)).$ctor1(this, System.Collections.Generic.SortedList$2.Enumerator(TKey,TValue).DictEntry).$clone();
             },
+            /*System.Collections.Generic.SortedList$2.System$Collections$IDictionary$GetEnumerator end.*/
+
+            /*System.Collections.Generic.SortedList$2.System$Collections$IEnumerable$GetEnumerator start.*/
             System$Collections$IEnumerable$GetEnumerator: function () {
                 return new (System.Collections.Generic.SortedList$2.Enumerator(TKey,TValue)).$ctor1(this, System.Collections.Generic.SortedList$2.Enumerator(TKey,TValue).KeyValuePair).$clone();
             },
+            /*System.Collections.Generic.SortedList$2.System$Collections$IEnumerable$GetEnumerator end.*/
+
+            /*System.Collections.Generic.SortedList$2.GetKey start.*/
             GetKey: function (index) {
                 if (index < 0 || index >= this._size) {
                     System.ThrowHelper.ThrowArgumentOutOfRangeException$2(System.ExceptionArgument.index, System.ExceptionResource.ArgumentOutOfRange_Index);
                 }
                 return this.keys[System.Array.index(index, this.keys)];
             },
+            /*System.Collections.Generic.SortedList$2.GetKey end.*/
+
+            /*System.Collections.Generic.SortedList$2.IndexOfKey start.*/
             IndexOfKey: function (key) {
                 if (key == null) {
                     System.ThrowHelper.ThrowArgumentNullException(System.ExceptionArgument.key);
@@ -488,9 +560,15 @@
                 var ret = System.Array.binarySearch(this.keys, 0, this._size, key, this.comparer);
                 return ret >= 0 ? ret : -1;
             },
+            /*System.Collections.Generic.SortedList$2.IndexOfKey end.*/
+
+            /*System.Collections.Generic.SortedList$2.IndexOfValue start.*/
             IndexOfValue: function (value) {
                 return System.Array.indexOfT(this.values, value, 0, this._size);
             },
+            /*System.Collections.Generic.SortedList$2.IndexOfValue end.*/
+
+            /*System.Collections.Generic.SortedList$2.Insert start.*/
             Insert: function (index, key, value) {
                 if (this._size === this.keys.length) {
                     this.EnsureCapacity(((this._size + 1) | 0));
@@ -504,6 +582,9 @@
                 this._size = (this._size + 1) | 0;
                 this.version = (this.version + 1) | 0;
             },
+            /*System.Collections.Generic.SortedList$2.Insert end.*/
+
+            /*System.Collections.Generic.SortedList$2.tryGetValue start.*/
             tryGetValue: function (key, value) {
                 var i = this.IndexOfKey(key);
                 if (i >= 0) {
@@ -514,6 +595,9 @@
                 value.v = Bridge.getDefaultValue(TValue);
                 return false;
             },
+            /*System.Collections.Generic.SortedList$2.tryGetValue end.*/
+
+            /*System.Collections.Generic.SortedList$2.RemoveAt start.*/
             RemoveAt: function (index) {
                 if (index < 0 || index >= this._size) {
                     System.ThrowHelper.ThrowArgumentOutOfRangeException$2(System.ExceptionArgument.index, System.ExceptionResource.ArgumentOutOfRange_Index);
@@ -527,11 +611,18 @@
                 this.values[System.Array.index(this._size, this.values)] = Bridge.getDefaultValue(TValue);
                 this.version = (this.version + 1) | 0;
             },
+            /*System.Collections.Generic.SortedList$2.RemoveAt end.*/
+
+            /*System.Collections.Generic.SortedList$2.TrimExcess start.*/
             TrimExcess: function () {
                 var threshold = Bridge.Int.clip32(this.keys.length * 0.9);
                 if (this._size < threshold) {
                     this.Capacity = this._size;
                 }
-            }
+            },
+            /*System.Collections.Generic.SortedList$2.TrimExcess end.*/
+
+
         }
     }; });
+    /*System.Collections.Generic.SortedList$2 end.*/

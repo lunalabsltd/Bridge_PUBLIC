@@ -1,6 +1,7 @@
 Bridge.assembly("TypeScriptTest", function ($asm, globals) {
     "use strict";
 
+    /*Classes.Animal start.*/
     Bridge.define("Classes.Animal", {
         fields: {
             Name: null
@@ -16,21 +17,34 @@ Bridge.assembly("TypeScriptTest", function ($asm, globals) {
             }
         },
         methods: {
+            /*Classes.Animal.GetName start.*/
             GetName: function () {
                 return this.Name;
             },
+            /*Classes.Animal.GetName end.*/
+
+            /*Classes.Animal.Move start.*/
             Move: function () {
                 return 1;
-            }
+            },
+            /*Classes.Animal.Move end.*/
+
+
         }
     });
+    /*Classes.Animal end.*/
 
+    /*Classes.MovePoint start.*/
     Bridge.define("Classes.MovePoint", {
         statics: {
             methods: {
+                /*Classes.MovePoint.Move:static start.*/
                 Move: function (p, dx, dy) {
                     return Classes.StaticClass.Move(p.$clone(), dx, dy);
-                }
+                },
+                /*Classes.MovePoint.Move:static end.*/
+
+
             }
         },
         props: {
@@ -42,12 +56,18 @@ Bridge.assembly("TypeScriptTest", function ($asm, globals) {
             }
         },
         methods: {
+            /*Classes.MovePoint.Move start.*/
             Move: function (dx, dy) {
                 this.Point = Classes.MovePoint.Move(this.Point.$clone(), dx, dy);
-            }
+            },
+            /*Classes.MovePoint.Move end.*/
+
+
         }
     });
+    /*Classes.MovePoint end.*/
 
+    /*Classes.Point start.*/
     Bridge.define("Classes.Point", {
         $kind: "struct",
         statics: {
@@ -88,17 +108,25 @@ Bridge.assembly("TypeScriptTest", function ($asm, globals) {
             }
         }
     });
+    /*Classes.Point end.*/
 
+    /*Classes.StaticClass start.*/
     Bridge.define("Classes.StaticClass", {
         statics: {
             methods: {
+                /*Classes.StaticClass.Move:static start.*/
                 Move: function (p, dx, dy) {
                     return new Classes.Point.$ctor1(((p.X + dx) | 0), ((p.Y + dy) | 0));
-                }
+                },
+                /*Classes.StaticClass.Move:static end.*/
+
+
             }
         }
     });
+    /*Classes.StaticClass end.*/
 
+    /*Classes.Dog start.*/
     Bridge.define("Classes.Dog", {
         inherits: [Classes.Animal],
         ctors: {
@@ -108,12 +136,18 @@ Bridge.assembly("TypeScriptTest", function ($asm, globals) {
             }
         },
         methods: {
+            /*Classes.Dog.Move$1 start.*/
             Move$1: function () {
                 return 20;
-            }
+            },
+            /*Classes.Dog.Move$1 end.*/
+
+
         }
     });
+    /*Classes.Dog end.*/
 
+    /*Classes.Employee start.*/
     Bridge.define("Classes.Employee", {
         inherits: [Classes.Animal],
         fields: {
@@ -129,7 +163,9 @@ Bridge.assembly("TypeScriptTest", function ($asm, globals) {
             }
         }
     });
+    /*Classes.Employee end.*/
 
+    /*Classes.Snake start.*/
     Bridge.define("Classes.Snake", {
         inherits: [Classes.Animal],
         ctors: {
@@ -139,9 +175,14 @@ Bridge.assembly("TypeScriptTest", function ($asm, globals) {
             }
         },
         methods: {
+            /*Classes.Snake.Move start.*/
             Move: function () {
                 return 5;
-            }
+            },
+            /*Classes.Snake.Move end.*/
+
+
         }
     });
+    /*Classes.Snake end.*/
 });

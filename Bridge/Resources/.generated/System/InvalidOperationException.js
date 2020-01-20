@@ -1,3 +1,4 @@
+    /*System.InvalidOperationException start.*/
     Bridge.define("System.InvalidOperationException", {
         inherits: [System.SystemException],
         ctors: {
@@ -18,3 +19,4 @@
             }
         }
     });
+    /*System.InvalidOperationException end.*/

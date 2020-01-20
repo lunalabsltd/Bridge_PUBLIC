@@ -16,6 +16,12 @@ namespace System.Reflection
         }
 
         /// <summary>
+        /// Gets an AssemblyName for this assembly.
+        /// </summary>
+        /// <returns>An object that contains the fully parsed display name for this assembly.</returns>
+        public extern AssemblyName GetName();
+
+        /// <summary>
         /// Creates the name of a type qualified by the display name of its assembly.
         /// </summary>
         /// <param name="assemblyName">The display name of an assembly.</param>
@@ -69,6 +75,14 @@ namespace System.Reflection
         /// <returns>The assembly that contains the code that is currently executing.</returns>
         [Bridge.Template("$asm")]
         public static extern Assembly GetExecutingAssembly();
+
+        /// <summary>
+        /// Returns the assembly of the method that invoked the currently executing method.
+        /// (Workaround, returns the same as GetExecutingAssembly, works as long as we are in a single assembly.)
+        /// </summary>
+        /// <returns>The assembly of the method that invoked the currently executing method.</returns>
+        [Bridge.Template("$asm")]
+        public static extern Assembly GetCallingAssembly();
 
         /// <summary>
         /// Retrieves a collection of custom attributes that are applied to a specified assembly.

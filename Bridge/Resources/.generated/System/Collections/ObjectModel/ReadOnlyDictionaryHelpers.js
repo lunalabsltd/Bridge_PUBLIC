@@ -1,6 +1,8 @@
+    /*System.Collections.ObjectModel.ReadOnlyDictionaryHelpers start.*/
     Bridge.define("System.Collections.ObjectModel.ReadOnlyDictionaryHelpers", {
         statics: {
             methods: {
+                /*System.Collections.ObjectModel.ReadOnlyDictionaryHelpers.CopyToNonGenericICollectionHelper:static start.*/
                 CopyToNonGenericICollectionHelper: function (T, collection, array, index) {
                     var $t;
                     if (array == null) {
@@ -75,7 +77,11 @@
                             }
                         }
                     }
-                }
+                },
+                /*System.Collections.ObjectModel.ReadOnlyDictionaryHelpers.CopyToNonGenericICollectionHelper:static end.*/
+
+
             }
         }
     });
+    /*System.Collections.ObjectModel.ReadOnlyDictionaryHelpers end.*/

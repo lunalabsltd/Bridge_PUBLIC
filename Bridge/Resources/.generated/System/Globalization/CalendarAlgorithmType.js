@@ -1,3 +1,4 @@
+    /*System.Globalization.CalendarAlgorithmType start.*/
     Bridge.define("System.Globalization.CalendarAlgorithmType", {
         $kind: "enum",
         statics: {
@@ -9,3 +10,4 @@
             }
         }
     });
+    /*System.Globalization.CalendarAlgorithmType end.*/

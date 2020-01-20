@@ -1,3 +1,4 @@
+    /*System.Runtime.Serialization.StreamingContextStates start.*/
     Bridge.define("System.Runtime.Serialization.StreamingContextStates", {
         $kind: "enum",
         statics: {
@@ -15,3 +16,4 @@
         },
         $flags: true
     });
+    /*System.Runtime.Serialization.StreamingContextStates end.*/

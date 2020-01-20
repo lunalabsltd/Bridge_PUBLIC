@@ -1,24 +1,32 @@
 /**
  * Bridge Test library - a common classes shared across all test Batches
  * @version 1.2.3.4
- * @compiler Bridge.NET 17.9.0
+ * @compiler Bridge.NET 17.9.3-luna
  */
 Bridge.assembly("Bridge.ClientTestHelper", function ($asm, globals) {
     "use strict";
 
+    /*Bridge.ClientTestHelper.ClassLibraryTest start.*/
     Bridge.define("Bridge.ClientTestHelper.ClassLibraryTest", {
         statics: {
             methods: {
+                /*Bridge.ClientTestHelper.ClassLibraryTest.Test:static start.*/
                 Test: function (item) {
                     item.Bridge$ClientTestHelper$IWriteableItem$SetValue(Bridge.box(2, System.Int32));
-                }
+                },
+                /*Bridge.ClientTestHelper.ClassLibraryTest.Test:static end.*/
+
+
             }
         }
     });
+    /*Bridge.ClientTestHelper.ClassLibraryTest end.*/
 
+    /*Bridge.ClientTestHelper.CommonHelper start.*/
     Bridge.define("Bridge.ClientTestHelper.CommonHelper", {
         statics: {
             methods: {
+                /*Bridge.ClientTestHelper.CommonHelper.Safe:static start.*/
                 Safe: function (a, failMessage) {
                     if (failMessage === void 0) { failMessage = null; }
                     try {
@@ -27,14 +35,20 @@ Bridge.assembly("Bridge.ClientTestHelper", function ($asm, globals) {
                         ex = System.Exception.create(ex);
                         Bridge.Test.NUnit.Assert.Fail((failMessage || "") + (Bridge.toString(ex) || ""));
                     }
-                }
+                },
+                /*Bridge.ClientTestHelper.CommonHelper.Safe:static end.*/
+
+
             }
         }
     });
+    /*Bridge.ClientTestHelper.CommonHelper end.*/
 
+    /*Bridge.ClientTestHelper.DateHelper start.*/
     Bridge.define("Bridge.ClientTestHelper.DateHelper", {
         statics: {
             methods: {
+                /*Bridge.ClientTestHelper.DateHelper.AssertDate$1:static start.*/
                 AssertDate$1: function (dt, kind, ticks, year, month, day, hour, minute, second, ms, message) {
                     if (year === void 0) { year = null; }
                     if (month === void 0) { month = null; }
@@ -75,6 +89,9 @@ Bridge.assembly("Bridge.ClientTestHelper", function ($asm, globals) {
                         Bridge.Test.NUnit.Assert.AreEqual(System.Nullable.getValue(ms), System.DateTime.getMillisecond(dt), (message || "") + "Millisecond");
                     }
                 },
+                /*Bridge.ClientTestHelper.DateHelper.AssertDate$1:static end.*/
+
+                /*Bridge.ClientTestHelper.DateHelper.AssertDate:static start.*/
                 AssertDate: function (expected, actual, message) {
                     if (message === void 0) { message = null; }
                     Bridge.Test.NUnit.Assert.AreEqual(System.DateTime.getKind(expected), System.DateTime.getKind(actual), (message || "") + "Kind");
@@ -88,6 +105,9 @@ Bridge.assembly("Bridge.ClientTestHelper", function ($asm, globals) {
                     Bridge.Test.NUnit.Assert.AreEqual(System.DateTime.getSecond(expected), System.DateTime.getSecond(actual), (message || "") + "Second");
                     Bridge.Test.NUnit.Assert.AreEqual(System.DateTime.getMillisecond(expected), System.DateTime.getMillisecond(actual), (message || "") + "Millisecond");
                 },
+                /*Bridge.ClientTestHelper.DateHelper.AssertDate:static end.*/
+
+                /*Bridge.ClientTestHelper.DateHelper.GetOffsetString:static start.*/
                 GetOffsetString: function (adjustment) {
                     if (adjustment === void 0) { adjustment = 0; }
                     var minutes = (Bridge.ClientTestHelper.DateHelper.GetOffsetMinutes() + adjustment) | 0;
@@ -99,15 +119,23 @@ Bridge.assembly("Bridge.ClientTestHelper", function ($asm, globals) {
 
                     return offset;
                 },
+                /*Bridge.ClientTestHelper.DateHelper.GetOffsetString:static end.*/
+
+                /*Bridge.ClientTestHelper.DateHelper.GetOffsetMinutes:static start.*/
                 GetOffsetMinutes: function () {
                     var d = System.DateTime.getDefaultValue();
 
                     return d.getTimezoneOffset();
-                }
+                },
+                /*Bridge.ClientTestHelper.DateHelper.GetOffsetMinutes:static end.*/
+
+
             }
         }
     });
+    /*Bridge.ClientTestHelper.DateHelper end.*/
 
+    /*Bridge.ClientTestHelper.HtmlHelper start.*/
     Bridge.define("Bridge.ClientTestHelper.HtmlHelper", {
         statics: {
             fields: {
@@ -127,11 +155,15 @@ Bridge.assembly("Bridge.ClientTestHelper", function ($asm, globals) {
             }
         }
     });
+    /*Bridge.ClientTestHelper.HtmlHelper end.*/
 
+    /*Bridge.ClientTestHelper.IItem start.*/
     Bridge.define("Bridge.ClientTestHelper.IItem", {
         $kind: "interface"
     });
+    /*Bridge.ClientTestHelper.IItem end.*/
 
+    /*Bridge.ClientTestHelper.N1193 start.*/
     Bridge.define("Bridge.ClientTestHelper.N1193", {
         statics: {
             props: {
@@ -143,20 +175,29 @@ Bridge.assembly("Bridge.ClientTestHelper", function ($asm, globals) {
             }
         }
     });
+    /*Bridge.ClientTestHelper.N1193 end.*/
 
+    /*Bridge.ClientTestHelper.N2190 start.*/
     Bridge.define("Bridge.ClientTestHelper.N2190", {
         statics: {
             methods: {
+                /*Bridge.ClientTestHelper.N2190.Greeting:static start.*/
                 Greeting: function () {
                     return "Hi";
-                }
+                },
+                /*Bridge.ClientTestHelper.N2190.Greeting:static end.*/
+
+
             }
         }
     });
+    /*Bridge.ClientTestHelper.N2190 end.*/
 
+    /*Bridge.ClientTestHelper.NumberHelper start.*/
     Bridge.define("Bridge.ClientTestHelper.NumberHelper", {
         statics: {
             methods: {
+                /*Bridge.ClientTestHelper.NumberHelper.AssertNumberByRepresentation:static start.*/
                 AssertNumberByRepresentation: function (expected, actual, message) {
                     if (message === void 0) { message = null; }
                     var a = actual != null ? Bridge.toString(actual) : "[null]";
@@ -164,11 +205,17 @@ Bridge.assembly("Bridge.ClientTestHelper", function ($asm, globals) {
 
                     Bridge.Test.NUnit.Assert.AreEqual(e, a, (message || "") + " representation");
                 },
+                /*Bridge.ClientTestHelper.NumberHelper.AssertNumberByRepresentation:static end.*/
+
+                /*Bridge.ClientTestHelper.NumberHelper.AssertNumber:static start.*/
                 AssertNumber: function (expected, actual, message) {
                     if (message === void 0) { message = null; }
                     Bridge.Test.NUnit.Assert.AreEqual(Bridge.Reflection.getTypeName(Bridge.getType(expected)), Bridge.Reflection.getTypeName(Bridge.getType(actual)), (message || "") + " type");
                     Bridge.Test.NUnit.Assert.AreEqual(Bridge.toString(expected), Bridge.toString(actual), (message || "") + " representation");
                 },
+                /*Bridge.ClientTestHelper.NumberHelper.AssertNumber:static end.*/
+
+                /*Bridge.ClientTestHelper.NumberHelper.AssertNumberWithEpsilon1:static start.*/
                 AssertNumberWithEpsilon1: function (T, expected, actual, message) {
                     var useEpsilon = Bridge.referenceEquals(T, System.Double) || Bridge.referenceEquals(T, System.Single);
 
@@ -204,16 +251,25 @@ Bridge.assembly("Bridge.ClientTestHelper", function ($asm, globals) {
                         Bridge.Test.NUnit.Assert.AreEqual(Bridge.toString(expected), Bridge.toString(actual), message);
                     }
                 },
+                /*Bridge.ClientTestHelper.NumberHelper.AssertNumberWithEpsilon1:static end.*/
+
+                /*Bridge.ClientTestHelper.NumberHelper.AssertDouble$1:static start.*/
                 AssertDouble$1: function (expected, actual, message) {
                     if (message === void 0) { message = null; }
                     Bridge.Test.NUnit.Assert.AreEqual("Double", Bridge.Reflection.getTypeName(System.Double), (message || "") + " type");
                     Bridge.Test.NUnit.Assert.AreEqual(Bridge.toString(expected), System.Double.format(actual), (message || "") + " representation");
                 },
+                /*Bridge.ClientTestHelper.NumberHelper.AssertDouble$1:static end.*/
+
+                /*Bridge.ClientTestHelper.NumberHelper.AssertDouble:static start.*/
                 AssertDouble: function (expected, actual, message) {
                     if (message === void 0) { message = null; }
                     Bridge.Test.NUnit.Assert.AreEqual("Double", Bridge.Reflection.getTypeName(System.Double), (message || "") + " type");
                     Bridge.Test.NUnit.Assert.AreEqual(Bridge.toString(expected), System.Double.format(actual), (message || "") + " representation");
                 },
+                /*Bridge.ClientTestHelper.NumberHelper.AssertDouble:static end.*/
+
+                /*Bridge.ClientTestHelper.NumberHelper.AssertDoubleWithEpsilon8:static start.*/
                 AssertDoubleWithEpsilon8: function (expected, actual, description) {
                     var $t, $t1;
                     if (description === void 0) { description = null; }
@@ -232,6 +288,9 @@ Bridge.assembly("Bridge.ClientTestHelper", function ($asm, globals) {
 
                     Bridge.Test.NUnit.Assert.True(diff < 1E-08, ($t1 = description, $t1 != null ? $t1 : "Expected " + System.Double.format(expected) + " but was " + System.Double.format(actual)));
                 },
+                /*Bridge.ClientTestHelper.NumberHelper.AssertDoubleWithEpsilon8:static end.*/
+
+                /*Bridge.ClientTestHelper.NumberHelper.AssertDoubleTryParse:static start.*/
                 AssertDoubleTryParse: function (r, expected, s, message) {
                     var actual = { };
                     var b = System.Double.tryParse(s, null, actual);
@@ -240,48 +299,75 @@ Bridge.assembly("Bridge.ClientTestHelper", function ($asm, globals) {
                     Bridge.Test.NUnit.Assert.AreEqual("Double", Bridge.Reflection.getTypeName(System.Double), (message || "") + " type");
                     Bridge.Test.NUnit.Assert.AreEqual(System.Double.format(expected), System.Double.format(actual.v), (message || "") + " representation");
                 },
+                /*Bridge.ClientTestHelper.NumberHelper.AssertDoubleTryParse:static end.*/
+
+                /*Bridge.ClientTestHelper.NumberHelper.AssertFloat:static start.*/
                 AssertFloat: function (expected, actual, message) {
                     if (message === void 0) { message = null; }
                     Bridge.Test.NUnit.Assert.AreEqual("Single", Bridge.Reflection.getTypeName(System.Single), (message || "") + " type");
                     Bridge.Test.NUnit.Assert.AreEqual(Bridge.toString(expected), System.Single.format(actual), (message || "") + " representation");
                 },
+                /*Bridge.ClientTestHelper.NumberHelper.AssertFloat:static end.*/
+
+                /*Bridge.ClientTestHelper.NumberHelper.AssertDecimal$1:static start.*/
                 AssertDecimal$1: function (expected, actual, message) {
                     if (message === void 0) { message = null; }
                     Bridge.Test.NUnit.Assert.AreEqual("Decimal", Bridge.Reflection.getTypeName(Bridge.getType(actual)), (message || "") + " type");
                     Bridge.Test.NUnit.Assert.AreEqual(Bridge.toString(expected), Bridge.toString(actual), (message || "") + " representation");
                 },
+                /*Bridge.ClientTestHelper.NumberHelper.AssertDecimal$1:static end.*/
+
+                /*Bridge.ClientTestHelper.NumberHelper.AssertDecimal$2:static start.*/
                 AssertDecimal$2: function (expected, actual, message) {
                     if (message === void 0) { message = null; }
                     Bridge.Test.NUnit.Assert.AreEqual("Decimal", Bridge.Reflection.getTypeName(System.Decimal), (message || "") + " type");
                     Bridge.Test.NUnit.Assert.AreEqual(Bridge.toString(expected), actual.toString(), (message || "") + " representation");
                 },
+                /*Bridge.ClientTestHelper.NumberHelper.AssertDecimal$2:static end.*/
+
+                /*Bridge.ClientTestHelper.NumberHelper.AssertDecimal:static start.*/
                 AssertDecimal: function (expected, actual, message) {
                     if (message === void 0) { message = null; }
                     Bridge.Test.NUnit.Assert.AreEqual("Decimal", Bridge.Reflection.getTypeName(System.Decimal), (message || "") + " type");
                     Bridge.Test.NUnit.Assert.AreEqual(System.Double.format(expected), actual.toString(), (message || "") + " representation");
                 },
+                /*Bridge.ClientTestHelper.NumberHelper.AssertDecimal:static end.*/
+
+                /*Bridge.ClientTestHelper.NumberHelper.AssertRealDecimal:static start.*/
                 AssertRealDecimal: function (expected, actual, message) {
                     if (message === void 0) { message = null; }
                     Bridge.Test.NUnit.Assert.AreEqual("Decimal", Bridge.Reflection.getTypeName(System.Decimal), (message || "") + " type");
                     Bridge.Test.NUnit.Assert.AreEqual(expected.toString(), actual.toString(), (message || "") + " representation");
                 },
+                /*Bridge.ClientTestHelper.NumberHelper.AssertRealDecimal:static end.*/
+
+                /*Bridge.ClientTestHelper.NumberHelper.AssertLong:static start.*/
                 AssertLong: function (expected, actual, message) {
                     if (message === void 0) { message = ""; }
                     Bridge.Test.NUnit.Assert.AreEqual("System.Int64", Bridge.Reflection.getTypeFullName(Bridge.getType(actual)), (message || "") + " type");
                     Bridge.Test.NUnit.Assert.AreEqual(Bridge.toString(expected), Bridge.toString(actual), message);
                 },
+                /*Bridge.ClientTestHelper.NumberHelper.AssertLong:static end.*/
+
+                /*Bridge.ClientTestHelper.NumberHelper.AssertULong:static start.*/
                 AssertULong: function (expected, actual, message) {
                     if (message === void 0) { message = ""; }
                     Bridge.Test.NUnit.Assert.AreEqual("System.UInt64", Bridge.Reflection.getTypeFullName(Bridge.getType(actual)), (message || "") + " type");
                     Bridge.Test.NUnit.Assert.AreEqual(Bridge.toString(expected), Bridge.toString(actual), message);
-                }
+                },
+                /*Bridge.ClientTestHelper.NumberHelper.AssertULong:static end.*/
+
+
             }
         }
     });
+    /*Bridge.ClientTestHelper.NumberHelper end.*/
 
+    /*Bridge.ClientTestHelper.StringHelper start.*/
     Bridge.define("Bridge.ClientTestHelper.StringHelper", {
         statics: {
             methods: {
+                /*Bridge.ClientTestHelper.StringHelper.CombineLines:static start.*/
                 CombineLines: function (lines) {
                     if (lines === void 0) { lines = []; }
                     if (lines == null) {
@@ -300,6 +386,9 @@ Bridge.assembly("Bridge.ClientTestHelper", function ($asm, globals) {
 
                     return s;
                 },
+                /*Bridge.ClientTestHelper.StringHelper.CombineLines:static end.*/
+
+                /*Bridge.ClientTestHelper.StringHelper.CombineLinesNL:static start.*/
                 CombineLinesNL: function (lines) {
                     if (lines === void 0) { lines = []; }
                     var s = Bridge.ClientTestHelper.StringHelper.CombineLines(lines);
@@ -309,13 +398,19 @@ Bridge.assembly("Bridge.ClientTestHelper", function ($asm, globals) {
                     }
 
                     return (s || "") + ("\n" || "");
-                }
+                },
+                /*Bridge.ClientTestHelper.StringHelper.CombineLinesNL:static end.*/
+
+
             }
         }
     });
+    /*Bridge.ClientTestHelper.StringHelper end.*/
 
+    /*Bridge.ClientTestHelper.IWriteableItem start.*/
     Bridge.define("Bridge.ClientTestHelper.IWriteableItem", {
         inherits: [Bridge.ClientTestHelper.IItem],
         $kind: "interface"
     });
+    /*Bridge.ClientTestHelper.IWriteableItem end.*/
 });

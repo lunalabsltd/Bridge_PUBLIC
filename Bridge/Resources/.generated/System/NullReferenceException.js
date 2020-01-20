@@ -1,3 +1,4 @@
+    /*System.NullReferenceException start.*/
     Bridge.define("System.NullReferenceException", {
         inherits: [System.SystemException],
         ctors: {
@@ -18,3 +19,4 @@
             }
         }
     });
+    /*System.NullReferenceException end.*/

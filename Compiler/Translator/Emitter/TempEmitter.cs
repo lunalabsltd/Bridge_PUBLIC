@@ -213,6 +213,30 @@ namespace Bridge.Translator
             }
         }
 
+        public bool NewLine
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string EndingComment
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public List<IPluginDependency> CurrentDependencies
         {
             get
@@ -941,6 +965,18 @@ namespace Bridge.Translator
                 throw new NotImplementedException();
             }
 
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool IsStaticBlock
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
             set
             {
                 throw new NotImplementedException();

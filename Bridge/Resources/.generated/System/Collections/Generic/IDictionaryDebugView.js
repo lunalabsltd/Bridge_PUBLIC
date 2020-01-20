@@ -1,3 +1,4 @@
+    /*System.Collections.Generic.IDictionaryDebugView$2 start.*/
     Bridge.define("System.Collections.Generic.IDictionaryDebugView$2", function (K, V) { return {
         fields: {
             _dict: null
@@ -24,3 +25,4 @@
             }
         }
     }; });
+    /*System.Collections.Generic.IDictionaryDebugView$2 end.*/

@@ -1,3 +1,4 @@
+    /*System.Collections.Generic.KeyNotFoundException start.*/
     Bridge.define("System.Collections.Generic.KeyNotFoundException", {
         inherits: [System.SystemException],
         ctors: {
@@ -18,3 +19,4 @@
             }
         }
     });
+    /*System.Collections.Generic.KeyNotFoundException end.*/

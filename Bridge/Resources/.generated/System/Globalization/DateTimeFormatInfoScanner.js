@@ -1,3 +1,4 @@
+    /*System.Globalization.DateTimeFormatInfoScanner start.*/
     Bridge.define("System.Globalization.DateTimeFormatInfoScanner", {
         statics: {
             fields: {
@@ -67,6 +68,7 @@
                 }
             },
             methods: {
+                /*System.Globalization.DateTimeFormatInfoScanner.SkipWhiteSpacesAndNonLetter:static start.*/
                 SkipWhiteSpacesAndNonLetter: function (pattern, currentIndex) {
                     while (currentIndex < pattern.length) {
                         var ch = pattern.charCodeAt(currentIndex);
@@ -88,6 +90,9 @@
                     }
                     return (currentIndex);
                 },
+                /*System.Globalization.DateTimeFormatInfoScanner.SkipWhiteSpacesAndNonLetter:static end.*/
+
+                /*System.Globalization.DateTimeFormatInfoScanner.ScanRepeatChar:static start.*/
                 ScanRepeatChar: function (pattern, ch, index, count) {
                     count.v = 1;
                     while (((index = (index + 1) | 0)) < pattern.length && pattern.charCodeAt(index) === ch) {
@@ -95,9 +100,15 @@
                     }
                     return (index);
                 },
+                /*System.Globalization.DateTimeFormatInfoScanner.ScanRepeatChar:static end.*/
+
+                /*System.Globalization.DateTimeFormatInfoScanner.GetFormatFlagGenitiveMonth:static start.*/
                 GetFormatFlagGenitiveMonth: function (monthNames, genitveMonthNames, abbrevMonthNames, genetiveAbbrevMonthNames) {
                     return ((!System.Globalization.DateTimeFormatInfoScanner.EqualStringArrays(monthNames, genitveMonthNames) || !System.Globalization.DateTimeFormatInfoScanner.EqualStringArrays(abbrevMonthNames, genetiveAbbrevMonthNames)) ? 1 : 0);
                 },
+                /*System.Globalization.DateTimeFormatInfoScanner.GetFormatFlagGenitiveMonth:static end.*/
+
+                /*System.Globalization.DateTimeFormatInfoScanner.GetFormatFlagUseSpaceInMonthNames:static start.*/
                 GetFormatFlagUseSpaceInMonthNames: function (monthNames, genitveMonthNames, abbrevMonthNames, genetiveAbbrevMonthNames) {
                     var formatFlags = 0;
                     formatFlags |= (System.Globalization.DateTimeFormatInfoScanner.ArrayElementsBeginWithDigit(monthNames) || System.Globalization.DateTimeFormatInfoScanner.ArrayElementsBeginWithDigit(genitveMonthNames) || System.Globalization.DateTimeFormatInfoScanner.ArrayElementsBeginWithDigit(abbrevMonthNames) || System.Globalization.DateTimeFormatInfoScanner.ArrayElementsBeginWithDigit(genetiveAbbrevMonthNames) ? 32 : 0);
@@ -105,12 +116,21 @@
                     formatFlags |= (System.Globalization.DateTimeFormatInfoScanner.ArrayElementsHaveSpace(monthNames) || System.Globalization.DateTimeFormatInfoScanner.ArrayElementsHaveSpace(genitveMonthNames) || System.Globalization.DateTimeFormatInfoScanner.ArrayElementsHaveSpace(abbrevMonthNames) || System.Globalization.DateTimeFormatInfoScanner.ArrayElementsHaveSpace(genetiveAbbrevMonthNames) ? 4 : 0);
                     return (formatFlags);
                 },
+                /*System.Globalization.DateTimeFormatInfoScanner.GetFormatFlagUseSpaceInMonthNames:static end.*/
+
+                /*System.Globalization.DateTimeFormatInfoScanner.GetFormatFlagUseSpaceInDayNames:static start.*/
                 GetFormatFlagUseSpaceInDayNames: function (dayNames, abbrevDayNames) {
                     return ((System.Globalization.DateTimeFormatInfoScanner.ArrayElementsHaveSpace(dayNames) || System.Globalization.DateTimeFormatInfoScanner.ArrayElementsHaveSpace(abbrevDayNames)) ? 16 : 0);
                 },
+                /*System.Globalization.DateTimeFormatInfoScanner.GetFormatFlagUseSpaceInDayNames:static end.*/
+
+                /*System.Globalization.DateTimeFormatInfoScanner.GetFormatFlagUseHebrewCalendar:static start.*/
                 GetFormatFlagUseHebrewCalendar: function (calID) {
                     return (calID === 8 ? 10 : 0);
                 },
+                /*System.Globalization.DateTimeFormatInfoScanner.GetFormatFlagUseHebrewCalendar:static end.*/
+
+                /*System.Globalization.DateTimeFormatInfoScanner.EqualStringArrays:static start.*/
                 EqualStringArrays: function (array1, array2) {
                     if (Bridge.referenceEquals(array1, array2)) {
                         return true;
@@ -128,6 +148,9 @@
 
                     return true;
                 },
+                /*System.Globalization.DateTimeFormatInfoScanner.EqualStringArrays:static end.*/
+
+                /*System.Globalization.DateTimeFormatInfoScanner.ArrayElementsHaveSpace:static start.*/
                 ArrayElementsHaveSpace: function (array) {
                     for (var i = 0; i < array.length; i = (i + 1) | 0) {
                         for (var j = 0; j < array[System.Array.index(i, array)].length; j = (j + 1) | 0) {
@@ -139,6 +162,9 @@
 
                     return false;
                 },
+                /*System.Globalization.DateTimeFormatInfoScanner.ArrayElementsHaveSpace:static end.*/
+
+                /*System.Globalization.DateTimeFormatInfoScanner.ArrayElementsBeginWithDigit:static start.*/
                 ArrayElementsBeginWithDigit: function (array) {
                     for (var i = 0; i < array.length; i = (i + 1) | 0) {
                         if (array[System.Array.index(i, array)].length > 0 && array[System.Array.index(i, array)].charCodeAt(0) >= 48 && array[System.Array.index(i, array)].charCodeAt(0) <= 57) {
@@ -168,7 +194,10 @@
                     }
 
                     return false;
-                }
+                },
+                /*System.Globalization.DateTimeFormatInfoScanner.ArrayElementsBeginWithDigit:static end.*/
+
+
             }
         },
         fields: {
@@ -182,6 +211,7 @@
             }
         },
         methods: {
+            /*System.Globalization.DateTimeFormatInfoScanner.AddDateWordOrPostfix start.*/
             AddDateWordOrPostfix: function (formatPostfix, str) {
                 if (str.length > 0) {
                     if (System.String.equals(str, ".")) {
@@ -212,6 +242,9 @@
                     }
                 }
             },
+            /*System.Globalization.DateTimeFormatInfoScanner.AddDateWordOrPostfix end.*/
+
+            /*System.Globalization.DateTimeFormatInfoScanner.AddDateWords start.*/
             AddDateWords: function (pattern, index, formatPostfix) {
                 var newIndex = System.Globalization.DateTimeFormatInfoScanner.SkipWhiteSpacesAndNonLetter(pattern, index);
                 if (newIndex !== index && formatPostfix != null) {
@@ -248,6 +281,9 @@
                 }
                 return (index);
             },
+            /*System.Globalization.DateTimeFormatInfoScanner.AddDateWords end.*/
+
+            /*System.Globalization.DateTimeFormatInfoScanner.AddIgnorableSymbols start.*/
             AddIgnorableSymbols: function (text) {
                 if (this.m_dateWords == null) {
                     this.m_dateWords = new (System.Collections.Generic.List$1(System.String)).ctor();
@@ -257,6 +293,9 @@
                     this.m_dateWords.add(temp);
                 }
             },
+            /*System.Globalization.DateTimeFormatInfoScanner.AddIgnorableSymbols end.*/
+
+            /*System.Globalization.DateTimeFormatInfoScanner.ScanDateWord start.*/
             ScanDateWord: function (pattern) {
                 this._ymdFlags = System.Globalization.DateTimeFormatInfoScanner.FoundDatePattern.None;
 
@@ -307,6 +346,9 @@
                     }
                 }
             },
+            /*System.Globalization.DateTimeFormatInfoScanner.ScanDateWord end.*/
+
+            /*System.Globalization.DateTimeFormatInfoScanner.GetDateWordsOfDTFI start.*/
             GetDateWordsOfDTFI: function (dtfi) {
                 var datePatterns = dtfi.getAllDateTimePatterns(68);
                 var i;
@@ -344,6 +386,10 @@
                     }
                 }
                 return (result);
-            }
+            },
+            /*System.Globalization.DateTimeFormatInfoScanner.GetDateWordsOfDTFI end.*/
+
+
         }
     });
+    /*System.Globalization.DateTimeFormatInfoScanner end.*/

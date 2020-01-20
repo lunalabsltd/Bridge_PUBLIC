@@ -1,3 +1,4 @@
+    /*System.Collections.Generic.SortedSet$1+Node start.*/
     Bridge.define("System.Collections.Generic.SortedSet$1.Node", function (T) { return {
         $kind: "nested class",
         fields: {
@@ -19,3 +20,4 @@
             }
         }
     }; });
+    /*System.Collections.Generic.SortedSet$1+Node end.*/

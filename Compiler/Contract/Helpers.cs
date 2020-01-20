@@ -444,9 +444,21 @@ namespace Bridge.Contract
             }
 
             var type = nullable ? ((ParameterizedType)rrtype).TypeArguments[0] : rrtype;
+
+            if (type.Kind == TypeKind.TypeParameter && block.Emitter.AssemblyInfo.SafeStructsInGenerics)
+            {
+                Helpers.BridgeRValue(insertPosition, block);
+                return;
+            }
+
             if (type.Kind == TypeKind.Struct)
             {
                 if (Helpers.IsImmutableStruct(block.Emitter, type))
+                {
+                    return;
+                }
+
+                if (Helpers.IsRef(expression, block.Emitter))
                 {
                     return;
                 }
@@ -514,6 +526,16 @@ namespace Bridge.Contract
             }
         }
 
+        private static void BridgeRValue(int insertPosition, IAbstractEmitterBlock block)
+        {
+            block.Emitter.Output.Insert(
+              insertPosition,
+              JS.Funcs.BRIDGE_RVALUE + "("
+            );
+
+            block.WriteCloseParentheses();
+        }
+
         public static bool IsImmutableStruct(IEmitter emitter, IType type)
         {
             if (type.Kind != TypeKind.Struct)
@@ -535,6 +557,51 @@ namespace Bridge.Contract
             {
                 return true;
             }
+            return false;
+        }
+
+        public static bool IsRef(Expression expression, IEmitter emitter)
+        {
+            var invocationExpression = expression?.Parent as InvocationExpression;
+
+            if (invocationExpression == null || invocationExpression.Target == expression)
+            {
+                return false;
+            }
+
+            var irr = emitter.Resolver.ResolveNode(invocationExpression, emitter) as InvocationResolveResult;
+
+            if (irr == null)
+            {
+                return false;
+            }
+
+            const string pureAttributeName = "Bridge.RefAttribute";
+            var pureAttribute = emitter.Validator.GetAttribute(irr.Member.Attributes, pureAttributeName);
+
+            if (pureAttribute != null)
+            {
+                return true;
+            }
+
+            var i = 0;
+
+            foreach (var argument in invocationExpression.Arguments)
+            {
+                if (argument != expression)
+                {
+                    ++i;
+                    continue;
+                }
+
+                pureAttribute = emitter.Validator.GetAttribute(irr.Member.Parameters[i].Attributes, pureAttributeName);
+
+                if (pureAttribute != null)
+                {
+                    return true;
+                }
+            }
+
             return false;
         }
 
@@ -1315,6 +1382,26 @@ namespace Bridge.Contract
         public static bool IsReservedStaticName(string name, bool ignoreCase = true)
         {
             return JS.Reserved.StaticNames.Any(n => String.Equals(name, n, ignoreCase ? StringComparison.InvariantCultureIgnoreCase : StringComparison.InvariantCulture));
+        }
+
+        public static string GetClassName(TypeDefinition type)
+        {
+            return type.FullName.Replace("/", "+").Replace("`", "$");
+        }
+
+        public static string GetMemberName(IMember member, IEmitter emitter)
+        {
+            var name = OverloadsCollection.Create(emitter, member).GetOverloadName();
+            if (member.IsStatic)
+            {
+                name += ":static";
+            }
+            return name;
+        }
+
+        public static string GetMemberName(IMember member, TypeDefinition type, IEmitter emitter)
+        {
+            return GetClassName(type) + "." + GetMemberName(member, emitter);
         }
 
         public static string GetFunctionName(NamedFunctionMode mode, IMember member, IEmitter emitter, bool isSetter = false)

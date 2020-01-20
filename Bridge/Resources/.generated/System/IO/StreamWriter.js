@@ -1,3 +1,4 @@
+    /*System.IO.StreamWriter start.*/
     Bridge.define("System.IO.StreamWriter", {
         inherits: [System.IO.TextWriter],
         statics: {
@@ -120,6 +121,7 @@
             }
         },
         methods: {
+            /*System.IO.StreamWriter.Init start.*/
             Init: function (streamArg, encodingArg, bufferSize, shouldLeaveOpen) {
                 this.stream = streamArg;
                 this.encoding = encodingArg;
@@ -134,9 +136,15 @@
                 }
                 this.closable = !shouldLeaveOpen;
             },
+            /*System.IO.StreamWriter.Init end.*/
+
+            /*System.IO.StreamWriter.Close start.*/
             Close: function () {
                 this.Dispose$1(true);
             },
+            /*System.IO.StreamWriter.Close end.*/
+
+            /*System.IO.StreamWriter.Dispose$1 start.*/
             Dispose$1: function (disposing) {
                 try {
                     if (this.stream != null) {
@@ -161,9 +169,15 @@
                     }
                 }
             },
+            /*System.IO.StreamWriter.Dispose$1 end.*/
+
+            /*System.IO.StreamWriter.Flush start.*/
             Flush: function () {
                 this.Flush$1(true, true);
             },
+            /*System.IO.StreamWriter.Flush end.*/
+
+            /*System.IO.StreamWriter.Flush$1 start.*/
             Flush$1: function (flushStream, flushEncoder) {
                 if (this.stream == null) {
                     System.IO.__Error.WriterClosed();
@@ -189,6 +203,9 @@
                     this.stream.Flush();
                 }
             },
+            /*System.IO.StreamWriter.Flush$1 end.*/
+
+            /*System.IO.StreamWriter.Write$1 start.*/
             Write$1: function (value) {
                 if (this.charPos === this.charLen) {
                     this.Flush$1(false, false);
@@ -199,6 +216,9 @@
                     this.Flush$1(true, false);
                 }
             },
+            /*System.IO.StreamWriter.Write$1 end.*/
+
+            /*System.IO.StreamWriter.Write$2 start.*/
             Write$2: function (buffer) {
                 if (buffer == null) {
                     return;
@@ -223,6 +243,9 @@
                     this.Flush$1(true, false);
                 }
             },
+            /*System.IO.StreamWriter.Write$2 end.*/
+
+            /*System.IO.StreamWriter.Write$3 start.*/
             Write$3: function (buffer, index, count) {
                 if (buffer == null) {
                     throw new System.ArgumentNullException.$ctor3("buffer", "ArgumentNull_Buffer");
@@ -254,6 +277,9 @@
                     this.Flush$1(true, false);
                 }
             },
+            /*System.IO.StreamWriter.Write$3 end.*/
+
+            /*System.IO.StreamWriter.Write$10 start.*/
             Write$10: function (value) {
                 if (value != null) {
                     var count = value.length;
@@ -275,6 +301,10 @@
                         this.Flush$1(true, false);
                     }
                 }
-            }
+            },
+            /*System.IO.StreamWriter.Write$10 end.*/
+
+
         }
     });
+    /*System.IO.StreamWriter end.*/

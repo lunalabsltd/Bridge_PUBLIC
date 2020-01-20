@@ -1,3 +1,4 @@
+    /*System.FormatException start.*/
     Bridge.define("System.FormatException", {
         inherits: [System.SystemException],
         ctors: {
@@ -18,3 +19,4 @@
             }
         }
     });
+    /*System.FormatException end.*/

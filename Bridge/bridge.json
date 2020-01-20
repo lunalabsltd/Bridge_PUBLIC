@@ -29,6 +29,7 @@
         "Resources/Core.js",
         "Resources/Browser.js",
         "Resources/Class.js",
+        "Resources/.generated/System/Reflection/AssemblyName.js",
         "Resources/ReflectionAssembly.js",
         "Resources/Object.js",
         "Resources/.generated/System/Void.js",
@@ -43,6 +44,7 @@
         "Resources/.generated/Bridge/Ref.js",
         "Resources/.generated/System/IConvertible.js",
         "Resources/.generated/System/HResults.js",
+        "Resources/.generated/System/Reflection/TargetSite.js",
         "Resources/Exception.js",
         "Resources/.generated/System/SystemException.js",
         "Resources/.generated/System/OutOfMemoryException.js",
@@ -337,6 +339,7 @@
         "Resources/.generated/System/Reflection/Module.js",
         "Resources/.generated/System/Reflection/ParameterModifier.js",
         "Resources/.generated/System/Reflection/TypeAttributes.js",
+        "Resources/.generated/System/Reflection/ParameterAttributes.js",
 
         "Resources/.generated/System/Random.js",
         "Resources/.generated/System/RankException.js",
