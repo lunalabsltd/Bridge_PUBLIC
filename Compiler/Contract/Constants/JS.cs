@@ -27,7 +27,7 @@
             public const string PROPERTIES = "props";
             public const string FIELDS = "fields";
             public const string METHODS = "methods";
-            public const string OVERLOADS = "methodNames";
+            public const string OVERLOADS = "overloads";
             public const string STATICS = "statics";
             public const string CTORS = "ctors";
             public const string BOX = "box";

@@ -78,7 +78,7 @@ namespace Bridge.Translator
                     var overloadName = OverloadsCollection.GetOverloadName(this.Emitter, declaration);
                     if (overloadName != null)
                     {
-                        overloads[overloadName.Item2] = overloadName.Item1 + MethodParametersToString(declaration);
+                        overloads[overloadName] = declaration.Name;
                     }
                 }
             }
@@ -88,7 +88,8 @@ namespace Bridge.Translator
                 return;
             }
 
-            this.EnsureComma();
+            this.Emitter.Comma = true;
+            this.EnsureComma(true);
             this.Write(JS.Fields.OVERLOADS);
             this.WriteColon();
             this.BeginBlock();

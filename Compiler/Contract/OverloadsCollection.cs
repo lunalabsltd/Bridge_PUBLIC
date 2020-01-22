@@ -996,19 +996,11 @@ namespace Bridge.Contract
         }
 
         private Dictionary<Tuple<bool, string, bool, bool>, string> overloadName = new Dictionary<Tuple<bool, string, bool, bool>, string>();
-        private Dictionary<string, string> currentOverloads = new Dictionary<string, string>();
+        private string currentOverloads = null;
 
-        public static Tuple<string,string> GetOverloadName(IEmitter emitter, MethodDeclaration declaration) {
+        public static string GetOverloadName(IEmitter emitter, MethodDeclaration declaration) {
             var overloadCollection = OverloadsCollection.Create(emitter, declaration);
-            var declarationName = declaration.Name;
-            if (overloadCollection.Member.ImplementedInterfaceMembers.Count > 0) {
-                declarationName = BridgeTypes.ToJsName(overloadCollection.Member.ImplementedInterfaceMembers.First().DeclaringType, emitter) + "." + declarationName;
-            }
-
-            if (overloadCollection.currentOverloads.ContainsKey(declarationName)) {
-                return new Tuple<string, string>(declarationName, overloadCollection.currentOverloads[declarationName]);
-            }
-            return null;
+            return overloadCollection.currentOverloads;
         }
 
         public string GetOverloadName(bool skipInterfaceName = false, string prefix = null, bool withoutTypeParams = false, bool isObjectLiteral = false, bool excludeTypeOnly = false)
@@ -1033,14 +1025,8 @@ namespace Bridge.Contract
                 name = this.GetOverloadName(this.Member, skipInterfaceName, prefix, withoutTypeParams, isObjectLiteral, excludeTypeOnly);
                 this.overloadName[key] = name;
                 if (this.Name != name) {
-                    if (this.Member.ImplementedInterfaceMembers.Count > 0) {
-                        var interfaceName = BridgeTypes.ToJsName(this.Member.ImplementedInterfaceMembers.First().DeclaringType, this.Emitter);
-                        this.currentOverloads[interfaceName + "." + this.Name] = name;
-                    }
-                    else {
-
-
-                        this.currentOverloads[this.Name] = name;
+                    if (!this.Member.IsExplicitInterfaceImplementation && ( this.Member.DeclaringTypeDefinition == null || this.Member.DeclaringTypeDefinition.Kind != TypeKind.Interface)) {
+                        this.currentOverloads = name;
                     }
                 }
             }
