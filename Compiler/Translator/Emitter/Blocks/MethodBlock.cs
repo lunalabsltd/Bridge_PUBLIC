@@ -43,29 +43,10 @@ namespace Bridge.Translator
             else
             {
                 this.EmitMethods(this.TypeInfo.InstanceMethods, this.TypeInfo.InstanceProperties, null);
-                this.EmitOverloads( this.TypeInfo.InstanceMethods );
+                this.EmitOverloads(this.TypeInfo.InstanceMethods);
             }
         }
 
-        protected virtual string MethodParametersToString(MethodDeclaration member)
-        {
-            StringBuilder sb = new StringBuilder();
-            bool firstItem = true;
-                foreach (var p in member.Parameters)
-                {
-                    if (firstItem)
-                    {
-                        firstItem = false;
-                    }
-                    else
-                    {
-                        sb.Append( ", " );
-                    }
-                    sb.Append(p.Type.ToString());
-                }
-
-            return "(" + sb.ToString() + ")";
-        }
         protected virtual void EmitOverloads(Dictionary<string, List<MethodDeclaration>> methods)
         {
             Dictionary<string, string> overloads = new Dictionary<string, string>();

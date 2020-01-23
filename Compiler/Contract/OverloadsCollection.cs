@@ -1025,7 +1025,7 @@ namespace Bridge.Contract
                 name = this.GetOverloadName(this.Member, skipInterfaceName, prefix, withoutTypeParams, isObjectLiteral, excludeTypeOnly);
                 this.overloadName[key] = name;
                 if (this.Name != name) {
-                    if (!this.Member.IsExplicitInterfaceImplementation && ( this.Member.DeclaringTypeDefinition == null || this.Member.DeclaringTypeDefinition.Kind != TypeKind.Interface)) {
+                    if (!this.Member.IsExplicitInterfaceImplementation && (this.Member.DeclaringTypeDefinition == null || this.Member.DeclaringTypeDefinition.Kind != TypeKind.Interface)) {
                         this.currentOverloads = name;
                     }
                 }
