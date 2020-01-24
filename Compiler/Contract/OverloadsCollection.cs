@@ -998,7 +998,8 @@ namespace Bridge.Contract
         private Dictionary<Tuple<bool, string, bool, bool>, string> overloadName = new Dictionary<Tuple<bool, string, bool, bool>, string>();
         private string currentOverloads = null;
 
-        public static string GetOverloadName(IEmitter emitter, MethodDeclaration declaration) {
+        public static string GetOverloadName(IEmitter emitter, MethodDeclaration declaration)
+        {
             var overloadCollection = OverloadsCollection.Create(emitter, declaration);
             return overloadCollection.currentOverloads;
         }
@@ -1024,8 +1025,10 @@ namespace Bridge.Contract
             {
                 name = this.GetOverloadName(this.Member, skipInterfaceName, prefix, withoutTypeParams, isObjectLiteral, excludeTypeOnly);
                 this.overloadName[key] = name;
-                if (this.Name != name) {
-                    if (!this.Member.IsExplicitInterfaceImplementation && (this.Member.DeclaringTypeDefinition == null || this.Member.DeclaringTypeDefinition.Kind != TypeKind.Interface)) {
+                if (this.Name != name)
+                {
+                    if (!this.Member.IsExplicitInterfaceImplementation && (this.Member.DeclaringTypeDefinition == null || this.Member.DeclaringTypeDefinition.Kind != TypeKind.Interface))
+                    {
                         this.currentOverloads = name;
                     }
                 }
