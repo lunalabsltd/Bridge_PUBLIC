@@ -90,12 +90,6 @@ namespace Bridge.Translator
 
         public virtual string MethodParametersToString(MethodDeclaration member)
         {
-            var typeDef = this.Emitter.GetTypeDefinition();
-            string name = this.Emitter.Validator.GetCustomTypeName(typeDef, this.Emitter, false);
-            if (name.IsEmpty())
-            {
-                name = BridgeTypes.ToJsName(this.TypeInfo.Type, this.Emitter, asDefinition: true, nomodule: true, ignoreLiteralName: false);
-            }
             StringBuilder sb = new StringBuilder();
             bool firstItem = true;
             foreach (var p in member.Parameters)
