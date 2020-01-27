@@ -59,7 +59,7 @@ namespace Bridge.Translator
                     var overloadName = OverloadsCollection.GetOverloadName(this.Emitter, declaration);
                     if (overloadName != null)
                     {
-                        overloads[overloadName] = declaration.Name;
+                        overloads[overloadName] = declaration.Name + this.MethodParametersToString(declaration);
                     }
                 }
             }
@@ -86,6 +86,32 @@ namespace Bridge.Translator
 
             this.WriteNewLine();
             this.EndBlock();
+        }
+
+        public virtual string MethodParametersToString(MethodDeclaration member)
+        {
+            var typeDef = this.Emitter.GetTypeDefinition();
+            string name = this.Emitter.Validator.GetCustomTypeName(typeDef, this.Emitter, false);
+            if (name.IsEmpty())
+            {
+                name = BridgeTypes.ToJsName(this.TypeInfo.Type, this.Emitter, asDefinition: true, nomodule: true, ignoreLiteralName: false);
+            }
+            StringBuilder sb = new StringBuilder();
+            bool firstItem = true;
+            foreach (var p in member.Parameters)
+            {
+                if (firstItem)
+                {
+                    firstItem = false;
+                }
+                else
+                {
+                    sb.Append( ", " );
+                }
+                sb.Append(p.Type.ToString());
+            }
+
+            return "(" + sb.ToString() + ")";
         }
 
         protected virtual void EmitMethods(Dictionary<string, List<MethodDeclaration>> methods, Dictionary<string, List<EntityDeclaration>> properties, Dictionary<OperatorType, List<OperatorDeclaration>> operators)
