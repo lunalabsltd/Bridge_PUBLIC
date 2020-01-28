@@ -188,6 +188,11 @@
                     write = true;
                 }
 
+                if (obj.overloads) {
+                    config.overloads = obj.overloads;
+                    write = true;
+                }
+
                 if (obj.ctors) {
                     if (obj.ctors.init) {
                         config.init = obj.ctors.init;

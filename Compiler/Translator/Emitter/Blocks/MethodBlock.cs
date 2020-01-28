@@ -1,4 +1,5 @@
-﻿using Bridge.Contract;
+﻿using System;
+using Bridge.Contract;
 using Bridge.Contract.Constants;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.TypeSystem;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using ICSharpCode.NRefactory.Semantics;
 using Newtonsoft.Json;
+using Object.Net.Utilities;
 
 namespace Bridge.Translator
 {
@@ -41,7 +43,69 @@ namespace Bridge.Translator
             else
             {
                 this.EmitMethods(this.TypeInfo.InstanceMethods, this.TypeInfo.InstanceProperties, null);
+                this.EmitOverloads(this.TypeInfo.InstanceMethods);
             }
+        }
+
+        protected virtual void EmitOverloads(Dictionary<string, List<MethodDeclaration>> methods)
+        {
+            Dictionary<string, string> overloads = new Dictionary<string, string>();
+            foreach (var method in methods)
+            {
+                foreach (var declaration in method.Value)
+                {
+                    if (overloads.ContainsKey(declaration.Name)) continue;
+
+                    var overloadName = OverloadsCollection.GetOverloadName(this.Emitter, declaration);
+                    if (overloadName != null)
+                    {
+                        overloads[overloadName] = declaration.Name + this.MethodParametersToString(declaration);
+                    }
+                }
+            }
+
+            if (overloads.Count <= 0)
+            {
+                return;
+            }
+
+            this.Emitter.Comma = true;
+            this.EnsureComma(true);
+            this.Write(JS.Fields.OVERLOADS);
+            this.WriteColon();
+            this.BeginBlock();
+
+            foreach (var overload in overloads)
+            {
+                this.EnsureComma();
+                this.WriteScript(overload.Value);
+                this.WriteColon();
+                this.WriteScript(overload.Key);
+                this.Emitter.Comma = true;
+            }
+
+            this.WriteNewLine();
+            this.EndBlock();
+        }
+
+        public virtual string MethodParametersToString(MethodDeclaration member)
+        {
+            StringBuilder sb = new StringBuilder();
+            bool firstItem = true;
+            foreach (var p in member.Parameters)
+            {
+                if (firstItem)
+                {
+                    firstItem = false;
+                }
+                else
+                {
+                    sb.Append( ", " );
+                }
+                sb.Append(p.Type.ToString());
+            }
+
+            return "(" + sb.ToString() + ")";
         }
 
         protected virtual void EmitMethods(Dictionary<string, List<MethodDeclaration>> methods, Dictionary<string, List<EntityDeclaration>> properties, Dictionary<OperatorType, List<OperatorDeclaration>> operators)
