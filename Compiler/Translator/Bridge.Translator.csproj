@@ -328,6 +328,7 @@
     <Compile Include="SourceMaps\SourceMapGenerator.cs" />
     <Compile Include="Translator\InvocationInterceptor.cs" />
     <Compile Include="Translator\HtmlGenerator.cs" />
+    <Compile Include="Translator\MonoHack.cs" />
     <Compile Include="Translator\Translator.Output.cs" />
     <Compile Include="Translator\Plugins.cs" />
     <Compile Include="Utils\ByteSizeHelper.cs" />

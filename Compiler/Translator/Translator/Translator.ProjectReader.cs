@@ -34,6 +34,10 @@ namespace Bridge.Translator
 
         internal static Project OpenProject(string location, IDictionary<string,string> globalProperties)
         {
+            //Hack for issue parsing solution with mono provided by unity
+            //https://github.com/microsoft/msbuild/issues/2554
+            new MonoHack();
+
             return new Project(location, globalProperties, null, new ProjectCollection());
         }
 
