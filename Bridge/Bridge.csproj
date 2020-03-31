@@ -1676,7 +1676,11 @@
     <Content Include="Resources\.typescript\header.d.ts" />
   </ItemGroup>
   <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <CSharpTargetsPath>$(MSBuildBinPath)\Microsoft.CSharp.targets</CSharpTargetsPath>
+    <CSharpTargetsPath Condition="$(MSBuildBinPath.Contains('xbuild'))">$(MSBuildBinPath)\..\..\14.0\bin\Microsoft.CSharp.targets</CSharpTargetsPath>
+  </PropertyGroup>
+  <Import Project="$(CSharpTargetsPath)" />
   <Import Project="$(SolutionDir).build\common\NuGet.Build.Package.targets" Condition="Exists('$(SolutionDir).build\common\NuGet.Build.Package.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
