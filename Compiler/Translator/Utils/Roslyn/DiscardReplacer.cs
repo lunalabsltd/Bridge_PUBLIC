@@ -29,7 +29,7 @@ namespace Bridge.Translator
                     if (arg.Expression is IdentifierNameSyntax ins && ins.Identifier.ValueText == DISCARD_IDENTIFIER)
                     {
                         var si = model.GetSymbolInfo(arg.Expression);
-                        return si.Symbol == null || si.Symbol.Kind == SymbolKind.Discard;
+                        return si.Symbol == null || si.Symbol is IDiscardSymbol;
                     }
 
                     return false;
@@ -42,7 +42,7 @@ namespace Bridge.Translator
                     if (assignment.Left is IdentifierNameSyntax ins && ins.Identifier.ValueText == DISCARD_IDENTIFIER)
                     {
                         var si = model.GetSymbolInfo(assignment.Left);
-                        return si.Symbol == null || si.Symbol.Kind == SymbolKind.Discard;
+                        return si.Symbol == null || si.Symbol is IDiscardSymbol;
                     }
 
                     return false;
