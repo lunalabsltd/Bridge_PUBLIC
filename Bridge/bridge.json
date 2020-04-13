@@ -284,6 +284,7 @@
         "Resources/.generated/System/Globalization/CultureNotFoundException.js",
         "Resources/.generated/System/Globalization/DateTimeFormatInfoScanner.js",
         "Resources/.generated/System/Globalization/DateTimeStyles.js",
+        "Resources/.generated/System/Globalization/NumberStyles.js",
         "Resources/.generated/System/Globalization/FORMATFLAGS.js",
         "Resources/.generated/System/Globalization/GlobalizationMode.js",
 

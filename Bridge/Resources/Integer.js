@@ -713,6 +713,22 @@
                 return true;
             },
 
+            parseIntStyles: function (str, min, max, style) {
+                style = style || 0;
+                if ( (style & 512) !== 0 ) {
+                    return this.parseInt(str, min, max, 16);
+                }
+                return this.parseInt(str, min, max, 10);
+            },
+
+            tryParseIntStyles: function (str, result, min, max, style) {
+                style = style || 0;
+                if ( (style & 512) !== 0 ) {
+                    return this.tryParseInt(str, result, min, max, 16);
+                }
+                return this.tryParseInt(str, result, min, max, 10);
+            },
+
             isInfinite: function (x) {
                 return x === Number.POSITIVE_INFINITY || x === Number.NEGATIVE_INFINITY;
             },
@@ -892,6 +908,12 @@
                     },
                     tryParse: function (s, result, radix) {
                         return Bridge.Int.tryParseInt(s, result, min, max, radix);
+                    },
+                    parseStyles: function (s, style) {
+                        return Bridge.Int.parseIntStyles(s, min, max, style);
+                    },
+                    tryParseStyles: function(s, result, style) {
+                        return Bridge.Int.tryParseIntStyles(s, result, min, max, style);
                     },
                     format: function (number, format, provider) {
                         return Bridge.Int.format(number, format, provider, type, toUnsign);

@@ -23,6 +23,8 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             Assert.AreEqual(7, int.Parse("\r\n7"), "The '\\r\\n7' string is parsed into 7.");
             Assert.AreEqual(8, int.Parse("8\n"), "The '8\\n' string is parsed into 8.");
             Assert.AreEqual(9, int.Parse("\r\n9\n"), "The '\\r\\n9\\n' string is parsed into 9.");
+
+            Assert.AreEqual(0x10, int.Parse("10", System.Globalization.NumberStyles.HexNumber), "The '10' string is parsed to 0x10 with NumberStyles.HexNumber");
         }
 
         [Test]
@@ -60,6 +62,9 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             Assert.AreEqual(10, res, "The crafted int '10' is parsed as 10.");
 
             Assert.False(int.TryParse("11 n", out res), "The '11 n' string can't be parsed.");
+
+            Assert.True(int.TryParse("12", out res, System.Globalization.NumberStyles.HexNumber), "The '12' string can be parsed with NumberStyles.HexNumber.");
+            Assert.AreEqual(0x12, res, "The parsed string resulted in 0x12.");
         }
     }
 }
