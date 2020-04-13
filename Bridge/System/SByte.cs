@@ -25,6 +25,10 @@ namespace System
         [CLSCompliant(false)]
         public static extern sbyte Parse(string s, int radix);
 
+        [Bridge.Template("System.SByte.parseStyles({s}, {style})")]
+        [CLSCompliant(false)]
+        public static extern sbyte Parse(string s, Globalization.NumberStyles style);
+
         [Bridge.Template("System.SByte.tryParse({s}, {result})")]
         [CLSCompliant(false)]
         public static extern bool TryParse(string s, out sbyte result);
@@ -32,6 +36,10 @@ namespace System
         [Bridge.Template("System.SByte.tryParse({s}, {result}, {radix})")]
         [CLSCompliant(false)]
         public static extern bool TryParse(string s, out sbyte result, int radix);
+
+        [Bridge.Template("System.SByte.tryParseStyles({s}, {result}, {style})")]
+        [CLSCompliant(false)]
+        public static extern bool TryParse(string s, out sbyte result, Globalization.NumberStyles style);
 
         public extern string ToString(int radix);
 
