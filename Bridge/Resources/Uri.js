@@ -18,6 +18,14 @@
 
                     notEquals: function (uri1, uri2) {
                         return !System.Uri.equals(uri1, uri2);
+                    },
+
+                    escapeUriString: function (stringToEscape) {
+                        return encodeURI( stringToEscape );
+                    },
+
+                    escapeDataString: function (stringToEscape) {
+                        return encodeURIComponent(stringToEscape);
                     }
                 }
             },

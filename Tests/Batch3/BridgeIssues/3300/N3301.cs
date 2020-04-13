@@ -22,5 +22,18 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             var uri = new Uri(uriStr);
             Assert.AreEqual(uriStr, uri.ToString(), "URI ToString() returns the same string used to initialize it.");
         }
+
+        /// <summary>
+        /// Checks whether URI`s EscapeUriString() & EscapeDataString() escapes correctly
+        /// </summary>
+        [Test]
+        public static void TestEscape()
+        {
+            var planeText = "http://exmaple.org?param=arg1 &arg2";
+            var escapeUriString = Uri.EscapeUriString(planeText);
+            Assert.AreEqual("http://exmaple.org?param=arg1%20&arg2", escapeUriString, "Uri.EscapeUriString() works correctly.");
+            var escapeDataString = Uri.EscapeDataString(planeText);
+            Assert.AreEqual("http%3A%2F%2Fexmaple.org%3Fparam%3Darg1%20%26arg2", escapeDataString, "Uri.EscapeDataString() works correctly.");
+        }
     }
 }
