@@ -715,7 +715,7 @@
 
             parseIntStyles: function (str, min, max, style) {
                 style = style || 0;
-                if ( (style & 512) !== 0 ) {
+                if ( (style & System.Globalization.NumberStyles.AllowHexSpecifier) !== 0 ) {
                     return this.parseInt(str, min, max, 16);
                 }
                 return this.parseInt(str, min, max, 10);
@@ -723,7 +723,7 @@
 
             tryParseIntStyles: function (str, result, min, max, style) {
                 style = style || 0;
-                if ( (style & 512) !== 0 ) {
+                if ( (style & System.Globalization.NumberStyles.AllowHexSpecifier) !== 0 ) {
                     return this.tryParseInt(str, result, min, max, 16);
                 }
                 return this.tryParseInt(str, result, min, max, 10);
