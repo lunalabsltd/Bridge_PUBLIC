@@ -327,6 +327,25 @@
                 return c;
             },
 
+            getCultureInfoByIetfLanguageTag: function (name) {
+                if (name == null) {
+                    throw new System.ArgumentNullException.$ctor1("name");
+                } else if (name === "") {
+                    return System.Globalization.CultureInfo.invariantCulture;
+                }
+
+                var names = Bridge.getPropertyNames(this.cultures);
+                for (let i = 0; i < names.length; i++) {
+                    const cultureName = names[i];
+                    let match = cultureName.match(new RegExp(/^\w\w/gi));
+                    if (match && match[0] === name) {
+                        return this.cultures[cultureName];
+                    }
+                }
+
+                throw new System.Globalization.CultureNotFoundException.$ctor5("name", name);
+            },
+
             getCultures: function () {
                 var names = Bridge.getPropertyNames(this.cultures),
                     result = [],
