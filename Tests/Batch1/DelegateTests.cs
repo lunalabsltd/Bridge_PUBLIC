@@ -363,5 +363,34 @@ namespace Bridge.ClientTest
             Assert.True((Action)l[2] == f12);
             Assert.True((Action)l[3] == f11_2);
         }
+
+        public class CreateDelegateTestClass
+        {
+            public int Value;
+
+            public static float Method1()
+            {
+                return 1;
+            }
+
+            public float Method2()
+            {
+                return Value;
+            }
+        }
+
+        [Test]
+        public void CreateDelegateTest()
+        {
+            var delStatic = Delegate.CreateDelegate(typeof(CreateDelegateTestClass), null, "Method1");
+            Assert.AreEqual(1, delStatic.Apply(), "CreateDelegate(Type, Target, MethodName) works with static methods.");
+
+            var inst = new CreateDelegateTestClass();
+            inst.Value = 2;
+            var delInstance = Delegate.CreateDelegate(typeof(CreateDelegateTestClass), inst, "Method2");
+            Assert.AreEqual(2, delInstance.Apply(), "CreateDelegate(Type, Target, MethodName) works with instance methods.");
+        }
     }
+
+    
 }
