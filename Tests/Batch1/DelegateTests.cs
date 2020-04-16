@@ -364,6 +364,7 @@ namespace Bridge.ClientTest
             Assert.True((Action)l[3] == f11_2);
         }
 
+        [Reflectable]
         public class CreateDelegateTestClass
         {
             public int Value;
