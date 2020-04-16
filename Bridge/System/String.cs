@@ -307,6 +307,27 @@ namespace System
         public static extern int Compare(string strA, int indexA, string strB, int indexB, int length, bool ignoreCase, CultureInfo culture);
 
         /// <summary>
+        /// Compares substrings of two specified String objects by evaluating the numeric values of the corresponding Char objects in each substring.
+        /// </summary>
+        /// <param name="strA">The first string to use in the comparison.</param>
+        /// <param name="indexA">The starting index of the substring in strA.</param>
+        /// <param name="strB">The second string to use in the comparison.</param>
+        /// <param name="indexB">The starting index of the substring in strB.</param>
+        /// <param name="length">The maximum number of characters in the substrings to compare.</param>
+        /// <returns>A 32-bit signed integer that indicates the lexical relationship between the two comparands.</returns>
+        [Bridge.Template("System.String.compare({strA}.substr({indexA}, {length}), {strB}.substr({indexB}, {length}), System.StringComparison.Ordinal)")]
+        public extern static int CompareOrdinal(string strA, int indexA, string strB, int indexB, int length);
+
+        /// <summary>
+        /// Compares two specified String objects by evaluating the numeric values of the corresponding Char objects in each string.
+        /// </summary>
+        /// <param name="strA">The first string to compare.</param>
+        /// <param name="strB">The second string to compare.</param>
+        /// <returns>An integer that indicates the lexical relationship between the two comparands.</returns>
+        [Bridge.Template("System.String.compare({strA}, {strB}, System.StringComparison.Ordinal)")]
+        public static extern int CompareOrdinal(string strA, string strB);
+
+        /// <summary>
         /// Reports the zero-based index of the first occurrence of the specified Unicode character in this string.
         /// </summary>
         /// <param name="value">A Unicode character to seek.</param>
@@ -443,7 +464,44 @@ namespace System
         [Bridge.Template("System.String.lastIndexOf({this}, {value}, {startIndex}, {count})")]
         public extern int LastIndexOf(string value, int startIndex, int count);
 
-        // TODO: Missing System.String.LastIndexOf Method overloads #2396
+        /// <summary>
+        /// Reports the zero-based index of the last occurrence of a specified string within the current String object.
+        /// A parameter specifies the type of search to use for the specified string.
+        /// </summary>
+        /// <param name="value">The string to seek.</param>
+        /// <param name="comparisonType">One of the enumeration values that specifies the rules for the search.</param>
+        /// <returns>The zero-based starting index position of the value parameter if that string is found, or -1 if it is not.
+        /// If value is Empty, the return value is the last index position in this instance.</returns>
+        [Bridge.Template("System.String.lastIndexOf({this}, {value}, this.length - 1, this.length, {comparisonType})")]
+        public extern int LastIndexOf(string value, StringComparison comparisonType);
+
+        /// <summary>
+        /// Reports the zero-based index of the last occurrence of a specified string within the current String object.
+        /// The search starts at a specified character position and proceeds backward toward the beginning of the string.
+        /// A parameter specifies the type of comparison to perform when searching for the specified string.
+        /// </summary>
+        /// <param name="value">The string to seek.</param>
+        /// <param name="startIndex">The search starting position. The search proceeds from startIndex toward the beginning of this instance.</param>
+        /// <param name="comparisonType">One of the enumeration values that specifies the rules for the search.</param>
+        /// <returns>The zero-based starting index position of the value parameter if that string is found, or -1 if it is not found or if the current instance equals Empty.
+        /// If value is Empty, the return value is the smaller of startIndex and the last index position in this instance.</returns>
+        [Bridge.Template("System.String.lastIndexOf({this}, {value}, {startIndex}, this.length, {comparisonType})")]
+        public extern int LastIndexOf(string value, int startIndex, StringComparison comparisonType);
+
+        /// <summary>
+        /// Reports the zero-based index position of the last occurrence of a specified string within this instance.
+        /// The search starts at a specified character position and proceeds backward toward the beginning of the string
+        /// for the specified number of character positions. A parameter specifies the type of comparison to perform when searching for the specified string.
+        /// </summary>
+        /// <param name="value">The string to seek.</param>
+        /// <param name="startIndex">The search starting position. The search proceeds from startIndex toward the beginning of this instance.</param>
+        /// <param name="count">The number of character positions to examine.</param>
+        /// <param name="comparisonType">One of the enumeration values that specifies the rules for the search.</param>
+        /// <returns>The zero-based starting index position of the value parameter if that string is found, or -1
+        /// if it is not found or if the current instance equals Empty.
+        /// If value is Empty, the return value is the smaller of startIndex and the last index position in this instance.</returns>
+        [Bridge.Template("System.String.lastIndexOf({this}, {value}, {startIndex}, {count}, {comparisonType})")]
+        public extern int LastIndexOf(string value, int startIndex, int count, StringComparison comparisonType);
 
         /// <summary>
         /// Reports the zero-based index position of the last occurrence in this instance of one or more characters specified in a Unicode array.
