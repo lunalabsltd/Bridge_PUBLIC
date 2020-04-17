@@ -22,6 +22,9 @@ namespace System.Globalization
         [Bridge.Name("getCultureInfo")]
         public static extern CultureInfo GetCultureInfo(string name);
 
+        [Bridge.Convention(Bridge.Notation.CamelCase)]
+        public static extern CultureInfo GetCultureInfoByIetfLanguageTag(string name);
+
         /// <summary>
         /// Creates a CultureInfo that represents the specific culture that is associated with the specified name.
         /// </summary>
