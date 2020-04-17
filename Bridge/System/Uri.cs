@@ -21,5 +21,11 @@
 
         [Bridge.Template("System.Uri.notEquals({uri1}, {uri2})")]
         public static extern bool operator !=(Uri uri1, Uri uri2);
+
+        [Bridge.Template("System.Uri.escapeUriString({stringToEscape})")]
+        public static extern string EscapeUriString(string stringToEscape);
+
+        [Bridge.Template("System.Uri.escapeDataString({stringToEscape})")]
+        public static extern string EscapeDataString(string stringToEscape);
     }
 }
