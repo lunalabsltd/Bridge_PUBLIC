@@ -62,6 +62,9 @@ namespace System
         [Bridge.Template("Bridge.Reflection.createDelegate({method})")]
         public static extern Delegate CreateDelegate(Type type, MethodInfo method);
 
+        [Bridge.Template("Bridge.Reflection.createDelegateTarget({type}, {target}, {method})")]
+        public static extern Delegate CreateDelegate(Type type, object target, string method);
+
         [Bridge.Template("Bridge.fn.getInvocationList({this})")]
         public extern Delegate[] GetInvocationList();
     }

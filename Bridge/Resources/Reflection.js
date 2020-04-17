@@ -911,6 +911,23 @@
             return method;
         },
 
+        createDelegateTarget: function (type, target, method) {
+            if (type == null) {
+                throw new System.ArgumentException( name(type) );
+            }
+            if (method == null || method === "") {
+                throw new System.ArgumentException( name(method) );
+            }
+            var memberTypes = System.Reflection.MemberTypes.Method;
+            var bindingFlags = System.Reflection.BindingFlags.Instance
+                                | System.Reflection.BindingFlags.Static
+                                | System.Reflection.BindingFlags.Public
+                                | System.Reflection.BindingFlags.InvokeMethod;
+
+            var mi = Bridge.Reflection.getMembers(type, memberTypes, bindingFlags, method);
+            return Bridge.Reflection.createDelegate(mi, target);
+        },
+
         midel: function (mi, target, typeArguments, bind) {
             if (bind !== false) {
                 if (mi.is && !!target) {
