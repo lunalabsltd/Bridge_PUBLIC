@@ -424,6 +424,17 @@ namespace Bridge.ClientTest.SimpleTypes
         }
 
         [Test]
+        public void LastIndexOfStringWithComparisonTypeWorks()
+        {
+            Assert.AreEqual(1, "aBc".LastIndexOf("bc", StringComparison.OrdinalIgnoreCase));
+            Assert.AreEqual(-1, "aBc".LastIndexOf("bc", StringComparison.Ordinal));
+            Assert.AreEqual(1, "aBc".LastIndexOf("bc", StringComparison.CurrentCultureIgnoreCase));
+            Assert.AreEqual(-1, "aBc".LastIndexOf("bc", StringComparison.CurrentCulture));
+            Assert.AreEqual(1, "aBc".LastIndexOf("bc", StringComparison.InvariantCultureIgnoreCase));
+            Assert.AreEqual(-1, "aBc".LastIndexOf("bc", StringComparison.InvariantCulture));
+        }
+
+        [Test]
         public void LastIndexOfCharWithStartIndexWorks()
         {
             Assert.AreEqual(1, "abcabc".LastIndexOf('b', 3));
@@ -435,6 +446,17 @@ namespace Bridge.ClientTest.SimpleTypes
         {
             Assert.AreEqual(1, "abcabc".LastIndexOf("bc", 3));
             Assert.AreEqual(-1, "abcabc".LastIndexOf("bd", 3));
+        }
+
+        [Test]
+        public void LastIndexOfStringWithStartIndexAndComparisonTypeWorks()
+        {
+            Assert.AreEqual(1, "aBcabc".LastIndexOf("bc", 3, StringComparison.OrdinalIgnoreCase));
+            Assert.AreEqual(-1, "aBcabc".LastIndexOf("bc", 3, StringComparison.Ordinal));
+            Assert.AreEqual(1, "aBcabc".LastIndexOf("bc", 3, StringComparison.CurrentCultureIgnoreCase));
+            Assert.AreEqual(-1, "aBcabc".LastIndexOf("bc", 3, StringComparison.CurrentCulture));
+            Assert.AreEqual(1, "aBcabc".LastIndexOf("bc", 3, StringComparison.InvariantCultureIgnoreCase));
+            Assert.AreEqual(-1, "aBcabc".LastIndexOf("bc", 3, StringComparison.InvariantCulture));
         }
 
         [Test]
@@ -451,6 +473,17 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.AreEqual(1, "xbcxxxbc".LastIndexOf("bc", 3, 3));
             Assert.AreEqual(-1, "xbcxxxbc".LastIndexOf("bc", 3, 2));
             Assert.AreEqual(-1, "xbcxxxbc".LastIndexOf("bd", 3, 3));
+        }
+
+        [Test]
+        public void LastIndexOfStringWithStartIndexAndCountAndComparisonTypeWorks()
+        {
+            Assert.AreEqual(1, "xBcxxxBc".LastIndexOf("bc", 3, 3, StringComparison.OrdinalIgnoreCase));
+            Assert.AreEqual(-1, "xBcxxxBc".LastIndexOf("bc", 3, 3, StringComparison.Ordinal));
+            Assert.AreEqual(1, "xBcxxxBc".LastIndexOf("bc", 3, 3, StringComparison.CurrentCultureIgnoreCase));
+            Assert.AreEqual(-1, "xBcxxxBc".LastIndexOf("bc", 3, 3, StringComparison.CurrentCulture));
+            Assert.AreEqual(1, "xBcxxxBc".LastIndexOf("bc", 3, 3, StringComparison.InvariantCultureIgnoreCase));
+            Assert.AreEqual(-1, "xBcxxxBc".LastIndexOf("bc", 3, 3, StringComparison.InvariantCulture));
         }
 
         [Test]
@@ -822,6 +855,15 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.True(string.Compare("abcd", "abcD") != 0);
             Assert.True(string.Compare("abcd", "abcb") > 0);
             Assert.True(string.Compare("abcd", "abce") < 0);
+        }
+
+        [Test]
+        public void StaticCompareOrdinalToWorks()
+        {
+            Assert.True(string.CompareOrdinal("abcd", "abcd") == 0);
+            Assert.True(string.CompareOrdinal("abcd", "abcD") != 0);
+            Assert.True(string.CompareOrdinal("abcd", "abcb") > 0);
+            Assert.True(string.CompareOrdinal("abcd", "abce") < 0);
         }
 
         [Test]

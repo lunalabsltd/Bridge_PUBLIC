@@ -76,9 +76,63 @@
                 return result;
             },
 
-            lastIndexOf: function (s, search, startIndex, count) {
-                var index = s.lastIndexOf(search, startIndex);
+            lastIndexOf: function (s, search, startIndex, count, comparisonType) {
+                startIndex = startIndex || s.length - 1;
+                startIndex = startIndex < 0 ? 0 : startIndex;
+                count = count || s.length;
+                comparisonType = comparisonType || System.StringComparison.CurrentCulture;
+                let index = -1;
+                let ordinal = comparisonType === System.StringComparison.OrdinalIgnoreCase
+                            || comparisonType === System.StringComparison.Ordinal;
 
+                if (ordinal) {
+                    if (comparisonType === System.StringComparison.OrdinalIgnoreCase) {
+                        index = s.toLowerCase().lastIndexOf(search.toLowerCase(), startIndex);
+                    } else {
+                        index = s.lastIndexOf(search, startIndex);
+                    }
+                } else {
+                    let cultureName = "";
+                    let ignoreCase = false;
+
+                    switch (comparisonType) {
+                        case System.StringComparison.CurrentCultureIgnoreCase:
+                            cultureName = System.Globalization.CultureInfo.getCurrentCulture().name;
+                            ignoreCase = true;
+                            break;
+                        case System.StringComparison.CurrentCulture:
+                            cultureName = System.Globalization.CultureInfo.getCurrentCulture().name;
+                            break;
+                        case System.StringComparison.InvariantCultureIgnoreCase:
+                            cultureName = System.Globalization.CultureInfo.invariantCulture.name;
+                            ignoreCase = true;
+                            break;
+                        case System.StringComparison.InvariantCulture:
+                            cultureName = System.Globalization.CultureInfo.invariantCulture.name;
+                            break;
+                    }
+
+                    let subStringLength = search.length;
+                    startIndex = Math.min(startIndex, s.length - subStringLength);
+
+                    for (let i = startIndex; i >= 0; i--) {
+                        let testSubString = s.substring(i, i + subStringLength);
+                        if (ignoreCase) {
+                            if (testSubString.localeCompare(search, cultureName, { sensitivity: "accent"}) === 0) {
+                                index = i;
+                                break;
+                            }
+                        } else {
+                            if (testSubString.localeCompare(search, cultureName) === 0) {
+                                index = i;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if ( index === -1 ) {
+                    return index;
+                }
                 return (index < (startIndex - count + 1)) ? -1 : index;
             },
 
