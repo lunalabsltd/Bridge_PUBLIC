@@ -168,6 +168,15 @@
 
             getHashCode: function (v) {
                 return v | (v << 16);
+            },
+
+            convertFromUtf32: function (v) {
+                if (v < 0 || v > 1114111 || v >= 55296 && v <= 57343)
+                    throw new System.ArgumentOutOfRangeException(name({v}), System.Environment.GetResourceString("ArgumentOutOfRange_InvalidUTF32"));
+                if (v < 65536)
+                    return String.fromCharCode(v);
+                v -= 65536;
+                return String.fromCharCode(v / 1024 + 55296) + String.fromCharCode(v % 1024 + 56320);
             }
         }
     });

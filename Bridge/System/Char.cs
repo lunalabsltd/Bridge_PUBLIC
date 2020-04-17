@@ -137,5 +137,8 @@ namespace System
 
         [Bridge.Template("String.fromCharCode({c})")]
         public static extern string ToString(Char c);
+
+        [Bridge.Template("System.Char.convertFromUtf32({utf32})")]
+        public static extern string ConvertFromUtf32(int utf32);
     }
 }

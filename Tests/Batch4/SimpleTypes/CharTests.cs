@@ -15,6 +15,12 @@ namespace Bridge.ClientTest.Batch4.SimpleTypes
             Assert.False(interfaces.Contains(typeof(IFormattable)));
         }
 
+        [Test]
+        public void ConvertFromUtf32Tests()
+        {
+            Assert.AreEqual('z', char.ConvertFromUtf32(122), "char.ConvertFromUtf32() works corretly.");
+        }
+
         // #SPI
         //[Test]
         //public void TryParseWorks_SPI_1630()
