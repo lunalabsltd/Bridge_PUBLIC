@@ -92,6 +92,7 @@
     <Compile Include="shared\System\FormattableString.cs" />
     <Compile Include="shared\System\Globalization\BidiCategory.cs" />
     <Compile Include="shared\System\Globalization\DaylightTime.cs" />
+    <Compile Include="shared\System\Globalization\NumberStyles.cs" />
     <Compile Include="shared\System\Globalization\SortVersion.cs" />
     <Compile Include="shared\System\Globalization\UnicodeCategory.cs" />
     <Compile Include="shared\System\IO\FileOptions.cs" />

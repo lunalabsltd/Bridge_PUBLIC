@@ -21,11 +21,17 @@ namespace System
         [Bridge.Template("System.Byte.parse({s}, {radix})")]
         public static extern byte Parse(string s, int radix);
 
+        [Bridge.Template("System.Byte.parseStyles({s}, {style})")]
+        public static extern byte Parse(string s, Globalization.NumberStyles style);
+
         [Bridge.Template("System.Byte.tryParse({s}, {result})")]
         public static extern bool TryParse(string s, out byte result);
 
         [Bridge.Template("System.Byte.tryParse({s}, {result}, {radix})")]
         public static extern bool TryParse(string s, out byte result, int radix);
+
+        [Bridge.Template("System.Byte.tryParseStyles({s}, {result}, {style})")]
+        public static extern bool TryParse(string s, out byte result, Globalization.NumberStyles style);
 
         public extern string ToString(int radix);
 
