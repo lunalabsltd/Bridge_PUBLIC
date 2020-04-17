@@ -133,11 +133,27 @@ namespace Bridge.ClientTest.Batch1
             Assert.AreEqual(num2?.Value, 0);
         }
 
+        [Test]
+        public void TestSimpleType2()
+        {
+            var x = ReturnParameterFromMethod(10);
+            Assert.AreEqual(x, 10);
+        }
+
         private static void Set<T>(out T target, ref T input) => target = input;
 
         private static T ReturnParameter<T>(T value)
         {
             return value;
+        }
+
+        private static T ReturnParameterFromMethod<T>(T value)
+        {
+            var instance = new BaseClass<T>()
+            {
+                Foo = value
+            };
+            return instance.GetFoo();
         }
 
         private static void ChangeMyStruct(object value)
@@ -154,16 +170,35 @@ namespace Bridge.ClientTest.Batch1
             return foo;
         }
 
+        public class TestClass
+        {
+            public float val;
+        }
+
 #pragma warning disable 0649
         private class BaseClass<T>
         {
             public T Foo;
+            public T GetFoo()
+            {
+                return GetFooInner(Foo);
+            }
+
+            private T GetFooInner<K>(K argument)
+            {
+                return Foo;
+            }
         }
 #pragma warning restore 0649
 
         private class InheritanceClass : BaseClass<MyStruct>
         {
 
+        }
+
+        public class Object
+        {
+            public string str;
         }
 
     }

@@ -447,6 +447,42 @@ namespace Bridge.Contract
 
             if (type.Kind == TypeKind.TypeParameter && block.Emitter.AssemblyInfo.SafeStructsInGenerics)
             {
+                if (Helpers.IsRef(expression, block.Emitter))
+                {
+                    return;
+                }
+                var memberResult = resolveResult as MemberResolveResult;
+                var field = memberResult != null ? memberResult.Member as DefaultResolvedField : null;
+                if (field != null && field.IsReadOnly)
+                {
+                    Helpers.BridgeRValue(insertPosition, block);
+                    return;
+                }
+                var isOperator = false;
+                if (expression != null && (expression.Parent is BinaryOperatorExpression || expression.Parent is UnaryOperatorExpression))
+                {
+                    var orr = block.Emitter.Resolver.ResolveNode(expression.Parent, block.Emitter) as OperatorResolveResult;
+                    isOperator = orr != null && orr.UserDefinedOperatorMethod != null;
+                }
+                if (expression == null || isOperator ||
+                    expression.Parent is NamedExpression ||
+                    expression.Parent is ObjectCreateExpression ||
+                    expression.Parent is ArrayInitializerExpression ||
+                    expression.Parent is ReturnStatement ||
+                    expression.Parent is InvocationExpression ||
+                    expression.Parent is AssignmentExpression ||
+                    expression.Parent is VariableInitializer ||
+                    expression.Parent is ForeachStatement && resolveResult is ForEachResolveResult)
+                {
+                    if (expression != null && expression.Parent is InvocationExpression)
+                    {
+                        var invocationExpression = (InvocationExpression)expression.Parent;
+                        if (invocationExpression.Target == expression)
+                        {
+                            return;
+                        }
+                    }
+                }
                 Helpers.BridgeRValue(insertPosition, block);
                 return;
             }
