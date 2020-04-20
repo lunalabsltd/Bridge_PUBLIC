@@ -278,8 +278,7 @@
         statics: {
             ctor: function () {
                 this.cultures = this.cultures || {};
-                this.leftTagRegExp = /^(\w\w)/i;
-                this.bothTagsRegExp = /^(\w\w).?(\w\w)/i;
+                this.tagRegExp = /^(\w\w).?(\w\w)?/i;
 
                 this.invariantCulture = Bridge.merge(new System.Globalization.CultureInfo("iv", true), {
                     englishName: "Invariant Language (Invariant Country)",
@@ -339,10 +338,7 @@
                 if (name.length !== 2 && name.length !== 5) {
                     return false;
                 }
-                if (name.match(this.bothTagsRegExp)) {
-                    return true;
-                }
-                if (name.match(this.leftTagRegExp)) {
+                if (name.match(this.tagRegExp)) {
                     return true;
                 }
                 return false;
@@ -358,24 +354,20 @@
                 }
                 const names = Bridge.getPropertyNames(this.cultures);
                 // match always exists here because we`ve validated the name before
-                const leftTagInput = name.match(this.leftTagRegExp)[0].toLowerCase();
+                const leftTagInput = name.match(this.tagRegExp)[1].toLowerCase();
 
                 // try find existing culture
                 for (let i = 0; i < names.length; i++) {
                     const cultureName = names[i];
-                    const match = cultureName.match(this.leftTagRegExp);
-                    if (match && match[0].toLowerCase() === leftTagInput) {
+                    const match = cultureName.match(this.tagRegExp);
+                    if (match && match[1].toLowerCase() === leftTagInput) {
                         return this.cultures[cultureName];
                     }
                 }
 
                 // clone invariant culture with provided name
-                let newCultureName;
-                if (name.length === 2) {
-                    newCultureName = name.toLowerCase();
-                } else {
-                    newCultureName = name.substring(0, 3).toLowerCase() + name.substring(3, 5).toUpperCase();
-                }
+                const chunks = name.match(this.tagRegExp);
+                const newCultureName = chunks[1].toLowerCase() + (chunks[2] ? "-" + chunks[2].toUpperCase() : "");
 
                 let newCulture = {};
                 System.Globalization.CultureInfo.prototype.ctor.call(newCulture, newCultureName, true);
