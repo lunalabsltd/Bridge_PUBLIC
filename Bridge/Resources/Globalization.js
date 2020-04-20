@@ -276,11 +276,10 @@
         $entryPoint: true,
 
         statics: {
-            LEFT_TAG_REGEXP: new RegExp(/^\w\w/gi),
-            BOTH_TAGS_REGEXP: new RegExp(/^\w\w-\w\w/gi),
-
             ctor: function () {
                 this.cultures = this.cultures || {};
+                this.leftTagRegExp = /^(\w\w)/i;
+                this.bothTagsRegExp = /^(\w\w).?(\w\w)/i;
 
                 this.invariantCulture = Bridge.merge(new System.Globalization.CultureInfo("iv", true), {
                     englishName: "Invariant Language (Invariant Country)",
@@ -337,13 +336,13 @@
                 if (name === "") {
                     return true;
                 }
-                if (name.length !== 2 || name.length !== 5) {
+                if (name.length !== 2 && name.length !== 5) {
                     return false;
                 }
-                if (name.match(this.BOTH_TAGS_REGEXP)) {
+                if (name.match(this.bothTagsRegExp)) {
                     return true;
                 }
-                if (name.match(this.LEFT_TAG_REGEXP)) {
+                if (name.match(this.leftTagRegExp)) {
                     return true;
                 }
                 return false;
@@ -359,12 +358,12 @@
                 }
                 const names = Bridge.getPropertyNames(this.cultures);
                 // match always exists here because we`ve validated the name before
-                const leftTagInput = name.match(this.LEFT_TAG_REGEXP)[0].toLowerCase();
+                const leftTagInput = name.match(this.leftTagRegExp)[0].toLowerCase();
 
                 // try find existing culture
                 for (let i = 0; i < names.length; i++) {
                     const cultureName = names[i];
-                    const match = cultureName.match(this.LEFT_TAG_REGEXP);
+                    const match = cultureName.match(this.leftTagRegExp);
                     if (match && match[0].toLowerCase() === leftTagInput) {
                         return this.cultures[cultureName];
                     }
@@ -377,9 +376,16 @@
                 } else {
                     newCultureName = name.substring(0, 3).toLowerCase() + name.substring(3, 5).toUpperCase();
                 }
-                const newCulture = System.Globalization.CultureInfo.invariantCulture.$clone();
-                newCulture.name = newCultureName;
-                this.cultures[newCultureName] = newCulture;
+
+                let newCulture = {};
+                System.Globalization.CultureInfo.prototype.ctor.call(newCulture, newCultureName, true);
+                newCulture.englishName = "Unknown Language (" + newCultureName + ")";
+                newCulture.nativeName = "Unknown Language (" + newCultureName + ")";
+                Bridge.copy(newCulture, System.Globalization.CultureInfo.invariantCulture, [
+                    "numberFormat",
+                    "dateTimeFormat",
+                    "TextInfo"
+                ]);
                 return newCulture;
             },
 
