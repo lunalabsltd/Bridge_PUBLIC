@@ -369,8 +369,9 @@
                 const chunks = name.match(this.tagRegExp);
                 const newCultureName = chunks[1].toLowerCase() + (chunks[2] ? "-" + chunks[2].toUpperCase() : "");
 
-                let newCulture = {};
-                System.Globalization.CultureInfo.prototype.ctor.call(newCulture, newCultureName, true);
+                this.cultures[newCultureName] = { name: newCultureName, TextInfo: System.Globalization.CultureInfo.invariantCulture.TextInfo };
+                let newCulture = new System.Globalization.CultureInfo( newCultureName );
+                this.cultures[newCultureName] = newCulture;
                 newCulture.englishName = "Unknown Language (" + newCultureName + ")";
                 newCulture.nativeName = "Unknown Language (" + newCultureName + ")";
                 Bridge.copy(newCulture, System.Globalization.CultureInfo.invariantCulture, [
@@ -378,6 +379,7 @@
                     "dateTimeFormat",
                     "TextInfo"
                 ]);
+                newCulture.TextInfo.IsReadOnly = true;
                 return newCulture;
             },
 
