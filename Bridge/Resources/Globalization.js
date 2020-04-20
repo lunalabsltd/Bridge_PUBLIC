@@ -276,6 +276,9 @@
         $entryPoint: true,
 
         statics: {
+            LEFT_TAG_REGEXP: new RegExp(/^\w\w/gi),
+            BOTH_TAGS_REGEXP: new RegExp(/^\w\w-\w\w/gi),
+
             ctor: function () {
                 this.cultures = this.cultures || {};
 
@@ -327,23 +330,57 @@
                 return c;
             },
 
-            getCultureInfoByIetfLanguageTag: function (name) {
+            validateCultureName: function (name) {
                 if (name == null) {
+                    return false;
+                }
+                if (name === "") {
+                    return true;
+                }
+                if (name.length !== 2 || name.length !== 5) {
+                    return false;
+                }
+                if (name.match(this.BOTH_TAGS_REGEXP)) {
+                    return true;
+                }
+                if (name.match(this.LEFT_TAG_REGEXP)) {
+                    return true;
+                }
+                return false;
+            },
+
+            getCultureInfoByIetfLanguageTag: function (name) {
+                // validate provided name
+                if (!this.validateCultureName(name)) {
                     throw new System.ArgumentNullException.$ctor1("name");
-                } else if (name === "") {
+                }
+                if (name === "") {
                     return System.Globalization.CultureInfo.invariantCulture;
                 }
-                var lowerName = name.toLowerCase();
-                var names = Bridge.getPropertyNames(this.cultures);
+                const names = Bridge.getPropertyNames(this.cultures);
+                // match always exists here because we`ve validated the name before
+                const leftTagInput = name.match(this.LEFT_TAG_REGEXP)[0].toLowerCase();
+
+                // try find existing culture
                 for (let i = 0; i < names.length; i++) {
                     const cultureName = names[i];
-                    let match = cultureName.match(new RegExp(/^\w\w/gi));
-                    if (match && match[0].toLowerCase() === lowerName) {
+                    const match = cultureName.match(this.LEFT_TAG_REGEXP);
+                    if (match && match[0].toLowerCase() === leftTagInput) {
                         return this.cultures[cultureName];
                     }
                 }
 
-                throw new System.Globalization.CultureNotFoundException.$ctor5("name", lowerName);
+                // clone invariant culture with provided name
+                let newCultureName;
+                if (name.length === 2) {
+                    newCultureName = name.toLowerCase();
+                } else {
+                    newCultureName = name.substring(0, 3).toLowerCase() + name.substring(3, 5).toUpperCase();
+                }
+                const newCulture = System.Globalization.CultureInfo.invariantCulture.$clone();
+                newCulture.name = newCultureName;
+                this.cultures[newCultureName] = newCulture;
+                return newCulture;
             },
 
             getCultures: function () {
