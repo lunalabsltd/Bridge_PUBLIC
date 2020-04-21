@@ -333,5 +333,14 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.True(((IComparable<ulong>)((ulong)1)).CompareTo((ulong)0) > 0);
             Assert.True(((IComparable<ulong>)((ulong)0)).CompareTo((ulong)1) < 0);
         }
+
+        [Test]
+        public void UnboxingTest()
+        {
+            var integer = 10;
+            var boxed = (object)integer;
+            var int64Unboxed = (long)boxed;
+            Assert.True(int64Unboxed.GetType().FullName == "System.Int64", "Int64 unboxing works correctly.");
+        }
     }
 }
