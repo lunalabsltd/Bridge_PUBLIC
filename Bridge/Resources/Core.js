@@ -135,6 +135,9 @@
                 }
 
                 if (T && T !== t && !Bridge.isObject(T)) {
+                    if (T.$$name === "System.Int64") {
+                        return new System.Int64(v);
+                    }
                     throw new System.InvalidCastException.$ctor1("Specified cast is not valid.");
                 }
 
