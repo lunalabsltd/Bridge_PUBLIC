@@ -140,5 +140,27 @@ namespace Bridge.ClientTest
 
             Assert.False(isFriday, "#3013: FirstDayOfWeek is of type DayOfWeek");
         }
+
+        [Test]
+        public void GetCultureInfoByIetfLanguageTagTests()
+        {
+            Assert.NotNull(CultureInfo.GetCultureInfoByIetfLanguageTag("en"), "CultureInfo.GetCultureInfoByIetfLanguageTag(\"en\") not null");
+            Assert.NotNull(CultureInfo.GetCultureInfoByIetfLanguageTag("EN"), "CultureInfo.GetCultureInfoByIetfLanguageTag(\"EN\") not null");
+            Assert.NotNull(CultureInfo.GetCultureInfoByIetfLanguageTag("ru-RU"), "CultureInfo.GetCultureInfoByIetfLanguageTag(\"ru-RU\") not null");
+            Assert.NotNull(CultureInfo.GetCultureInfoByIetfLanguageTag("RU-ru"), "CultureInfo.GetCultureInfoByIetfLanguageTag(\"RU-ru\") not null");
+            Assert.NotNull(CultureInfo.GetCultureInfoByIetfLanguageTag("RU-RU"), "CultureInfo.GetCultureInfoByIetfLanguageTag(\"RU-RU\") not null");
+
+            var culture1 = CultureInfo.GetCultureInfoByIetfLanguageTag("qq");
+            Assert.NotNull(culture1, "CultureInfo.GetCultureInfoByIetfLanguageTag(\"qq\") not null");
+            Assert.True(culture1.Name == "qq", "CultureInfo.GetCultureInfoByIetfLanguageTag(\"qq\").Name == \"qq\"");
+
+            var culture2 = CultureInfo.GetCultureInfoByIetfLanguageTag("ww-ww");
+            Assert.NotNull(culture2, "CultureInfo.GetCultureInfoByIetfLanguageTag(\"ww-ww\") not null");
+            Assert.True(culture2.Name == "ww-WW", "CultureInfo.GetCultureInfoByIetfLanguageTag(\"ww-ww\").Name == \"ww-WW\"");
+
+            var culture3 = CultureInfo.GetCultureInfoByIetfLanguageTag("XX-xx");
+            Assert.NotNull(culture3, "CultureInfo.GetCultureInfoByIetfLanguageTag(\"XX-xx\") not null");
+            Assert.True(culture3.Name == "xx-XX", "CultureInfo.GetCultureInfoByIetfLanguageTag(\"XX-xx\").Name == \"xx-XX\"");
+        }
     }
 }

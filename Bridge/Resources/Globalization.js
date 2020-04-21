@@ -278,6 +278,7 @@
         statics: {
             ctor: function () {
                 this.cultures = this.cultures || {};
+                this.tagRegExp = /^(\w\w).?(\w\w)?/i;
 
                 this.invariantCulture = Bridge.merge(new System.Globalization.CultureInfo("iv", true), {
                     englishName: "Invariant Language (Invariant Country)",
@@ -327,23 +328,55 @@
                 return c;
             },
 
-            getCultureInfoByIetfLanguageTag: function (name) {
+            validateCultureName: function (name) {
                 if (name == null) {
+                    return false;
+                }
+                if (name === "") {
+                    return true;
+                }
+                if (name.length !== 2 && name.length !== 5) {
+                    return false;
+                }
+                if (name.match(this.tagRegExp)) {
+                    return true;
+                }
+                return false;
+            },
+
+            getCultureInfoByIetfLanguageTag: function (name) {
+                // validate provided name
+                if (!this.validateCultureName(name)) {
                     throw new System.ArgumentNullException.$ctor1("name");
-                } else if (name === "") {
+                }
+                if (name === "") {
                     return System.Globalization.CultureInfo.invariantCulture;
                 }
-                var lowerName = name.toLowerCase();
-                var names = Bridge.getPropertyNames(this.cultures);
+                const names = Bridge.getPropertyNames(this.cultures);
+                // match always exists here because we`ve validated the name before
+                const leftTagInput = name.match(this.tagRegExp)[1].toLowerCase();
+
+                // try find existing culture
                 for (let i = 0; i < names.length; i++) {
                     const cultureName = names[i];
-                    let match = cultureName.match(new RegExp(/^\w\w/gi));
-                    if (match && match[0].toLowerCase() === lowerName) {
+                    const match = cultureName.match(this.tagRegExp);
+                    if (match && match[1].toLowerCase() === leftTagInput) {
                         return this.cultures[cultureName];
                     }
                 }
 
-                throw new System.Globalization.CultureNotFoundException.$ctor5("name", lowerName);
+                // clone invariant culture with provided name
+                const chunks = name.match(this.tagRegExp);
+                const newCultureName = chunks[1].toLowerCase() + (chunks[2] ? "-" + chunks[2].toUpperCase() : "");
+                let newCulture = new System.Globalization.CultureInfo( newCultureName, true );
+                newCulture.englishName = "Unknown Language (" + newCultureName + ")";
+                newCulture.nativeName = "Unknown Language (" + newCultureName + ")";
+                Bridge.copy(newCulture, System.Globalization.CultureInfo.invariantCulture, [
+                    "numberFormat",
+                    "dateTimeFormat",
+                    "TextInfo"
+                ]);
+                return newCulture;
             },
 
             getCultures: function () {
