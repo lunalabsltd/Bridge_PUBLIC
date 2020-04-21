@@ -22,7 +22,7 @@ namespace System.Globalization
         [Bridge.Name("getCultureInfo")]
         public static extern CultureInfo GetCultureInfo(string name);
 
-        [Bridge.Template("System.Globalization.CultureInfo.getCultureInfoByIetfLanguageTag({0})")]
+        [Bridge.Convention(Bridge.Notation.CamelCase)]
         public static extern CultureInfo GetCultureInfoByIetfLanguageTag(string name);
 
         /// <summary>
