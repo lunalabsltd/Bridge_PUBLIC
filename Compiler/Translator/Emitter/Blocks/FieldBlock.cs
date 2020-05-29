@@ -524,28 +524,19 @@ namespace Bridge.Translator
                 else if (typeParameter != null)
                 {
                     var value = JS.Funcs.BRIDGE_GETDEFAULTVALUE + "(" + typeParameter.Name + ")";
-                    if (!isNullable)
+
+                    this.Write(value);
+                    
+                    var name = member.GetName(this.Emitter);
+                    bool isValidIdentifier = Helpers.IsValidIdentifier(name);
+
+                    if (!isValidIdentifier)
                     {
-                        this.Write(value);
+                        this.Injectors.Insert(BeginCounter++, string.Format("this[{0}] = {1};", name.StartsWith("\"") ? name : AbstractEmitterBlock.ToJavaScript(name, this.Emitter), value));
                     }
                     else
                     {
-                        this.Write("null");
-                    }
-
-                    if (!isNullable)
-                    {
-                        var name = member.GetName(this.Emitter);
-                        bool isValidIdentifier = Helpers.IsValidIdentifier(name);
-
-                        if (!isValidIdentifier)
-                        {
-                            this.Injectors.Insert(BeginCounter++, string.Format("this[{0}] = {1};", name.StartsWith("\"") ? name : AbstractEmitterBlock.ToJavaScript(name, this.Emitter), value));
-                        }
-                        else
-                        {
-                            this.Injectors.Insert(BeginCounter++, string.Format(name.StartsWith("\"") ? interfaceFormat : format, name, value));
-                        }
+                        this.Injectors.Insert(BeginCounter++, string.Format(name.StartsWith("\"") ? interfaceFormat : format, name, value));
                     }
                 }
                 else if (write)
