@@ -143,6 +143,7 @@ namespace Bridge.Translator
             int pos = 0;
             IWriterInfo writer = null;
             bool beginBlock = false;
+            var hasTypeParameters = Helpers.HasTypeParameters(this.TypeInfo.Type);
 
             if (hasProperties && objectName != null && !this.IsObjectLiteral)
             {
@@ -489,6 +490,17 @@ namespace Bridge.Translator
                     continue;
                 }
 
+                ITypeParameter typeParameter = null;
+
+                if (isNull && !isPrimitive && !isNullable && hasTypeParameters
+                    && (isAutoProperty || !isProperty)
+                    && !member.Entity.ReturnType.IsNull)
+                {
+                    // may have ' = null' initializer or not have it at all or be an auto-property
+                    var rr = this.Emitter.Resolver.ResolveNode(member.Entity.ReturnType, this.Emitter);
+                    typeParameter = rr?.Type as ITypeParameter;
+                }
+
                 if (constValue is AstType || constValue is IType)
                 {
                     this.Write("null");
@@ -498,6 +510,33 @@ namespace Bridge.Translator
                         var name = member.GetName(this.Emitter);
                         bool isValidIdentifier = Helpers.IsValidIdentifier(name);
                         var value = constValue is AstType ? Inspector.GetStructDefaultValue((AstType)constValue, this.Emitter) : Inspector.GetStructDefaultValue((IType)constValue, this.Emitter);
+
+                        if (!isValidIdentifier)
+                        {
+                            this.Injectors.Insert(BeginCounter++, string.Format("this[{0}] = {1};", name.StartsWith("\"") ? name : AbstractEmitterBlock.ToJavaScript(name, this.Emitter), value));
+                        }
+                        else
+                        {
+                            this.Injectors.Insert(BeginCounter++, string.Format(name.StartsWith("\"") ? interfaceFormat : format, name, value));
+                        }
+                    }
+                }
+                else if (typeParameter != null)
+                {
+                    var value = JS.Funcs.BRIDGE_GETDEFAULTVALUE + "(" + typeParameter.Name + ")";
+                    if (!isNullable)
+                    {
+                        this.Write(value);
+                    }
+                    else
+                    {
+                        this.Write("null");
+                    }
+
+                    if (!isNullable)
+                    {
+                        var name = member.GetName(this.Emitter);
+                        bool isValidIdentifier = Helpers.IsValidIdentifier(name);
 
                         if (!isValidIdentifier)
                         {
