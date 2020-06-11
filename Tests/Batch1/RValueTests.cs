@@ -85,6 +85,12 @@ namespace Bridge.ClientTest.Batch1
 
             var newC = new InheritanceClass();
             Assert.NotNull(newC.Foo);
+
+            var newC2 = new InheritanceClass();
+            newC.Foo.X = 1;
+            newC2.Foo.X = 2;
+            Assert.True(newC.Foo.X == 1);
+            Assert.True(newC2.Foo.X == 2);
         }
 
         [Test]
@@ -178,7 +184,16 @@ namespace Bridge.ClientTest.Batch1
 #pragma warning disable 0649
         private class BaseClass<T>
         {
+            private T _fooCached;
+            public T FooProperty
+            {
+                get => _fooCached;
+                set => _fooCached = value;
+            }
+            public T FooAuto { get; set; }
             public T Foo;
+            public T FooWithInitializer = default(T);
+            public MyStruct Boo;
             public T GetFoo()
             {
                 return GetFooInner(Foo);
@@ -189,11 +204,10 @@ namespace Bridge.ClientTest.Batch1
                 return Foo;
             }
         }
-#pragma warning restore 0649
 
         private class InheritanceClass : BaseClass<MyStruct>
         {
-
+            public MyStruct S1;
         }
 
         public class Object
@@ -201,5 +215,6 @@ namespace Bridge.ClientTest.Batch1
             public string str;
         }
 
+#pragma warning restore 0649
     }
 }
