@@ -141,6 +141,10 @@
             /*System.IO.TextReader.ReadLine end.*/
 
 
+        },
+        overloads: {
+            "Dispose(bool)": "Dispose$1",
+            "Read(char[], int, int)": "Read$1"
         }
     });
     /*System.IO.TextReader end.*/

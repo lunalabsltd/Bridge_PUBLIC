@@ -50,6 +50,9 @@
             "Dispose", "System$IDisposable$Dispose"
         ],
         ctors: {
+            init: function () {
+                this.current = Bridge.getDefaultValue(T);
+            },
             $ctor1: function (list) {
                 this.$initialize();
                 this.list = list;
@@ -119,6 +122,9 @@
                 s.index = this.index;
                 return s;
             }
+        },
+        overloads: {
+            "MoveNext()": "moveNext"
         }
     }; });
     /*System.Collections.Generic.LinkedList$1+Enumerator end.*/

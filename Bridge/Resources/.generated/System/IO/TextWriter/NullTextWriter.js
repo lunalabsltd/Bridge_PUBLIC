@@ -37,6 +37,12 @@
             /*System.IO.TextWriter+NullTextWriter.WriteLine$9 end.*/
 
 
+        },
+        overloads: {
+            "Write(char[], int, int)": "Write$3",
+            "Write(String)": "Write$10",
+            "WriteLine(String)": "WriteLine$11",
+            "WriteLine(Object)": "WriteLine$9"
         }
     });
     /*System.IO.TextWriter+NullTextWriter end.*/

@@ -89,6 +89,11 @@
             /*System.Globalization.SortVersion.getHashCode end.*/
 
 
+        },
+        overloads: {
+            "Equals(object)": "equals",
+            "Equals(SortVersion)": "equalsT",
+            "GetHashCode()": "getHashCode"
         }
     });
     /*System.Globalization.SortVersion end.*/

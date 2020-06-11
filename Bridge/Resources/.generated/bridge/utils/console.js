@@ -500,6 +500,17 @@
             /*Bridge.Utils.Console.obj2Css end.*/
 
 
+        },
+        overloads: {
+            "Init(bool)": "init",
+            "ShowTooltip()": "showTooltip",
+            "HideTooltip()": "hideTooltip",
+            "Close()": "close",
+            "WrapBodyContent()": "wrapBodyContent",
+            "UnwrapBodyContent()": "unwrapBodyContent",
+            "BuildConsoleMessage(string, MessageType)": "buildConsoleMessage",
+            "SetAttributes(Element, Dictionary<string, string>)": "setAttributes",
+            "Obj2Css(Dictionary<string, string>)": "obj2Css"
         }
     });
 

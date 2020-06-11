@@ -43,6 +43,9 @@
             "Current", ["System$Collections$Generic$IEnumerator$1$" + Bridge.getTypeAlias(T) + "$Current$1", "System$Collections$Generic$IEnumerator$1$Current$1"]
         ],
         ctors: {
+            init: function () {
+                this._currentElement = Bridge.getDefaultValue(T);
+            },
             $ctor1: function (stack) {
                 this.$initialize();
                 this._stack = stack;
@@ -118,6 +121,9 @@
                 s._currentElement = this._currentElement;
                 return s;
             }
+        },
+        overloads: {
+            "MoveNext()": "moveNext"
         }
     }; });
     /*System.Collections.Generic.Stack$1+Enumerator end.*/

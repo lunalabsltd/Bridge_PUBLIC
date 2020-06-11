@@ -730,6 +730,14 @@
             /*System.Collections.Generic.Dictionary$2.GetValueOrDefault end.*/
 
 
+        },
+        overloads: {
+            "Add(TKey, TValue)": "add",
+            "Remove(TKey)": "remove",
+            "Clear()": "clear",
+            "ContainsKey(TKey)": "containsKey",
+            "Resize(int, bool)": "Resize$1",
+            "TryGetValue(TKey, TValue)": "tryGetValue"
         }
     }; });
     /*System.Collections.Generic.Dictionary$2 end.*/

@@ -23,6 +23,9 @@
             /*System.Empty.toString end.*/
 
 
+        },
+        overloads: {
+            "ToString()": "toString"
         }
     });
     /*System.Empty end.*/

@@ -1,7 +1,7 @@
 /**
- * @version   : 17.9.5-luna - Bridge.NET
+ * @version   : 17.9.8-luna - Bridge.NET
  * @author    : Object.NET, Inc. http://bridge.net/
- * @copyright : Copyright 2008-2019 Object.NET, Inc. http://object.net/
+ * @copyright : Copyright 2008-2020 Object.NET, Inc. http://object.net/
  * @license   : See license.txt and https://github.com/bridgedotnet/Bridge/blob/master/LICENSE.md
  */
 
@@ -153,6 +153,9 @@
                 }
 
                 if (T && T !== t && !Bridge.isObject(T)) {
+                    if (T.$$name === "System.Int64") {
+                        return new System.Int64(v);
+                    }
                     throw new System.InvalidCastException.$ctor1("Specified cast is not valid.");
                 }
 
@@ -2457,6 +2460,11 @@
                     write = true;
                 }
 
+                if (obj.overloads) {
+                    config.overloads = obj.overloads;
+                    write = true;
+                }
+
                 if (obj.ctors) {
                     if (obj.ctors.init) {
                         config.init = obj.ctors.init;
@@ -3394,6 +3402,9 @@
             /*System.Reflection.AssemblyName.toString end.*/
 
 
+        },
+        overloads: {
+            "ToString()": "toString"
         }
     });
     /*System.Reflection.AssemblyName end.*/
@@ -3533,8 +3544,8 @@
 
     /*Bridge.Utils.SystemAssemblyVersion start.*/
     Bridge.init(function () {
-        Bridge.SystemAssembly.version = "17.9.5-luna";
-        Bridge.SystemAssembly.compiler = "17.9.5-luna";
+        Bridge.SystemAssembly.version = "17.9.8-luna";
+        Bridge.SystemAssembly.compiler = "17.9.8-luna";
     });
 
     Bridge.define("Bridge.Utils.SystemAssemblyVersion");
@@ -4453,6 +4464,23 @@
             }
 
             return method;
+        },
+
+        createDelegateTarget: function (type, target, method) {
+            if (type == null) {
+                throw new System.ArgumentException( name(type) );
+            }
+            if (method == null || method === "") {
+                throw new System.ArgumentException( name(method) );
+            }
+            var memberTypes = System.Reflection.MemberTypes.Method;
+            var bindingFlags = System.Reflection.BindingFlags.Instance
+                                | System.Reflection.BindingFlags.Static
+                                | System.Reflection.BindingFlags.Public
+                                | System.Reflection.BindingFlags.InvokeMethod;
+
+            var mi = Bridge.Reflection.getMembers(type, memberTypes, bindingFlags, method);
+            return Bridge.Reflection.createDelegate(mi, target);
         },
 
         midel: function (mi, target, typeArguments, bind) {
@@ -5617,6 +5645,15 @@ Bridge.define("System.ValueType", {
 
             getHashCode: function (v) {
                 return v | (v << 16);
+            },
+
+            convertFromUtf32: function (v) {
+                if (v < 0 || v > 1114111 || v >= 55296 && v <= 57343)
+                    throw new System.ArgumentOutOfRangeException(name({v}), System.Environment.GetResourceString("ArgumentOutOfRange_InvalidUTF32"));
+                if (v < 65536)
+                    return String.fromCharCode(v);
+                v -= 65536;
+                return String.fromCharCode(v / 1024 + 55296) + String.fromCharCode(v % 1024 + 56320);
             }
         }
     });
@@ -5677,6 +5714,10 @@ Bridge.define("System.ValueType", {
             /*Bridge.Ref$1.valueOf end.*/
 
 
+        },
+        overloads: {
+            "ToString()": "toString",
+            "ValueOf()": "valueOf"
         }
     }; });
     /*Bridge.Ref$1 end.*/
@@ -5717,6 +5758,9 @@ Bridge.define("System.ValueType", {
             /*System.Reflection.TargetSite.toString end.*/
 
 
+        },
+        overloads: {
+            "ToString()": "toString"
         }
     });
     /*System.Reflection.TargetSite end.*/
@@ -5975,6 +6019,9 @@ Bridge.define("System.ValueType", {
             /*System.Globalization.TextInfo.VerifyWritable end.*/
 
 
+        },
+        overloads: {
+            "Clone()": "clone"
         }
     });
     /*System.Globalization.TextInfo end.*/
@@ -6107,6 +6154,11 @@ Bridge.define("System.ValueType", {
             /*System.Globalization.SortVersion.getHashCode end.*/
 
 
+        },
+        overloads: {
+            "Equals(object)": "equals",
+            "Equals(SortVersion)": "equalsT",
+            "GetHashCode()": "getHashCode"
         }
     });
     /*System.Globalization.SortVersion end.*/
@@ -6533,6 +6585,7 @@ Bridge.define("System.ValueType", {
         statics: {
             ctor: function () {
                 this.cultures = this.cultures || {};
+                this.tagRegExp = /^(\w\w).?(\w\w)?/i;
 
                 this.invariantCulture = Bridge.merge(new System.Globalization.CultureInfo("iv", true), {
                     englishName: "Invariant Language (Invariant Country)",
@@ -6580,6 +6633,57 @@ Bridge.define("System.ValueType", {
                 }
 
                 return c;
+            },
+
+            validateCultureName: function (name) {
+                if (name == null) {
+                    return false;
+                }
+                if (name === "") {
+                    return true;
+                }
+                if (name.length !== 2 && name.length !== 5) {
+                    return false;
+                }
+                if (name.match(this.tagRegExp)) {
+                    return true;
+                }
+                return false;
+            },
+
+            getCultureInfoByIetfLanguageTag: function (name) {
+                // validate provided name
+                if (!this.validateCultureName(name)) {
+                    throw new System.ArgumentNullException.$ctor1("name");
+                }
+                if (name === "") {
+                    return System.Globalization.CultureInfo.invariantCulture;
+                }
+                const names = Bridge.getPropertyNames(this.cultures);
+                // match always exists here because we`ve validated the name before
+                const leftTagInput = name.match(this.tagRegExp)[1].toLowerCase();
+
+                // try find existing culture
+                for (let i = 0; i < names.length; i++) {
+                    const cultureName = names[i];
+                    const match = cultureName.match(this.tagRegExp);
+                    if (match && match[1].toLowerCase() === leftTagInput) {
+                        return this.cultures[cultureName];
+                    }
+                }
+
+                // clone invariant culture with provided name
+                const chunks = name.match(this.tagRegExp);
+                const newCultureName = chunks[1].toLowerCase() + (chunks[2] ? "-" + chunks[2].toUpperCase() : "");
+                let newCulture = new System.Globalization.CultureInfo( newCultureName, true );
+                newCulture.englishName = "Unknown Language (" + newCultureName + ")";
+                newCulture.nativeName = "Unknown Language (" + newCultureName + ")";
+                Bridge.copy(newCulture, System.Globalization.CultureInfo.invariantCulture, [
+                    "numberFormat",
+                    "dateTimeFormat",
+                    "TextInfo"
+                ]);
+                return newCulture;
             },
 
             getCultures: function () {
@@ -8015,6 +8119,22 @@ Bridge.define("System.Type", {
                 return true;
             },
 
+            parseIntStyles: function (str, min, max, style) {
+                style = style || 0;
+                if ( (style & System.Globalization.NumberStyles.AllowHexSpecifier) !== 0 ) {
+                    return this.parseInt(str, min, max, 16);
+                }
+                return this.parseInt(str, min, max, 10);
+            },
+
+            tryParseIntStyles: function (str, result, min, max, style) {
+                style = style || 0;
+                if ( (style & System.Globalization.NumberStyles.AllowHexSpecifier) !== 0 ) {
+                    return this.tryParseInt(str, result, min, max, 16);
+                }
+                return this.tryParseInt(str, result, min, max, 10);
+            },
+
             isInfinite: function (x) {
                 return x === Number.POSITIVE_INFINITY || x === Number.NEGATIVE_INFINITY;
             },
@@ -8194,6 +8314,12 @@ Bridge.define("System.Type", {
                     },
                     tryParse: function (s, result, radix) {
                         return Bridge.Int.tryParseInt(s, result, min, max, radix);
+                    },
+                    parseStyles: function (s, style) {
+                        return Bridge.Int.parseIntStyles(s, min, max, style);
+                    },
+                    tryParseStyles: function(s, result, style) {
+                        return Bridge.Int.tryParseIntStyles(s, result, min, max, style);
                     },
                     format: function (number, format, provider) {
                         return Bridge.Int.format(number, format, provider, type, toUnsign);
@@ -13978,9 +14104,63 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 return result;
             },
 
-            lastIndexOf: function (s, search, startIndex, count) {
-                var index = s.lastIndexOf(search, startIndex);
+            lastIndexOf: function (s, search, startIndex, count, comparisonType) {
+                startIndex = startIndex || s.length - 1;
+                startIndex = startIndex < 0 ? 0 : startIndex;
+                count = count || s.length;
+                comparisonType = comparisonType || System.StringComparison.CurrentCulture;
+                let index = -1;
+                let ordinal = comparisonType === System.StringComparison.OrdinalIgnoreCase
+                            || comparisonType === System.StringComparison.Ordinal;
 
+                if (ordinal) {
+                    if (comparisonType === System.StringComparison.OrdinalIgnoreCase) {
+                        index = s.toLowerCase().lastIndexOf(search.toLowerCase(), startIndex);
+                    } else {
+                        index = s.lastIndexOf(search, startIndex);
+                    }
+                } else {
+                    let cultureName = "";
+                    let ignoreCase = false;
+
+                    switch (comparisonType) {
+                        case System.StringComparison.CurrentCultureIgnoreCase:
+                            cultureName = System.Globalization.CultureInfo.getCurrentCulture().name;
+                            ignoreCase = true;
+                            break;
+                        case System.StringComparison.CurrentCulture:
+                            cultureName = System.Globalization.CultureInfo.getCurrentCulture().name;
+                            break;
+                        case System.StringComparison.InvariantCultureIgnoreCase:
+                            cultureName = System.Globalization.CultureInfo.invariantCulture.name;
+                            ignoreCase = true;
+                            break;
+                        case System.StringComparison.InvariantCulture:
+                            cultureName = System.Globalization.CultureInfo.invariantCulture.name;
+                            break;
+                    }
+
+                    let subStringLength = search.length;
+                    startIndex = Math.min(startIndex, s.length - subStringLength);
+
+                    for (let i = startIndex; i >= 0; i--) {
+                        let testSubString = s.substring(i, i + subStringLength);
+                        if (ignoreCase) {
+                            if (testSubString.localeCompare(search, cultureName, { sensitivity: "accent"}) === 0) {
+                                index = i;
+                                break;
+                            }
+                        } else {
+                            if (testSubString.localeCompare(search, cultureName) === 0) {
+                                index = i;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if ( index === -1 ) {
+                    return index;
+                }
                 return (index < (startIndex - count + 1)) ? -1 : index;
             },
 
@@ -14549,6 +14729,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         ctors: {
+            init: function () {
+                this.key$1 = Bridge.getDefaultValue(TKey);
+                this.value$1 = Bridge.getDefaultValue(TValue);
+            },
             $ctor1: function (key, value) {
                 this.$initialize();
                 this.key$1 = key;
@@ -14593,6 +14777,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 return Bridge.equals(this.key$1, o.key$1) && Bridge.equals(this.value$1, o.value$1);
             },
             $clone: function (to) { return this; }
+        },
+        overloads: {
+            "ToString()": "toString"
         }
     }; });
     /*System.Collections.Generic.KeyValuePair$2 end.*/
@@ -15108,6 +15295,14 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.SortedList.TrimToSize end.*/
 
 
+        },
+        overloads: {
+            "Add(Object, Object)": "add",
+            "Clear()": "clear",
+            "Clone()": "clone",
+            "Contains(Object)": "contains",
+            "CopyTo(Array, int)": "copyTo",
+            "Remove(Object)": "remove"
         }
     });
     /*System.Collections.SortedList end.*/
@@ -15246,6 +15441,16 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.SortedList+KeyList.removeAt end.*/
 
 
+        },
+        overloads: {
+            "Add(Object)": "add",
+            "Clear()": "clear",
+            "Contains(Object)": "contains",
+            "CopyTo(Array, int)": "copyTo",
+            "Insert(int, Object)": "insert",
+            "IndexOf(Object)": "indexOf",
+            "Remove(Object)": "remove",
+            "RemoveAt(int)": "removeAt"
         }
     });
     /*System.Collections.SortedList+KeyList end.*/
@@ -15422,6 +15627,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.SortedList+SortedListEnumerator.reset end.*/
 
 
+        },
+        overloads: {
+            "Clone()": "clone",
+            "MoveNext()": "moveNext",
+            "Reset()": "reset"
         }
     });
     /*System.Collections.SortedList+SortedListEnumerator end.*/
@@ -15682,6 +15892,14 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.SortedList+SyncSortedList.TrimToSize end.*/
 
 
+        },
+        overloads: {
+            "Add(Object, Object)": "add",
+            "Clear()": "clear",
+            "Clone()": "clone",
+            "Contains(Object)": "contains",
+            "CopyTo(Array, int)": "copyTo",
+            "Remove(Object)": "remove"
         }
     });
     /*System.Collections.SortedList+SyncSortedList end.*/
@@ -15812,6 +16030,16 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.SortedList+ValueList.removeAt end.*/
 
 
+        },
+        overloads: {
+            "Add(Object)": "add",
+            "Clear()": "clear",
+            "Contains(Object)": "contains",
+            "CopyTo(Array, int)": "copyTo",
+            "Insert(int, Object)": "insert",
+            "IndexOf(Object)": "indexOf",
+            "Remove(Object)": "remove",
+            "RemoveAt(int)": "removeAt"
         }
     });
     /*System.Collections.SortedList+ValueList end.*/
@@ -16443,6 +16671,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.Generic.SortedList$2.TrimExcess end.*/
 
 
+        },
+        overloads: {
+            "Add(TKey, TValue)": "add",
+            "Remove(TKey)": "remove",
+            "Clear()": "clear",
+            "ContainsKey(TKey)": "containsKey",
+            "TryGetValue(TKey, TValue)": "tryGetValue"
         }
     }; });
     /*System.Collections.Generic.SortedList$2 end.*/
@@ -16529,6 +16764,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             "Current", ["System$Collections$Generic$IEnumerator$1$System$Collections$Generic$KeyValuePair$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$Current$1", "System$Collections$Generic$IEnumerator$1$Current$1"]
         ],
         ctors: {
+            init: function () {
+                this.key = Bridge.getDefaultValue(TKey);
+                this.value = Bridge.getDefaultValue(TValue);
+            },
             $ctor1: function (sortedList, getEnumeratorRetType) {
                 this.$initialize();
                 this._sortedList = sortedList;
@@ -16604,6 +16843,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 s.getEnumeratorRetType = this.getEnumeratorRetType;
                 return s;
             }
+        },
+        overloads: {
+            "MoveNext()": "moveNext"
         }
     }; });
     /*System.Collections.Generic.SortedList$2+Enumerator end.*/
@@ -16757,6 +16999,16 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.Generic.SortedList$2+KeyList.removeAt end.*/
 
 
+        },
+        overloads: {
+            "Add(TKey)": "add",
+            "Clear()": "clear",
+            "Contains(TKey)": "contains",
+            "CopyTo(TKey[], int)": "copyTo",
+            "Insert(int, TKey)": "insert",
+            "IndexOf(TKey)": "indexOf",
+            "Remove(TKey)": "remove",
+            "RemoveAt(int)": "removeAt"
         }
     }; });
     /*System.Collections.Generic.SortedList$2+KeyList end.*/
@@ -16795,6 +17047,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             "Current", ["System$Collections$Generic$IEnumerator$1$" + Bridge.getTypeAlias(TKey) + "$Current$1", "System$Collections$Generic$IEnumerator$1$Current$1"]
         ],
         ctors: {
+            init: function () {
+                this.currentKey = Bridge.getDefaultValue(TKey);
+            },
             ctor: function (sortedList) {
                 this.$initialize();
                 this._sortedList = sortedList;
@@ -16839,6 +17094,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.Generic.SortedList$2+SortedListKeyEnumerator.System$Collections$IEnumerator$reset end.*/
 
 
+        },
+        overloads: {
+            "MoveNext()": "moveNext"
         }
     }; });
     /*System.Collections.Generic.SortedList$2+SortedListKeyEnumerator end.*/
@@ -16877,6 +17135,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             "Current", ["System$Collections$Generic$IEnumerator$1$" + Bridge.getTypeAlias(TValue) + "$Current$1", "System$Collections$Generic$IEnumerator$1$Current$1"]
         ],
         ctors: {
+            init: function () {
+                this.currentValue = Bridge.getDefaultValue(TValue);
+            },
             ctor: function (sortedList) {
                 this.$initialize();
                 this._sortedList = sortedList;
@@ -16921,6 +17182,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.Generic.SortedList$2+SortedListValueEnumerator.System$Collections$IEnumerator$reset end.*/
 
 
+        },
+        overloads: {
+            "MoveNext()": "moveNext"
         }
     }; });
     /*System.Collections.Generic.SortedList$2+SortedListValueEnumerator end.*/
@@ -17066,6 +17330,16 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.Generic.SortedList$2+ValueList.removeAt end.*/
 
 
+        },
+        overloads: {
+            "Add(TValue)": "add",
+            "Clear()": "clear",
+            "Contains(TValue)": "contains",
+            "CopyTo(TValue[], int)": "copyTo",
+            "Insert(int, TValue)": "insert",
+            "IndexOf(TValue)": "indexOf",
+            "Remove(TValue)": "remove",
+            "RemoveAt(int)": "removeAt"
         }
     }; });
     /*System.Collections.Generic.SortedList$2+ValueList end.*/
@@ -18763,6 +19037,27 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.Generic.SortedSet$1.TryGetValue end.*/
 
 
+        },
+        overloads: {
+            "InOrderTreeWalk(TreeWalkPredicate<T>, bool)": "InOrderTreeWalk$1",
+            "Add(T)": "add",
+            "Remove(T)": "remove",
+            "Clear()": "clear",
+            "Contains(T)": "contains",
+            "CopyTo(T[], int)": "copyTo",
+            "CopyTo(T[], int, int)": "CopyTo$1",
+            "FindRange(T, T, bool, bool)": "FindRange$1",
+            "UnionWith(IEnumerable<T>)": "unionWith",
+            "IntersectWith(IEnumerable<T>)": "intersectWith",
+            "ExceptWith(IEnumerable<T>)": "exceptWith",
+            "SymmetricExceptWith(IEnumerable<T>)": "symmetricExceptWith",
+            "SymmetricExceptWithSameEC(ISet<T>)": "SymmetricExceptWithSameEC$1",
+            "IsSubsetOf(IEnumerable<T>)": "isSubsetOf",
+            "IsProperSubsetOf(IEnumerable<T>)": "isProperSubsetOf",
+            "IsSupersetOf(IEnumerable<T>)": "isSupersetOf",
+            "IsProperSupersetOf(IEnumerable<T>)": "isProperSupersetOf",
+            "SetEquals(IEnumerable<T>)": "setEquals",
+            "Overlaps(IEnumerable<T>)": "overlaps"
         }
     }; });
     /*System.Collections.Generic.SortedSet$1 end.*/
@@ -18849,6 +19144,12 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.Generic.SortedSetEqualityComparer$1.getHashCode end.*/
 
 
+        },
+        overloads: {
+            "Equals(SortedSet<T>, SortedSet<T>)": "equals2",
+            "Equals(Object)": "equals",
+            "GetHashCode(SortedSet<T>)": "getHashCode2",
+            "GetHashCode()": "getHashCode"
         }
     }; });
     /*System.Collections.Generic.SortedSetEqualityComparer$1 end.*/
@@ -19074,6 +19375,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 s.reverse = this.reverse;
                 return s;
             }
+        },
+        overloads: {
+            "MoveNext()": "moveNext"
         }
     }; });
     /*System.Collections.Generic.SortedSet$1+Enumerator end.*/
@@ -19090,6 +19394,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             Right: null
         },
         ctors: {
+            init: function () {
+                this.Item = Bridge.getDefaultValue(T);
+            },
             ctor: function (item) {
                 this.$initialize();
                 this.Item = item;
@@ -19122,6 +19429,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             "clear", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$clear"
         ],
         ctors: {
+            init: function () {
+                this.min = Bridge.getDefaultValue(T);
+                this.max = Bridge.getDefaultValue(T);
+            },
             $ctor1: function (Underlying, Min, Max, lowerBoundActive, upperBoundActive) {
                 this.$initialize();
                 System.Collections.Generic.SortedSet$1(T).$ctor1.call(this, Underlying.Comparer);
@@ -19380,6 +19691,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.Generic.SortedSet$1+TreeSubSet.IntersectWithEnumerable end.*/
 
 
+        },
+        overloads: {
+            "Contains(T)": "contains",
+            "Clear()": "clear",
+            "InOrderTreeWalk(TreeWalkPredicate<T>, Boolean)": "InOrderTreeWalk$1"
         }
     }; });
 
@@ -19860,6 +20176,16 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.Generic.LinkedList$1.ValidateNode end.*/
 
 
+        },
+        overloads: {
+            "AddAfter(LinkedListNode<T>, LinkedListNode<T>)": "AddAfter$1",
+            "AddBefore(LinkedListNode<T>, LinkedListNode<T>)": "AddBefore$1",
+            "AddFirst(LinkedListNode<T>)": "AddFirst$1",
+            "AddLast(LinkedListNode<T>)": "AddLast$1",
+            "Clear()": "clear",
+            "Contains(T)": "contains",
+            "CopyTo(T[], int)": "copyTo",
+            "Remove(T)": "remove"
         }
     }; });
     /*System.Collections.Generic.LinkedList$1 end.*/
@@ -19900,6 +20226,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             }
         },
         ctors: {
+            init: function () {
+                this.item = Bridge.getDefaultValue(T);
+            },
             ctor: function (value) {
                 this.$initialize();
                 this.item = value;
@@ -19978,6 +20307,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             "Dispose", "System$IDisposable$Dispose"
         ],
         ctors: {
+            init: function () {
+                this.current = Bridge.getDefaultValue(T);
+            },
             $ctor1: function (list) {
                 this.$initialize();
                 this.list = list;
@@ -20047,6 +20379,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 s.index = this.index;
                 return s;
             }
+        },
+        overloads: {
+            "MoveNext()": "moveNext"
         }
     }; });
     /*System.Collections.Generic.LinkedList$1+Enumerator end.*/
@@ -20801,6 +21136,14 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.Generic.Dictionary$2.GetValueOrDefault end.*/
 
 
+        },
+        overloads: {
+            "Add(TKey, TValue)": "add",
+            "Remove(TKey)": "remove",
+            "Clear()": "clear",
+            "ContainsKey(TKey)": "containsKey",
+            "Resize(int, bool)": "Resize$1",
+            "TryGetValue(TKey, TValue)": "tryGetValue"
         }
     }; });
     /*System.Collections.Generic.Dictionary$2 end.*/
@@ -20822,6 +21165,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             value: Bridge.getDefaultValue(TValue)
         },
         ctors: {
+            init: function () {
+                this.key = Bridge.getDefaultValue(TKey);
+                this.value = Bridge.getDefaultValue(TValue);
+            },
             ctor: function () {
                 this.$initialize();
             }
@@ -21002,6 +21349,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 s.getEnumeratorRetType = this.getEnumeratorRetType;
                 return s;
             }
+        },
+        overloads: {
+            "MoveNext()": "moveNext"
         }
     }; });
     /*System.Collections.Generic.Dictionary$2+Enumerator end.*/
@@ -21178,6 +21528,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$remove end.*/
 
 
+        },
+        overloads: {
+            "CopyTo(TKey[], int)": "copyTo"
         }
     }; });
     /*System.Collections.Generic.Dictionary$2+KeyCollection end.*/
@@ -21221,6 +21574,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             "Current", ["System$Collections$Generic$IEnumerator$1$" + Bridge.getTypeAlias(TKey) + "$Current$1", "System$Collections$Generic$IEnumerator$1$Current$1"]
         ],
         ctors: {
+            init: function () {
+                this.currentKey = Bridge.getDefaultValue(TKey);
+            },
             $ctor1: function (dictionary) {
                 this.$initialize();
                 this.dictionary = dictionary;
@@ -21288,6 +21644,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 s.currentKey = this.currentKey;
                 return s;
             }
+        },
+        overloads: {
+            "MoveNext()": "moveNext"
         }
     }; });
     /*System.Collections.Generic.Dictionary$2+KeyCollection+Enumerator end.*/
@@ -21464,6 +21823,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$contains end.*/
 
 
+        },
+        overloads: {
+            "CopyTo(TValue[], int)": "copyTo"
         }
     }; });
     /*System.Collections.Generic.Dictionary$2+ValueCollection end.*/
@@ -21507,6 +21869,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             "Current", ["System$Collections$Generic$IEnumerator$1$" + Bridge.getTypeAlias(TValue) + "$Current$1", "System$Collections$Generic$IEnumerator$1$Current$1"]
         ],
         ctors: {
+            init: function () {
+                this.currentValue = Bridge.getDefaultValue(TValue);
+            },
             $ctor1: function (dictionary) {
                 this.$initialize();
                 this.dictionary = dictionary;
@@ -21572,6 +21937,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 s.currentValue = this.currentValue;
                 return s;
             }
+        },
+        overloads: {
+            "MoveNext()": "moveNext"
         }
     }; });
     /*System.Collections.Generic.Dictionary$2+ValueCollection+Enumerator end.*/
@@ -21916,6 +22284,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$IDictionary$GetEnumerator end.*/
 
 
+        },
+        overloads: {
+            "ContainsKey(TKey)": "containsKey",
+            "TryGetValue(TKey, TValue)": "tryGetValue"
         }
     }; });
     /*System.Collections.ObjectModel.ReadOnlyDictionary$2 end.*/
@@ -22004,6 +22376,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 s._enumerator = this._enumerator;
                 return s;
             }
+        },
+        overloads: {
+            "MoveNext()": "moveNext",
+            "Reset()": "reset"
         }
     }; });
     /*System.Collections.ObjectModel.ReadOnlyDictionary$2+DictionaryEnumerator end.*/
@@ -22110,6 +22486,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection.System$Collections$IEnumerable$GetEnumerator end.*/
 
 
+        },
+        overloads: {
+            "CopyTo(TKey[], int)": "copyTo"
         }
     }; });
     /*System.Collections.ObjectModel.ReadOnlyDictionary$2+KeyCollection end.*/
@@ -22216,6 +22595,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.System$Collections$IEnumerable$GetEnumerator end.*/
 
 
+        },
+        overloads: {
+            "CopyTo(TValue[], int)": "copyTo"
         }
     }; });
     /*System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection end.*/
@@ -22561,6 +22943,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.OrdinalComparer.getHashCode end.*/
 
 
+        },
+        overloads: {
+            "Compare(string, string)": "compare",
+            "Equals(string, string)": "equals2",
+            "Equals(Object)": "equals",
+            "GetHashCode(string)": "getHashCode2",
+            "GetHashCode()": "getHashCode"
         }
     });
     /*System.OrdinalComparer end.*/
@@ -23813,6 +24202,30 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.Generic.List$1.toJSON end.*/
 
 
+        },
+        overloads: {
+            "Add(T)": "add",
+            "BinarySearch(int, int, T, IComparer<T>)": "BinarySearch$2",
+            "BinarySearch(T, IComparer<T>)": "BinarySearch$1",
+            "Clear()": "clear",
+            "Contains(T)": "contains",
+            "CopyTo(int, T[], int, int)": "CopyTo$1",
+            "CopyTo(T[], int)": "copyTo",
+            "FindIndex(Predicate<T>)": "FindIndex$2",
+            "FindIndex(int, Predicate<T>)": "FindIndex$1",
+            "FindLastIndex(Predicate<T>)": "FindLastIndex$2",
+            "FindLastIndex(int, Predicate<T>)": "FindLastIndex$1",
+            "IndexOf(T)": "indexOf",
+            "IndexOf(T, int, int)": "IndexOf$1",
+            "Insert(int, T)": "insert",
+            "LastIndexOf(T, int)": "LastIndexOf$1",
+            "LastIndexOf(T, int, int)": "LastIndexOf$2",
+            "Remove(T)": "remove",
+            "RemoveAt(int)": "removeAt",
+            "Reverse(int, int)": "Reverse$1",
+            "Sort(IComparer<T>)": "Sort$1",
+            "Sort(int, int, IComparer<T>)": "Sort$3",
+            "Sort(Comparison<T>)": "Sort$2"
         }
     }; });
     /*System.Collections.Generic.List$1 end.*/
@@ -23943,6 +24356,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.CharEnumerator.reset end.*/
 
 
+        },
+        overloads: {
+            "Clone()": "clone",
+            "MoveNext()": "moveNext",
+            "Reset()": "reset"
         }
     });
     /*System.CharEnumerator end.*/
@@ -27135,6 +27553,14 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
 
                     notEquals: function (uri1, uri2) {
                         return !System.Uri.equals(uri1, uri2);
+                    },
+
+                    escapeUriString: function (stringToEscape) {
+                        return encodeURI( stringToEscape );
+                    },
+
+                    escapeDataString: function (stringToEscape) {
+                        return encodeURIComponent(stringToEscape);
                     }
                 }
             },
@@ -30996,6 +31422,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Runtime.Serialization.SerializationInfoEnumerator.reset end.*/
 
 
+        },
+        overloads: {
+            "MoveNext()": "moveNext",
+            "Reset()": "reset"
         }
     });
     /*System.Runtime.Serialization.SerializationInfoEnumerator end.*/
@@ -31062,6 +31492,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 s._state = this._state;
                 return s;
             }
+        },
+        overloads: {
+            "Equals(object)": "equals",
+            "GetHashCode()": "getHashCode"
         }
     });
     /*System.Runtime.Serialization.StreamingContext end.*/
@@ -31194,6 +31628,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Security.SecurityException.toString end.*/
 
 
+        },
+        overloads: {
+            "ToString()": "toString"
         }
     });
     /*System.Security.SecurityException end.*/
@@ -38059,6 +38496,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.BitArray.GetEnumerator end.*/
 
 
+        },
+        overloads: {
+            "CopyTo(Array, int)": "copyTo",
+            "Clone()": "clone"
         }
     });
     /*System.Collections.BitArray end.*/
@@ -38129,6 +38570,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.BitArray+BitArrayEnumeratorSimple.reset end.*/
 
 
+        },
+        overloads: {
+            "MoveNext()": "moveNext",
+            "Reset()": "reset"
         }
     });
     /*System.Collections.BitArray+BitArrayEnumeratorSimple end.*/
@@ -39260,6 +39705,24 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.Generic.HashSet$1.InternalGetHashCode end.*/
 
 
+        },
+        overloads: {
+            "Add(T)": "add",
+            "Clear()": "clear",
+            "Contains(T)": "contains",
+            "CopyTo(T[], int)": "copyTo",
+            "CopyTo(T[], int, int)": "CopyTo$1",
+            "Remove(T)": "remove",
+            "UnionWith(IEnumerable<T>)": "unionWith",
+            "IntersectWith(IEnumerable<T>)": "intersectWith",
+            "ExceptWith(IEnumerable<T>)": "exceptWith",
+            "SymmetricExceptWith(IEnumerable<T>)": "symmetricExceptWith",
+            "IsSubsetOf(IEnumerable<T>)": "isSubsetOf",
+            "IsProperSubsetOf(IEnumerable<T>)": "isProperSubsetOf",
+            "IsSupersetOf(IEnumerable<T>)": "isSupersetOf",
+            "IsProperSupersetOf(IEnumerable<T>)": "isProperSupersetOf",
+            "Overlaps(IEnumerable<T>)": "overlaps",
+            "SetEquals(IEnumerable<T>)": "setEquals"
         }
     }; });
     /*System.Collections.Generic.HashSet$1 end.*/
@@ -39342,6 +39805,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             "Current", ["System$Collections$Generic$IEnumerator$1$" + Bridge.getTypeAlias(T) + "$Current$1", "System$Collections$Generic$IEnumerator$1$Current$1"]
         ],
         ctors: {
+            init: function () {
+                this._current = Bridge.getDefaultValue(T);
+            },
             $ctor1: function (set) {
                 this.$initialize();
                 this._set = set;
@@ -39406,6 +39872,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 s._current = this._current;
                 return s;
             }
+        },
+        overloads: {
+            "MoveNext()": "moveNext"
         }
     }; });
     /*System.Collections.Generic.HashSet$1+Enumerator end.*/
@@ -39426,6 +39895,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             next: 0
         },
         ctors: {
+            init: function () {
+                this.value = Bridge.getDefaultValue(T);
+            },
             ctor: function () {
                 this.$initialize();
             }
@@ -39490,6 +39962,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             "Current", ["System$Collections$Generic$IEnumerator$1$" + Bridge.getTypeAlias(T) + "$Current$1", "System$Collections$Generic$IEnumerator$1$Current$1"]
         ],
         ctors: {
+            init: function () {
+                this.current = Bridge.getDefaultValue(T);
+            },
             $ctor1: function (list) {
                 this.$initialize();
                 this.list = list;
@@ -39561,6 +40036,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 s.current = this.current;
                 return s;
             }
+        },
+        overloads: {
+            "MoveNext()": "moveNext"
         }
     }; });
     /*System.Collections.Generic.List$1+Enumerator end.*/
@@ -39889,6 +40367,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.Generic.Queue$1.TrimExcess end.*/
 
 
+        },
+        overloads: {
+            "CopyTo(Array, int)": "copyTo"
         }
     }; });
     /*System.Collections.Generic.Queue$1 end.*/
@@ -39997,6 +40478,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             "Current", ["System$Collections$Generic$IEnumerator$1$" + Bridge.getTypeAlias(T) + "$Current$1", "System$Collections$Generic$IEnumerator$1$Current$1"]
         ],
         ctors: {
+            init: function () {
+                this._currentElement = Bridge.getDefaultValue(T);
+            },
             $ctor1: function (q) {
                 this.$initialize();
                 this._q = q;
@@ -40067,6 +40551,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 s._currentElement = this._currentElement;
                 return s;
             }
+        },
+        overloads: {
+            "MoveNext()": "moveNext"
         }
     }; });
     /*System.Collections.Generic.Queue$1+Enumerator end.*/
@@ -40315,6 +40802,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.Generic.Stack$1.ToArray end.*/
 
 
+        },
+        overloads: {
+            "CopyTo(Array, int)": "copyTo"
         }
     }; });
     /*System.Collections.Generic.Stack$1 end.*/
@@ -40366,6 +40856,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             "Current", ["System$Collections$Generic$IEnumerator$1$" + Bridge.getTypeAlias(T) + "$Current$1", "System$Collections$Generic$IEnumerator$1$Current$1"]
         ],
         ctors: {
+            init: function () {
+                this._currentElement = Bridge.getDefaultValue(T);
+            },
             $ctor1: function (stack) {
                 this.$initialize();
                 this._stack = stack;
@@ -40441,6 +40934,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 s._currentElement = this._currentElement;
                 return s;
             }
+        },
+        overloads: {
+            "MoveNext()": "moveNext"
         }
     }; });
     /*System.Collections.Generic.Stack$1+Enumerator end.*/
@@ -40982,6 +41478,16 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.ObjectModel.Collection$1.SetItem end.*/
 
 
+        },
+        overloads: {
+            "Add(T)": "add",
+            "Clear()": "clear",
+            "CopyTo(T[], int)": "copyTo",
+            "Contains(T)": "contains",
+            "IndexOf(T)": "indexOf",
+            "Insert(int, T)": "insert",
+            "Remove(T)": "remove",
+            "RemoveAt(int)": "removeAt"
         }
     }; });
     /*System.Collections.ObjectModel.Collection$1 end.*/
@@ -41239,6 +41745,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$removeAt end.*/
 
 
+        },
+        overloads: {
+            "Contains(T)": "contains",
+            "CopyTo(T[], int)": "copyTo",
+            "IndexOf(T)": "indexOf"
         }
     }; });
     /*System.Collections.ObjectModel.ReadOnlyCollection$1 end.*/
@@ -41302,6 +41813,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.ComponentModel.BrowsableAttribute.getHashCode end.*/
 
 
+        },
+        overloads: {
+            "Equals(object)": "equals",
+            "GetHashCode()": "getHashCode"
         }
     });
     /*System.ComponentModel.BrowsableAttribute end.*/
@@ -41441,6 +41956,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.ComponentModel.DefaultValueAttribute.setValue end.*/
 
 
+        },
+        overloads: {
+            "Equals(object)": "equals",
+            "GetHashCode()": "getHashCode",
+            "SetValue(object)": "setValue"
         }
     });
     /*System.ComponentModel.DefaultValueAttribute end.*/
@@ -42160,6 +42680,17 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 s.m_offsetMinutes = this.m_offsetMinutes;
                 return s;
             }
+        },
+        overloads: {
+            "CompareTo(DateTimeOffset)": "compareTo",
+            "Equals(Object)": "equals",
+            "Equals(DateTimeOffset)": "equalsT",
+            "GetHashCode()": "getHashCode",
+            "Subtract(DateTimeOffset)": "Subtract$1",
+            "ToLocalTime(bool)": "ToLocalTime$1",
+            "ToString()": "toString",
+            "ToString(String)": "ToString$1",
+            "ToString(String, IFormatProvider)": "format"
         }
     });
     /*System.DateTimeOffset end.*/
@@ -42312,6 +42843,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 s.failureArgumentName = this.failureArgumentName;
                 return s;
             }
+        },
+        overloads: {
+            "SetFailure(ParseFailureKind, string, object, string)": "SetFailure$1"
         }
     });
     /*System.DateTimeResult end.*/
@@ -42469,6 +43003,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.DBNull.System$IConvertible$ToType end.*/
 
 
+        },
+        overloads: {
+            "ToString()": "toString"
         }
     });
     /*System.DBNull end.*/
@@ -42500,6 +43037,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Empty.toString end.*/
 
 
+        },
+        overloads: {
+            "ToString()": "toString"
         }
     });
     /*System.Empty end.*/
@@ -43005,6 +43545,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.FormattableString.toString end.*/
 
 
+        },
+        overloads: {
+            "ToString()": "toString"
         }
     });
     /*System.FormattableString end.*/
@@ -43510,6 +44053,14 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Guid.toJSON end.*/
 
             $clone: function (to) { return this; }
+        },
+        overloads: {
+            "GetHashCode()": "getHashCode",
+            "Equals(Object)": "equals",
+            "Equals(Guid)": "equalsT",
+            "CompareTo(Guid)": "compareTo",
+            "ToString()": "toString",
+            "ToString(string, IFormatProvider)": "format"
         }
     });
     /*System.Guid end.*/
@@ -43764,6 +44315,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.ValueTuple.toString end.*/
 
             $clone: function (to) { return this; }
+        },
+        overloads: {
+            "Equals(object)": "equals",
+            "Equals(ValueTuple)": "equalsT",
+            "CompareTo(ValueTuple)": "compareTo",
+            "GetHashCode()": "getHashCode",
+            "ToString()": "toString"
         }
     });
     /*System.ValueTuple end.*/
@@ -43800,6 +44358,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             "compareTo", ["System$IComparable$1$System$ValueTuple$1$" + Bridge.getTypeAlias(T1) + "$compareTo", "System$IComparable$1$compareTo"]
         ],
         ctors: {
+            init: function () {
+                this.Item1 = Bridge.getDefaultValue(T1);
+            },
             $ctor1: function (item1) {
                 this.$initialize();
                 this.Item1 = item1;
@@ -43906,6 +44467,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 s.Item1 = this.Item1;
                 return s;
             }
+        },
+        overloads: {
+            "Equals(object)": "equals",
+            "Equals(ValueTuple<T1>)": "equalsT",
+            "CompareTo(ValueTuple<T1>)": "compareTo",
+            "GetHashCode()": "getHashCode",
+            "ToString()": "toString"
         }
     }; });
     /*System.ValueTuple$1 end.*/
@@ -43945,6 +44513,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             "compareTo", ["System$IComparable$1$System$ValueTuple$2$" + Bridge.getTypeAlias(T1) + "$" + Bridge.getTypeAlias(T2) + "$compareTo", "System$IComparable$1$compareTo"]
         ],
         ctors: {
+            init: function () {
+                this.Item1 = Bridge.getDefaultValue(T1);
+                this.Item2 = Bridge.getDefaultValue(T2);
+            },
             $ctor1: function (item1, item2) {
                 this.$initialize();
                 this.Item1 = item1;
@@ -44067,6 +44639,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 s.Item2 = this.Item2;
                 return s;
             }
+        },
+        overloads: {
+            "Equals(object)": "equals",
+            "Equals(ValueTuple<T1, T2>)": "equalsT",
+            "CompareTo(ValueTuple<T1, T2>)": "compareTo",
+            "GetHashCode()": "getHashCode",
+            "ToString()": "toString"
         }
     }; });
     /*System.ValueTuple$2 end.*/
@@ -44109,6 +44688,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             "compareTo", ["System$IComparable$1$System$ValueTuple$3$" + Bridge.getTypeAlias(T1) + "$" + Bridge.getTypeAlias(T2) + "$" + Bridge.getTypeAlias(T3) + "$compareTo", "System$IComparable$1$compareTo"]
         ],
         ctors: {
+            init: function () {
+                this.Item1 = Bridge.getDefaultValue(T1);
+                this.Item2 = Bridge.getDefaultValue(T2);
+                this.Item3 = Bridge.getDefaultValue(T3);
+            },
             $ctor1: function (item1, item2, item3) {
                 this.$initialize();
                 this.Item1 = item1;
@@ -44243,6 +44827,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 s.Item3 = this.Item3;
                 return s;
             }
+        },
+        overloads: {
+            "Equals(object)": "equals",
+            "Equals(ValueTuple<T1, T2, T3>)": "equalsT",
+            "CompareTo(ValueTuple<T1, T2, T3>)": "compareTo",
+            "GetHashCode()": "getHashCode",
+            "ToString()": "toString"
         }
     }; });
     /*System.ValueTuple$3 end.*/
@@ -44288,6 +44879,12 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             "compareTo", ["System$IComparable$1$System$ValueTuple$4$" + Bridge.getTypeAlias(T1) + "$" + Bridge.getTypeAlias(T2) + "$" + Bridge.getTypeAlias(T3) + "$" + Bridge.getTypeAlias(T4) + "$compareTo", "System$IComparable$1$compareTo"]
         ],
         ctors: {
+            init: function () {
+                this.Item1 = Bridge.getDefaultValue(T1);
+                this.Item2 = Bridge.getDefaultValue(T2);
+                this.Item3 = Bridge.getDefaultValue(T3);
+                this.Item4 = Bridge.getDefaultValue(T4);
+            },
             $ctor1: function (item1, item2, item3, item4) {
                 this.$initialize();
                 this.Item1 = item1;
@@ -44434,6 +45031,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 s.Item4 = this.Item4;
                 return s;
             }
+        },
+        overloads: {
+            "Equals(object)": "equals",
+            "Equals(ValueTuple<T1, T2, T3, T4>)": "equalsT",
+            "CompareTo(ValueTuple<T1, T2, T3, T4>)": "compareTo",
+            "GetHashCode()": "getHashCode",
+            "ToString()": "toString"
         }
     }; });
     /*System.ValueTuple$4 end.*/
@@ -44482,6 +45086,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             "compareTo", ["System$IComparable$1$System$ValueTuple$5$" + Bridge.getTypeAlias(T1) + "$" + Bridge.getTypeAlias(T2) + "$" + Bridge.getTypeAlias(T3) + "$" + Bridge.getTypeAlias(T4) + "$" + Bridge.getTypeAlias(T5) + "$compareTo", "System$IComparable$1$compareTo"]
         ],
         ctors: {
+            init: function () {
+                this.Item1 = Bridge.getDefaultValue(T1);
+                this.Item2 = Bridge.getDefaultValue(T2);
+                this.Item3 = Bridge.getDefaultValue(T3);
+                this.Item4 = Bridge.getDefaultValue(T4);
+                this.Item5 = Bridge.getDefaultValue(T5);
+            },
             $ctor1: function (item1, item2, item3, item4, item5) {
                 this.$initialize();
                 this.Item1 = item1;
@@ -44640,6 +45251,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 s.Item5 = this.Item5;
                 return s;
             }
+        },
+        overloads: {
+            "Equals(object)": "equals",
+            "Equals(ValueTuple<T1, T2, T3, T4, T5>)": "equalsT",
+            "CompareTo(ValueTuple<T1, T2, T3, T4, T5>)": "compareTo",
+            "GetHashCode()": "getHashCode",
+            "ToString()": "toString"
         }
     }; });
     /*System.ValueTuple$5 end.*/
@@ -44691,6 +45309,14 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             "compareTo", ["System$IComparable$1$System$ValueTuple$6$" + Bridge.getTypeAlias(T1) + "$" + Bridge.getTypeAlias(T2) + "$" + Bridge.getTypeAlias(T3) + "$" + Bridge.getTypeAlias(T4) + "$" + Bridge.getTypeAlias(T5) + "$" + Bridge.getTypeAlias(T6) + "$compareTo", "System$IComparable$1$compareTo"]
         ],
         ctors: {
+            init: function () {
+                this.Item1 = Bridge.getDefaultValue(T1);
+                this.Item2 = Bridge.getDefaultValue(T2);
+                this.Item3 = Bridge.getDefaultValue(T3);
+                this.Item4 = Bridge.getDefaultValue(T4);
+                this.Item5 = Bridge.getDefaultValue(T5);
+                this.Item6 = Bridge.getDefaultValue(T6);
+            },
             $ctor1: function (item1, item2, item3, item4, item5, item6) {
                 this.$initialize();
                 this.Item1 = item1;
@@ -44861,6 +45487,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 s.Item6 = this.Item6;
                 return s;
             }
+        },
+        overloads: {
+            "Equals(object)": "equals",
+            "Equals(ValueTuple<T1, T2, T3, T4, T5, T6>)": "equalsT",
+            "CompareTo(ValueTuple<T1, T2, T3, T4, T5, T6>)": "compareTo",
+            "GetHashCode()": "getHashCode",
+            "ToString()": "toString"
         }
     }; });
     /*System.ValueTuple$6 end.*/
@@ -44915,6 +45548,15 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             "compareTo", ["System$IComparable$1$System$ValueTuple$7$" + Bridge.getTypeAlias(T1) + "$" + Bridge.getTypeAlias(T2) + "$" + Bridge.getTypeAlias(T3) + "$" + Bridge.getTypeAlias(T4) + "$" + Bridge.getTypeAlias(T5) + "$" + Bridge.getTypeAlias(T6) + "$" + Bridge.getTypeAlias(T7) + "$compareTo", "System$IComparable$1$compareTo"]
         ],
         ctors: {
+            init: function () {
+                this.Item1 = Bridge.getDefaultValue(T1);
+                this.Item2 = Bridge.getDefaultValue(T2);
+                this.Item3 = Bridge.getDefaultValue(T3);
+                this.Item4 = Bridge.getDefaultValue(T4);
+                this.Item5 = Bridge.getDefaultValue(T5);
+                this.Item6 = Bridge.getDefaultValue(T6);
+                this.Item7 = Bridge.getDefaultValue(T7);
+            },
             $ctor1: function (item1, item2, item3, item4, item5, item6, item7) {
                 this.$initialize();
                 this.Item1 = item1;
@@ -45097,6 +45739,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 s.Item7 = this.Item7;
                 return s;
             }
+        },
+        overloads: {
+            "Equals(object)": "equals",
+            "Equals(ValueTuple<T1, T2, T3, T4, T5, T6, T7>)": "equalsT",
+            "CompareTo(ValueTuple<T1, T2, T3, T4, T5, T6, T7>)": "compareTo",
+            "GetHashCode()": "getHashCode",
+            "ToString()": "toString"
         }
     }; });
     /*System.ValueTuple$7 end.*/
@@ -45155,6 +45804,16 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             "compareTo", ["System$IComparable$1$System$ValueTuple$8$" + Bridge.getTypeAlias(T1) + "$" + Bridge.getTypeAlias(T2) + "$" + Bridge.getTypeAlias(T3) + "$" + Bridge.getTypeAlias(T4) + "$" + Bridge.getTypeAlias(T5) + "$" + Bridge.getTypeAlias(T6) + "$" + Bridge.getTypeAlias(T7) + "$" + Bridge.getTypeAlias(TRest) + "$compareTo", "System$IComparable$1$compareTo"]
         ],
         ctors: {
+            init: function () {
+                this.Item1 = Bridge.getDefaultValue(T1);
+                this.Item2 = Bridge.getDefaultValue(T2);
+                this.Item3 = Bridge.getDefaultValue(T3);
+                this.Item4 = Bridge.getDefaultValue(T4);
+                this.Item5 = Bridge.getDefaultValue(T5);
+                this.Item6 = Bridge.getDefaultValue(T6);
+                this.Item7 = Bridge.getDefaultValue(T7);
+                this.Rest = Bridge.getDefaultValue(TRest);
+            },
             $ctor1: function (item1, item2, item3, item4, item5, item6, item7, rest) {
                 this.$initialize();
                 if (!(Bridge.is(rest, System.ITupleInternal))) {
@@ -45421,6 +46080,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 s.Rest = this.Rest;
                 return s;
             }
+        },
+        overloads: {
+            "Equals(object)": "equals",
+            "Equals(ValueTuple<T1, T2, T3, T4, T5, T6, T7, TRest>)": "equalsT",
+            "CompareTo(ValueTuple<T1, T2, T3, T4, T5, T6, T7, TRest>)": "compareTo",
+            "GetHashCode()": "getHashCode",
+            "ToString()": "toString"
         }
     }; });
     /*System.ValueTuple$8 end.*/
@@ -46040,6 +46706,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Globalization.Calendar.ToFourDigitYear end.*/
 
 
+        },
+        overloads: {
+            "Clone()": "clone",
+            "GetLeapMonth(int, int)": "GetLeapMonth$1"
         }
     });
     /*System.Globalization.Calendar end.*/
@@ -46623,6 +47293,36 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
         $flags: true
     });
     /*System.Globalization.DateTimeStyles end.*/
+
+    // @source NumberStyles.js
+
+    /*System.Globalization.NumberStyles start.*/
+    Bridge.define("System.Globalization.NumberStyles", {
+        $kind: "enum",
+        statics: {
+            fields: {
+                None: 0,
+                AllowLeadingWhite: 1,
+                AllowTrailingWhite: 2,
+                AllowLeadingSign: 4,
+                Integer: 7,
+                AllowTrailingSign: 8,
+                AllowParentheses: 16,
+                AllowDecimalPoint: 32,
+                AllowThousands: 64,
+                Number: 111,
+                AllowExponent: 128,
+                Float: 167,
+                AllowCurrencySymbol: 256,
+                Currency: 383,
+                Any: 511,
+                AllowHexSpecifier: 512,
+                HexNumber: 515
+            }
+        },
+        $flags: true
+    });
+    /*System.Globalization.NumberStyles end.*/
 
     // @source FORMATFLAGS.js
 
@@ -47606,6 +48306,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.IO.BinaryReader.Read7BitEncodedInt end.*/
 
 
+        },
+        overloads: {
+            "Dispose(bool)": "Dispose$1",
+            "Read(char[], int, int)": "Read$2",
+            "Read(byte[], int, int)": "Read$1"
         }
     });
     /*System.IO.BinaryReader end.*/
@@ -47898,6 +48603,26 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.IO.BinaryWriter.Write7BitEncodedInt end.*/
 
 
+        },
+        overloads: {
+            "Dispose(bool)": "Dispose$1",
+            "Write(byte)": "Write$1",
+            "Write(sbyte)": "Write$12",
+            "Write(byte[])": "Write$2",
+            "Write(byte[], int, int)": "Write$3",
+            "Write(char)": "Write$4",
+            "Write(char[])": "Write$5",
+            "Write(char[], int, int)": "Write$6",
+            "Write(double)": "Write$8",
+            "Write(decimal)": "Write$7",
+            "Write(short)": "Write$9",
+            "Write(ushort)": "Write$15",
+            "Write(int)": "Write$10",
+            "Write(uint)": "Write$16",
+            "Write(long)": "Write$11",
+            "Write(ulong)": "Write$17",
+            "Write(float)": "Write$13",
+            "Write(String)": "Write$14"
         }
     });
     /*System.IO.BinaryWriter end.*/
@@ -48180,6 +48905,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.IO.Stream.BlockingBeginWrite end.*/
 
 
+        },
+        overloads: {
+            "CopyTo(Stream, int)": "CopyTo$1",
+            "Dispose(bool)": "Dispose$1"
         }
     });
     /*System.IO.Stream end.*/
@@ -48757,6 +49486,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.IO.BufferedStream.SetLength end.*/
 
 
+        },
+        overloads: {
+            "Dispose(bool)": "Dispose$1",
+            "ReadFromBuffer(Byte[], Int32, Int32, Exception)": "ReadFromBuffer$1",
+            "WriteToBuffer(Byte[], Int32, Int32, Exception)": "WriteToBuffer$1"
         }
     });
     /*System.IO.BufferedStream end.*/
@@ -49372,6 +50106,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             "GetEnumerator", ["System$Collections$Generic$IEnumerable$1$" + Bridge.getTypeAlias(TSource) + "$GetEnumerator", "System$Collections$Generic$IEnumerable$1$GetEnumerator"]
         ],
         ctors: {
+            init: function () {
+                this.current = Bridge.getDefaultValue(TSource);
+            },
             ctor: function () {
                 this.$initialize();
             }
@@ -49416,6 +50153,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.IO.Iterator$1.System$Collections$IEnumerator$reset end.*/
 
 
+        },
+        overloads: {
+            "Dispose(bool)": "Dispose$1"
         }
     }; });
     /*System.IO.Iterator$1 end.*/
@@ -49937,6 +50677,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.IO.MemoryStream.WriteTo end.*/
 
 
+        },
+        overloads: {
+            "Dispose(bool)": "Dispose$1"
         }
     });
     /*System.IO.MemoryStream end.*/
@@ -50017,6 +50760,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.IO.ReadLinesIterator.Dispose$1 end.*/
 
 
+        },
+        overloads: {
+            "MoveNext()": "moveNext",
+            "Dispose(bool)": "Dispose$1"
         }
     });
     /*System.IO.ReadLinesIterator end.*/
@@ -50156,6 +50903,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.IO.Stream+NullStream.SetLength end.*/
 
 
+        },
+        overloads: {
+            "Dispose(bool)": "Dispose$1"
         }
     });
     /*System.IO.Stream+NullStream end.*/
@@ -50414,6 +51164,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.IO.TextReader.ReadLine end.*/
 
 
+        },
+        overloads: {
+            "Dispose(bool)": "Dispose$1",
+            "Read(char[], int, int)": "Read$1"
         }
     });
     /*System.IO.TextReader end.*/
@@ -50978,6 +51732,12 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.IO.StreamReader.ReadLine end.*/
 
 
+        },
+        overloads: {
+            "Init(Stream, Encoding, bool, int, bool)": "Init$1",
+            "Dispose(bool)": "Dispose$1",
+            "Read(char[], int, int)": "Read$1",
+            "ReadBuffer(char[], int, int, bool)": "ReadBuffer$1"
         }
     });
     /*System.IO.StreamReader end.*/
@@ -51049,6 +51809,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.IO.StreamReader+NullStreamReader.ReadBuffer end.*/
 
 
+        },
+        overloads: {
+            "Dispose(bool)": "Dispose$1",
+            "Read(char[], int, int)": "Read$1"
         }
     });
     /*System.IO.StreamReader+NullStreamReader end.*/
@@ -51422,6 +52186,42 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.IO.TextWriter.WriteLine$15 end.*/
 
 
+        },
+        overloads: {
+            "Dispose(bool)": "Dispose$1",
+            "Write(char)": "Write$1",
+            "Write(char[])": "Write$2",
+            "Write(char[], int, int)": "Write$3",
+            "Write(int)": "Write$6",
+            "Write(uint)": "Write$15",
+            "Write(long)": "Write$7",
+            "Write(ulong)": "Write$16",
+            "Write(float)": "Write$9",
+            "Write(double)": "Write$5",
+            "Write(Decimal)": "Write$4",
+            "Write(String)": "Write$10",
+            "Write(Object)": "Write$8",
+            "Write(String, Object)": "Write$11",
+            "Write(String, Object, Object)": "Write$12",
+            "Write(String, Object, Object, Object)": "Write$13",
+            "Write(String, Object[])": "Write$14",
+            "WriteLine(char)": "WriteLine$2",
+            "WriteLine(char[])": "WriteLine$3",
+            "WriteLine(char[], int, int)": "WriteLine$4",
+            "WriteLine(bool)": "WriteLine$1",
+            "WriteLine(int)": "WriteLine$7",
+            "WriteLine(uint)": "WriteLine$16",
+            "WriteLine(long)": "WriteLine$8",
+            "WriteLine(ulong)": "WriteLine$17",
+            "WriteLine(float)": "WriteLine$10",
+            "WriteLine(double)": "WriteLine$6",
+            "WriteLine(decimal)": "WriteLine$5",
+            "WriteLine(String)": "WriteLine$11",
+            "WriteLine(Object)": "WriteLine$9",
+            "WriteLine(String, Object)": "WriteLine$12",
+            "WriteLine(String, Object, Object)": "WriteLine$13",
+            "WriteLine(String, Object, Object, Object)": "WriteLine$14",
+            "WriteLine(String, Object[])": "WriteLine$15"
         }
     });
     /*System.IO.TextWriter end.*/
@@ -51735,6 +52535,14 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.IO.StreamWriter.Write$10 end.*/
 
 
+        },
+        overloads: {
+            "Dispose(bool)": "Dispose$1",
+            "Flush(bool, bool)": "Flush$1",
+            "Write(char)": "Write$1",
+            "Write(char[])": "Write$2",
+            "Write(char[], int, int)": "Write$3",
+            "Write(String)": "Write$10"
         }
     });
     /*System.IO.StreamWriter end.*/
@@ -51874,6 +52682,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.IO.StringReader.ReadLine end.*/
 
 
+        },
+        overloads: {
+            "Dispose(bool)": "Dispose$1",
+            "Read(char[], int, int)": "Read$1"
         }
     });
     /*System.IO.StringReader end.*/
@@ -51992,6 +52804,13 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.IO.StringWriter.toString end.*/
 
 
+        },
+        overloads: {
+            "Dispose(bool)": "Dispose$1",
+            "Write(char)": "Write$1",
+            "Write(char[], int, int)": "Write$3",
+            "Write(String)": "Write$10",
+            "ToString()": "toString"
         }
     });
     /*System.IO.StringWriter end.*/
@@ -52022,6 +52841,9 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.IO.TextReader+NullTextReader.ReadLine end.*/
 
 
+        },
+        overloads: {
+            "Read(char[], int, int)": "Read$1"
         }
     });
     /*System.IO.TextReader+NullTextReader end.*/
@@ -52067,6 +52889,12 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.IO.TextWriter+NullTextWriter.WriteLine$9 end.*/
 
 
+        },
+        overloads: {
+            "Write(char[], int, int)": "Write$3",
+            "Write(String)": "Write$10",
+            "WriteLine(String)": "WriteLine$11",
+            "WriteLine(Object)": "WriteLine$9"
         }
     });
     /*System.IO.TextWriter+NullTextWriter end.*/
@@ -52653,6 +53481,23 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Reflection.Module.toString end.*/
 
 
+        },
+        overloads: {
+            "GetCustomAttributes(Type, bool)": "GetCustomAttributes$1",
+            "GetMethod(string, Type[])": "GetMethod$2",
+            "GetMethod(string, BindingFlags, Binder, CallingConventions, Type[], ParameterModifier[])": "GetMethod$1",
+            "GetMethods(BindingFlags)": "GetMethods$1",
+            "GetField(string, BindingFlags)": "GetField$1",
+            "GetFields(BindingFlags)": "GetFields$1",
+            "GetType(string, bool)": "GetType$1",
+            "GetType(string, bool, bool)": "GetType$2",
+            "ResolveField(int, Type[], Type[])": "ResolveField$1",
+            "ResolveMember(int, Type[], Type[])": "ResolveMember$1",
+            "ResolveMethod(int, Type[], Type[])": "ResolveMethod$1",
+            "ResolveType(int, Type[], Type[])": "ResolveType$1",
+            "Equals(object)": "equals",
+            "GetHashCode()": "getHashCode",
+            "ToString()": "toString"
         }
     });
     /*System.Reflection.Module end.*/
@@ -52941,6 +53786,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Random.NextBytes end.*/
 
 
+        },
+        overloads: {
+            "Next(int, int)": "Next$2",
+            "Next(int)": "Next$1"
         }
     });
     /*System.Random end.*/
@@ -53976,6 +54825,23 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Text.Encoding.GetString$1 end.*/
 
 
+        },
+        overloads: {
+            "Encode(char[], int, int)": "Encode$1",
+            "Encode(string, int, int, byte[], int)": "Encode$5",
+            "Encode(char[], int, int, byte[], int)": "Encode$4",
+            "Encode(string)": "Encode$2",
+            "Decode(byte[], int, int)": "Decode$1",
+            "GetByteCount(string)": "GetByteCount$2",
+            "GetByteCount(char[], int, int)": "GetByteCount$1",
+            "GetBytes(char[], int, int)": "GetBytes$1",
+            "GetBytes(char[], int, int, byte[], int)": "GetBytes$3",
+            "GetBytes(string)": "GetBytes$2",
+            "GetBytes(string, int, int, byte[], int)": "GetBytes$4",
+            "GetCharCount(byte[], int, int)": "GetCharCount$1",
+            "GetChars(byte[], int, int)": "GetChars$1",
+            "GetChars(byte[], int, int, char[], int)": "GetChars$2",
+            "GetString(byte[], int, int)": "GetString$1"
         }
     });
     /*System.Text.Encoding end.*/
@@ -54085,6 +54951,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Text.ASCIIEncoding.GetMaxCharCount end.*/
 
 
+        },
+        overloads: {
+            "Encode(string, byte[], int, int)": "Encode$3",
+            "Decode(byte[], int, int, char[], int)": "Decode$2"
         }
     });
     /*System.Text.ASCIIEncoding end.*/
@@ -54128,6 +54998,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Text.EncodingInfo.equals end.*/
 
 
+        },
+        overloads: {
+            "GetHashCode()": "getHashCode",
+            "Equals(object)": "equals"
         }
     });
     /*System.Text.EncodingInfo end.*/
@@ -54382,6 +55256,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Text.UnicodeEncoding.GetMaxCharCount end.*/
 
 
+        },
+        overloads: {
+            "Encode(string, byte[], int, int)": "Encode$3",
+            "Decode(byte[], int, int, char[], int)": "Decode$2"
         }
     });
 
@@ -54629,6 +55507,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Text.UTF32Encoding.GetMaxCharCount end.*/
 
 
+        },
+        overloads: {
+            "Encode(string, byte[], int, int)": "Encode$3",
+            "Decode(byte[], int, int, char[], int)": "Decode$2"
         }
     });
     /*System.Text.UTF32Encoding end.*/
@@ -54761,6 +55643,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Text.UTF7Encoding.GetMaxCharCount end.*/
 
 
+        },
+        overloads: {
+            "Encode(string, byte[], int, int)": "Encode$3",
+            "Decode(byte[], int, int, char[], int)": "Decode$2"
         }
     });
 
@@ -55050,6 +55936,10 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Text.UTF8Encoding.GetMaxCharCount end.*/
 
 
+        },
+        overloads: {
+            "Encode(string, byte[], int, int)": "Encode$3",
+            "Decode(byte[], int, int, char[], int)": "Decode$2"
         }
     });
 
@@ -55240,6 +56130,11 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Threading.Timer.Dispose end.*/
 
 
+        },
+        overloads: {
+            "Change(TimeSpan, TimeSpan)": "Change$2",
+            "Change(UInt32, UInt32)": "Change$3",
+            "Change(long, long)": "Change$1"
         }
     });
     /*System.Threading.Timer end.*/
@@ -55772,6 +56667,16 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
             /*System.Version.toString$1 end.*/
 
 
+        },
+        overloads: {
+            "Clone()": "clone",
+            "CompareTo(Object)": "compareTo$1",
+            "CompareTo(Version)": "compareTo",
+            "Equals(Object)": "equals",
+            "Equals(Version)": "equalsT",
+            "GetHashCode()": "getHashCode",
+            "ToString()": "toString",
+            "ToString(int)": "toString$1"
         }
     });
     /*System.Version end.*/
@@ -55889,6 +56794,12 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                 s.m_canThrow = this.m_canThrow;
                 return s;
             }
+        },
+        overloads: {
+            "Init(string, bool)": "init",
+            "SetFailure(ParseFailureKind)": "setFailure",
+            "SetFailure(ParseFailureKind, string)": "setFailure$1",
+            "GetVersionParseException()": "getVersionParseException"
         }
     });
     /*System.Version+VersionResult end.*/

@@ -80,6 +80,10 @@
                 s._enumerator = this._enumerator;
                 return s;
             }
+        },
+        overloads: {
+            "MoveNext()": "moveNext",
+            "Reset()": "reset"
         }
     }; });
     /*System.Collections.ObjectModel.ReadOnlyDictionary$2+DictionaryEnumerator end.*/

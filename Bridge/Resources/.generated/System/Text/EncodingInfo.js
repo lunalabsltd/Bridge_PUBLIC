@@ -35,6 +35,10 @@
             /*System.Text.EncodingInfo.equals end.*/
 
 
+        },
+        overloads: {
+            "GetHashCode()": "getHashCode",
+            "Equals(object)": "equals"
         }
     });
     /*System.Text.EncodingInfo end.*/

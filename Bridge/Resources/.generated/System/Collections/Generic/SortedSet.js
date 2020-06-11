@@ -1689,6 +1689,27 @@
             /*System.Collections.Generic.SortedSet$1.TryGetValue end.*/
 
 
+        },
+        overloads: {
+            "InOrderTreeWalk(TreeWalkPredicate<T>, bool)": "InOrderTreeWalk$1",
+            "Add(T)": "add",
+            "Remove(T)": "remove",
+            "Clear()": "clear",
+            "Contains(T)": "contains",
+            "CopyTo(T[], int)": "copyTo",
+            "CopyTo(T[], int, int)": "CopyTo$1",
+            "FindRange(T, T, bool, bool)": "FindRange$1",
+            "UnionWith(IEnumerable<T>)": "unionWith",
+            "IntersectWith(IEnumerable<T>)": "intersectWith",
+            "ExceptWith(IEnumerable<T>)": "exceptWith",
+            "SymmetricExceptWith(IEnumerable<T>)": "symmetricExceptWith",
+            "SymmetricExceptWithSameEC(ISet<T>)": "SymmetricExceptWithSameEC$1",
+            "IsSubsetOf(IEnumerable<T>)": "isSubsetOf",
+            "IsProperSubsetOf(IEnumerable<T>)": "isProperSubsetOf",
+            "IsSupersetOf(IEnumerable<T>)": "isSupersetOf",
+            "IsProperSupersetOf(IEnumerable<T>)": "isProperSupersetOf",
+            "SetEquals(IEnumerable<T>)": "setEquals",
+            "Overlaps(IEnumerable<T>)": "overlaps"
         }
     }; });
     /*System.Collections.Generic.SortedSet$1 end.*/

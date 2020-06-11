@@ -336,6 +336,10 @@
             /*System.Collections.ObjectModel.ReadOnlyDictionary$2.System$Collections$IDictionary$GetEnumerator end.*/
 
 
+        },
+        overloads: {
+            "ContainsKey(TKey)": "containsKey",
+            "TryGetValue(TKey, TValue)": "tryGetValue"
         }
     }; });
     /*System.Collections.ObjectModel.ReadOnlyDictionary$2 end.*/

@@ -17,6 +17,9 @@
             /*System.Reflection.AssemblyName.toString end.*/
 
 
+        },
+        overloads: {
+            "ToString()": "toString"
         }
     });
     /*System.Reflection.AssemblyName end.*/

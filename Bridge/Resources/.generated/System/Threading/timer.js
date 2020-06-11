@@ -170,6 +170,11 @@
             /*System.Threading.Timer.Dispose end.*/
 
 
+        },
+        overloads: {
+            "Change(TimeSpan, TimeSpan)": "Change$2",
+            "Change(UInt32, UInt32)": "Change$3",
+            "Change(long, long)": "Change$1"
         }
     });
     /*System.Threading.Timer end.*/

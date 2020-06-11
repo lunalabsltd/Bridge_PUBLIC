@@ -168,6 +168,9 @@
             /*System.Collections.Generic.Dictionary$2+ValueCollection.System$Collections$Generic$ICollection$1$contains end.*/
 
 
+        },
+        overloads: {
+            "CopyTo(TValue[], int)": "copyTo"
         }
     }; });
     /*System.Collections.Generic.Dictionary$2+ValueCollection end.*/

@@ -137,6 +137,16 @@
             /*System.Collections.Generic.SortedList$2+ValueList.removeAt end.*/
 
 
+        },
+        overloads: {
+            "Add(TValue)": "add",
+            "Clear()": "clear",
+            "Contains(TValue)": "contains",
+            "CopyTo(TValue[], int)": "copyTo",
+            "Insert(int, TValue)": "insert",
+            "IndexOf(TValue)": "indexOf",
+            "Remove(TValue)": "remove",
+            "RemoveAt(int)": "removeAt"
         }
     }; });
     /*System.Collections.Generic.SortedList$2+ValueList end.*/

@@ -240,6 +240,9 @@
             /*System.Collections.Generic.Stack$1.ToArray end.*/
 
 
+        },
+        overloads: {
+            "CopyTo(Array, int)": "copyTo"
         }
     }; });
     /*System.Collections.Generic.Stack$1 end.*/

@@ -366,6 +366,10 @@
             /*System.Collections.BitArray.GetEnumerator end.*/
 
 
+        },
+        overloads: {
+            "CopyTo(Array, int)": "copyTo",
+            "Clone()": "clone"
         }
     });
     /*System.Collections.BitArray end.*/

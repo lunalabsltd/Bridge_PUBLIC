@@ -110,6 +110,13 @@
             /*System.IO.StringWriter.toString end.*/
 
 
+        },
+        overloads: {
+            "Dispose(bool)": "Dispose$1",
+            "Write(char)": "Write$1",
+            "Write(char[], int, int)": "Write$3",
+            "Write(String)": "Write$10",
+            "ToString()": "toString"
         }
     });
     /*System.IO.StringWriter end.*/

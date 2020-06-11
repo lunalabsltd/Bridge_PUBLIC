@@ -184,6 +184,13 @@
             /*System.ValueTuple.toString end.*/
 
             $clone: function (to) { return this; }
+        },
+        overloads: {
+            "Equals(object)": "equals",
+            "Equals(ValueTuple)": "equalsT",
+            "CompareTo(ValueTuple)": "compareTo",
+            "GetHashCode()": "getHashCode",
+            "ToString()": "toString"
         }
     });
     /*System.ValueTuple end.*/
@@ -220,6 +227,9 @@
             "compareTo", ["System$IComparable$1$System$ValueTuple$1$" + Bridge.getTypeAlias(T1) + "$compareTo", "System$IComparable$1$compareTo"]
         ],
         ctors: {
+            init: function () {
+                this.Item1 = Bridge.getDefaultValue(T1);
+            },
             $ctor1: function (item1) {
                 this.$initialize();
                 this.Item1 = item1;
@@ -326,6 +336,13 @@
                 s.Item1 = this.Item1;
                 return s;
             }
+        },
+        overloads: {
+            "Equals(object)": "equals",
+            "Equals(ValueTuple<T1>)": "equalsT",
+            "CompareTo(ValueTuple<T1>)": "compareTo",
+            "GetHashCode()": "getHashCode",
+            "ToString()": "toString"
         }
     }; });
     /*System.ValueTuple$1 end.*/
@@ -365,6 +382,10 @@
             "compareTo", ["System$IComparable$1$System$ValueTuple$2$" + Bridge.getTypeAlias(T1) + "$" + Bridge.getTypeAlias(T2) + "$compareTo", "System$IComparable$1$compareTo"]
         ],
         ctors: {
+            init: function () {
+                this.Item1 = Bridge.getDefaultValue(T1);
+                this.Item2 = Bridge.getDefaultValue(T2);
+            },
             $ctor1: function (item1, item2) {
                 this.$initialize();
                 this.Item1 = item1;
@@ -487,6 +508,13 @@
                 s.Item2 = this.Item2;
                 return s;
             }
+        },
+        overloads: {
+            "Equals(object)": "equals",
+            "Equals(ValueTuple<T1, T2>)": "equalsT",
+            "CompareTo(ValueTuple<T1, T2>)": "compareTo",
+            "GetHashCode()": "getHashCode",
+            "ToString()": "toString"
         }
     }; });
     /*System.ValueTuple$2 end.*/
@@ -529,6 +557,11 @@
             "compareTo", ["System$IComparable$1$System$ValueTuple$3$" + Bridge.getTypeAlias(T1) + "$" + Bridge.getTypeAlias(T2) + "$" + Bridge.getTypeAlias(T3) + "$compareTo", "System$IComparable$1$compareTo"]
         ],
         ctors: {
+            init: function () {
+                this.Item1 = Bridge.getDefaultValue(T1);
+                this.Item2 = Bridge.getDefaultValue(T2);
+                this.Item3 = Bridge.getDefaultValue(T3);
+            },
             $ctor1: function (item1, item2, item3) {
                 this.$initialize();
                 this.Item1 = item1;
@@ -663,6 +696,13 @@
                 s.Item3 = this.Item3;
                 return s;
             }
+        },
+        overloads: {
+            "Equals(object)": "equals",
+            "Equals(ValueTuple<T1, T2, T3>)": "equalsT",
+            "CompareTo(ValueTuple<T1, T2, T3>)": "compareTo",
+            "GetHashCode()": "getHashCode",
+            "ToString()": "toString"
         }
     }; });
     /*System.ValueTuple$3 end.*/
@@ -708,6 +748,12 @@
             "compareTo", ["System$IComparable$1$System$ValueTuple$4$" + Bridge.getTypeAlias(T1) + "$" + Bridge.getTypeAlias(T2) + "$" + Bridge.getTypeAlias(T3) + "$" + Bridge.getTypeAlias(T4) + "$compareTo", "System$IComparable$1$compareTo"]
         ],
         ctors: {
+            init: function () {
+                this.Item1 = Bridge.getDefaultValue(T1);
+                this.Item2 = Bridge.getDefaultValue(T2);
+                this.Item3 = Bridge.getDefaultValue(T3);
+                this.Item4 = Bridge.getDefaultValue(T4);
+            },
             $ctor1: function (item1, item2, item3, item4) {
                 this.$initialize();
                 this.Item1 = item1;
@@ -854,6 +900,13 @@
                 s.Item4 = this.Item4;
                 return s;
             }
+        },
+        overloads: {
+            "Equals(object)": "equals",
+            "Equals(ValueTuple<T1, T2, T3, T4>)": "equalsT",
+            "CompareTo(ValueTuple<T1, T2, T3, T4>)": "compareTo",
+            "GetHashCode()": "getHashCode",
+            "ToString()": "toString"
         }
     }; });
     /*System.ValueTuple$4 end.*/
@@ -902,6 +955,13 @@
             "compareTo", ["System$IComparable$1$System$ValueTuple$5$" + Bridge.getTypeAlias(T1) + "$" + Bridge.getTypeAlias(T2) + "$" + Bridge.getTypeAlias(T3) + "$" + Bridge.getTypeAlias(T4) + "$" + Bridge.getTypeAlias(T5) + "$compareTo", "System$IComparable$1$compareTo"]
         ],
         ctors: {
+            init: function () {
+                this.Item1 = Bridge.getDefaultValue(T1);
+                this.Item2 = Bridge.getDefaultValue(T2);
+                this.Item3 = Bridge.getDefaultValue(T3);
+                this.Item4 = Bridge.getDefaultValue(T4);
+                this.Item5 = Bridge.getDefaultValue(T5);
+            },
             $ctor1: function (item1, item2, item3, item4, item5) {
                 this.$initialize();
                 this.Item1 = item1;
@@ -1060,6 +1120,13 @@
                 s.Item5 = this.Item5;
                 return s;
             }
+        },
+        overloads: {
+            "Equals(object)": "equals",
+            "Equals(ValueTuple<T1, T2, T3, T4, T5>)": "equalsT",
+            "CompareTo(ValueTuple<T1, T2, T3, T4, T5>)": "compareTo",
+            "GetHashCode()": "getHashCode",
+            "ToString()": "toString"
         }
     }; });
     /*System.ValueTuple$5 end.*/
@@ -1111,6 +1178,14 @@
             "compareTo", ["System$IComparable$1$System$ValueTuple$6$" + Bridge.getTypeAlias(T1) + "$" + Bridge.getTypeAlias(T2) + "$" + Bridge.getTypeAlias(T3) + "$" + Bridge.getTypeAlias(T4) + "$" + Bridge.getTypeAlias(T5) + "$" + Bridge.getTypeAlias(T6) + "$compareTo", "System$IComparable$1$compareTo"]
         ],
         ctors: {
+            init: function () {
+                this.Item1 = Bridge.getDefaultValue(T1);
+                this.Item2 = Bridge.getDefaultValue(T2);
+                this.Item3 = Bridge.getDefaultValue(T3);
+                this.Item4 = Bridge.getDefaultValue(T4);
+                this.Item5 = Bridge.getDefaultValue(T5);
+                this.Item6 = Bridge.getDefaultValue(T6);
+            },
             $ctor1: function (item1, item2, item3, item4, item5, item6) {
                 this.$initialize();
                 this.Item1 = item1;
@@ -1281,6 +1356,13 @@
                 s.Item6 = this.Item6;
                 return s;
             }
+        },
+        overloads: {
+            "Equals(object)": "equals",
+            "Equals(ValueTuple<T1, T2, T3, T4, T5, T6>)": "equalsT",
+            "CompareTo(ValueTuple<T1, T2, T3, T4, T5, T6>)": "compareTo",
+            "GetHashCode()": "getHashCode",
+            "ToString()": "toString"
         }
     }; });
     /*System.ValueTuple$6 end.*/
@@ -1335,6 +1417,15 @@
             "compareTo", ["System$IComparable$1$System$ValueTuple$7$" + Bridge.getTypeAlias(T1) + "$" + Bridge.getTypeAlias(T2) + "$" + Bridge.getTypeAlias(T3) + "$" + Bridge.getTypeAlias(T4) + "$" + Bridge.getTypeAlias(T5) + "$" + Bridge.getTypeAlias(T6) + "$" + Bridge.getTypeAlias(T7) + "$compareTo", "System$IComparable$1$compareTo"]
         ],
         ctors: {
+            init: function () {
+                this.Item1 = Bridge.getDefaultValue(T1);
+                this.Item2 = Bridge.getDefaultValue(T2);
+                this.Item3 = Bridge.getDefaultValue(T3);
+                this.Item4 = Bridge.getDefaultValue(T4);
+                this.Item5 = Bridge.getDefaultValue(T5);
+                this.Item6 = Bridge.getDefaultValue(T6);
+                this.Item7 = Bridge.getDefaultValue(T7);
+            },
             $ctor1: function (item1, item2, item3, item4, item5, item6, item7) {
                 this.$initialize();
                 this.Item1 = item1;
@@ -1517,6 +1608,13 @@
                 s.Item7 = this.Item7;
                 return s;
             }
+        },
+        overloads: {
+            "Equals(object)": "equals",
+            "Equals(ValueTuple<T1, T2, T3, T4, T5, T6, T7>)": "equalsT",
+            "CompareTo(ValueTuple<T1, T2, T3, T4, T5, T6, T7>)": "compareTo",
+            "GetHashCode()": "getHashCode",
+            "ToString()": "toString"
         }
     }; });
     /*System.ValueTuple$7 end.*/
@@ -1575,6 +1673,16 @@
             "compareTo", ["System$IComparable$1$System$ValueTuple$8$" + Bridge.getTypeAlias(T1) + "$" + Bridge.getTypeAlias(T2) + "$" + Bridge.getTypeAlias(T3) + "$" + Bridge.getTypeAlias(T4) + "$" + Bridge.getTypeAlias(T5) + "$" + Bridge.getTypeAlias(T6) + "$" + Bridge.getTypeAlias(T7) + "$" + Bridge.getTypeAlias(TRest) + "$compareTo", "System$IComparable$1$compareTo"]
         ],
         ctors: {
+            init: function () {
+                this.Item1 = Bridge.getDefaultValue(T1);
+                this.Item2 = Bridge.getDefaultValue(T2);
+                this.Item3 = Bridge.getDefaultValue(T3);
+                this.Item4 = Bridge.getDefaultValue(T4);
+                this.Item5 = Bridge.getDefaultValue(T5);
+                this.Item6 = Bridge.getDefaultValue(T6);
+                this.Item7 = Bridge.getDefaultValue(T7);
+                this.Rest = Bridge.getDefaultValue(TRest);
+            },
             $ctor1: function (item1, item2, item3, item4, item5, item6, item7, rest) {
                 this.$initialize();
                 if (!(Bridge.is(rest, System.ITupleInternal))) {
@@ -1841,6 +1949,13 @@
                 s.Rest = this.Rest;
                 return s;
             }
+        },
+        overloads: {
+            "Equals(object)": "equals",
+            "Equals(ValueTuple<T1, T2, T3, T4, T5, T6, T7, TRest>)": "equalsT",
+            "CompareTo(ValueTuple<T1, T2, T3, T4, T5, T6, T7, TRest>)": "compareTo",
+            "GetHashCode()": "getHashCode",
+            "ToString()": "toString"
         }
     }; });
     /*System.ValueTuple$8 end.*/

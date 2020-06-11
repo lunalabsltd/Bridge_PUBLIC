@@ -78,6 +78,12 @@
             /*System.Collections.Generic.SortedSetEqualityComparer$1.getHashCode end.*/
 
 
+        },
+        overloads: {
+            "Equals(SortedSet<T>, SortedSet<T>)": "equals2",
+            "Equals(Object)": "equals",
+            "GetHashCode(SortedSet<T>)": "getHashCode2",
+            "GetHashCode()": "getHashCode"
         }
     }; });
     /*System.Collections.Generic.SortedSetEqualityComparer$1 end.*/

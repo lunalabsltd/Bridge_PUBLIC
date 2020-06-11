@@ -30,6 +30,9 @@
             /*System.FormattableString.toString end.*/
 
 
+        },
+        overloads: {
+            "ToString()": "toString"
         }
     });
     /*System.FormattableString end.*/

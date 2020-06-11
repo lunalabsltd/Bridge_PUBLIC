@@ -305,6 +305,14 @@
             /*System.IO.StreamWriter.Write$10 end.*/
 
 
+        },
+        overloads: {
+            "Dispose(bool)": "Dispose$1",
+            "Flush(bool, bool)": "Flush$1",
+            "Write(char)": "Write$1",
+            "Write(char[])": "Write$2",
+            "Write(char[], int, int)": "Write$3",
+            "Write(String)": "Write$10"
         }
     });
     /*System.IO.StreamWriter end.*/

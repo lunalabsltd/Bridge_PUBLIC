@@ -70,6 +70,9 @@
             /*System.Security.SecurityException.toString end.*/
 
 
+        },
+        overloads: {
+            "ToString()": "toString"
         }
     });
     /*System.Security.SecurityException end.*/

@@ -89,6 +89,13 @@
             /*System.OrdinalComparer.getHashCode end.*/
 
 
+        },
+        overloads: {
+            "Compare(string, string)": "compare",
+            "Equals(string, string)": "equals2",
+            "Equals(Object)": "equals",
+            "GetHashCode(string)": "getHashCode2",
+            "GetHashCode()": "getHashCode"
         }
     });
     /*System.OrdinalComparer end.*/

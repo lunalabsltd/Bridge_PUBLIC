@@ -13,6 +13,10 @@
             value: Bridge.getDefaultValue(TValue)
         },
         ctors: {
+            init: function () {
+                this.key = Bridge.getDefaultValue(TKey);
+                this.value = Bridge.getDefaultValue(TValue);
+            },
             ctor: function () {
                 this.$initialize();
             }

@@ -346,6 +346,23 @@
             /*System.Reflection.Module.toString end.*/
 
 
+        },
+        overloads: {
+            "GetCustomAttributes(Type, bool)": "GetCustomAttributes$1",
+            "GetMethod(string, Type[])": "GetMethod$2",
+            "GetMethod(string, BindingFlags, Binder, CallingConventions, Type[], ParameterModifier[])": "GetMethod$1",
+            "GetMethods(BindingFlags)": "GetMethods$1",
+            "GetField(string, BindingFlags)": "GetField$1",
+            "GetFields(BindingFlags)": "GetFields$1",
+            "GetType(string, bool)": "GetType$1",
+            "GetType(string, bool, bool)": "GetType$2",
+            "ResolveField(int, Type[], Type[])": "ResolveField$1",
+            "ResolveMember(int, Type[], Type[])": "ResolveMember$1",
+            "ResolveMethod(int, Type[], Type[])": "ResolveMethod$1",
+            "ResolveType(int, Type[], Type[])": "ResolveType$1",
+            "Equals(object)": "equals",
+            "GetHashCode()": "getHashCode",
+            "ToString()": "toString"
         }
     });
     /*System.Reflection.Module end.*/

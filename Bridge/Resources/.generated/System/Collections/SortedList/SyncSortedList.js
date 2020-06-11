@@ -252,6 +252,14 @@
             /*System.Collections.SortedList+SyncSortedList.TrimToSize end.*/
 
 
+        },
+        overloads: {
+            "Add(Object, Object)": "add",
+            "Clear()": "clear",
+            "Clone()": "clone",
+            "Contains(Object)": "contains",
+            "CopyTo(Array, int)": "copyTo",
+            "Remove(Object)": "remove"
         }
     });
     /*System.Collections.SortedList+SyncSortedList end.*/

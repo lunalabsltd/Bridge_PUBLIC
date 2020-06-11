@@ -8,6 +8,9 @@
             Right: null
         },
         ctors: {
+            init: function () {
+                this.Item = Bridge.getDefaultValue(T);
+            },
             ctor: function (item) {
                 this.$initialize();
                 this.Item = item;

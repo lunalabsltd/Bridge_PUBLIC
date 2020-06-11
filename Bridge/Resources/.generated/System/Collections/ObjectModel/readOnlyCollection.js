@@ -249,6 +249,11 @@
             /*System.Collections.ObjectModel.ReadOnlyCollection$1.System$Collections$IList$removeAt end.*/
 
 
+        },
+        overloads: {
+            "Contains(T)": "contains",
+            "CopyTo(T[], int)": "copyTo",
+            "IndexOf(T)": "indexOf"
         }
     }; });
     /*System.Collections.ObjectModel.ReadOnlyCollection$1 end.*/

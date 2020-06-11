@@ -62,6 +62,10 @@
             /*System.Collections.BitArray+BitArrayEnumeratorSimple.reset end.*/
 
 
+        },
+        overloads: {
+            "MoveNext()": "moveNext",
+            "Reset()": "reset"
         }
     });
     /*System.Collections.BitArray+BitArrayEnumeratorSimple end.*/

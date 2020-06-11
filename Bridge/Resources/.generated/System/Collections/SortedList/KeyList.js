@@ -130,6 +130,16 @@
             /*System.Collections.SortedList+KeyList.removeAt end.*/
 
 
+        },
+        overloads: {
+            "Add(Object)": "add",
+            "Clear()": "clear",
+            "Contains(Object)": "contains",
+            "CopyTo(Array, int)": "copyTo",
+            "Insert(int, Object)": "insert",
+            "IndexOf(Object)": "indexOf",
+            "Remove(Object)": "remove",
+            "RemoveAt(int)": "removeAt"
         }
     });
     /*System.Collections.SortedList+KeyList end.*/

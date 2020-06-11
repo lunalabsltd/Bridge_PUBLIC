@@ -416,6 +416,14 @@
             /*System.Guid.toJSON end.*/
 
             $clone: function (to) { return this; }
+        },
+        overloads: {
+            "GetHashCode()": "getHashCode",
+            "Equals(Object)": "equals",
+            "Equals(Guid)": "equalsT",
+            "CompareTo(Guid)": "compareTo",
+            "ToString()": "toString",
+            "ToString(string, IFormatProvider)": "format"
         }
     });
     /*System.Guid end.*/

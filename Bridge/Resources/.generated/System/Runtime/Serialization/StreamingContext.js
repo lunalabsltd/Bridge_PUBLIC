@@ -58,6 +58,10 @@
                 s._state = this._state;
                 return s;
             }
+        },
+        overloads: {
+            "Equals(object)": "equals",
+            "GetHashCode()": "getHashCode"
         }
     });
     /*System.Runtime.Serialization.StreamingContext end.*/

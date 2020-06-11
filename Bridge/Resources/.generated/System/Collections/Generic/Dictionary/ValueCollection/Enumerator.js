@@ -35,6 +35,9 @@
             "Current", ["System$Collections$Generic$IEnumerator$1$" + Bridge.getTypeAlias(TValue) + "$Current$1", "System$Collections$Generic$IEnumerator$1$Current$1"]
         ],
         ctors: {
+            init: function () {
+                this.currentValue = Bridge.getDefaultValue(TValue);
+            },
             $ctor1: function (dictionary) {
                 this.$initialize();
                 this.dictionary = dictionary;
@@ -100,6 +103,9 @@
                 s.currentValue = this.currentValue;
                 return s;
             }
+        },
+        overloads: {
+            "MoveNext()": "moveNext"
         }
     }; });
     /*System.Collections.Generic.Dictionary$2+ValueCollection+Enumerator end.*/

@@ -168,6 +168,9 @@
             /*System.Collections.Generic.Dictionary$2+KeyCollection.System$Collections$Generic$ICollection$1$remove end.*/
 
 
+        },
+        overloads: {
+            "CopyTo(TKey[], int)": "copyTo"
         }
     }; });
     /*System.Collections.Generic.Dictionary$2+KeyCollection end.*/

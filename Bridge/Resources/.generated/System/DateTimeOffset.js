@@ -545,6 +545,17 @@
                 s.m_offsetMinutes = this.m_offsetMinutes;
                 return s;
             }
+        },
+        overloads: {
+            "CompareTo(DateTimeOffset)": "compareTo",
+            "Equals(Object)": "equals",
+            "Equals(DateTimeOffset)": "equalsT",
+            "GetHashCode()": "getHashCode",
+            "Subtract(DateTimeOffset)": "Subtract$1",
+            "ToLocalTime(bool)": "ToLocalTime$1",
+            "ToString()": "toString",
+            "ToString(String)": "ToString$1",
+            "ToString(String, IFormatProvider)": "format"
         }
     });
     /*System.DateTimeOffset end.*/

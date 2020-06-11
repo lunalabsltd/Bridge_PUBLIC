@@ -463,6 +463,16 @@
             /*System.Collections.Generic.LinkedList$1.ValidateNode end.*/
 
 
+        },
+        overloads: {
+            "AddAfter(LinkedListNode<T>, LinkedListNode<T>)": "AddAfter$1",
+            "AddBefore(LinkedListNode<T>, LinkedListNode<T>)": "AddBefore$1",
+            "AddFirst(LinkedListNode<T>)": "AddFirst$1",
+            "AddLast(LinkedListNode<T>)": "AddLast$1",
+            "Clear()": "clear",
+            "Contains(T)": "contains",
+            "CopyTo(T[], int)": "copyTo",
+            "Remove(T)": "remove"
         }
     }; });
     /*System.Collections.Generic.LinkedList$1 end.*/

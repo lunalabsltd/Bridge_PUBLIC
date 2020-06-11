@@ -116,6 +116,9 @@
             /*System.IO.Stream+NullStream.SetLength end.*/
 
 
+        },
+        overloads: {
+            "Dispose(bool)": "Dispose$1"
         }
     });
     /*System.IO.Stream+NullStream end.*/

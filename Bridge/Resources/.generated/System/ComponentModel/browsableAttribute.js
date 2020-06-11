@@ -55,6 +55,10 @@
             /*System.ComponentModel.BrowsableAttribute.getHashCode end.*/
 
 
+        },
+        overloads: {
+            "Equals(object)": "equals",
+            "GetHashCode()": "getHashCode"
         }
     });
     /*System.ComponentModel.BrowsableAttribute end.*/

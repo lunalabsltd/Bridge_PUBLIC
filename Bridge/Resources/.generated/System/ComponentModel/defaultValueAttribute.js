@@ -131,6 +131,11 @@
             /*System.ComponentModel.DefaultValueAttribute.setValue end.*/
 
 
+        },
+        overloads: {
+            "Equals(object)": "equals",
+            "GetHashCode()": "getHashCode",
+            "SetValue(object)": "setValue"
         }
     });
     /*System.ComponentModel.DefaultValueAttribute end.*/

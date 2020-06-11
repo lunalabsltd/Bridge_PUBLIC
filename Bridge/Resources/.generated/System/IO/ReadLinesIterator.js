@@ -72,6 +72,10 @@
             /*System.IO.ReadLinesIterator.Dispose$1 end.*/
 
 
+        },
+        overloads: {
+            "MoveNext()": "moveNext",
+            "Dispose(bool)": "Dispose$1"
         }
     });
     /*System.IO.ReadLinesIterator end.*/

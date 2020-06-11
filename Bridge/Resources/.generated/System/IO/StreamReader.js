@@ -556,6 +556,12 @@
             /*System.IO.StreamReader.ReadLine end.*/
 
 
+        },
+        overloads: {
+            "Init(Stream, Encoding, bool, int, bool)": "Init$1",
+            "Dispose(bool)": "Dispose$1",
+            "Read(char[], int, int)": "Read$1",
+            "ReadBuffer(char[], int, int, bool)": "ReadBuffer$1"
         }
     });
     /*System.IO.StreamReader end.*/

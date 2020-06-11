@@ -949,6 +949,30 @@
             /*System.Collections.Generic.List$1.toJSON end.*/
 
 
+        },
+        overloads: {
+            "Add(T)": "add",
+            "BinarySearch(int, int, T, IComparer<T>)": "BinarySearch$2",
+            "BinarySearch(T, IComparer<T>)": "BinarySearch$1",
+            "Clear()": "clear",
+            "Contains(T)": "contains",
+            "CopyTo(int, T[], int, int)": "CopyTo$1",
+            "CopyTo(T[], int)": "copyTo",
+            "FindIndex(Predicate<T>)": "FindIndex$2",
+            "FindIndex(int, Predicate<T>)": "FindIndex$1",
+            "FindLastIndex(Predicate<T>)": "FindLastIndex$2",
+            "FindLastIndex(int, Predicate<T>)": "FindLastIndex$1",
+            "IndexOf(T)": "indexOf",
+            "IndexOf(T, int, int)": "IndexOf$1",
+            "Insert(int, T)": "insert",
+            "LastIndexOf(T, int)": "LastIndexOf$1",
+            "LastIndexOf(T, int, int)": "LastIndexOf$2",
+            "Remove(T)": "remove",
+            "RemoveAt(int)": "removeAt",
+            "Reverse(int, int)": "Reverse$1",
+            "Sort(IComparer<T>)": "Sort$1",
+            "Sort(int, int, IComparer<T>)": "Sort$3",
+            "Sort(Comparison<T>)": "Sort$2"
         }
     }; });
     /*System.Collections.Generic.List$1 end.*/

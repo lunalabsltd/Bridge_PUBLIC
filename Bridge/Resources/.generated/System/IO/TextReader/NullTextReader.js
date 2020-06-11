@@ -22,6 +22,9 @@
             /*System.IO.TextReader+NullTextReader.ReadLine end.*/
 
 
+        },
+        overloads: {
+            "Read(char[], int, int)": "Read$1"
         }
     });
     /*System.IO.TextReader+NullTextReader end.*/

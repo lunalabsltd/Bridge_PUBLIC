@@ -78,6 +78,10 @@
             "Current", ["System$Collections$Generic$IEnumerator$1$System$Collections$Generic$KeyValuePair$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$Current$1", "System$Collections$Generic$IEnumerator$1$Current$1"]
         ],
         ctors: {
+            init: function () {
+                this.key = Bridge.getDefaultValue(TKey);
+                this.value = Bridge.getDefaultValue(TValue);
+            },
             $ctor1: function (sortedList, getEnumeratorRetType) {
                 this.$initialize();
                 this._sortedList = sortedList;
@@ -153,6 +157,9 @@
                 s.getEnumeratorRetType = this.getEnumeratorRetType;
                 return s;
             }
+        },
+        overloads: {
+            "MoveNext()": "moveNext"
         }
     }; });
     /*System.Collections.Generic.SortedList$2+Enumerator end.*/

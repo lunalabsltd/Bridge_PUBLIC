@@ -461,6 +461,16 @@
             /*System.Version.toString$1 end.*/
 
 
+        },
+        overloads: {
+            "Clone()": "clone",
+            "CompareTo(Object)": "compareTo$1",
+            "CompareTo(Version)": "compareTo",
+            "Equals(Object)": "equals",
+            "Equals(Version)": "equalsT",
+            "GetHashCode()": "getHashCode",
+            "ToString()": "toString",
+            "ToString(int)": "toString$1"
         }
     });
     /*System.Version end.*/

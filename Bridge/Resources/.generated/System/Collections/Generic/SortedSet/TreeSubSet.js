@@ -14,6 +14,10 @@
             "clear", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$clear"
         ],
         ctors: {
+            init: function () {
+                this.min = Bridge.getDefaultValue(T);
+                this.max = Bridge.getDefaultValue(T);
+            },
             $ctor1: function (Underlying, Min, Max, lowerBoundActive, upperBoundActive) {
                 this.$initialize();
                 System.Collections.Generic.SortedSet$1(T).$ctor1.call(this, Underlying.Comparer);
@@ -272,6 +276,11 @@
             /*System.Collections.Generic.SortedSet$1+TreeSubSet.IntersectWithEnumerable end.*/
 
 
+        },
+        overloads: {
+            "Contains(T)": "contains",
+            "Clear()": "clear",
+            "InOrderTreeWalk(TreeWalkPredicate<T>, Boolean)": "InOrderTreeWalk$1"
         }
     }; });
 

@@ -177,6 +177,9 @@
                 s.reverse = this.reverse;
                 return s;
             }
+        },
+        overloads: {
+            "MoveNext()": "moveNext"
         }
     }; });
     /*System.Collections.Generic.SortedSet$1+Enumerator end.*/

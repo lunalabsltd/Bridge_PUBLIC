@@ -320,6 +320,9 @@
             /*System.Collections.Generic.Queue$1.TrimExcess end.*/
 
 
+        },
+        overloads: {
+            "CopyTo(Array, int)": "copyTo"
         }
     }; });
     /*System.Collections.Generic.Queue$1 end.*/

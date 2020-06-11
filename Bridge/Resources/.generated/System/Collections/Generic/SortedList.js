@@ -623,6 +623,13 @@
             /*System.Collections.Generic.SortedList$2.TrimExcess end.*/
 
 
+        },
+        overloads: {
+            "Add(TKey, TValue)": "add",
+            "Remove(TKey)": "remove",
+            "Clear()": "clear",
+            "ContainsKey(TKey)": "containsKey",
+            "TryGetValue(TKey, TValue)": "tryGetValue"
         }
     }; });
     /*System.Collections.Generic.SortedList$2 end.*/

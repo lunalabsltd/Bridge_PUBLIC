@@ -429,6 +429,10 @@
             /*System.Globalization.Calendar.ToFourDigitYear end.*/
 
 
+        },
+        overloads: {
+            "Clone()": "clone",
+            "GetLeapMonth(int, int)": "GetLeapMonth$1"
         }
     });
     /*System.Globalization.Calendar end.*/

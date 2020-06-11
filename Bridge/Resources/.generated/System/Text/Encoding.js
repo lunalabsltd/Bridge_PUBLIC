@@ -281,6 +281,23 @@
             /*System.Text.Encoding.GetString$1 end.*/
 
 
+        },
+        overloads: {
+            "Encode(char[], int, int)": "Encode$1",
+            "Encode(string, int, int, byte[], int)": "Encode$5",
+            "Encode(char[], int, int, byte[], int)": "Encode$4",
+            "Encode(string)": "Encode$2",
+            "Decode(byte[], int, int)": "Decode$1",
+            "GetByteCount(string)": "GetByteCount$2",
+            "GetByteCount(char[], int, int)": "GetByteCount$1",
+            "GetBytes(char[], int, int)": "GetBytes$1",
+            "GetBytes(char[], int, int, byte[], int)": "GetBytes$3",
+            "GetBytes(string)": "GetBytes$2",
+            "GetBytes(string, int, int, byte[], int)": "GetBytes$4",
+            "GetCharCount(byte[], int, int)": "GetCharCount$1",
+            "GetChars(byte[], int, int)": "GetChars$1",
+            "GetChars(byte[], int, int, char[], int)": "GetChars$2",
+            "GetString(byte[], int, int)": "GetString$1"
         }
     });
     /*System.Text.Encoding end.*/

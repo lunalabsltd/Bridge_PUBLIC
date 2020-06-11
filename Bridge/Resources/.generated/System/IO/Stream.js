@@ -274,6 +274,10 @@
             /*System.IO.Stream.BlockingBeginWrite end.*/
 
 
+        },
+        overloads: {
+            "CopyTo(Stream, int)": "CopyTo$1",
+            "Dispose(bool)": "Dispose$1"
         }
     });
     /*System.IO.Stream end.*/

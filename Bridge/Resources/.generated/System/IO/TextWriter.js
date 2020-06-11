@@ -365,6 +365,42 @@
             /*System.IO.TextWriter.WriteLine$15 end.*/
 
 
+        },
+        overloads: {
+            "Dispose(bool)": "Dispose$1",
+            "Write(char)": "Write$1",
+            "Write(char[])": "Write$2",
+            "Write(char[], int, int)": "Write$3",
+            "Write(int)": "Write$6",
+            "Write(uint)": "Write$15",
+            "Write(long)": "Write$7",
+            "Write(ulong)": "Write$16",
+            "Write(float)": "Write$9",
+            "Write(double)": "Write$5",
+            "Write(Decimal)": "Write$4",
+            "Write(String)": "Write$10",
+            "Write(Object)": "Write$8",
+            "Write(String, Object)": "Write$11",
+            "Write(String, Object, Object)": "Write$12",
+            "Write(String, Object, Object, Object)": "Write$13",
+            "Write(String, Object[])": "Write$14",
+            "WriteLine(char)": "WriteLine$2",
+            "WriteLine(char[])": "WriteLine$3",
+            "WriteLine(char[], int, int)": "WriteLine$4",
+            "WriteLine(bool)": "WriteLine$1",
+            "WriteLine(int)": "WriteLine$7",
+            "WriteLine(uint)": "WriteLine$16",
+            "WriteLine(long)": "WriteLine$8",
+            "WriteLine(ulong)": "WriteLine$17",
+            "WriteLine(float)": "WriteLine$10",
+            "WriteLine(double)": "WriteLine$6",
+            "WriteLine(decimal)": "WriteLine$5",
+            "WriteLine(String)": "WriteLine$11",
+            "WriteLine(Object)": "WriteLine$9",
+            "WriteLine(String, Object)": "WriteLine$12",
+            "WriteLine(String, Object, Object)": "WriteLine$13",
+            "WriteLine(String, Object, Object, Object)": "WriteLine$14",
+            "WriteLine(String, Object[])": "WriteLine$15"
         }
     });
     /*System.IO.TextWriter end.*/

@@ -130,6 +130,9 @@
             /*System.DBNull.System$IConvertible$ToType end.*/
 
 
+        },
+        overloads: {
+            "ToString()": "toString"
         }
     });
     /*System.DBNull end.*/

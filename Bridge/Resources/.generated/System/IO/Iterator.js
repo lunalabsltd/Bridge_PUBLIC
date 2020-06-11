@@ -23,6 +23,9 @@
             "GetEnumerator", ["System$Collections$Generic$IEnumerable$1$" + Bridge.getTypeAlias(TSource) + "$GetEnumerator", "System$Collections$Generic$IEnumerable$1$GetEnumerator"]
         ],
         ctors: {
+            init: function () {
+                this.current = Bridge.getDefaultValue(TSource);
+            },
             ctor: function () {
                 this.$initialize();
             }
@@ -67,6 +70,9 @@
             /*System.IO.Iterator$1.System$Collections$IEnumerator$reset end.*/
 
 
+        },
+        overloads: {
+            "Dispose(bool)": "Dispose$1"
         }
     }; });
     /*System.IO.Iterator$1 end.*/

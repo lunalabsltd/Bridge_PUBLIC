@@ -513,6 +513,9 @@
             /*System.IO.MemoryStream.WriteTo end.*/
 
 
+        },
+        overloads: {
+            "Dispose(bool)": "Dispose$1"
         }
     });
     /*System.IO.MemoryStream end.*/

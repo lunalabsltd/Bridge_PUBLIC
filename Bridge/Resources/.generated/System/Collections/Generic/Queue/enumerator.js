@@ -38,6 +38,9 @@
             "Current", ["System$Collections$Generic$IEnumerator$1$" + Bridge.getTypeAlias(T) + "$Current$1", "System$Collections$Generic$IEnumerator$1$Current$1"]
         ],
         ctors: {
+            init: function () {
+                this._currentElement = Bridge.getDefaultValue(T);
+            },
             $ctor1: function (q) {
                 this.$initialize();
                 this._q = q;
@@ -108,6 +111,9 @@
                 s._currentElement = this._currentElement;
                 return s;
             }
+        },
+        overloads: {
+            "MoveNext()": "moveNext"
         }
     }; });
     /*System.Collections.Generic.Queue$1+Enumerator end.*/

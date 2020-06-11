@@ -23,6 +23,10 @@
             }
         },
         ctors: {
+            init: function () {
+                this.key$1 = Bridge.getDefaultValue(TKey);
+                this.value$1 = Bridge.getDefaultValue(TValue);
+            },
             $ctor1: function (key, value) {
                 this.$initialize();
                 this.key$1 = key;
@@ -67,6 +71,9 @@
                 return Bridge.equals(this.key$1, o.key$1) && Bridge.equals(this.value$1, o.value$1);
             },
             $clone: function (to) { return this; }
+        },
+        overloads: {
+            "ToString()": "toString"
         }
     }; });
     /*System.Collections.Generic.KeyValuePair$2 end.*/

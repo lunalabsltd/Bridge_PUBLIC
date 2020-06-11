@@ -34,6 +34,9 @@
             "Current", ["System$Collections$Generic$IEnumerator$1$" + Bridge.getTypeAlias(T) + "$Current$1", "System$Collections$Generic$IEnumerator$1$Current$1"]
         ],
         ctors: {
+            init: function () {
+                this._current = Bridge.getDefaultValue(T);
+            },
             $ctor1: function (set) {
                 this.$initialize();
                 this._set = set;
@@ -98,6 +101,9 @@
                 s._current = this._current;
                 return s;
             }
+        },
+        overloads: {
+            "MoveNext()": "moveNext"
         }
     }; });
     /*System.Collections.Generic.HashSet$1+Enumerator end.*/

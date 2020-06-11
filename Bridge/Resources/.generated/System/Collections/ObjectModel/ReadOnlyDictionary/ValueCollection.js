@@ -98,6 +98,9 @@
             /*System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection.System$Collections$IEnumerable$GetEnumerator end.*/
 
 
+        },
+        overloads: {
+            "CopyTo(TValue[], int)": "copyTo"
         }
     }; });
     /*System.Collections.ObjectModel.ReadOnlyDictionary$2+ValueCollection end.*/

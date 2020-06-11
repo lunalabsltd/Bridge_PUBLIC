@@ -18,6 +18,9 @@
             /*System.Reflection.TargetSite.toString end.*/
 
 
+        },
+        overloads: {
+            "ToString()": "toString"
         }
     });
     /*System.Reflection.TargetSite end.*/

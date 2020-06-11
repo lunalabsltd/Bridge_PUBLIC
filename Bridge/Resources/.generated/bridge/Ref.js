@@ -50,6 +50,10 @@
             /*Bridge.Ref$1.valueOf end.*/
 
 
+        },
+        overloads: {
+            "ToString()": "toString",
+            "ValueOf()": "valueOf"
         }
     }; });
     /*Bridge.Ref$1 end.*/

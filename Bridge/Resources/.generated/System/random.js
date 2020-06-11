@@ -160,6 +160,10 @@
             /*System.Random.NextBytes end.*/
 
 
+        },
+        overloads: {
+            "Next(int, int)": "Next$2",
+            "Next(int)": "Next$1"
         }
     });
     /*System.Random end.*/

@@ -284,6 +284,26 @@
             /*System.IO.BinaryWriter.Write7BitEncodedInt end.*/
 
 
+        },
+        overloads: {
+            "Dispose(bool)": "Dispose$1",
+            "Write(byte)": "Write$1",
+            "Write(sbyte)": "Write$12",
+            "Write(byte[])": "Write$2",
+            "Write(byte[], int, int)": "Write$3",
+            "Write(char)": "Write$4",
+            "Write(char[])": "Write$5",
+            "Write(char[], int, int)": "Write$6",
+            "Write(double)": "Write$8",
+            "Write(decimal)": "Write$7",
+            "Write(short)": "Write$9",
+            "Write(ushort)": "Write$15",
+            "Write(int)": "Write$10",
+            "Write(uint)": "Write$16",
+            "Write(long)": "Write$11",
+            "Write(ulong)": "Write$17",
+            "Write(float)": "Write$13",
+            "Write(String)": "Write$14"
         }
     });
     /*System.IO.BinaryWriter end.*/

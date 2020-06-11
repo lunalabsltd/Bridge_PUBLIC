@@ -569,6 +569,11 @@
             /*System.IO.BufferedStream.SetLength end.*/
 
 
+        },
+        overloads: {
+            "Dispose(bool)": "Dispose$1",
+            "ReadFromBuffer(Byte[], Int32, Int32, Exception)": "ReadFromBuffer$1",
+            "WriteToBuffer(Byte[], Int32, Int32, Exception)": "WriteToBuffer$1"
         }
     });
     /*System.IO.BufferedStream end.*/

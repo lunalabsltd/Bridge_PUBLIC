@@ -41,6 +41,9 @@
             /*System.Globalization.TextInfo.VerifyWritable end.*/
 
 
+        },
+        overloads: {
+            "Clone()": "clone"
         }
     });
     /*System.Globalization.TextInfo end.*/

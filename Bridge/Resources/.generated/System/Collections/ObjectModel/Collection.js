@@ -376,6 +376,16 @@
             /*System.Collections.ObjectModel.Collection$1.SetItem end.*/
 
 
+        },
+        overloads: {
+            "Add(T)": "add",
+            "Clear()": "clear",
+            "CopyTo(T[], int)": "copyTo",
+            "Contains(T)": "contains",
+            "IndexOf(T)": "indexOf",
+            "Insert(int, T)": "insert",
+            "Remove(T)": "remove",
+            "RemoveAt(int)": "removeAt"
         }
     }; });
     /*System.Collections.ObjectModel.Collection$1 end.*/

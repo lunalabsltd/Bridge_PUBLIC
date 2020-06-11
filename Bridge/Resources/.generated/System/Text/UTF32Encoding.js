@@ -228,6 +228,10 @@
             /*System.Text.UTF32Encoding.GetMaxCharCount end.*/
 
 
+        },
+        overloads: {
+            "Encode(string, byte[], int, int)": "Encode$3",
+            "Decode(byte[], int, int, char[], int)": "Decode$2"
         }
     });
     /*System.Text.UTF32Encoding end.*/

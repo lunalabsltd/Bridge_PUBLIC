@@ -929,6 +929,24 @@
             /*System.Collections.Generic.HashSet$1.InternalGetHashCode end.*/
 
 
+        },
+        overloads: {
+            "Add(T)": "add",
+            "Clear()": "clear",
+            "Contains(T)": "contains",
+            "CopyTo(T[], int)": "copyTo",
+            "CopyTo(T[], int, int)": "CopyTo$1",
+            "Remove(T)": "remove",
+            "UnionWith(IEnumerable<T>)": "unionWith",
+            "IntersectWith(IEnumerable<T>)": "intersectWith",
+            "ExceptWith(IEnumerable<T>)": "exceptWith",
+            "SymmetricExceptWith(IEnumerable<T>)": "symmetricExceptWith",
+            "IsSubsetOf(IEnumerable<T>)": "isSubsetOf",
+            "IsProperSubsetOf(IEnumerable<T>)": "isProperSubsetOf",
+            "IsSupersetOf(IEnumerable<T>)": "isSupersetOf",
+            "IsProperSupersetOf(IEnumerable<T>)": "isProperSupersetOf",
+            "Overlaps(IEnumerable<T>)": "overlaps",
+            "SetEquals(IEnumerable<T>)": "setEquals"
         }
     }; });
     /*System.Collections.Generic.HashSet$1 end.*/

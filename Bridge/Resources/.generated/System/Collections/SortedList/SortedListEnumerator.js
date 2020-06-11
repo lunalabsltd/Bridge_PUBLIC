@@ -140,6 +140,11 @@
             /*System.Collections.SortedList+SortedListEnumerator.reset end.*/
 
 
+        },
+        overloads: {
+            "Clone()": "clone",
+            "MoveNext()": "moveNext",
+            "Reset()": "reset"
         }
     });
     /*System.Collections.SortedList+SortedListEnumerator end.*/

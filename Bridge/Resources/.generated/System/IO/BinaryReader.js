@@ -629,6 +629,11 @@
             /*System.IO.BinaryReader.Read7BitEncodedInt end.*/
 
 
+        },
+        overloads: {
+            "Dispose(bool)": "Dispose$1",
+            "Read(char[], int, int)": "Read$2",
+            "Read(byte[], int, int)": "Read$1"
         }
     });
     /*System.IO.BinaryReader end.*/

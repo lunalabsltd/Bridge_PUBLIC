@@ -99,6 +99,9 @@
                 s.failureArgumentName = this.failureArgumentName;
                 return s;
             }
+        },
+        overloads: {
+            "SetFailure(ParseFailureKind, string, object, string)": "SetFailure$1"
         }
     });
     /*System.DateTimeResult end.*/

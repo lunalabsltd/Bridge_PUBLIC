@@ -75,6 +75,11 @@
             /*System.CharEnumerator.reset end.*/
 
 
+        },
+        overloads: {
+            "Clone()": "clone",
+            "MoveNext()": "moveNext",
+            "Reset()": "reset"
         }
     });
     /*System.CharEnumerator end.*/

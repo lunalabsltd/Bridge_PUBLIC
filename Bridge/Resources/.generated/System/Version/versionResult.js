@@ -93,6 +93,12 @@
                 s.m_canThrow = this.m_canThrow;
                 return s;
             }
+        },
+        overloads: {
+            "Init(string, bool)": "init",
+            "SetFailure(ParseFailureKind)": "setFailure",
+            "SetFailure(ParseFailureKind, string)": "setFailure$1",
+            "GetVersionParseException()": "getVersionParseException"
         }
     });
     /*System.Version+VersionResult end.*/

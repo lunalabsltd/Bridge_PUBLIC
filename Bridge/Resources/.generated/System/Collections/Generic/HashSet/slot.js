@@ -12,6 +12,9 @@
             next: 0
         },
         ctors: {
+            init: function () {
+                this.value = Bridge.getDefaultValue(T);
+            },
             ctor: function () {
                 this.$initialize();
             }

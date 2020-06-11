@@ -87,6 +87,10 @@
             /*System.Runtime.Serialization.SerializationInfoEnumerator.reset end.*/
 
 
+        },
+        overloads: {
+            "MoveNext()": "moveNext",
+            "Reset()": "reset"
         }
     });
     /*System.Runtime.Serialization.SerializationInfoEnumerator end.*/

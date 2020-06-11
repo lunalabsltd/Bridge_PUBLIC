@@ -145,6 +145,16 @@
             /*System.Collections.Generic.SortedList$2+KeyList.removeAt end.*/
 
 
+        },
+        overloads: {
+            "Add(TKey)": "add",
+            "Clear()": "clear",
+            "Contains(TKey)": "contains",
+            "CopyTo(TKey[], int)": "copyTo",
+            "Insert(int, TKey)": "insert",
+            "IndexOf(TKey)": "indexOf",
+            "Remove(TKey)": "remove",
+            "RemoveAt(int)": "removeAt"
         }
     }; });
     /*System.Collections.Generic.SortedList$2+KeyList end.*/

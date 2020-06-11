@@ -149,6 +149,9 @@
                 s.getEnumeratorRetType = this.getEnumeratorRetType;
                 return s;
             }
+        },
+        overloads: {
+            "MoveNext()": "moveNext"
         }
     }; });
     /*System.Collections.Generic.Dictionary$2+Enumerator end.*/
