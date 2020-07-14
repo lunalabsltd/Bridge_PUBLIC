@@ -80,7 +80,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             int i = 3;
             this.RefMethod(ref i);
 
-            return i; ;
+            return i; 
         }
 
         public int this[int index]
