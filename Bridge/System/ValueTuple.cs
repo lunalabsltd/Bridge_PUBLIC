@@ -1,6 +1,13 @@
 ﻿using Bridge;
 using System.Collections;
 using System.Collections.Generic;
+// Rider
+// Disabling warning : IEqualityComparer.Equals ambiguity reference check for comments
+#pragma warning disable CS1574
+
+// Rider
+// Disabling warning : Disabling Field 's_t5Comparer' is never assigned to, in ValueTuple
+ #pragma warning disable CS0649
 
 namespace System
 {
