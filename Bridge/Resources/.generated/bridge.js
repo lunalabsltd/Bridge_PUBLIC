@@ -18403,7 +18403,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
 
                     if (!mineEnded || !theirsEnded) {
-                        var remaining = (mineEnded ? theirs : mine);
+                        var remaining = (mineEnded ? theirs.$clone() : mine.$clone());
                         do {
                             merged[System.Array.index(Bridge.identity(c, ((c = (c + 1) | 0))), merged)] = remaining.Current;
                         } while (remaining.moveNext());

@@ -499,6 +499,14 @@ namespace Bridge.Contract
                     return;
                 }
 
+                // case for using structs in
+                // struct = (condition)? structA : structB
+                // forcing require clone for true and false results
+                if (conversion.Equals(Conversion.IdentityConversion) && expression.Parent is ConditionalExpression)
+                {
+                    writeClone = true;
+                }
+
                 if (writeClone)
                 {
                     Helpers.WriteClone(block, insertPosition, nullable);
