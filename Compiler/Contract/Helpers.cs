@@ -500,9 +500,10 @@ namespace Bridge.Contract
                 }
 
                 // case for using structs in
-                // struct = (condition)? structA : structB
+                // struct = (condition)? A : B
                 // forcing require clone for true and false results
-                if (conversion.Equals(Conversion.IdentityConversion) && expression.Parent is ConditionalExpression)
+                // struct = (condition) ? A.clone : B.clone
+                if (expression.Parent is ConditionalExpression)
                 {
                     writeClone = true;
                 }

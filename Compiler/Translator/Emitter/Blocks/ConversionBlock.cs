@@ -484,6 +484,13 @@ namespace Bridge.Translator
                             block.Write(JS.Types.SYSTEM_NULLABLE + "." + JS.Funcs.Math.LIFT1 + "(\"" + JS.Funcs.CLONE + "\", ");
                             block.AfterOutput2 += ")";
                         }
+                        else if (expression is ConditionalExpression)
+                        {
+                            // Conditional expression struct = (condition) ? A : B
+                            // does not need aditional .clone at the end
+                            // instead we handle it inside helper this way
+                            // struct = (condition) ? A.clone : B.clone
+                        }
                         else
                         {
                             block.AfterOutput2 += "." + JS.Funcs.CLONE + "()";
