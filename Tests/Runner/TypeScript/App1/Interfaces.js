@@ -145,6 +145,9 @@ Bridge.assembly("TypeScriptTest", function ($asm, globals) {
             /*Interfaces.Class6.SetProperty end.*/
 
 
+        },
+        overloads: {
+            "SetProperty(string)": "SetProperty$1"
         }
     });
     /*Interfaces.Class6 end.*/

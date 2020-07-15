@@ -450,6 +450,9 @@ Bridge.assembly("TypeScriptTest", function ($asm, globals) {
             /*TypeScript.Issues.N3061+Car.equalsT$1 end.*/
 
 
+        },
+        overloads: {
+            "Equals(IVehicle)": "equalsT$1"
         }
     });
     /*TypeScript.Issues.N3061+Car end.*/
@@ -467,6 +470,9 @@ Bridge.assembly("TypeScriptTest", function ($asm, globals) {
             /*TypeScript.Issues.N3061+Tractor.equalsT end.*/
 
 
+        },
+        overloads: {
+            "Equals(Car)": "equalsT"
         }
     });
     /*TypeScript.Issues.N3061+Tractor end.*/
@@ -484,6 +490,9 @@ Bridge.assembly("TypeScriptTest", function ($asm, globals) {
             /*TypeScript.Issues.N3061+Truck.equalsT end.*/
 
 
+        },
+        overloads: {
+            "Equals(Car)": "equalsT"
         }
     });
     /*TypeScript.Issues.N3061+Truck end.*/
