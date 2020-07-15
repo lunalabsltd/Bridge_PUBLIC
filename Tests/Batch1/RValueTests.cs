@@ -192,7 +192,13 @@ namespace Bridge.ClientTest.Batch1
             }
             public T FooAuto { get; set; }
             public T Foo;
+
+// Rider compiler check
+// The private field 'field' is assigned but its value is never used
+// FooWithInitializer
+#pragma warning disable CS0414
             public T FooWithInitializer = default(T);
+#pragma warning restore CS0414
             public MyStruct Boo;
             public T GetFoo()
             {

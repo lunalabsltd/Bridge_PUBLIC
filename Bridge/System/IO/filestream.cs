@@ -22,6 +22,11 @@
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
+// Rider compiler check
+// Field 'field' is never assigned to, and will always have its default value 'value'
+// For readonly values in FileReader clas
+#pragma warning disable CS0649
+
 /*
  * FileStream supports different modes of accessing the disk - async mode
  * and sync mode.  They are two completely different codepaths in the
