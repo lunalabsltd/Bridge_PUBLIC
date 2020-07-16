@@ -12,7 +12,10 @@
 **
 =============================================================================*/
 
-
+// Rider compiler check
+// The given expression is never of the provided ('type') type
+// For if (array is int[]) CopyTo methods
+#pragma warning disable CS0184
 namespace System.Collections
 {
     using System;

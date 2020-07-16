@@ -1,7 +1,7 @@
 /**
  * Bridge Test library - a common classes shared across all test Batches
  * @version 1.2.3.4
- * @compiler Bridge.NET 17.9.3-luna
+ * @compiler Bridge.NET 17.9.8-luna
  */
 Bridge.assembly("Bridge.ClientTestHelper", function ($asm, globals) {
     "use strict";

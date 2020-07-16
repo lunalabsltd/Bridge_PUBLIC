@@ -1,5 +1,5 @@
 /**
- * @version   : 17.9.8-luna - Bridge.NET
+ * @version   : 17.9.9-luna - Bridge.NET
  * @author    : Object.NET, Inc. http://bridge.net/
  * @copyright : Copyright 2008-2020 Object.NET, Inc. http://object.net/
  * @license   : See license.txt and https://github.com/bridgedotnet/Bridge/blob/master/LICENSE.md
@@ -3544,8 +3544,8 @@
 
     /*Bridge.Utils.SystemAssemblyVersion start.*/
     Bridge.init(function () {
-        Bridge.SystemAssembly.version = "17.9.8-luna";
-        Bridge.SystemAssembly.compiler = "17.9.8-luna";
+        Bridge.SystemAssembly.version = "17.9.9-luna";
+        Bridge.SystemAssembly.compiler = "17.9.9-luna";
     });
 
     Bridge.define("Bridge.Utils.SystemAssemblyVersion");
@@ -18403,7 +18403,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
                     }
 
                     if (!mineEnded || !theirsEnded) {
-                        var remaining = (mineEnded ? theirs : mine);
+                        var remaining = (mineEnded ? theirs.$clone() : mine.$clone());
                         do {
                             merged[System.Array.index(Bridge.identity(c, ((c = (c + 1) | 0))), merged)] = remaining.Current;
                         } while (remaining.moveNext());

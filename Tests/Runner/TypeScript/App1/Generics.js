@@ -7,6 +7,9 @@ Bridge.assembly("TypeScriptTest", function ($asm, globals) {
             Instance: Bridge.getDefaultValue(T)
         },
         ctors: {
+            init: function () {
+                this.Instance = Bridge.getDefaultValue(T);
+            },
             ctor: function (instance) {
                 this.$initialize();
                 this.Instance = instance;
@@ -38,6 +41,9 @@ Bridge.assembly("TypeScriptTest", function ($asm, globals) {
             Instance: Bridge.getDefaultValue(T)
         },
         ctors: {
+            init: function () {
+                this.Instance = Bridge.getDefaultValue(T);
+            },
             ctor: function (instance) {
                 this.$initialize();
                 this.Instance = instance;
@@ -61,6 +67,9 @@ Bridge.assembly("TypeScriptTest", function ($asm, globals) {
             Instance: Bridge.getDefaultValue(T)
         },
         ctors: {
+            init: function () {
+                this.Instance = Bridge.getDefaultValue(T);
+            },
             ctor: function (instance) {
                 this.$initialize();
                 this.Instance = instance;
@@ -84,6 +93,9 @@ Bridge.assembly("TypeScriptTest", function ($asm, globals) {
             Instance: Bridge.getDefaultValue(T)
         },
         ctors: {
+            init: function () {
+                this.Instance = Bridge.getDefaultValue(T);
+            },
             ctor: function (instance) {
                 this.$initialize();
                 this.Instance = instance;
@@ -151,6 +163,10 @@ Bridge.assembly("TypeScriptTest", function ($asm, globals) {
             InstanceK: Bridge.getDefaultValue(K)
         },
         ctors: {
+            init: function () {
+                this.InstanceT = Bridge.getDefaultValue(T);
+                this.InstanceK = Bridge.getDefaultValue(K);
+            },
             ctor: function () {
                 this.$initialize();
             },
@@ -184,6 +200,9 @@ Bridge.assembly("TypeScriptTest", function ($asm, globals) {
             Instance: Bridge.getDefaultValue(T)
         },
         ctors: {
+            init: function () {
+                this.Instance = Bridge.getDefaultValue(T);
+            },
             ctor: function (instance) {
                 this.$initialize();
                 this.Instance = instance;
@@ -207,6 +226,9 @@ Bridge.assembly("TypeScriptTest", function ($asm, globals) {
             Instance: Bridge.getDefaultValue(T)
         },
         ctors: {
+            init: function () {
+                this.Instance = Bridge.getDefaultValue(T);
+            },
             ctor: function (instance) {
                 this.$initialize();
                 this.Instance = instance;
@@ -239,6 +261,9 @@ Bridge.assembly("TypeScriptTest", function ($asm, globals) {
             Instance: Bridge.getDefaultValue(T)
         },
         ctors: {
+            init: function () {
+                this.Instance = Bridge.getDefaultValue(T);
+            },
             ctor: function (instance) {
                 this.$initialize();
                 this.Instance = instance;

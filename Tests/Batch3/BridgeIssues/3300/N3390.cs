@@ -1,6 +1,9 @@
 using Bridge.Test.NUnit;
 using System.Collections.Generic;
 
+// Compile warning for unreachable code
+#pragma warning disable 162
+
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
     [TestFixture(TestNameFormat = "#3390 - {0}")]

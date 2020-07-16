@@ -143,6 +143,9 @@ Bridge.assembly("TypeScriptTest", function ($asm, globals) {
             /*Classes.Dog.Move$1 end.*/
 
 
+        },
+        overloads: {
+            "Move()": "Move$1"
         }
     });
     /*Classes.Dog end.*/
