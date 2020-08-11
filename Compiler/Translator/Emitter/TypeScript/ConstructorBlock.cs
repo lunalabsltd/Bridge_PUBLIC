@@ -50,10 +50,6 @@ namespace Bridge.Translator.TypeScript
             else if (this.TypeInfo.Ctors.Count == 1)
             {
                 var ctor = this.TypeInfo.Ctors.First();
-                if (!ctor.HasModifier(Modifiers.Public))
-                {
-                    return;
-                }
 
                 XmlToJsDoc.EmitComment(this, ctor);
 
@@ -68,11 +64,6 @@ namespace Bridge.Translator.TypeScript
             {
                 foreach (var ctor in this.TypeInfo.Ctors)
                 {
-                    if (!ctor.HasModifier(Modifiers.Public))
-                    {
-                        continue;
-                    }
-
                     if (ctor.Parameters.Count == 0)
                     {
                         XmlToJsDoc.EmitComment(this, ctor);

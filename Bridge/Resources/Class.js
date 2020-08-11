@@ -65,6 +65,17 @@
                 }
             }
 
+            // Re-apply all parent aliases one more time. This is needed to support parent aliases that are not defined
+            // in prototype, such as aliases in implemented interfaces.
+            for ( let i = 0; i < aliases.length; i++ ) {
+                const obj = statics ? scope : prototype;
+                const alias = aliases[ i ];
+                if ( !alias.descriptor || alias.alias in obj ) {
+                    continue;
+                }
+                Object.defineProperty( obj, alias.alias, { get: alias.descriptor.get, set: alias.descriptor.set, configurable: true } );
+            }
+
             if (config.alias) {
                 for (var i = 0; i < config.alias.length; i++) {
                     (function (obj, name, alias, cls) {
@@ -86,6 +97,8 @@
                             if (descriptor != null) {
                                 Object.defineProperty(obj, alias, descriptor);
                                 aliases.push({ alias: alias, descriptor: descriptor });
+                                // In order to support aliasing aliases
+                                descriptors.push( { ...descriptor, name: alias } );
                             } else {
                                 var m;
 
@@ -183,8 +196,11 @@
                     write = true;
                 }
 
-                if (obj.alias) {
-                    config.alias = obj.alias;
+                // Support mixing primary and alternative schemes. This is needed for minifier that cannot
+                // be bothered to check which scheme is actually used and is always using the primary one.
+                const alias = obj.alias || ( obj.$config && obj.$config.alias );
+                if ( alias ) {
+                    config.alias = alias;
                     write = true;
                 }
 
@@ -270,6 +286,9 @@
 
                     args = Array.prototype.slice.call(arguments);
                     obj = prop.apply(null, args);
+                    // Callback defined by minifier for generic classes, allows to register proper aliases after
+                    // class was instantiated with the generic params.
+                    prop.$aliasInit && prop.$aliasInit( obj );
                     c = Bridge.define(Bridge.Class.genericName(className, args), obj, true, { fn: fn, args: args });
 
                     if (!Bridge.Class.staticInitAllow && !Bridge.Class.queueIsBlocked) {
