@@ -626,7 +626,18 @@ namespace Bridge.Contract
             if (string.IsNullOrEmpty(inline))
                 return false;
 
-            return true;
+            var binaryExpression = expression.Parent as BinaryOperatorExpression;
+            if (binaryExpression == null)
+                return false;
+
+            int index = expression == binaryExpression.Left ? 0 : 1;
+            if ( index >= method.Parameters.Count )
+                return false;
+            var parameter = method.Parameters[index];
+
+            const string pureAttributeName = "Bridge.RefAttribute";
+            var pureAttribute = emitter.Validator.GetAttribute(parameter.Attributes, pureAttributeName);
+            return pureAttribute != null;
         }
 
         public static bool IsRef(Expression expression, IEmitter emitter)
