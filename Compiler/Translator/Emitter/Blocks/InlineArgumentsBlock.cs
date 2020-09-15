@@ -88,16 +88,6 @@ namespace Bridge.Translator
             if (Regex.IsMatch(key, "^\\d+$"))
             {
                 var list = new List<Expression>();
-
-                // // Checking for case where method template requires more then the method provides
-                // // [Template("CustomMethod( {0}, {1}, {2} )")]
-                // // public void MethodWithTemplate([Ref] Color a, [Ref] CustomStruct b)
-                // var result = expressions.Skip(int.Parse(key)).FirstOrDefault();
-                // if (result != null)
-                // {
-                //     list.Add(result.Expression);
-                // }
-
                 list.Add(expressions.Skip(int.Parse(key)).First().Expression);
                 return list;
             }
@@ -533,15 +523,6 @@ namespace Bridge.Translator
                     if (Regex.IsMatch(key, "^\\d+$"))
                     {
                         var index = int.Parse(key);
-
-                        // // Checking for case where method template has more  placeholders {0}, then actual method
-                        // if(index < this.Method.Parameters.Count) {
-                        //     key = this.Method.Parameters[index].Name;
-                        // }
-                        // else
-                        // {
-                        //     return string.Empty;
-                        // }
                         key = this.Method.Parameters[index].Name;
                     }
 
