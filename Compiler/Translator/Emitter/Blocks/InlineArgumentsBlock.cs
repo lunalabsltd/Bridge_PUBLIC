@@ -88,9 +88,7 @@ namespace Bridge.Translator
             if (Regex.IsMatch(key, "^\\d+$"))
             {
                 var list = new List<Expression>();
-
                 list.Add(expressions.Skip(int.Parse(key)).First().Expression);
-
                 return list;
             }
 

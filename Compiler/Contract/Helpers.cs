@@ -499,6 +499,11 @@ namespace Bridge.Contract
                     return;
                 }
 
+                if (Helpers.IsTemplateDefined(expression, block.Emitter))
+                {
+                    return;
+                }
+
                 // case for using structs in
                 // struct = (condition)? A : B
                 // forcing require clone for true and false results
@@ -605,33 +610,70 @@ namespace Bridge.Contract
             return false;
         }
 
+        public static bool IsTemplateDefined(Expression expression, IEmitter emitter)
+        {
+            if (expression?.Parent == null)
+                return false;
+            var orr = emitter.Resolver.ResolveNode(expression.Parent, emitter) as OperatorResolveResult;
+            if (orr == null)
+                return false;
+
+            var method = orr.UserDefinedOperatorMethod;
+
+            if (method == null) return false;
+
+            var inline = emitter.GetInline(method);
+            if (string.IsNullOrEmpty(inline))
+                return false;
+
+            var binaryExpression = expression.Parent as BinaryOperatorExpression;
+            if (binaryExpression == null)
+                return false;
+
+            int index = expression == binaryExpression.Left ? 0 : 1;
+            if ( index >= method.Parameters.Count )
+                return false;
+            var parameter = method.Parameters[index];
+
+            const string pureAttributeName = "Bridge.RefAttribute";
+            var pureAttribute = emitter.Validator.GetAttribute(parameter.Attributes, pureAttributeName);
+            return pureAttribute != null;
+        }
+
         public static bool IsRef(Expression expression, IEmitter emitter)
         {
+            InvocationResolveResult irr = null;
+            AstNodeCollection<Expression> arguments = null;
+
             var invocationExpression = expression?.Parent as InvocationExpression;
-
-            if (invocationExpression == null || invocationExpression.Target == expression)
+            if (invocationExpression != null)
             {
-                return false;
+                irr = emitter.Resolver.ResolveNode(invocationExpression, emitter) as InvocationResolveResult;
+                arguments = invocationExpression.Arguments;
             }
 
-            var irr = emitter.Resolver.ResolveNode(invocationExpression, emitter) as InvocationResolveResult;
-
-            if (irr == null)
+            var creationExpression = expression?.Parent as ObjectCreateExpression;
+            if (creationExpression != null)
             {
-                return false;
+                irr = emitter.Resolver.ResolveNode(creationExpression, emitter) as InvocationResolveResult;
+                arguments = creationExpression.Arguments;
             }
+
+            var variableInitalizer = expression?.Parent as VariableInitializer;
+            if (variableInitalizer != null)
+                irr = emitter.Resolver.ResolveNode(variableInitalizer, emitter) as InvocationResolveResult;
+
+            if (irr == null) return false;
 
             const string pureAttributeName = "Bridge.RefAttribute";
             var pureAttribute = emitter.Validator.GetAttribute(irr.Member.Attributes, pureAttributeName);
 
-            if (pureAttribute != null)
-            {
-                return true;
-            }
+            if (pureAttribute != null) return true;
+
+            if (arguments == null) return false;
 
             var i = 0;
-
-            foreach (var argument in invocationExpression.Arguments)
+            foreach (var argument in arguments)
             {
                 if (argument != expression)
                 {
@@ -641,10 +683,7 @@ namespace Bridge.Contract
 
                 pureAttribute = emitter.Validator.GetAttribute(irr.Member.Parameters[i].Attributes, pureAttributeName);
 
-                if (pureAttribute != null)
-                {
-                    return true;
-                }
+                if (pureAttribute != null) return true;
             }
 
             return false;
