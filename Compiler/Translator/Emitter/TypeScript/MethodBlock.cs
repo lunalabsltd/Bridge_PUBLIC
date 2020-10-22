@@ -44,11 +44,6 @@ namespace Bridge.Translator.TypeScript
 
         private void WriteSignature(MethodDeclaration methodDeclaration, OverloadsCollection overloads, bool ignoreInterface, bool isInterface)
         {
-            if (!isInterface && !methodDeclaration.HasModifier(Modifiers.Public))
-            {
-                return;
-            }
-
             string name = overloads.GetOverloadName(ignoreInterface);
             this.Write(name);
 

@@ -31,11 +31,6 @@ namespace Bridge.Translator.TypeScript
             var memberResult = this.Emitter.Resolver.ResolveNode(propertyDeclaration, this.Emitter) as MemberResolveResult;
             var isInterface = memberResult != null && memberResult.Member.DeclaringType.Kind == TypeKind.Interface;
 
-            if (!isInterface && !propertyDeclaration.HasModifier(Modifiers.Public))
-            {
-                return;
-            }
-
             if (memberResult != null &&
                 propertyDeclaration.Getter.IsNull && propertyDeclaration.Setter.IsNull)
             {
