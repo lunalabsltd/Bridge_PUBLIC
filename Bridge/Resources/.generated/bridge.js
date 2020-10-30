@@ -1,5 +1,5 @@
 /**
- * @version   : 17.9.10-luna - Bridge.NET
+ * @version   : 17.9.11-luna - Bridge.NET
  * @author    : Object.NET, Inc. http://bridge.net/
  * @copyright : Copyright 2008-2020 Object.NET, Inc. http://object.net/
  * @license   : See license.txt and https://github.com/bridgedotnet/Bridge/blob/master/LICENSE.md
@@ -3563,8 +3563,8 @@
 
     /*Bridge.Utils.SystemAssemblyVersion start.*/
     Bridge.init(function () {
-        Bridge.SystemAssembly.version = "17.9.10-luna";
-        Bridge.SystemAssembly.compiler = "17.9.10-luna";
+        Bridge.SystemAssembly.version = "17.9.11-luna";
+        Bridge.SystemAssembly.compiler = "17.9.11-luna";
     });
 
     Bridge.define("Bridge.Utils.SystemAssemblyVersion");
@@ -5671,6 +5671,16 @@ Bridge.define("System.ValueType", {
                     return String.fromCharCode(v);
                 v -= 65536;
                 return String.fromCharCode(v / 1024 + 55296) + String.fromCharCode(v % 1024 + 56320);
+            },
+
+            convertToUtf32: function (highSurrogate, lowSurrogate) {
+                if (!System.Char.isHighSurrogate(highSurrogate)) {
+                    throw new System.ArgumentOutOfRangeException(name({highSurrogate}), System.Environment.GetResourceString("ArgumentOutOfRange_InvalidHighSurrogate"));
+                }
+                if (!System.Char.isLowSurrogate(lowSurrogate)) {
+                    throw new System.ArgumentOutOfRangeException(name({lowSurrogate}), System.Environment.GetResourceString("ArgumentOutOfRange_InvalidLowSurrogate"));
+                }
+                return (highSurrogate - '\ud800') * 0x400 + (lowSurrogate - '\udc00') + 0x10000;
             }
         }
     });
