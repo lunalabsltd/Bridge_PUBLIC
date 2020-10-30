@@ -140,5 +140,10 @@ namespace System
 
         [Bridge.Template("System.Char.convertFromUtf32({utf32})")]
         public static extern string ConvertFromUtf32(int utf32);
+
+
+        [Bridge.Template( "System.Char.convertToUtf32({highSurrogate}, {lowSurrogate})" )]
+        public static extern int ConvertToUtf32( char highSurrogate, char lowSurrogate );
+
     }
 }

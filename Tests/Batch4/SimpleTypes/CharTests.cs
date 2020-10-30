@@ -21,6 +21,12 @@ namespace Bridge.ClientTest.Batch4.SimpleTypes
             Assert.AreEqual('z', char.ConvertFromUtf32(122), "char.ConvertFromUtf32() works corretly.");
         }
 
+        [Test]
+        public void ConvertToUtf32Tests()
+        {
+            Assert.AreEqual( 128512, char.ConvertToUtf32( '\uD83D', '\uDE00' ), "char.ConvertToUtf32 works correctly" );
+        }
+
         // #SPI
         //[Test]
         //public void TryParseWorks_SPI_1630()

@@ -177,6 +177,16 @@
                     return String.fromCharCode(v);
                 v -= 65536;
                 return String.fromCharCode(v / 1024 + 55296) + String.fromCharCode(v % 1024 + 56320);
+            },
+
+            convertToUtf32: function (highSurrogate, lowSurrogate) {
+                if (!System.Char.isHighSurrogate(highSurrogate)) {
+                    throw new System.ArgumentOutOfRangeException(name({highSurrogate}), System.Environment.GetResourceString("ArgumentOutOfRange_InvalidHighSurrogate"));
+                }
+                if (!System.Char.isLowSurrogate(lowSurrogate)) {
+                    throw new System.ArgumentOutOfRangeException(name({lowSurrogate}), System.Environment.GetResourceString("ArgumentOutOfRange_InvalidLowSurrogate"));
+                }
+                return (highSurrogate - '\ud800') * 0x400 + (lowSurrogate - '\udc00') + 0x10000;
             }
         }
     });
