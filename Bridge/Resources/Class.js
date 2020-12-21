@@ -98,7 +98,7 @@
                                 Object.defineProperty(obj, alias, descriptor);
                                 aliases.push({ alias: alias, descriptor: descriptor });
                                 // In order to support aliasing aliases
-                                descriptors.push( { ...descriptor, name: alias } );
+                                descriptors.push( Object.assign( {}, descriptor, { name: alias } ) );
                             } else {
                                 var m;
 
