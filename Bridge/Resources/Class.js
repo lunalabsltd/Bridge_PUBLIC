@@ -591,7 +591,15 @@
                     } else {
                         if (prop.$kind === "enum" && !Bridge.isFunction(member) && name.charAt(0) !== "$") {
                             Class.$names = Class.$names || [];
-                            Class.$names.push({name: name, value: member});
+                            const aliases = ( prototype.statics && prototype.statics.$config && prototype.statics.$config.alias ) || [];
+                            const currentNamePosition = aliases.indexOf( name );
+                            if ( currentNamePosition !== -1 ) {
+                                // The only case when enum's name was aliased is when file was minified by troll.js
+                                // We should use the original name in this case to properly support System.Enum.toString and similar methods
+                                Class.$names.push({name: aliases[ currentNamePosition + 1 ] || name, value: member});
+                            } else {
+                                Class.$names.push({name: name, value: member});
+                            }
                         }
 
                         Class[name] = member;
