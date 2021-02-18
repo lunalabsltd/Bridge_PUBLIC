@@ -9,7 +9,6 @@ namespace System
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Bridge.External]
-    [Bridge.NonScriptable]
     public struct IntPtr
     {
     }
