@@ -364,6 +364,7 @@
         "Resources/.generated/System/Text/UTF8Encoding.js",
 
         "Resources/.generated/System/Threading/Timer.js",
+        "Resources/.generated/System/Threading/Thread.js",
 
         "Resources/.generated/System/Threading/Tasks/TaskCanceledException.js",
         "Resources/.generated/System/Threading/Tasks/TaskSchedulerException.js",

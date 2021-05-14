@@ -1,20 +1,50 @@
-using System.ComponentModel;
-
 namespace System.Threading
 {
     [Bridge.Convention(Member = Bridge.ConventionMember.Field | Bridge.ConventionMember.Method, Notation = Bridge.Notation.CamelCase)]
-    [Bridge.External]
     public sealed class Thread
     {
-        //public extern int ManagedThreadId
-        //{
-        //    get;
-        //}
+        public extern int ManagedThreadId
+        {
+            get;
+        }
 
-        //public static extern Thread CurrentThread
-        //{
-        //    get;
-        //}
+        public static extern Thread CurrentThread
+        {
+            get;
+        }
+
+        public delegate void ParameterizedThreadStart( object obj );
+        public delegate void ThreadStart();
+
+        public Thread(ThreadStart start)
+        {
+            Bridge.Script.Write("console.warn('Not implemented in Luna');");
+        }
+
+        public Thread(ThreadStart start, int maxStackSize)
+        {
+            Bridge.Script.Write("console.warn('Not implemented in Luna');");
+        }
+
+        public Thread(ParameterizedThreadStart start)
+        {
+            Bridge.Script.Write("console.warn('Not implemented in Luna');");
+        }
+
+        public Thread(ParameterizedThreadStart start, int maxStackSize)
+        {
+            Bridge.Script.Write("console.warn('Not implemented in Luna');");
+        }
+
+        public void Start()
+        {
+            Bridge.Script.Write("console.warn('Not implemented in Luna');");
+        }
+
+        public void Start(object parameter)
+        {
+            Bridge.Script.Write("console.warn('Not implemented in Luna');");
+        }
 
         /// <summary>
         /// Suspends the current thread for the specified number of milliseconds.
