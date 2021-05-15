@@ -177,6 +177,13 @@
                 },
                 /*System.IO.File.ReadLines$1:static end.*/
 
+                /*System.IO.File.OpenWrite:static start.*/
+                OpenWrite: function (path) {
+                    console.warn('Not implemented in Luna');
+                    return null;
+                },
+                /*System.IO.File.OpenWrite:static end.*/
+
 
             }
         }

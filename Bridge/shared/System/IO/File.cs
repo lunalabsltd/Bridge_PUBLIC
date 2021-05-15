@@ -173,5 +173,11 @@ namespace System.IO
 
             return ReadLinesIterator.CreateIterator(path, encoding);
         }
+
+        public static FileStream OpenWrite(string path)
+        {
+            Bridge.Script.Write("console.warn('Not implemented in Luna');");
+            return null;
+        }
     }
 }
