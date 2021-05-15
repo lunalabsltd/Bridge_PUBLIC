@@ -1,5 +1,21 @@
     /*System.Threading.Thread start.*/
     Bridge.define("System.Threading.Thread", {
+        statics: {
+            props: {
+                CurrentThread: {
+                    get: function () {
+                        return null;
+                    }
+                }
+            }
+        },
+        props: {
+            ManagedThreadId: {
+                get: function () {
+                    return 0;
+                }
+            }
+        },
         ctors: {
             $ctor2: function (start) {
                 this.$initialize();

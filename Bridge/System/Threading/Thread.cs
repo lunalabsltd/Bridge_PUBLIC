@@ -3,15 +3,9 @@ namespace System.Threading
     [Bridge.Convention(Member = Bridge.ConventionMember.Field | Bridge.ConventionMember.Method, Notation = Bridge.Notation.CamelCase)]
     public sealed class Thread
     {
-        public extern int ManagedThreadId
-        {
-            get;
-        }
+        public int ManagedThreadId => 0;
 
-        public static extern Thread CurrentThread
-        {
-            get;
-        }
+        public static Thread CurrentThread => null;
 
         public delegate void ParameterizedThreadStart( object obj );
         public delegate void ThreadStart();
