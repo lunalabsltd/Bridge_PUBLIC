@@ -1,0 +1,17 @@
+{
+  "name": "luna-toolbox",
+  "version": "0.1.0",
+  "description": "Simple CLI utility to build Luna Bridge",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "luna-toolbox": "./index.js"
+  },
+  "author": "Luna Labs",
+  "dependencies": {
+    "arg": "^5.0.0",
+    "inquirer": "^8.1.1"
+  }
+}
