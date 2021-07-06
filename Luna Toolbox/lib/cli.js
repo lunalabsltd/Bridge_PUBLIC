@@ -1,5 +1,7 @@
 const arg = require('arg');
 const inquirer = require('inquirer');
+const build = require('./build');
+const test = require('./test');
 
 function parseArgs(rawArgs) {
 	const args = arg({
@@ -19,12 +21,6 @@ function parseArgs(rawArgs) {
 
 async function promptForMissingOptions(options) {
 	const questions = [];
-	questions.push({
-		type: 'confirm',
-		name: 'git',
-		message: 'Initialize a git repository?',
-		default: false,
-	});
 	const answers = await inquirer.prompt(questions);
 
 	return options;
@@ -34,6 +30,14 @@ async function cli(args) {
 	let options = parseArgs(args);
 	options = await promptForMissingOptions(options);
 	console.log(options);
+
+	if (options.build) {
+		build();
+	}
+
+	if (options.test) {
+		test();
+	}
 }
 
 module.exports = { cli };

@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "luna-toolbox": "./index.js"
+    "luna-toolbox": "./index.js",
+    "ltb": "./index.js"
   },
   "author": "Luna Labs",
   "dependencies": {
