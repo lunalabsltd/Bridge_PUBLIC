@@ -1,6 +1,6 @@
 const chalk = require('chalk');
 const path = require('path');
-const build = require('./jobs/build');
+const { build } = require('./jobs/build');
 const optionsParser = require('./optionsParser');
 
 function getTasks(options) {

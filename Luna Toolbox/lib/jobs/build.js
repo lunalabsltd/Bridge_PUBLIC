@@ -7,34 +7,29 @@ const { Paths, Regex } = require('../defines');
 
 function build(options) {
 	return new Listr([
-		// {
-		// 	title: 'Update Bridge version',
-		// 	task: async () => await updateBridgeVersion(options)
-		// },
+		{
+			title: 'Update Bridge version',
+			task: async () => await updateBridgeVersion(options)
+		},
 		{
 			title: 'Compile Bridge',
 			task: async () => await compile(options)
 		},
 		{
-			title: 'Update Luna dependencies',
-			task: () => new Listr([
-				{
-					title: 'Clean up old dependencies',
-					task: async () => await cleanUpOldDependencies()
-				},
-				{
-					title: 'Copy nuget packages',
-					task: async () => await copyNugets()
-				},
-				// {
-				// 	title: 'Update Bridge version in configs',
-				// 	task: async () => await updateVersionInConfigs(options)
-				// },
-				{
-					title: 'Resolve Nuget dependencies',
-					task: async () => await resolveNugets(options)
-				}
-			])
+			title: 'Clean up old dependencies',
+			task: async () => await cleanUpOldDependencies()
+		},
+		{
+			title: 'Copy nuget packages',
+			task: async () => await copyNugets()
+		},
+		{
+			title: 'Update Bridge version in configs',
+			task: async () => await updateVersionInConfigs(options)
+		},
+		{
+			title: 'Resolve Nuget dependencies',
+			task: async () => await resolveNugets(options)
 		}
 	]);
 }
@@ -69,7 +64,6 @@ async function getDirsToDelete(sourcePath) {
 }
 
 async function cleanUpOldDependencies() {
-	debugger;
 	const dirsToDelete = await getDirsToDelete(Paths.LunaCompiler.lunaCompilerPackages);
 	const deletePromises = dirsToDelete.map(
 		dir => fs.promises.rmdir(
@@ -80,7 +74,6 @@ async function cleanUpOldDependencies() {
 }
 
 async function copyNugets() {
-	debugger;
 	const copyPromises = [];
 	for (let i = 0; i < Paths.Bridge.compiledNugetDirs.length; i++) {
 		const dir = Paths.Bridge.compiledNugetDirs[i];
@@ -117,4 +110,4 @@ async function resolveNugets(options) {
 	await execa('nuget', ['restore', Paths.LunaCompiler.lunaCompilerSln], { cwd: options.targetDirectory });
 }
 
-module.exports = build;
+module.exports = { build };

@@ -23,7 +23,7 @@ const Paths = Object.freeze({
 			'./pipeline/templates/LunaCompiler/Scripts/Scripts.csproj',
 			'./pipeline/templates/LunaCompiler/Scripts/Scripts.csproj.template',
 			'./pipeline/templates/LunaCompiler/UnityEngine/UnityEngine.csproj',
-			'./pipeline/templates/LunaCompiler/1.2.1/1.2.1.csproj',
+			'./pipeline/templates/LunaCompiler/Vendor/com.unity.ui/1.2.1/1.2.1.csproj',
 		],
 		nugetConfigs: [
 			'./pipeline/templates/LunaCompiler/Scripts/packages.config',
