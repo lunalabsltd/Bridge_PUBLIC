@@ -1,42 +1,34 @@
-const arg = require('arg');
-const inquirer = require('inquirer');
-const build = require('./build');
-const test = require('./test');
+const chalk = require('chalk');
+const path = require('path');
+const build = require('./jobs/build');
+const optionsParser = require('./optionsParser');
 
-function parseArgs(rawArgs) {
-	const args = arg({
-		'--build': Boolean,
-		'--test': Boolean,
-		'-b': '--build',
-		'-t': '--test'
-	},{
-		argv: rawArgs.slice(2)
-	});
-
-	return {
-		build: args['--build'] || !args['--test'],
-		test: args['--test'] || false,
-	};
+function getTasks(options) {
+	if (options.build) {
+		return build(options);
+	}
 }
 
-async function promptForMissingOptions(options) {
-	const questions = [];
-	const answers = await inquirer.prompt(questions);
-
-	return options;
+function isOutsideLunaFolder() {
+	if (path.basename(process.cwd()) !== 'luna') {
+		throw new Error('Outside luna directory');
+	}
 }
 
 async function cli(args) {
-	let options = parseArgs(args);
-	options = await promptForMissingOptions(options);
-	console.log(options);
+	try {
+		isOutsideLunaFolder();
+		let options = await optionsParser.parse(args);
+		const tasks = getTasks(options);
 
-	if (options.build) {
-		build();
+		await tasks.run();
+
+		console.log('', chalk.green.bold('DONE'));
 	}
-
-	if (options.test) {
-		test();
+	catch (e) {
+		console.log('', chalk.red.bold('ERROR:'));
+		console.log(e.message);
+		process.exit(1);
 	}
 }
 
