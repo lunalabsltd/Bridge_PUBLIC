@@ -24,13 +24,21 @@ function build(options) {
 			task: async () => await copyNugets()
 		},
 		{
-			title: 'Update Bridge version in configs',
+			title: 'Update Bridge version in Luna Compiler',
 			task: async () => await updateVersionInConfigs(options)
 		},
 		{
-			title: 'Resolve Nuget dependencies',
-			task: async () => await resolveNugets(options)
-		}
+			title: 'Update Bridge version in Vendor libs',
+			task: async () => await updateVersionInVendorConfigs(options)
+		},
+		{
+			title: 'Resolve Nuget dependencies for Luna Compiler',
+			task: async () => await resolveNugetsLunaCompiler(options)
+		},
+		{
+			title: 'Resolve Nuget dependencies for Vendor libs',
+			task: async () => await resolveNugetsVendorLibs(options)
+		},
 	]);
 }
 
@@ -98,16 +106,34 @@ async function updateVersionInConfigs(options) {
 	};
 	const configReplaceOptions = {
 		files: Paths.LunaCompiler.nugetConfigs,
-		from : Regex.configVersion,
+		from : Regex.nugetConfigVersion,
 		to: options.bridgeVersion
 	};
 
-	await replace(csprojReplaceOptions);
-	await replace(configReplaceOptions);
+	await Promise.all([replace(csprojReplaceOptions), replace(configReplaceOptions)]);
 }
 
-async function resolveNugets(options) {
+async function updateVersionInVendorConfigs(options) {
+	const csprojReplaceOptions = {
+		files: Paths.Vendor.csprojs,
+		from : Regex.csprojVersion,
+		to: options.bridgeVersion
+	};
+	const configReplaceOptions = {
+		files: Paths.Vendor.nugetConfigs,
+		from : Regex.nugetConfigVersion,
+		to: options.bridgeVersion
+	};
+
+	await Promise.all([replace(csprojReplaceOptions), replace(configReplaceOptions)]);
+}
+
+async function resolveNugetsLunaCompiler(options) {
 	await execa('nuget', ['restore', Paths.LunaCompiler.lunaCompilerSln], { cwd: options.targetDirectory });
+}
+
+async function resolveNugetsVendorLibs(options) {
+	await execa('nuget', ['restore', Paths.Vendor.vendorSln], { cwd: options.targetDirectory });
 }
 
 module.exports = { build };
