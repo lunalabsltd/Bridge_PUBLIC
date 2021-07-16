@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const inquirer = require('inquirer');
 
-// const configPath = `${__dirname}/.config/config.json`;
+const configDirPath = path.resolve(__dirname, '../../.config');
 const configPath = path.resolve(__dirname, '../../.config/config.json');
 
 async function validateConfig() {
@@ -26,6 +26,7 @@ async function validateConfig() {
 async function updateConfig() {
 	const paths = await promptForPaths();
 	const pathsRaw = JSON.stringify(paths);
+	!fs.existsSync(configDirPath) && fs.mkdirSync(configDirPath);
 
 	await fs.promises.writeFile(configPath, pathsRaw, { encoding: 'utf8' });
 }
