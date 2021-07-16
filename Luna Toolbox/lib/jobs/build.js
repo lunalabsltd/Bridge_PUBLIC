@@ -123,7 +123,8 @@ async function updateVersionInConfigs(options) {
 	const csprojReplaceOptions = {
 		files: paths.LunaCompiler.csprojs,
 		from : Regex.csprojVersion,
-		to: options.bridgeVersion
+		to: options.bridgeVersion,
+		allowEmptyPaths: true
 	};
 	const configReplaceOptions = {
 		files: paths.LunaCompiler.packagesConfigs,
