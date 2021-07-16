@@ -4,7 +4,8 @@ const Regex = Object.freeze({
 	csprojVersion: /(?<=packages\\Bridge\.(Core|Min)\.)([a-zA-Z0-9-\.]*)[^\\]/g,
 	nugetConfigVersion: /(?<=id=\"Bridge\.(Min|Core)\" version=\")([a-zA-Z0-9-\.]*)[^\"]/g,
 	assemblyInformationalVersion: /(?<=AssemblyInformationalVersion\(\")([a-zA-Z0-9-\.]*)[^\"]/g,
-	defaultPackageVersion: /(?<=<DefaultPackageVersion>)([a-zA-Z0-9-\.]*)[^\<]/g
+	defaultPackageVersion: /(?<=<DefaultPackageVersion>)([a-zA-Z0-9-\.]*)[^\<]/g,
+	nugetConfigPackagesPath: /(?<=\<add key\=\"Luna\" value\=\")([a-zA-Z0-9-\.\/]*)[^\"]/g
 });
 
 class Paths {
@@ -28,6 +29,7 @@ class Paths {
 			lunaCompiler: path.join(this.lunaPath, 'pipeline/templates/LunaCompiler'),
 			lunaCompilerSln: path.join(this.lunaPath, 'pipeline/templates/LunaCompiler/LunaCompiler.sln'),
 			lunaCompilerPackages: path.join(this.lunaPath, 'pipeline/templates/LunaCompiler/packages'),
+			nugetConfig: path.join(this.lunaPath, 'pipeline/templates/LunaCompiler/nuget.config'),
 			packagesToCleanUp: [ 'Bridge.Core', 'Bridge.Min' ],
 			csprojs: [
 				path.join(this.lunaPath, 'pipeline/templates/LunaCompiler/Scripts/Scripts.csproj'),
@@ -35,7 +37,7 @@ class Paths {
 				path.join(this.lunaPath, 'pipeline/templates/LunaCompiler/UnityEngine/UnityEngine.csproj'),
 				path.join(this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.ui/1.2.1/1.2.1.csproj'),
 			],
-			nugetConfigs: [
+			packagesConfigs: [
 				path.join(this.lunaPath, 'pipeline/templates/LunaCompiler/Scripts/packages.config'),
 				path.join(this.lunaPath, 'pipeline/templates/LunaCompiler/UnityEngine/packages.config'),
 			]
@@ -52,7 +54,7 @@ class Paths {
 				path.join(this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.cinemachine/2.3.4/2.3.4.csproj'),
 				path.join(this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.cinemachine/2.4.0/2.4.0.csproj'),
 			],
-			nugetConfigs: [
+			packagesConfigs: [
 				path.join(this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.cinemachine/2.2.9/packages.config'),
 				path.join(this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.cinemachine/2.3.4/packages.config'),
 				path.join(this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.cinemachine/2.4.0/packages.config'),

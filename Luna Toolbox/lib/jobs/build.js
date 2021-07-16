@@ -63,9 +63,7 @@ async function updateBridgeVersion(options) {
 }
 
 async function compile(options) {
-	await execa('msbuild',
-		[paths.Bridge.bridgeSln, '-property:Configuration=Release'],
-		{ cwd: options.targetDirectory });
+	await execa('msbuild', [paths.Bridge.bridgeSln, '-property:Configuration=Release']);
 }
 
 async function getDirsToDelete(sourcePath) {
@@ -86,6 +84,8 @@ async function cleanUpOldDependencies() {
 }
 
 async function copyNugets() {
+	await updateNugetSource();
+
 	const copyPromises = [];
 	for (let i = 0; i < paths.Bridge.compiledNugetDirs.length; i++) {
 		const dir = paths.Bridge.compiledNugetDirs[i];
@@ -102,6 +102,23 @@ async function copyNugets() {
 	await Promise.all(copyPromises);
 }
 
+async function updateNugetSource() {
+	try {
+		await fs.promises.access(paths.LunaCompiler.nugetConfig, fs.constants.R_OK | fs.constants.W_OK);
+	}
+	catch(error) {
+		await fs.promises.copyFile(path.resolve(__dirname, '../templates/nuget.config'), paths.LunaCompiler.nugetConfig);
+	}
+
+	const nugetSourceReplaceOptions = {
+		files: paths.LunaCompiler.nugetConfig,
+		from: Regex.nugetConfigPackagesPath,
+		to: paths.Bridge.nugetTempDir
+	};
+
+	await replace(nugetSourceReplaceOptions);
+}
+
 async function updateVersionInConfigs(options) {
 	const csprojReplaceOptions = {
 		files: paths.LunaCompiler.csprojs,
@@ -109,7 +126,7 @@ async function updateVersionInConfigs(options) {
 		to: options.bridgeVersion
 	};
 	const configReplaceOptions = {
-		files: paths.LunaCompiler.nugetConfigs,
+		files: paths.LunaCompiler.packagesConfigs,
 		from : Regex.nugetConfigVersion,
 		to: options.bridgeVersion
 	};
@@ -124,7 +141,7 @@ async function updateVersionInVendorConfigs(options) {
 		to: options.bridgeVersion
 	};
 	const configReplaceOptions = {
-		files: paths.Vendor.nugetConfigs,
+		files: paths.Vendor.packagesConfigs,
 		from : Regex.nugetConfigVersion,
 		to: options.bridgeVersion
 	};
@@ -132,12 +149,12 @@ async function updateVersionInVendorConfigs(options) {
 	await Promise.all([replace(csprojReplaceOptions), replace(configReplaceOptions)]);
 }
 
-async function resolveNugetsLunaCompiler(options) {
-	await execa('nuget', ['restore', paths.LunaCompiler.lunaCompilerSln], { cwd: options.targetDirectory });
+async function resolveNugetsLunaCompiler() {
+	await execa('nuget', ['restore', paths.LunaCompiler.lunaCompilerSln]);
 }
 
-async function resolveNugetsVendorLibs(options) {
-	await execa('nuget', ['restore', paths.Vendor.vendorSln], { cwd: options.targetDirectory });
+async function resolveNugetsVendorLibs() {
+	await execa('nuget', ['restore', paths.Vendor.vendorSln]);
 }
 
 module.exports = { build };

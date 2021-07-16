@@ -213,3 +213,4 @@ Tests/**/App_Readme/
 # !/Bridge/Bridge/Resources/.generated/System/Diagnostics/Debug/*
 /Bridge.Dev.Sandbox.sln
 Luna Toolbox/node_modules
+Luna Toolbox/.config
