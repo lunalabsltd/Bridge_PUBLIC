@@ -26,9 +26,16 @@ async function validateConfig() {
 async function updateConfig() {
 	const paths = await promptForPaths();
 	const pathsRaw = JSON.stringify(paths);
-	!fs.existsSync(configDirPath) && fs.mkdirSync(configDirPath);
+	await ensureConfigDirExists();
 
 	await fs.promises.writeFile(configPath, pathsRaw, { encoding: 'utf8' });
+}
+
+async function ensureConfigDirExists() {
+	const isConfigDirExists = await fs.promises.access(configDirPath, fs.constants.R_OK | fs.constants.W_OK);
+	if (!isConfigDirExists) {
+		await fs.promises.mkdir(configDirPath);
+	}
 }
 
 async function promptForPaths() {
@@ -38,13 +45,13 @@ async function promptForPaths() {
 			name: 'lunaPath',
 			message: `Provide full path to luna folder`,
 			default: './',
-			validate(value) {
+			validate: async (value) => {
 				try {
-					fs.accessSync(path.join(value, 'LunaDevelopment.sln'), fs.constants.R_OK);
+					await fs.promises.access(path.join(value, 'LunaDevelopment.sln'), fs.constants.R_OK);
 					return true;
 				}
 				catch(error) {
-					return 'No Luna solution found in provided directory';
+					return 'LunaDevelopment.sln is not found in provided directory';
 				}
 			}
 		},
@@ -53,13 +60,13 @@ async function promptForPaths() {
 			name: 'bridgePath',
 			message: `Provide full path to Bridge folder`,
 			default: './',
-			validate(value) {
+			validate: async (value) => {
 				try {
-					fs.accessSync(path.join(value, 'Bridge.sln'), fs.constants.R_OK);
+					await fs.promises.access(path.join(value, 'Bridge.sln'), fs.constants.R_OK);
 					return true;
 				}
 				catch(error) {
-					return 'No Bridge solution found in provided directory';
+					return 'Bridge.sln is not found in provided directory';
 				}
 			}
 		}
@@ -73,9 +80,8 @@ async function promptForPaths() {
 
 async function getConfig() {
 	const configDataRaw = await fs.promises.readFile(configPath);
-	const configData = JSON.parse(configDataRaw);
 
-	return configData;
+	return JSON.parse(configDataRaw);
 }
 
 module.exports = {
