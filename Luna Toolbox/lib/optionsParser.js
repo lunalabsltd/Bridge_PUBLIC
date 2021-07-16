@@ -12,7 +12,7 @@ function parseArgs(rawArgs) {
 		'--bridge-version': String,
 		'-b': '--build',
 		'-t': '--test',
-		'-bv': '--bridge-version'
+		'-v': '--bridge-version'
 	},{
 		argv: rawArgs.slice(2)
 	});
