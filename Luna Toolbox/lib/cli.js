@@ -1,27 +1,20 @@
 const chalk = require('chalk');
-const path = require('path');
-const { build } = require('./jobs/build');
+const { build, validateConfig, getConfig } = require('./jobs');
 const optionsParser = require('./optionsParser');
 
-function getTasks(options) {
+function getTask(options) {
 	if (options.build) {
-		return build(options);
+		return build;
 	}
 }
-
-function isOutsideLunaFolder() {
-	if (path.basename(process.cwd()) !== 'luna') {
-		throw new Error('Outside luna directory');
-	}
-}
-
 async function cli(args) {
 	try {
-		isOutsideLunaFolder();
-		let options = await optionsParser.parse(args);
-		const tasks = getTasks(options);
+		await validateConfig();
+		const config = await getConfig();
+		let options = await optionsParser.parse(args, config);
+		const task = getTask(options);
 
-		await tasks.run();
+		await task(options, config);
 
 		console.log('', chalk.green.bold('DONE'));
 	}

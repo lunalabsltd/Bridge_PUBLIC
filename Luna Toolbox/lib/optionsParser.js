@@ -3,6 +3,8 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 const { Paths, Regex } = require('./defines');
 
+let paths;
+
 function parseArgs(rawArgs) {
 	const args = arg({
 		'--build': Boolean,
@@ -24,7 +26,7 @@ function parseArgs(rawArgs) {
 }
 
 async function getCurrentBridgeVersion() {
-	const versionInfoFile = await fs.promises.readFile(Paths.Bridge.nugetBuildPackageTargets, { encoding: 'utf8' });
+	const versionInfoFile = await fs.promises.readFile(paths.Bridge.nugetBuildPackageTargets, { encoding: 'utf8' });
 	const currentBridgeVersion = versionInfoFile.match(Regex.defaultPackageVersion);
 
 	return currentBridgeVersion && currentBridgeVersion[0];
@@ -56,7 +58,8 @@ async function promptForMissingOptions(options) {
 	};
 }
 
-async function parse(rawArgs) {
+async function parse(rawArgs, config) {
+	paths = new Paths(config);
 	const args = parseArgs(rawArgs);
 	const options = await promptForMissingOptions(args);
 
