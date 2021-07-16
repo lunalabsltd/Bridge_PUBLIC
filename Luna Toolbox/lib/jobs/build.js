@@ -12,16 +12,16 @@ function build(options, config) {
 
 	return new Listr([
 		{
+			title: 'Clean up old dependencies',
+			task: async () => await cleanUpOldDependencies()
+		},
+		{
 			title: 'Update Bridge version',
 			task: async () => await updateBridgeVersion(options)
 		},
 		{
 			title: 'Compile Bridge',
 			task: async () => await compile(options)
-		},
-		{
-			title: 'Clean up old dependencies',
-			task: async () => await cleanUpOldDependencies()
 		},
 		{
 			title: 'Copy nuget packages',
