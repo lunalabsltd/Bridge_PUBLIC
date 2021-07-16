@@ -32,8 +32,10 @@ async function updateConfig() {
 }
 
 async function ensureConfigDirExists() {
-	const isConfigDirExists = await fs.promises.access(configDirPath, fs.constants.R_OK | fs.constants.W_OK);
-	if (!isConfigDirExists) {
+	try {
+		await fs.promises.access(configDirPath, fs.constants.R_OK | fs.constants.W_OK);
+	}
+	catch (error) {
 		await fs.promises.mkdir(configDirPath);
 	}
 }
