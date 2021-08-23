@@ -40,21 +40,23 @@ async function promptForMissingOptions(options) {
 		questions.push({
 			type: 'input',
 			name: 'bridgeVersion',
-			message: `Enter new version for Bridge (or press enter to stay on current ${currentBridgeVersion})`,
+			message: `Enter new version for Bridge or press enter to stay on current ${currentBridgeVersion} (postfix '-luna' will be added automatically)`,
 			default: currentBridgeVersion,
 			validate(value) {
 				const pass = value.match(/\d+\.\d+\.\d+[a-zA-Z0-9\.-]+/);
 
-				return pass ? true : 'Please, enter valid version number (ex. "17.9.11", "17.9.11-luna")';
+				return pass ? true : 'Please, enter valid version number (ex. "17.9.11")';
 			}
 		});
 	}
 
 	const answers = await inquirer.prompt(questions);
+	const bridgeVersionRaw = options.bridgeVersion || answers.bridgeVersion;
+	const bridgeVersion = bridgeVersionRaw.includes('-luna') ? bridgeVersionRaw : `${bridgeVersionRaw}-luna`;
 
 	return {
 		...options,
-		bridgeVersion: options.bridgeVersion || answers.bridgeVersion
+		bridgeVersion
 	};
 }
 

@@ -45,7 +45,7 @@ class Paths {
 		this.Vendor = {
 			vendorSln: path.join(this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor.sln'),
 			csprojs: [
-				path.join(this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.dg.tweening/1.2.235/1.2.235.csproj'),
+				path.join(this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.dg.tweening/1.2.235/DOTween\ 1.2.235.csproj'),
 				path.join(this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.ui/1.2.1/1.2.1.csproj'),
 				path.join(this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.textmeshpro/1.3.0/1.3.0.csproj'),
 				path.join(this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.textmeshpro/2.0.0/2.0.0.csproj'),

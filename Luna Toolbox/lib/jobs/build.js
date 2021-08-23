@@ -16,7 +16,7 @@ function build(options, config) {
 			task: async () => await cleanUpOldDependencies()
 		},
 		{
-			title: 'Update Bridge version',
+			title: 'Update Bridge version in Bridge solution',
 			task: async () => await updateBridgeVersion(options)
 		},
 		{
@@ -74,6 +74,7 @@ async function getDirsToDelete(sourcePath) {
 }
 
 async function cleanUpOldDependencies() {
+	await cleanUpOldNuggets();
 	const dirsToDelete = await getDirsToDelete(paths.LunaCompiler.lunaCompilerPackages);
 	const deletePromises = dirsToDelete.map(
 		dir => fs.promises.rmdir(
@@ -81,6 +82,16 @@ async function cleanUpOldDependencies() {
 				{ force: true, recursive: true }));
 
 	await Promise.all(deletePromises);
+}
+
+async function cleanUpOldNuggets() {
+	const dirents = await fs.promises.readdir(paths.Bridge.nugetTempDir, { withFileTypes: true });
+	const nugets = dirents.filter(dirent => path.extname(dirent.name) === '.nupkg');
+	const removePromises = [];
+	nugets.forEach(nuget => {
+		const removePromise = fs.promises.unlink(path.join(paths.Bridge.nugetTempDir, nuget.name));
+		removePromises.push(removePromise);
+	});
 }
 
 async function copyNugets() {
