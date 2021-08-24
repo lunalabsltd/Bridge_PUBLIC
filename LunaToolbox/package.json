@@ -4,7 +4,9 @@
   "description": "Simple CLI utility to build Luna Bridge",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "eslint": "eslint ./",
+    "eslint:fix": "eslint ./ --fix"
   },
   "bin": {
     "luna-toolbox": "./index.js",
@@ -18,5 +20,10 @@
     "inquirer": "^8.1.1",
     "listr": "^0.14.3",
     "replace-in-file": "^6.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.24.1"
   }
 }
