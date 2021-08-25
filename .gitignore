@@ -212,3 +212,6 @@ Tests/**/App_Readme/
 # y no work?
 # !/Bridge/Bridge/Resources/.generated/System/Diagnostics/Debug/*
 /Bridge.Dev.Sandbox.sln
+LunaToolbox/node_modules
+LunaToolbox/.config
+LunaToolbox/package-lock.json
