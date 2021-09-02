@@ -513,13 +513,22 @@ namespace Bridge.Contract
                     writeClone = true;
                 }
 
+                var memberResult = resolveResult as MemberResolveResult;
+                bool isIMethod = memberResult?.Member is IMethod;
+                bool isInvocationResult = memberResult is InvocationResolveResult;
+                // check below fixes issue with
+                // delegate with mutable struct as a return value
+                // ex: delegate Vector2 ScratchHandler();
+                if (isIMethod && !(isInvocationResult)){
+                    return;
+                }
+
                 if (writeClone)
                 {
                     Helpers.WriteClone(block, insertPosition, nullable);
                     return;
                 }
 
-                var memberResult = resolveResult as MemberResolveResult;
 
                 var field = memberResult != null ? memberResult.Member as DefaultResolvedField : null;
 
