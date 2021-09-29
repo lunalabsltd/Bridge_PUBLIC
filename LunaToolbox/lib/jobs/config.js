@@ -66,7 +66,7 @@ async function getConfig() {
     return JSON.parse( configDataRaw );
 }
 
-async function getConfigCI() {
+function getConfigCI() {
     return {
         bridgePath: path.join( __dirname, '../../..' ),
         lunaPath: ''

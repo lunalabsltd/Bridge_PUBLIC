@@ -17,7 +17,13 @@ async function parseArgs( rawArgs ) {
         argv: rawArgs.slice( 2 ),
     });
 
-    const defaultBridgeVersion = await getCurrentBridgeVersion();
+    let defaultBridgeVersion;
+
+    if ( args['--ci']) {
+        defaultBridgeVersion = await getCurrentBridgeVersion();
+    } else {
+        defaultBridgeVersion = null;
+    }
 
     return {
         build: args['--build'] || false,

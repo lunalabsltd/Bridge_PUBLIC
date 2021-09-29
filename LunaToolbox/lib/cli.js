@@ -17,7 +17,7 @@ async function cli( args ) {
         let config;
 
         if ( options.ci ) {
-            config = await getConfigCI();
+            config = getConfigCI();
         } else {
             await validateConfig();
             config = await getConfig();
