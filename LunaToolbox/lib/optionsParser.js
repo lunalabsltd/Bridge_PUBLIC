@@ -1,8 +1,4 @@
 const arg = require( 'arg' );
-const fs = require( 'fs' );
-const { Paths, Regex } = require( './defines' );
-
-let paths;
 
 async function parseArgs( rawArgs ) {
     const args = arg({
@@ -17,32 +13,16 @@ async function parseArgs( rawArgs ) {
         argv: rawArgs.slice( 2 ),
     });
 
-    let defaultBridgeVersion;
-
-    if ( args['--ci']) {
-        defaultBridgeVersion = await getCurrentBridgeVersion();
-    } else {
-        defaultBridgeVersion = null;
-    }
-
     return {
         build: args['--build'] || false,
         test: args['--test'] || false,
         ci: args['--ci'] || false,
-        bridgeVersion: args['--bridge-version'] || defaultBridgeVersion || null,
+        bridgeVersion: args['--bridge-version'] || null,
         targetDirectory: process.cwd(),
     };
 }
 
-async function getCurrentBridgeVersion() {
-    const versionInfoFile = await fs.promises.readFile( paths.Bridge.nugetBuildPackageTargets, { encoding: 'utf8' });
-    const currentBridgeVersion = versionInfoFile.match( Regex.defaultPackageVersion );
-
-    return currentBridgeVersion && currentBridgeVersion[0];
-}
-
-async function parse( rawArgs, config ) {
-    paths = new Paths( config );
+async function parse( rawArgs ) {
     const options = await parseArgs( rawArgs );
 
     return options;

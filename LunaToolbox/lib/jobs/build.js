@@ -6,9 +6,7 @@ const replace = require( 'replace-in-file' );
 const inquirer = require( 'inquirer' );
 const { Paths, Regex, Messages } = require( '../defines' );
 
-let paths;
-
-async function updateBridgeVersion( options ) {
+async function updateBridgeVersion( options, paths ) {
     const assemblyInfoOptions = {
         files: paths.Bridge.assemblyInfo,
         from: Regex.assemblyInformationalVersion,
@@ -24,11 +22,18 @@ async function updateBridgeVersion( options ) {
     await replace( configReplaceOptions );
 }
 
-async function compile() {
+async function getCurrentBridgeVersion( paths ) {
+    const versionInfoFile = await fs.promises.readFile( paths.Bridge.nugetBuildPackageTargets, { encoding: 'utf8' });
+    const currentBridgeVersion = versionInfoFile.match( Regex.defaultPackageVersion );
+
+    return currentBridgeVersion && currentBridgeVersion[0];
+}
+
+async function compile( paths ) {
     await execa( 'msbuild', [paths.Bridge.bridgeSln, '-property:Configuration=Release']);
 }
 
-async function getDirsToDelete( sourcePath ) {
+async function getDirsToDelete( sourcePath, paths ) {
     const dirents = await fs.promises.readdir( sourcePath, { withFileTypes: true });
     const dirs = dirents.filter(( dirent ) => dirent.isDirectory());
 
@@ -37,7 +42,7 @@ async function getDirsToDelete( sourcePath ) {
             .some(( dep ) => dir.name.includes( dep )));
 }
 
-async function cleanUpOldNuggets() {
+async function cleanUpOldNuggets( paths ) {
     const dirents = await fs.promises.readdir( paths.Bridge.nugetTempDir, { withFileTypes: true });
     const nugets = dirents.filter(( dirent ) => path.extname( dirent.name ) === '.nupkg' );
     const removePromises = [];
@@ -47,8 +52,8 @@ async function cleanUpOldNuggets() {
     });
 }
 
-async function cleanUpOldDependencies() {
-    await cleanUpOldNuggets();
+async function cleanUpOldDependencies( paths ) {
+    await cleanUpOldNuggets( paths );
     const dirsToDelete = await getDirsToDelete( paths.LunaCompiler.lunaCompilerPackages );
     const deletePromises = dirsToDelete.map(
         ( dir ) => fs.promises.rmdir(
@@ -60,7 +65,7 @@ async function cleanUpOldDependencies() {
     await Promise.all( deletePromises );
 }
 
-async function copyNugets() {
+async function copyNugets( paths ) {
     await updateNugetSource();
 
     const copyPromises = [];
@@ -80,7 +85,7 @@ async function copyNugets() {
     await Promise.all( copyPromises );
 }
 
-async function updateNugetSource() {
+async function updateNugetSource( paths ) {
     try {
         await fs.promises.access( paths.LunaCompiler.nugetConfig, fs.constants.R_OK | fs.constants.W_OK );
     } catch ( error ) {
@@ -99,7 +104,7 @@ async function updateNugetSource() {
     await replace( nugetSourceReplaceOptions );
 }
 
-async function updateVersionInConfigs( options ) {
+async function updateVersionInConfigs( options, paths ) {
     const csprojReplaceOptions = {
         files: paths.LunaCompiler.csprojs,
         from: Regex.csprojVersion,
@@ -115,7 +120,7 @@ async function updateVersionInConfigs( options ) {
     await Promise.all([replace( csprojReplaceOptions ), replace( configReplaceOptions )]);
 }
 
-async function updateVersionInVendorConfigs( options ) {
+async function updateVersionInVendorConfigs( options, paths ) {
     const csprojReplaceOptions = {
         files: paths.Vendor.csprojs,
         from: Regex.csprojVersion,
@@ -130,16 +135,16 @@ async function updateVersionInVendorConfigs( options ) {
     await Promise.all([replace( csprojReplaceOptions ), replace( configReplaceOptions )]);
 }
 
-async function resolveNugetsLunaCompiler() {
+async function resolveNugetsLunaCompiler( paths ) {
     await execa( 'nuget', ['restore', paths.LunaCompiler.lunaCompilerSln]);
 }
 
-async function resolveNugetsVendorLibs() {
+async function resolveNugetsVendorLibs( paths ) {
     await execa( 'nuget', ['restore', paths.Vendor.vendorSln]);
 }
 
-async function askForMissingOptions( options ) {
-    const defaultBridgeVersion = options.bridgeVersion;
+async function askForMissingOptions( options, paths ) {
+    const defaultBridgeVersion = await getCurrentBridgeVersion( paths );
     const questions = [];
     if ( !defaultBridgeVersion ) {
         questions.push({
@@ -166,41 +171,41 @@ async function askForMissingOptions( options ) {
 }
 
 async function build( options, config ) {
-    paths = new Paths( config );
-    const completeOptions = await askForMissingOptions( options );
+    const paths = new Paths( config );
+    const completeOptions = await askForMissingOptions( options, paths );
 
     return new Listr([
         {
             title: 'Clean up old dependencies',
-            task: async () => cleanUpOldDependencies(),
+            task: async () => cleanUpOldDependencies( paths ),
         },
         {
             title: 'Update Bridge version in Bridge solution',
-            task: async () => updateBridgeVersion( completeOptions ),
+            task: async () => updateBridgeVersion( completeOptions, paths ),
         },
         {
             title: 'Compile Bridge',
-            task: async () => compile(),
+            task: async () => compile( paths ),
         },
         {
             title: 'Copy nuget packages',
-            task: async () => copyNugets(),
+            task: async () => copyNugets( paths ),
         },
         {
             title: 'Update Bridge version in Luna Compiler',
-            task: async () => updateVersionInConfigs( completeOptions ),
+            task: async () => updateVersionInConfigs( completeOptions, paths ),
         },
         {
             title: 'Update Bridge version in Vendor libs',
-            task: async () => updateVersionInVendorConfigs( completeOptions ),
+            task: async () => updateVersionInVendorConfigs( completeOptions, paths ),
         },
         {
             title: 'Resolve Nuget dependencies for Luna Compiler',
-            task: async () => resolveNugetsLunaCompiler( completeOptions ),
+            task: async () => resolveNugetsLunaCompiler( paths ),
         },
         {
             title: 'Resolve Nuget dependencies for Vendor libs',
-            task: async () => resolveNugetsVendorLibs( completeOptions ),
+            task: async () => resolveNugetsVendorLibs( paths ),
         },
     ]).run();
 }

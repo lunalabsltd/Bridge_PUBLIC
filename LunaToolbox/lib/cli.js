@@ -13,7 +13,7 @@ function getTask( options ) {
 }
 async function cli( args ) {
     try {
-        const options = await optionsParser.parse( args, config );
+        const options = await optionsParser.parse( args );
         let config;
 
         if ( options.ci ) {
