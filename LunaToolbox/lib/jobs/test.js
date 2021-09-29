@@ -8,7 +8,7 @@ const { Paths } = require( '../defines' );
 let paths;
 
 async function runTests() {
-    return new Promise(( resolve ) => {
+    return new Promise(( resolve, reject ) => {
         ( async () => {
             const browser = await puppeteer.launch();
             const page = await browser.newPage();
@@ -23,10 +23,14 @@ async function runTests() {
                 console.log( '', chalk.green.bold( `Passed: ${details.passed}` ));
                 console.log( '', chalk.red.bold( `Failed: ${details.failed}` ));
 
-                details.tests.forEach(( testLog ) => {
-                    console.log( '', chalk.red.bold( `${testLog.module} -> ${testLog.name}` ));
-                    console.log( testLog.message );
-                });
+                if ( details.failed > 0 ) {
+                    details.tests.forEach(( testLog ) => {
+                        console.log( '', chalk.red.bold( `${testLog.module} -> ${testLog.name}` ));
+                        console.log( testLog.message );
+                    });
+
+                    reject( new Error( 'Some tests failed.' ));
+                }
 
                 console.log( '\n\n\n' );
 

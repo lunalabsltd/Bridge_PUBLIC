@@ -66,6 +66,13 @@ async function getConfig() {
     return JSON.parse( configDataRaw );
 }
 
+async function getConfigCI() {
+    return {
+        bridgePath: path.join( __dirname, '../../..' ),
+        lunaPath: ''
+    };
+}
+
 async function validateConfig() {
     try {
         const { lunaPath, bridgePath } = await getConfig();
@@ -86,4 +93,5 @@ module.exports = {
     updateConfig,
     validateConfig,
     getConfig,
+    getConfigCI,
 };

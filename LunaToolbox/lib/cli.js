@@ -1,6 +1,6 @@
 const chalk = require( 'chalk' );
 const {
-    build, validateConfig, getConfig, test
+    build, validateConfig, getConfig, getConfigCI, test
 } = require( './jobs' );
 const optionsParser = require( './optionsParser' );
 
@@ -13,11 +13,17 @@ function getTask( options ) {
 }
 async function cli( args ) {
     try {
-        await validateConfig();
-        const config = await getConfig();
         const options = await optionsParser.parse( args, config );
-        const task = getTask( options );
+        let config;
 
+        if ( options.ci ) {
+            config = await getConfigCI();
+        } else {
+            await validateConfig();
+            config = await getConfig();
+        }
+
+        const task = getTask( options );
         await task( options, config );
 
         console.log( '', chalk.green.bold( 'DONE' ));

@@ -9,6 +9,7 @@ async function parseArgs( rawArgs ) {
         '--build': Boolean,
         '--test': Boolean,
         '--bridge-version': String,
+        '--ci': Boolean,
         '-b': '--build',
         '-t': '--test',
         '-v': '--bridge-version',
@@ -21,6 +22,7 @@ async function parseArgs( rawArgs ) {
     return {
         build: args['--build'] || false,
         test: args['--test'] || false,
+        ci: args['--ci'] || false,
         bridgeVersion: args['--bridge-version'] || defaultBridgeVersion || null,
         targetDirectory: process.cwd(),
     };

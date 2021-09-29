@@ -1,6 +1,8 @@
 const { build } = require( './build' );
 const { test } = require( './test' );
-const { updateConfig, validateConfig, getConfig } = require( './config' );
+const {
+    updateConfig, validateConfig, getConfig, getConfigCI
+} = require( './config' );
 
 module.exports = {
     build,
@@ -8,4 +10,5 @@ module.exports = {
     updateConfig,
     validateConfig,
     getConfig,
+    getConfigCI,
 };
