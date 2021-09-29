@@ -15,7 +15,7 @@ module.exports = {
         'eol-last': ['error', 'always'],
         'no-console': 'off',
         'no-use-before-define': 'off',
-        'max-len': ['warn', { code: 120 }],
+        'max-len': ['warn', { code: 160 }],
         'no-bitwise': 'off',
         'no-plusplus': 'off',
         'no-loop-func': 'off',

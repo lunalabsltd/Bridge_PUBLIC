@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -44,9 +45,20 @@
     <script src="TypeScript/Batch1/3_Classes.js"></script>
     <script src="TypeScript/Batch1/4_Functions.js"></script>
     <script src="TypeScript/Batch1/5_Generics.js"></script>
+    <script>
+        QUnit.log( ( details ) => {
+            window.onTestResult( details );
+        } );
+
+        QUnit.done( ( details ) => {
+            window.onTestsDone( details );
+        } );
+    </script>
 </head>
+
 <body>
     <div id="qunit"></div>
     <div id="qunit-fixture"></div>
 </body>
+
 </html>

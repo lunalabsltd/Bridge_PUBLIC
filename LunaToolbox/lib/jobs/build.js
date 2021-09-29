@@ -3,7 +3,8 @@ const Listr = require( 'listr' );
 const path = require( 'path' );
 const fs = require( 'fs' );
 const replace = require( 'replace-in-file' );
-const { Paths, Regex } = require( '../defines' );
+const inquirer = require( 'inquirer' );
+const { Paths, Regex, Messages } = require( '../defines' );
 
 let paths;
 
@@ -137,8 +138,36 @@ async function resolveNugetsVendorLibs() {
     await execa( 'nuget', ['restore', paths.Vendor.vendorSln]);
 }
 
-function build( options, config ) {
+async function askForMissingOptions( options ) {
+    const defaultBridgeVersion = options.bridgeVersion;
+    const questions = [];
+    if ( !defaultBridgeVersion ) {
+        questions.push({
+            type: 'input',
+            name: 'bridgeVersion',
+            message: Messages.bridgeVersion.replace( '$currentBridgeVersion', defaultBridgeVersion ),
+            default: defaultBridgeVersion,
+            validate( value ) {
+                const pass = value.match( /\d+\.\d+\.\d+[a-zA-Z0-9.-]+/ );
+
+                return pass ? true : Messages.bridgeVersionValidationError;
+            },
+        });
+    }
+
+    const answers = await inquirer.prompt( questions );
+    const bridgeVersionRaw = options.bridgeVersion || answers.bridgeVersion;
+    const bridgeVersion = bridgeVersionRaw.includes( '-luna' ) ? bridgeVersionRaw : `${bridgeVersionRaw}-luna`;
+
+    return {
+        ...options,
+        bridgeVersion,
+    };
+}
+
+async function build( options, config ) {
     paths = new Paths( config );
+    const completeOptions = await askForMissingOptions( options );
 
     return new Listr([
         {
@@ -147,7 +176,7 @@ function build( options, config ) {
         },
         {
             title: 'Update Bridge version in Bridge solution',
-            task: async () => updateBridgeVersion( options ),
+            task: async () => updateBridgeVersion( completeOptions ),
         },
         {
             title: 'Compile Bridge',
@@ -159,19 +188,19 @@ function build( options, config ) {
         },
         {
             title: 'Update Bridge version in Luna Compiler',
-            task: async () => updateVersionInConfigs( options ),
+            task: async () => updateVersionInConfigs( completeOptions ),
         },
         {
             title: 'Update Bridge version in Vendor libs',
-            task: async () => updateVersionInVendorConfigs( options ),
+            task: async () => updateVersionInVendorConfigs( completeOptions ),
         },
         {
             title: 'Resolve Nuget dependencies for Luna Compiler',
-            task: async () => resolveNugetsLunaCompiler( options ),
+            task: async () => resolveNugetsLunaCompiler( completeOptions ),
         },
         {
             title: 'Resolve Nuget dependencies for Vendor libs',
-            task: async () => resolveNugetsVendorLibs( options ),
+            task: async () => resolveNugetsVendorLibs( completeOptions ),
         },
     ]).run();
 }

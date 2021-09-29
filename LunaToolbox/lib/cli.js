@@ -1,10 +1,12 @@
 const chalk = require( 'chalk' );
-const { build, validateConfig, getConfig } = require( './jobs' );
+const {
+    build, validateConfig, getConfig, test
+} = require( './jobs' );
 const optionsParser = require( './optionsParser' );
 
 function getTask( options ) {
-    if ( options.build ) {
-        return build;
+    if ( options.test ) {
+        return test;
     }
 
     return build;

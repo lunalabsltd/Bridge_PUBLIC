@@ -1,11 +1,10 @@
 const arg = require( 'arg' );
-const inquirer = require( 'inquirer' );
 const fs = require( 'fs' );
-const { Paths, Regex, Messages } = require( './defines' );
+const { Paths, Regex } = require( './defines' );
 
 let paths;
 
-function parseArgs( rawArgs ) {
+async function parseArgs( rawArgs ) {
     const args = arg({
         '--build': Boolean,
         '--test': Boolean,
@@ -17,10 +16,12 @@ function parseArgs( rawArgs ) {
         argv: rawArgs.slice( 2 ),
     });
 
+    const defaultBridgeVersion = await getCurrentBridgeVersion();
+
     return {
-        build: args['--build'] || !args['--test'],
+        build: args['--build'] || false,
         test: args['--test'] || false,
-        bridgeVersion: args['--bridge-version'] || null,
+        bridgeVersion: args['--bridge-version'] || defaultBridgeVersion || null,
         targetDirectory: process.cwd(),
     };
 }
@@ -32,38 +33,9 @@ async function getCurrentBridgeVersion() {
     return currentBridgeVersion && currentBridgeVersion[0];
 }
 
-async function promptForMissingOptions( options ) {
-    const currentBridgeVersion = await getCurrentBridgeVersion();
-    const questions = [];
-
-    if ( !options.bridgeVersion ) {
-        questions.push({
-            type: 'input',
-            name: 'bridgeVersion',
-            message: Messages.bridgeVersion.replace( '$currentBridgeVersion', currentBridgeVersion ),
-            default: currentBridgeVersion,
-            validate( value ) {
-                const pass = value.match( /\d+\.\d+\.\d+[a-zA-Z0-9.-]+/ );
-
-                return pass ? true : Messages.bridgeVersionValidationError;
-            },
-        });
-    }
-
-    const answers = await inquirer.prompt( questions );
-    const bridgeVersionRaw = options.bridgeVersion || answers.bridgeVersion;
-    const bridgeVersion = bridgeVersionRaw.includes( '-luna' ) ? bridgeVersionRaw : `${bridgeVersionRaw}-luna`;
-
-    return {
-        ...options,
-        bridgeVersion,
-    };
-}
-
 async function parse( rawArgs, config ) {
     paths = new Paths( config );
-    const args = parseArgs( rawArgs );
-    const options = await promptForMissingOptions( args );
+    const options = await parseArgs( rawArgs );
 
     return options;
 }
