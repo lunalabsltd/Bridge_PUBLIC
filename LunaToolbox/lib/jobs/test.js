@@ -1,13 +1,15 @@
 const puppeteer = require( 'puppeteer' );
 const path = require( 'path' );
 const chalk = require( 'chalk' );
-const Listr = require( 'listr' );
+// const Listr = require( 'listr' );
 const execa = require( 'execa' );
 const { Paths } = require( '../defines' );
 
 let paths;
 
 async function runTests() {
+    console.log( '', chalk.green.bold( 'Run Bridge tests...' ));
+
     return new Promise(( resolve, reject ) => {
         ( async () => {
             const browser = await puppeteer.launch();
@@ -45,30 +47,42 @@ async function runTests() {
 }
 
 async function compileBridgeTests() {
+    console.log( '', chalk.green.bold( 'Compile Bridge tests...' ));
     await execa( 'msbuild', [paths.Bridge.bridgeDevSln]);
 }
 
 async function restoreNugets() {
+    console.log( '', chalk.green.bold( 'Restore Nuget packages...' ));
     await execa( 'nuget', ['restore', paths.Bridge.bridgeDevSln]);
 }
 
 async function test( options, config ) {
     paths = new Paths( config );
 
-    return new Listr([
-        {
-            title: 'Restore Nuget packages for Bridge tests',
-            task: async () => restoreNugets()
-        },
-        {
-            title: 'Compile Bridge tests',
-            task: async () => compileBridgeTests()
-        },
-        {
-            title: 'Run tests',
-            task: async () => runTests()
-        }
-    ]).run();
+    // return new Listr([
+    //     {
+    //         title: 'Restore Nuget packages for Bridge tests',
+    //         task: async () => restoreNugets()
+    //     },
+    //     {
+    //         title: 'Compile Bridge tests',
+    //         task: async () => compileBridgeTests()
+    //     },
+    //     {
+    //         title: 'Run tests',
+    //         task: async () => runTests()
+    //     }
+    // ]).run();
+
+    return new Promise(( resolve ) => {
+        ( async () => {
+            await restoreNugets();
+            await compileBridgeTests();
+            await runTests();
+
+            resolve();
+        })();
+    });
 }
 
 module.exports = {

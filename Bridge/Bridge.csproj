@@ -563,9 +563,9 @@
     <Compile Include="System\Version.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\.auxiliary\AssemblyEnd.js" />
-    <Content Include="Resources\.auxiliary\Header.js" />
-    <Content Include="Resources\.auxiliary\AssemblyBegin.js" />
+    <Content Include="Resources\.auxiliary\assemblyend.js" />
+    <Content Include="Resources\.auxiliary\header.js" />
+    <Content Include="Resources\.auxiliary\assemblybegin.js" />
     <Content Include="Resources\.generated\bridge.js" />
     <Content Include="Resources\.generated\bridge.meta.js" />
     <Content Include="Resources\.generated\Bridge\Utils\Console.js" />
@@ -1638,9 +1638,9 @@
     <Content Include="Resources\Array.js" />
     <Content Include="Resources\Collections\Comparer.js" />
     <Content Include="Resources\Decimal.js" />
-    <Content Include="Resources\.auxiliary\Finally.js" />
-    <Content Include="Resources\.auxiliary\End.js" />
-    <Content Include="Resources\.auxiliary\Init.js" />
+    <Content Include="Resources\.auxiliary\finally.js" />
+    <Content Include="Resources\.auxiliary\end.js" />
+    <Content Include="Resources\.auxiliary\init.js" />
     <Content Include="Resources\Attribute.js" />
     <Content Include="Resources\Browser.js" />
     <Content Include="Resources\Class.js" />
