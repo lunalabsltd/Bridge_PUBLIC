@@ -51,7 +51,7 @@
         "Resources/.generated/system/outofmemoryexception.js",
         "Resources/.generated/system/arraytypemismatchexception.js",
 
-        "Resources/.generated/system/Resources/missingmanifestresourceexception.js",
+        "Resources/.generated/system/resources/missingmanifestresourceexception.js",
 
         "Resources/.generated/system/globalization/textinfo.js",
         "Resources/.generated/system/globalization/bidicategory.js",
