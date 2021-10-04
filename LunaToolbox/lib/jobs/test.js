@@ -76,13 +76,17 @@ async function test( options, config ) {
     //     }
     // ]).run();
 
-    return new Promise(( resolve ) => {
+    return new Promise(( resolve, reject ) => {
         ( async () => {
-            await restoreNugets();
-            await compileBridgeTests();
-            await runTests();
+            try {
+                await restoreNugets();
+                await compileBridgeTests();
+                await runTests();
 
-            resolve();
+                resolve();
+            } catch ( e ) {
+                reject( e );
+            }
         })();
     });
 }
