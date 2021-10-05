@@ -47,11 +47,26 @@
     <script src="TypeScript/Batch1/5_Generics.js"></script>
     <script>
         QUnit.log( ( details ) => {
-            window.onTestResult( details );
+            try {
+                const d = {
+                    result: details.result,
+                    module: details.module,
+                    name: details.name,
+                }
+                window.onTestResult( d );
+            }
+            catch ( e ) {
+                console.log( e );
+            }
         } );
 
         QUnit.done( ( details ) => {
-            window.onTestsDone( details );
+            try {
+                // window.onTestsDone( details );
+            }
+            catch ( e ) {
+                console.log( e );
+            }
         } );
     </script>
 </head>

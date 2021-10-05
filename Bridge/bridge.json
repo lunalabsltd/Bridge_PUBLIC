@@ -23,7 +23,7 @@
     {
       // File paths relative to project root
       "name": "bridge.js",
-      "header": "Resources/.auxiliary/Header.js",
+      "header": "Resources/.auxiliary/header.js",
       "remark": "\n    // @source {name}\n",
       "files": [
         "Resources/.auxiliary/init.js",

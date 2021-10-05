@@ -8,43 +8,61 @@ const { Paths } = require( '../defines' );
 let paths;
 
 async function runTests() {
+    let testCounter = 0;
     console.log( '', chalk.green.bold( 'Run Bridge tests...' ));
 
-    return new Promise(( resolve, reject ) => {
-        ( async () => {
-            const browser = await puppeteer.launch({
-                args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    const browser = await puppeteer.launch({
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-web-security'
+        ],
+        // devtools: true,
+        // headless: false
+    });
+    const page = await browser.newPage();
+
+    page.on( 'console', ( msg ) => {
+        console.log( 'msg:' );
+        console.dir( msg );
+    });
+
+    page.on( 'error', ( msg ) => {
+        console.log( 'err:' );
+        console.dir( msg );
+    });
+
+    await page.exposeFunction( 'onTestResult', ( details ) => {
+        testCounter++;
+        const result = `${testCounter}: ${details.result ? 'PASSED' : 'FAILED'}   ${details.module} -> ${details.name}`;
+        console.log( result );
+    });
+
+    await page.exposeFunction( 'onTestsDone', async ( details ) => {
+        console.log( '', chalk.green.bold( `Total: ${details.total}` ));
+        console.log( '', chalk.green.bold( `Passed: ${details.passed}` ));
+        console.log( '', chalk.red.bold( `Failed: ${details.failed}` ));
+
+        if ( details.failed > 0 ) {
+            details.tests.forEach(( testLog ) => {
+                console.log( '', chalk.red.bold( `${testLog.module} -> ${testLog.name}` ));
+                console.log( testLog.message );
             });
-            const page = await browser.newPage();
 
-            await page.exposeFunction( 'onTestResult', ( details ) => {
-                const result = `${details.result ? 'PASSED' : 'FAILED'}   ${details.module} -> ${details.name}`;
-                console.log( result );
-            });
+            throw new Error( 'Some tests failed.' );
+        }
 
-            await page.exposeFunction( 'onTestsDone', async ( details ) => {
-                console.log( '', chalk.green.bold( `Total: ${details.total}` ));
-                console.log( '', chalk.green.bold( `Passed: ${details.passed}` ));
-                console.log( '', chalk.red.bold( `Failed: ${details.failed}` ));
+        console.log( '\n\n\n' );
 
-                if ( details.failed > 0 ) {
-                    details.tests.forEach(( testLog ) => {
-                        console.log( '', chalk.red.bold( `${testLog.module} -> ${testLog.name}` ));
-                        console.log( testLog.message );
-                    });
+        await page.close();
+        await browser.close();
+    });
 
-                    reject( new Error( 'Some tests failed.' ));
-                }
-
-                console.log( '\n\n\n' );
-
-                await page.close();
-                await browser.close();
-                resolve();
-            });
-
-            await page.goto( `file:///${path.join( __dirname, '../../../Tests/Runner/', 'index.html' )}` );
-        })();
+    console.log( 'Open link...' );
+    await page.goto( `file:///${path.join( __dirname, '../../../Tests/Runner/', 'index.html' )}?moduleId=9f1b120d` );
+    // await page.goto( 'http://localhost:9000' );
+    await page.evaluate(() => {
+        debugger;
     });
 }
 
@@ -61,34 +79,9 @@ async function restoreNugets() {
 async function test( options, config ) {
     paths = new Paths( config );
 
-    // return new Listr([
-    //     {
-    //         title: 'Restore Nuget packages for Bridge tests',
-    //         task: async () => restoreNugets()
-    //     },
-    //     {
-    //         title: 'Compile Bridge tests',
-    //         task: async () => compileBridgeTests()
-    //     },
-    //     {
-    //         title: 'Run tests',
-    //         task: async () => runTests()
-    //     }
-    // ]).run();
-
-    return new Promise(( resolve, reject ) => {
-        ( async () => {
-            try {
-                await restoreNugets();
-                await compileBridgeTests();
-                await runTests();
-
-                resolve();
-            } catch ( e ) {
-                reject( e );
-            }
-        })();
-    });
+    // await restoreNugets();
+    // await compileBridgeTests();
+    await runTests();
 }
 
 module.exports = {
