@@ -25,4 +25,4 @@ jobs:
         run: docker build -t tests .
 
       - name: Run Docker tests
-        run: docker run -t tests ltb --test --ci
+        run: docker run --network="host" -t tests ltb --test --ci

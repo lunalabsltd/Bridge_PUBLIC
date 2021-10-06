@@ -1,7 +1,6 @@
 const puppeteer = require( 'puppeteer' );
-const path = require( 'path' );
+// const path = require( 'path' );
 const chalk = require( 'chalk' );
-// const Listr = require( 'listr' );
 const execa = require( 'execa' );
 const { Paths } = require( '../defines' );
 
@@ -10,6 +9,9 @@ let paths;
 async function runTests() {
     let testCounter = 0;
     console.log( '', chalk.green.bold( 'Run Bridge tests...' ));
+    // const server = execa( 'ws', ['-p', '9000'], { cwd: path.join( __dirname, '../../../Tests/Runner' ) });
+    const server = execa( 'ws', ['-p', '9005'], { cwd: '/bridge/Tests/Runner' });
+    // server.stdout.pipe( process.stdout );
 
     const browser = await puppeteer.launch({
         args: [
@@ -21,16 +23,6 @@ async function runTests() {
         // headless: false
     });
     const page = await browser.newPage();
-
-    page.on( 'console', ( msg ) => {
-        console.log( 'msg:' );
-        console.dir( msg );
-    });
-
-    page.on( 'error', ( msg ) => {
-        console.log( 'err:' );
-        console.dir( msg );
-    });
 
     await page.exposeFunction( 'onTestResult', ( details ) => {
         testCounter++;
@@ -52,18 +44,13 @@ async function runTests() {
             throw new Error( 'Some tests failed.' );
         }
 
-        console.log( '\n\n\n' );
-
         await page.close();
         await browser.close();
+        server.cancel();
     });
 
-    console.log( 'Open link...' );
-    await page.goto( `file:///${path.join( __dirname, '../../../Tests/Runner/', 'index.html' )}?moduleId=9f1b120d` );
-    // await page.goto( 'http://localhost:9000' );
-    await page.evaluate(() => {
-        debugger;
-    });
+    // await page.goto( `file:///${path.join( __dirname, '../../../Tests/Runner/', 'index.html' )}?moduleId=9f1b120d` );
+    await page.goto( 'http://127.0.0.1:9005' );
 }
 
 async function compileBridgeTests() {
@@ -79,8 +66,8 @@ async function restoreNugets() {
 async function test( options, config ) {
     paths = new Paths( config );
 
-    // await restoreNugets();
-    // await compileBridgeTests();
+    await restoreNugets();
+    await compileBridgeTests();
     await runTests();
 }
 

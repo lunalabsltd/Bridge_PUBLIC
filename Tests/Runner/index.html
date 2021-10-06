@@ -62,7 +62,21 @@
 
         QUnit.done( ( details ) => {
             try {
-                // window.onTestsDone( details );
+                debugger;
+                const t = details.tests.map( ( { message, module, name } ) => {
+                    return {
+                        message,
+                        module,
+                        name
+                    }
+                } );
+                const d = {
+                    total: details.total,
+                    passed: details.passed,
+                    failed: details.failed,
+                    tests: t
+                };
+                ( async () => await window.onTestsDone( d ) )();
             }
             catch ( e ) {
                 console.log( e );

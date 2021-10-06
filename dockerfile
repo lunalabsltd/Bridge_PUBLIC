@@ -15,3 +15,4 @@ COPY . .
 RUN ln -s /usr/lib/mono/xbuild/14.0/bin /usr/lib/mono/xbuild/15.0/
 
 RUN cd ./LunaToolbox && npm i && npm i ./ -g && npm link && npm rebuild
+RUN npm i local-web-server -g

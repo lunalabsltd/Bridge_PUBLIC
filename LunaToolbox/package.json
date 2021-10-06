@@ -19,6 +19,7 @@
     "execa": "^5.1.1",
     "inquirer": "^8.1.1",
     "listr": "^0.14.3",
+    "local-web-server": "^5.1.1",
     "puppeteer": "^10.4.0",
     "replace-in-file": "^6.2.0"
   },
