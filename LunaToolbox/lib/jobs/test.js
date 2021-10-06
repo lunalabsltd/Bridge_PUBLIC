@@ -6,7 +6,7 @@ const { Paths } = require( '../defines' );
 
 let paths;
 
-async function runTests() {
+async function runTests( isLoggingEnabled ) {
     let testCounter = 0;
     console.log( '', chalk.green.bold( 'Run Bridge tests...' ));
 
@@ -18,9 +18,11 @@ async function runTests() {
     const page = await browser.newPage();
 
     await page.exposeFunction( 'onTestResult', ( details ) => {
-        testCounter++;
-        const result = `${testCounter}: ${details.result ? 'PASSED' : 'FAILED'}   ${details.module} -> ${details.name}`;
-        console.log( result );
+        if ( isLoggingEnabled ) {
+            testCounter++;
+            const result = `${testCounter}: ${details.result ? 'PASSED' : 'FAILED'}   ${details.module} -> ${details.name}`;
+            console.log( result );
+        }
     });
 
     await page.exposeFunction( 'onTestsDone', async ( details ) => {
@@ -43,6 +45,14 @@ async function runTests() {
     });
 
     await page.goto( 'http://127.0.0.1:8080' );
+
+    setTimeout( async () => {
+        await page.close();
+        await browser.close();
+        server.close();
+
+        throw new Error( 'Test timeout (30m) exceed' );
+    }, 1000 * 60 * 30 );
 }
 
 async function compileBridgeTests() {
@@ -58,9 +68,11 @@ async function restoreNugets() {
 async function test( options, config ) {
     paths = new Paths( config );
 
+    const isLoggingEnabled = options.debug || false;
+
     await restoreNugets();
     await compileBridgeTests();
-    await runTests();
+    await runTests( isLoggingEnabled );
 }
 
 module.exports = {
