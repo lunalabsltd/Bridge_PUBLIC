@@ -48,6 +48,7 @@
     <script>
         QUnit.log( ( details ) => {
             try {
+                // Avoid serialization issues while transferring data from puppeteer to node
                 const d = {
                     result: details.result,
                     module: details.module,
@@ -62,7 +63,6 @@
 
         QUnit.done( ( details ) => {
             try {
-                debugger;
                 const t = details.tests.map( ( { message, module, name } ) => {
                     return {
                         message,

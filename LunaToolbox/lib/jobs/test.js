@@ -1,7 +1,7 @@
 const puppeteer = require( 'puppeteer' );
-// const path = require( 'path' );
 const chalk = require( 'chalk' );
 const execa = require( 'execa' );
+const express = require( 'express' );
 const { Paths } = require( '../defines' );
 
 let paths;
@@ -9,19 +9,12 @@ let paths;
 async function runTests() {
     let testCounter = 0;
     console.log( '', chalk.green.bold( 'Run Bridge tests...' ));
-    // const server = execa( 'ws', ['-p', '9000'], { cwd: path.join( __dirname, '../../../Tests/Runner' ) });
-    const server = execa( 'ws', ['-p', '9005'], { cwd: '/bridge/Tests/Runner' });
-    // server.stdout.pipe( process.stdout );
 
-    const browser = await puppeteer.launch({
-        args: [
-            '--no-sandbox',
-            '--disable-setuid-sandbox',
-            '--disable-web-security'
-        ],
-        // devtools: true,
-        // headless: false
-    });
+    const app = express();
+    app.use( express.static( paths.Bridge.bridgeTests ));
+    const server = app.listen( 8080 );
+
+    const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security'] });
     const page = await browser.newPage();
 
     await page.exposeFunction( 'onTestResult', ( details ) => {
@@ -35,22 +28,21 @@ async function runTests() {
         console.log( '', chalk.green.bold( `Passed: ${details.passed}` ));
         console.log( '', chalk.red.bold( `Failed: ${details.failed}` ));
 
-        if ( details.failed > 0 ) {
-            details.tests.forEach(( testLog ) => {
-                console.log( '', chalk.red.bold( `${testLog.module} -> ${testLog.name}` ));
-                console.log( testLog.message );
-            });
-
-            throw new Error( 'Some tests failed.' );
-        }
+        details.tests.forEach(( testLog ) => {
+            console.log( '', chalk.red.bold( `${testLog.module} -> ${testLog.name}` ));
+            console.log( testLog.message );
+        });
 
         await page.close();
         await browser.close();
-        server.cancel();
+        server.close();
+
+        if ( details.failed > 0 ) {
+            throw new Error( 'Some tests failed.' );
+        }
     });
 
-    // await page.goto( `file:///${path.join( __dirname, '../../../Tests/Runner/', 'index.html' )}?moduleId=9f1b120d` );
-    await page.goto( 'http://127.0.0.1:9005' );
+    await page.goto( 'http://127.0.0.1:8080' );
 }
 
 async function compileBridgeTests() {

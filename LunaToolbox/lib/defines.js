@@ -23,6 +23,7 @@ class Paths {
         this.Bridge = {
             bridgeSln: path.join( this.bridgePath, 'Bridge.sln' ),
             bridgeDevSln: path.join( this.bridgePath, 'Bridge.Dev.sln' ),
+            bridgeTests: path.join( this.bridgePath, './Tests/Runner' ),
             assemblyInfo: path.join( this.bridgePath, '.build/common/CommonAssemblyInfo.cs' ),
             nugetBuildPackageTargets: path.join( this.bridgePath, '.build/common/NuGet.Build.Package.targets' ),
             nugetTempDir: path.join( this.bridgePath, '.build/packages/' ),
