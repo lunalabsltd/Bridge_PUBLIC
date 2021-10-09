@@ -21,7 +21,7 @@ async function promptForPaths() {
             name: 'lunaPath',
             message: 'Provide full path to luna folder',
             default: './',
-            validate: async ( value ) => {
+            validate: async( value ) => {
                 try {
                     await fs.promises.access( path.join( value, 'LunaDevelopment.sln' ), fs.constants.R_OK );
                     return true;
@@ -35,7 +35,7 @@ async function promptForPaths() {
             name: 'bridgePath',
             message: 'Provide full path to Bridge folder',
             default: './',
-            validate: async ( value ) => {
+            validate: async( value ) => {
                 try {
                     await fs.promises.access( path.join( value, 'Bridge.sln' ), fs.constants.R_OK );
                     return true;
@@ -57,7 +57,7 @@ async function updateConfig() {
     const pathsRaw = JSON.stringify( paths );
     await ensureConfigDirExists();
 
-    await fs.promises.writeFile( configPath, pathsRaw, { encoding: 'utf8' });
+    await fs.promises.writeFile( configPath, pathsRaw, { encoding: 'utf8' } );
 }
 
 async function getConfig() {
@@ -69,20 +69,20 @@ async function getConfig() {
 function getConfigCI() {
     return {
         bridgePath: path.join( __dirname, '../../..' ),
-        lunaPath: ''
+        lunaPath: '',
     };
 }
 
 async function validateConfig() {
     try {
         const { lunaPath, bridgePath } = await getConfig();
-        const isLunaPathValid = fs.promises.access( path.join( lunaPath, 'LunaDevelopment.sln' ));
-        const isBridgePathValid = fs.promises.access( path.join( bridgePath, 'Bridge.sln' ));
+        const isLunaPathValid = fs.promises.access( path.join( lunaPath, 'LunaDevelopment.sln' ) );
+        const isBridgePathValid = fs.promises.access( path.join( bridgePath, 'Bridge.sln' ) );
 
         return isBridgePathValid && isLunaPathValid;
     } catch ( error ) {
-        console.log( '', chalk.yellow.bold( 'Your config file is corrupted or does not exists' ));
-        console.log( '', chalk.yellow.bold( 'Let\'s create a new one' ));
+        console.log( '', chalk.yellow.bold( 'Your config file is corrupted or does not exists' ) );
+        console.log( '', chalk.yellow.bold( 'Let\'s create a new one' ) );
         await updateConfig();
 
         return true;

@@ -1,8 +1,8 @@
 const chalk = require( 'chalk' );
 const {
-    build, validateConfig, getConfig, getConfigCI, test
-} = require( './jobs' );
-const optionsParser = require( './optionsParser' );
+    build, validateConfig, getConfig, getConfigCI, test,
+} = require( './jobs.js' );
+const optionsParser = require( './optionsParser.js' );
 
 function getTask( options ) {
     if ( options.test ) {
@@ -26,9 +26,9 @@ async function cli( args ) {
         const task = getTask( options );
         await task( options, config );
 
-        console.log( '', chalk.green.bold( 'DONE' ));
+        console.log( '', chalk.green.bold( 'DONE' ) );
     } catch ( e ) {
-        console.log( '', chalk.red.bold( 'ERROR:' ));
+        console.log( '', chalk.red.bold( 'ERROR:' ) );
         console.log( e.message );
         process.exit( 1 );
     }

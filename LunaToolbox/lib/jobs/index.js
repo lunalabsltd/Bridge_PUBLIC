@@ -1,8 +1,8 @@
-const { build } = require( './build' );
-const { test } = require( './test' );
+const { build } = require( './build.js' );
+const { test } = require( './test.js' );
 const {
-    updateConfig, validateConfig, getConfig, getConfigCI
-} = require( './config' );
+    updateConfig, validateConfig, getConfig, getConfigCI,
+} = require( './config.js' );
 
 module.exports = {
     build,

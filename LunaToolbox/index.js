@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-require( './lib/cli' ).cli( process.argv );
+require( './lib/cli.js' ).cli( process.argv );

@@ -1,7 +1,7 @@
 const arg = require( 'arg' );
 
 async function parseArgs( rawArgs ) {
-    const args = arg({
+    const args = arg( {
         '--build': Boolean,
         '--test': Boolean,
         '--bridge-version': String,
@@ -12,14 +12,14 @@ async function parseArgs( rawArgs ) {
         '-v': '--bridge-version',
     }, {
         argv: rawArgs.slice( 2 ),
-    });
+    } );
 
     return {
-        build: args['--build'] || false,
-        test: args['--test'] || false,
-        ci: args['--ci'] || false,
-        debug: args['--debug'] || false,
-        bridgeVersion: args['--bridge-version'] || null,
+        build: args[ '--build' ] || false,
+        test: args[ '--test' ] || false,
+        ci: args[ '--ci' ] || false,
+        debug: args[ '--debug' ] || false,
+        bridgeVersion: args[ '--bridge-version' ] || null,
         targetDirectory: process.cwd(),
     };
 }
