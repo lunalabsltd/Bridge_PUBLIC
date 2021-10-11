@@ -73,25 +73,29 @@ function getConfigCI() {
     };
 }
 
-async function validateConfig() {
+async function tryGetConfig( { ci = false } ) {
+    if ( ci ) {
+        return getConfigCI();
+    }
+
     try {
         const { lunaPath, bridgePath } = await getConfig();
-        const isLunaPathValid = fs.promises.access( path.join( lunaPath, 'LunaDevelopment.sln' ) );
-        const isBridgePathValid = fs.promises.access( path.join( bridgePath, 'Bridge.sln' ) );
+        fs.promises.access( path.join( lunaPath, 'LunaDevelopment.sln' ) );
+        fs.promises.access( path.join( bridgePath, 'Bridge.sln' ) );
 
-        return isBridgePathValid && isLunaPathValid;
+        return { lunaPath, bridgePath };
     } catch ( error ) {
         console.log( '', chalk.yellow.bold( 'Your config file is corrupted or does not exists' ) );
         console.log( '', chalk.yellow.bold( 'Let\'s create a new one' ) );
         await updateConfig();
 
-        return true;
+        return getConfig();
     }
 }
 
 module.exports = {
     updateConfig,
-    validateConfig,
+    tryGetConfig,
     getConfig,
     getConfigCI,
 };

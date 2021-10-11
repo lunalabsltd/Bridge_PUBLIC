@@ -1,14 +1,14 @@
 const { build } = require( './build.js' );
 const { test } = require( './test.js' );
 const {
-    updateConfig, validateConfig, getConfig, getConfigCI,
+    updateConfig, tryGetConfig, getConfig, getConfigCI,
 } = require( './config.js' );
 
 module.exports = {
     build,
     test,
     updateConfig,
-    validateConfig,
+    tryGetConfig,
     getConfig,
     getConfigCI,
 };
