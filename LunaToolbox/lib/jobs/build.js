@@ -54,7 +54,7 @@ async function cleanUpOldNuggets( paths ) {
 
 async function cleanUpOldDependencies( paths ) {
     await cleanUpOldNuggets( paths );
-    const dirsToDelete = await getDirsToDelete( paths.LunaCompiler.lunaCompilerPackages );
+    const dirsToDelete = await getDirsToDelete( paths.LunaCompiler.lunaCompilerPackages, paths );
     const deletePromises = dirsToDelete.map(
         ( dir ) => fs.promises.rmdir(
             path.join( paths.LunaCompiler.lunaCompilerPackages, dir.name ),

@@ -73,7 +73,7 @@ function getConfigCI() {
     };
 }
 
-async function tryGetConfig( { ci = false } ) {
+async function tryGetConfig( ci = false ) {
     if ( ci ) {
         return getConfigCI();
     }

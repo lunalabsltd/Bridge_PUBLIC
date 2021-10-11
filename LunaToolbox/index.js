@@ -13,7 +13,7 @@ program.version( '0.1.0' );
 program
     .command( 'build' )
     .description( 'Compile and setup up Bridge to Luna solution' )
-    .option( '-bv, --bridgeVersion', 'Update version for Bridge', null ) // it should be argument
+    .option( '-bv, --bridgeVersion [bridgeVersion]', 'Update version for Bridge', null ) // it should be argument
     .action( async( options ) => {
         const config = await tryGetConfig();
 
@@ -27,7 +27,7 @@ program
     .option( '--debug', 'Log debug info to console', false )
     .action( async( options ) => {
         const { ci } = options;
-        const config = await tryGetConfig( { ci } );
+        const config = await tryGetConfig( ci );
 
         await test( options, config );
     } );
