@@ -6,7 +6,7 @@ const { Paths } = require( '../defines.js' );
 
 let paths;
 
-async function runTests( isLoggingEnabled ) {
+async function runTests( options ) {
     return new Promise( ( resolve, reject ) => {
         ( async() => {
             let testCounter = 0;
@@ -14,13 +14,13 @@ async function runTests( isLoggingEnabled ) {
 
             const app = express();
             app.use( express.static( paths.Bridge.bridgeTests ) );
-            const server = app.listen( 8080 );
+            const server = app.listen( options.port );
 
             const browser = await puppeteer.launch( { args: [ '--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security' ] } );
             const page = await browser.newPage();
 
             await page.exposeFunction( 'onTestResult', ( details ) => {
-                if ( isLoggingEnabled ) {
+                if ( options.debug ) {
                     testCounter++;
                     const result = `${testCounter}: ${details.result ? 'PASSED' : 'FAILED'}   ${details.module} -> ${details.name}`;
                     console.log( result );
@@ -42,7 +42,6 @@ async function runTests( isLoggingEnabled ) {
                 server.close();
 
                 if ( details.failed > 0 ) {
-                    // throw new Error( 'Some tests failed.' );
                     reject( new Error( 'Some tests failed.' ) );
                     return;
                 }
@@ -73,14 +72,30 @@ async function restoreNugets() {
     await execa( 'nuget', [ 'restore', paths.Bridge.bridgeDevSln ] );
 }
 
+function runLocalServer( options ) {
+    console.log( '', chalk.green.bold( `Starting local server on: http://localhost:${options.port}` ) );
+
+    const app = express();
+    app.use( express.static( paths.Bridge.bridgeTests ) );
+    app.listen( options.port );
+
+    console.log( 'Ctrl+C to stop server' );
+}
+
 async function test( options, config ) {
     paths = new Paths( config );
 
-    const isLoggingEnabled = options.debug || false;
+    if ( options.server ) {
+        runLocalServer( options );
+        return;
+    }
 
-    await restoreNugets();
-    await compileBridgeTests();
-    await runTests( isLoggingEnabled );
+    if ( options.recompile ) {
+        await restoreNugets();
+        await compileBridgeTests();
+    }
+
+    await runTests( options );
 }
 
 module.exports = {
