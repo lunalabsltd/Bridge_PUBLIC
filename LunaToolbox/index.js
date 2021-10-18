@@ -16,7 +16,6 @@ program
     .option( '-bv, --bridgeVersion [bridgeVersion]', 'Update version for Bridge', null )
     .action( async( options ) => {
         const config = await tryGetConfig();
-
         await build( options, config );
     } );
 
@@ -28,10 +27,10 @@ program
     .option( '-s, --server', 'Run local web-server for test debug', false )
     .option( '-p, --port [port]', 'Port to run local web-server on', 8080 )
     .option( '-nc, --no-recompile', 'Run tests without Bridge recompile', false )
+    .option( '-nd, --no-docker', 'Run tests outside Docker container (not recommended)', false )
     .action( async( options ) => {
         const { ci } = options;
         const config = await tryGetConfig( ci );
-
         await test( options, config );
     } );
 
