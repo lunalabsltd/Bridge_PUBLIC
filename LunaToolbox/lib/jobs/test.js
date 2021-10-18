@@ -214,24 +214,29 @@ function buildLtbDockerCommand( options ) {
 }
 
 async function test( options, config ) {
-    const paths = new Paths( config );
+    try {
+        const paths = new Paths( config );
 
-    if ( options.docker ) {
-        await runDockerContainer( options, paths );
-        return;
+        if ( options.docker ) {
+            await runDockerContainer( options, paths );
+            return;
+        }
+
+        if ( options.recompile ) {
+            await restoreNugets( paths );
+            await compileBridgeTests( paths );
+        }
+
+        if ( options.server ) {
+            runDevServer( options, paths );
+            return;
+        }
+
+        await runTests( options, paths );
+    } catch ( e ) {
+        console.log( '', chalk.red.bold( e.message ) );
+        console.log( e.stack );
     }
-
-    if ( options.recompile ) {
-        await restoreNugets( paths );
-        await compileBridgeTests( paths );
-    }
-
-    if ( options.server ) {
-        runDevServer( options, paths );
-        return;
-    }
-
-    await runTests( options, paths );
 }
 
 module.exports = {

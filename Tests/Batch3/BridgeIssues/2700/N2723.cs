@@ -5,11 +5,11 @@ using Base2723 = Problem2723.Classes2723.A2723;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
-    [Category(Constants.MODULE_ISSUES)]
-    [TestFixture(TestNameFormat = "#2723 - {0}")]
+    // [Category(Constants.MODULE_ISSUES)]
+    // [TestFixture(TestNameFormat = "#2723 - {0}")]
     public class Bridge2723
     {
-        [Test(ExpectedCount = 1)]
+        // [Test(ExpectedCount = 1)]
         public static void TestAmbigiousSymbols()
         {
             Derived2723.Problem2723 problem = new Derived2723.Problem2723();
