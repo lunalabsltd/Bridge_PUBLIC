@@ -30,4 +30,4 @@ jobs:
 
       - name: Run Docker tests
         run: docker run -t tests ltb test --ci -nd
-        timeout-minutes: 25
+        timeout-minutes: 100
