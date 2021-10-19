@@ -15,12 +15,10 @@ jobs:
           node-version: '12.x'
 
       - name: Install packages
-        working-directory: $GITHUB_WORKSPACE/LunaToolbox
-        run: npm install
+        run: cd LunaToolbox && npm install
 
       - name: Run eslint
-        working-directory: $GITHUB_WORKSPACE/LunaToolbox
-        run: npm run eslint
+        run: cd LunaToolbox && npm run eslint
 
   tests:
     runs-on: ubuntu-latest
