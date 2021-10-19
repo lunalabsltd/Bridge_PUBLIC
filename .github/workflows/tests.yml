@@ -29,5 +29,5 @@ jobs:
         run: docker build -t tests .
 
       - name: Run Docker tests
-        run: docker run -t tests ltb test --ci -nd
+        run: docker run -t tests ltb test --ci -nd -p 3331
         timeout-minutes: 100
