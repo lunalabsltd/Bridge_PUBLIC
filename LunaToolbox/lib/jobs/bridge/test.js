@@ -41,7 +41,7 @@ async function runTests( options, paths ) {
     } );
 
     await page.goto( `http://127.0.0.1:${options.port}` );
-    await page.waitForSelector( '#result-container > span', { timeout: 1000 * 60 * 90 } );
+    await page.waitForSelector( '#result-container > span', { timeout: 1000 * 60 * 15 } );
 
     await page.close();
     await browser.close();

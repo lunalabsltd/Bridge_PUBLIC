@@ -191,8 +191,6 @@ FakesAssemblies/
 *.nupkg
 Tests/**/App_Readme/
 /Tests/Runner/ClientTestHelper/Bridge.Test/
-# /Bridge/Resources/.generated/**/*.js
-# /Tests/Runner/**/*.js
 /Tests/Runner/**/*.ts
 /Tests/Runner/**/*.d.ts
 !/Tests/Runner/resources/
