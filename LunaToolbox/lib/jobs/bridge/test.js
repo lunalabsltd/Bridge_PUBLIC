@@ -14,10 +14,7 @@ async function runTests( options, paths ) {
 
     const server = runServer( options, paths );
 
-    const browser = await puppeteer.launch( {
-        args: [ '--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security' ],
-        // headless: false,
-    } );
+    const browser = await puppeteer.launch( { args: [ '--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security' ] } );
     const [ page ] = await browser.pages();
 
     await page.exposeFunction( 'onTestResult', ( details ) => {
@@ -44,7 +41,7 @@ async function runTests( options, paths ) {
     } );
 
     await page.goto( `http://127.0.0.1:${options.port}` );
-    await page.waitForSelector( '#result-container > span', { timeout: 1000 * 60 * 15 } );
+    await page.waitForSelector( '#result-container > span', { timeout: 1000 * 60 * 25 } );
 
     await page.close();
     await browser.close();
