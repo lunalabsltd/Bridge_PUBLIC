@@ -23,14 +23,6 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-      - name: Cleanup
-        working-directory: /
-        run: |
-          # Kill all potential leftovers from other jobs
-          docker kill $(docker ps -q) || true
-          mkdir -p $GITHUB_WORKSPACE
-          sudo rm -rf $GITHUB_WORKSPACE/{*,.*} || true
-
       - uses: actions/checkout@v2
 
       - name: Build Docker container
