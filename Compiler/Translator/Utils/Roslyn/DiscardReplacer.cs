@@ -29,6 +29,9 @@ namespace Bridge.Translator
                     if (arg.Expression is IdentifierNameSyntax ins && ins.Identifier.ValueText == DISCARD_IDENTIFIER)
                     {
                         var si = model.GetSymbolInfo(arg.Expression);
+                        // Added try catch to handle Mono issue
+                        // By some reason it can't find value "Discard" for enum SymbolKind
+                        // and it fails only if si.Symbol.Kind is SymbolKind.Discard
                         try
                         {
                             return si.Symbol == null || si.Symbol.Kind == SymbolKind.Discard;
@@ -49,6 +52,9 @@ namespace Bridge.Translator
                     if (assignment.Left is IdentifierNameSyntax ins && ins.Identifier.ValueText == DISCARD_IDENTIFIER)
                     {
                         var si = model.GetSymbolInfo(assignment.Left);
+                        // Added try catch to handle Mono issue
+                        // By some reason it can't find value "Discard" for enum SymbolKind
+                        // and it fails only if si.Symbol.Kind is SymbolKind.Discard
                         try
                         {
                             return si.Symbol == null || si.Symbol.Kind == SymbolKind.Discard;

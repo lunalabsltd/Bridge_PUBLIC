@@ -5,6 +5,10 @@ using Base2723 = Problem2723.Classes2723.A2723;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
+    // FIXME: Bridge 2723 issue still reprodusable for Mono runtime (MacOS and Linux) and it's not on CLR (Windows)
+    // https://github.com/bridgedotnet/Bridge/issues/2723
+    // that's why test aren't included in test run for now
+
     // [Category(Constants.MODULE_ISSUES)]
     // [TestFixture(TestNameFormat = "#2723 - {0}")]
     public class Bridge2723
