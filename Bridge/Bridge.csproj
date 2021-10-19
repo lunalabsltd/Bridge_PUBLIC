@@ -312,7 +312,7 @@
     <Compile Include="shared\System\IO\EndOfStreamException.cs" />
     <Compile Include="shared\System\IO\File.cs" />
     <Compile Include="shared\System\IO\FileMode.cs" />
-    <Compile Include="System\IO\filestream.cs" />
+    <Compile Include="System\IO\Filestream.cs" />
     <Compile Include="shared\System\IO\IOException.cs" />
     <Compile Include="shared\System\IO\ReadLinesIterator.cs" />
     <Compile Include="shared\System\IO\SeekOrigin.cs" />
