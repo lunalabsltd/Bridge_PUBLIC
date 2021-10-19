@@ -3,7 +3,7 @@ const chalk = require( 'chalk' );
 const execa = require( 'execa' );
 const { spawn } = require( 'child_process' );
 const express = require( 'express' );
-const { Paths } = require( '../defines.js' );
+const { Paths } = require( '../../defines.js' );
 
 const SUCCESS_EXIT_CODE = 0;
 const BRIDGE_LTB_TAG = 'bridge-ltb';

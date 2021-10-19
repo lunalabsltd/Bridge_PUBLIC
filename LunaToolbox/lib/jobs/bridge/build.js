@@ -4,7 +4,7 @@ const path = require( 'path' );
 const fs = require( 'fs' );
 const replace = require( 'replace-in-file' );
 const inquirer = require( 'inquirer' );
-const { Paths, Regex, Messages } = require( '../defines.js' );
+const { Paths, Regex, Messages } = require( '../../defines.js' );
 
 async function updateBridgeVersion( options, paths ) {
     const assemblyInfoOptions = {
