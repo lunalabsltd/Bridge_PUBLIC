@@ -205,6 +205,7 @@ function buildLtbDockerCommand( options ) {
 
     command.push( '--ci' );
     command.push( '-p' );
+    command.push( '-nd' );
     command.push( options.port );
 
     return command;
