@@ -195,6 +195,7 @@ Tests/**/App_Readme/
 /Tests/Runner/**/*.js
 /Tests/Runner/**/*.ts
 /Tests/Runner/**/*.d.ts
+!/Tests/Runner/resources/
 /Bridge.Sandbox.sln
 /.build/packages/*.nupkg
 /.build/packages/*.exe

@@ -15,19 +15,19 @@ jobs:
           node-version: '12.x'
 
       - name: Install packages
-        working-directory: /LunaToolbox
+        working-directory: $GITHUB_WORKSPACE/LunaToolbox
         run: npm install
 
       - name: Run eslint
-        working-directory: /LunaToolbox
+        working-directory: $GITHUB_WORKSPACE/LunaToolbox
         run: npm run eslint
 
-  build:
+  tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
-      - name: Build Docker
+      - name: Build Docker container
         run: docker build -t tests .
 
       - name: Run Docker tests
