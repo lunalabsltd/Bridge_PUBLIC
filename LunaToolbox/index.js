@@ -2,6 +2,7 @@
 
 const { Command } = require( 'commander' );
 const {
+    init,
     test,
     build,
     tryGetConfig,
@@ -9,6 +10,12 @@ const {
 
 const program = new Command();
 program.version( '0.1.0' );
+
+program
+    .command( 'init' )
+    .action( async() => {
+        await init();
+    } );
 
 program
     .command( 'build' )
