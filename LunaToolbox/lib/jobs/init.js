@@ -7,10 +7,13 @@ const MAC_OS = 'darwin';
 const WINDOWS = 'windows';
 const MAC_OS_XBUILD_VERSION_PATH = '/Library/Frameworks/Mono.framework/Versions/6.12.0/lib/mono/xbuild';
 const LINUX_XBUILD_VERSION_PATH = '/usr/lib/mono/xbuild';
+const WINDOWS_DOCKER_INSTALL_LINK = 'https://docs.docker.com/desktop/mac/install/';
+const MAC_OS_DOCKER_INSTALL_LINK = 'https://docs.docker.com/desktop/mac/install/';
 
 async function init() {
     await updateMonoXbuildFolder();
     await updateConfig();
+    await checkIsDockerInstalled();
 }
 
 async function updateMonoXbuildFolder() {
@@ -28,10 +31,21 @@ async function updateMonoXbuildFolder() {
         await execa.command( `sudo ln -s ${path.join( baseXbuildPath, '14.0', 'bin' )} ${path.join( baseXbuildPath, '15.0' )} ` );
     } catch ( e ) {
         if ( e.exitCode === 1 ) {
-            console.log( 'Looks like you have patched Mono already' );
+            console.log( '', chalk.green.bold( 'You have patched Mono already' ) );
         } else {
             console.log( e );
         }
+    }
+}
+
+async function checkIsDockerInstalled() {
+    try {
+        await execa( 'docker', [ '--version' ] );
+        console.log( '', chalk.green.bold( 'You have Docker installed already' ) );
+    } catch ( e ) {
+        const link = process.platform === MAC_OS ? MAC_OS_DOCKER_INSTALL_LINK : WINDOWS_DOCKER_INSTALL_LINK;
+        console.log( '', chalk.yellow.bold( 'Looks like you have no docker installed' ) );
+        console.log( `Please, follow: ${link} to install Docker desktop` );
     }
 }
 
