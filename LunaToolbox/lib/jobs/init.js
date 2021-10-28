@@ -4,7 +4,7 @@ const chalk = require( 'chalk' );
 const { updateConfig } = require( './config.js' );
 
 const MAC_OS = 'darwin';
-const WINDOWS = 'windows';
+const WINDOWS = 'win32';
 const MAC_OS_XBUILD_VERSION_PATH = '/Library/Frameworks/Mono.framework/Versions/6.12.0/lib/mono/xbuild';
 const LINUX_XBUILD_VERSION_PATH = '/usr/lib/mono/xbuild';
 const WINDOWS_DOCKER_INSTALL_LINK = 'https://docs.docker.com/desktop/mac/install/';
