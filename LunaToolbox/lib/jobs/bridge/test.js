@@ -75,8 +75,6 @@ async function runDockerContainer( options, paths ) {
     await dockerBuild( paths );
     const ltbDockerCommand = buildLtbDockerCommand( options );
     await dockerRun( options, ltbDockerCommand );
-    await dockerRemoveContainers();
-    await dockerRemoveImageByTag();
 }
 
 async function dockerBuild( paths ) {
@@ -117,6 +115,11 @@ async function dockerRun( { port }, command ) {
             }
         } );
     } );
+}
+
+async function cleanUpDocker() {
+    await dockerRemoveContainers();
+    await dockerRemoveImageByTag();
 }
 
 async function dockerRemoveContainers() {
@@ -216,8 +219,14 @@ async function test( options, config ) {
         const paths = new Paths( config );
 
         if ( options.docker ) {
-            await runDockerContainer( options, paths );
-            return;
+            try {
+                await runDockerContainer( options, paths );
+                return;
+            } catch ( error ) {
+                console.log( error );
+            } finally {
+                await cleanUpDocker( paths );
+            }
         }
 
         if ( options.recompile ) {
