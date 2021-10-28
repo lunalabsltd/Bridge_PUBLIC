@@ -16,6 +16,9 @@ async function init() {
     await checkIsDockerInstalled();
 }
 
+// We've encountered the problem with Mono msbuild, that it tries to look up for .targets files
+// in wrong path. So, we decided to copy proper .targets files to upper version of Mono.
+// It should not broke your Mono installation for other projects
 async function updateMonoXbuildFolder() {
     if ( process.platform === WINDOWS ) {
         return;
