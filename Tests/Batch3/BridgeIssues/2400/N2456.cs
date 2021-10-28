@@ -21,6 +21,8 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         [Test]
         public static void TestIsArrayFromIFrame()
         {
+            Bridge.Script.Write("window.frames = window;"); // Fix for chromium due it's bug
+
             var frame = new HTMLIFrameElement();
             Document.Body.AppendChild(frame);
 
@@ -40,6 +42,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             }
             finally
             {
+                Bridge.Script.Write("window.frames = [];"); // Fix for chromium due it's bug
                 if (frame != null && frame.ParentNode != null)
                 {
                     frame.ParentNode.RemoveChild(frame);

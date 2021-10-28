@@ -196,7 +196,7 @@ Tests/**/App_Readme/
 /Tests/Runner/**/*.d.ts
 !/Tests/Runner/resources
 !/Tests/Runner/resources/test.js
-!/Tests/Runner/resources/qunit/
+!/Tests/Runner/resources/qunit/qunit.d.ts
 /Bridge.Sandbox.sln
 /.build/packages/*.nupkg
 /.build/packages/*.exe
