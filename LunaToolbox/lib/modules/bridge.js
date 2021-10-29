@@ -6,10 +6,10 @@ const {
     test,
     build,
     tryGetConfig,
-} = require( './lib/jobs/index.js' );
+} = require( '../jobs/index.js' );
 
-const program = new Command();
-program.version( '0.1.0' );
+const program = new Command( 'eba.bridge' );
+program.version( '1.0.0' );
 
 program
     .command( 'init' )
