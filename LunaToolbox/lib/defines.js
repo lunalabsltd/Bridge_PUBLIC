@@ -2,19 +2,6 @@
 
 const path = require( 'path' );
 
-const Messages = Object.freeze( {
-    bridgeVersion: 'Enter new version for Bridge or press enter to stay on current $currentBridgeVersion (postfix \'-luna\' will be added automatically)',
-    bridgeVersionValidationError: 'Please, enter valid version number (ex. "17.9.11")',
-} );
-
-const Regex = Object.freeze( {
-    csprojVersion: /(?<=packages\\Bridge\.(Core|Min)\.)([a-zA-Z0-9-.]*)[^\\]/g,
-    nugetConfigVersion: /(?<=id="Bridge\.(Min|Core)" version=")([a-zA-Z0-9-.]*)[^"]/g,
-    assemblyInformationalVersion: /(?<=AssemblyInformationalVersion\(")([a-zA-Z0-9-.]*)[^"]/g,
-    defaultPackageVersion: /(?<=<DefaultPackageVersion>)([a-zA-Z0-9-.]*)[^<]/g,
-    nugetConfigPackagesPath: /(?<=<add key="Luna" value=")([a-zA-Z0-9-./]*)[^"]/g,
-} );
-
 class Paths {
     constructor( { lunaPath, bridgePath } ) {
         this.lunaPath = lunaPath;
@@ -77,6 +64,4 @@ class Paths {
 
 module.exports = {
     Paths,
-    Regex,
-    Messages,
 };

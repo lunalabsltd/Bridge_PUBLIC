@@ -4,17 +4,19 @@ const path = require( 'path' );
 const fs = require( 'fs' );
 const replace = require( 'replace-in-file' );
 const inquirer = require( 'inquirer' );
-const { Paths, Regex, Messages } = require( '../../defines.js' );
+const { Paths } = require( '../../defines.js' );
+const { regex } = require( '../../defines/bridge/regex.js' );
+const { messages } = require( '../../defines/bridge/messages.js' );
 
 async function updateBridgeVersion( options, paths ) {
     const assemblyInfoOptions = {
         files: paths.Bridge.assemblyInfo,
-        from: Regex.assemblyInformationalVersion,
+        from: regex.assemblyInformationalVersion,
         to: options.bridgeVersion,
     };
     const configReplaceOptions = {
         files: paths.Bridge.nugetBuildPackageTargets,
-        from: Regex.defaultPackageVersion,
+        from: regex.defaultPackageVersion,
         to: options.bridgeVersion,
     };
 
@@ -24,7 +26,7 @@ async function updateBridgeVersion( options, paths ) {
 
 async function getCurrentBridgeVersion( paths ) {
     const versionInfoFile = await fs.promises.readFile( paths.Bridge.nugetBuildPackageTargets, { encoding: 'utf8' } );
-    const currentBridgeVersion = versionInfoFile.match( Regex.defaultPackageVersion );
+    const currentBridgeVersion = versionInfoFile.match( regex.defaultPackageVersion );
 
     return currentBridgeVersion && currentBridgeVersion[ 0 ];
 }
@@ -97,7 +99,7 @@ async function updateNugetSource( paths ) {
 
     const nugetSourceReplaceOptions = {
         files: paths.LunaCompiler.nugetConfig,
-        from: Regex.nugetConfigPackagesPath,
+        from: regex.nugetConfigPackagesPath,
         to: paths.Bridge.nugetTempDir,
     };
 
@@ -107,13 +109,13 @@ async function updateNugetSource( paths ) {
 async function updateVersionInConfigs( options, paths ) {
     const csprojReplaceOptions = {
         files: paths.LunaCompiler.csprojs,
-        from: Regex.csprojVersion,
+        from: regex.csprojVersion,
         to: options.bridgeVersion,
         allowEmptyPaths: true,
     };
     const configReplaceOptions = {
         files: paths.LunaCompiler.packagesConfigs,
-        from: Regex.nugetConfigVersion,
+        from: regex.nugetConfigVersion,
         to: options.bridgeVersion,
     };
 
@@ -123,12 +125,12 @@ async function updateVersionInConfigs( options, paths ) {
 async function updateVersionInVendorConfigs( options, paths ) {
     const csprojReplaceOptions = {
         files: paths.Vendor.csprojs,
-        from: Regex.csprojVersion,
+        from: regex.csprojVersion,
         to: options.bridgeVersion,
     };
     const configReplaceOptions = {
         files: paths.Vendor.packagesConfigs,
-        from: Regex.nugetConfigVersion,
+        from: regex.nugetConfigVersion,
         to: options.bridgeVersion,
     };
 
@@ -150,12 +152,12 @@ async function askForMissingOptions( options, paths ) {
         questions.push( {
             type: 'input',
             name: 'bridgeVersion',
-            message: Messages.bridgeVersion.replace( '$currentBridgeVersion', defaultBridgeVersion ),
+            message: messages.bridgeVersion.replace( '$currentBridgeVersion', defaultBridgeVersion ),
             default: defaultBridgeVersion,
             validate( value ) {
                 const pass = value.match( /\d+\.\d+\.\d+[a-zA-Z0-9.-]+/ );
 
-                return pass ? true : Messages.bridgeVersionValidationError;
+                return pass ? true : messages.bridgeVersionValidationError;
             },
         } );
     }
