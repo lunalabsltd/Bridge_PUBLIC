@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { Command } = require( 'commander' );
+const { Command, Option } = require( 'commander' );
 const {
     init,
     test,
@@ -29,7 +29,7 @@ program
 program
     .command( 'test' )
     .description( 'Compile and run Bridge tests' )
-    .option( '--ci', 'Use CI configuration', false )
+    .addOption( new Option( '--ci' ).default( false ).hideHelp() )
     .option( '--debug', 'Log debug info to console', false )
     .option( '-s, --server', 'Run local web-server for test debug', false )
     .option( '-p, --port [port]', 'Port to run local web-server on', 8080 )
