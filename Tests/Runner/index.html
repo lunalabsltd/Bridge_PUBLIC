@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -44,9 +45,49 @@
     <script src="TypeScript/Batch1/3_Classes.js"></script>
     <script src="TypeScript/Batch1/4_Functions.js"></script>
     <script src="TypeScript/Batch1/5_Generics.js"></script>
+    <script>
+        QUnit.log( ( details ) => {
+            try {
+                // Avoid serialization issues while transferring data from puppeteer to node
+                const d = {
+                    result: details.result,
+                    module: details.module,
+                    name: details.name,
+                }
+                window.onTestResult( d );
+            }
+            catch ( e ) {
+                console.log( e );
+            }
+        } );
+
+        QUnit.done( ( details ) => {
+            try {
+                const t = details.tests.map( ( { message, module, name } ) => {
+                    return {
+                        message,
+                        module,
+                        name
+                    }
+                } );
+                const d = {
+                    total: details.total,
+                    passed: details.passed,
+                    failed: details.failed,
+                    tests: t
+                };
+                ( async () => await window.onTestsDone( d ) )();
+            }
+            catch ( e ) {
+                console.log( e );
+            }
+        } );
+    </script>
 </head>
+
 <body>
     <div id="qunit"></div>
     <div id="qunit-fixture"></div>
 </body>
+
 </html>

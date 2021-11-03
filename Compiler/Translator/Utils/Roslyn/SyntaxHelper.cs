@@ -563,6 +563,8 @@ namespace Bridge.Translator
             }
         }
 
+        // FIXME: Bridge 2723 issue still reprodusable for Mono runtime (MacOS and Linux) and it's not on CLR (Windows)
+        // https://github.com/bridgedotnet/Bridge/issues/2723
         public static string GetFullyQualifiedNameAndValidate(this ISymbol symbol, SemanticModel semanticModel, int position, bool appenTypeArgs = true)
         {
             var name = symbol.FullyQualifiedName(appenTypeArgs);

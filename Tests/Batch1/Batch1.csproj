@@ -229,7 +229,7 @@
     <Compile Include="Reflection\TypeSystemLanguageSupportTests.cs" />
     <Compile Include="Reflection\TypeSystemTests.cs" />
     <Compile Include="Serialization\JsonTests.cs" />
-    <Compile Include="SimpleTypes\JsStringTests.cs" />
+    <Compile Include="SimpleTypes\JSStringTests.cs" />
     <Compile Include="Text\Encoding\ASCIIEncoding\ASCIIEncodingDecodeTests.cs" />
     <Compile Include="Text\Encoding\ASCIIEncoding\ASCIIEncodingGetMaxTests.cs" />
     <Compile Include="Text\Encoding\ASCIIEncoding\ASCIIEncodingEncodeTests.cs" />

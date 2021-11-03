@@ -1,0 +1,33 @@
+name: Bridge Tests
+
+on:
+  push
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      - name: Install packages
+        run: cd LunaToolbox && npm install
+
+      - name: Run eslint
+        run: cd LunaToolbox && npm run eslint
+
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build Docker container
+        run: docker build -t tests .
+
+      - name: Run Docker tests
+        run: docker run -t tests ltb test --ci -nd
+        timeout-minutes: 15

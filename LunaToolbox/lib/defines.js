@@ -2,26 +2,15 @@
 
 const path = require( 'path' );
 
-const Messages = Object.freeze({
-    bridgeVersion: 'Enter new version for Bridge or press enter to stay on current $currentBridgeVersion (postfix \'-luna\' will be added automatically)',
-    bridgeVersionValidationError: 'Please, enter valid version number (ex. "17.9.11")'
-});
-
-const Regex = Object.freeze({
-    csprojVersion: /(?<=packages\\Bridge\.(Core|Min)\.)([a-zA-Z0-9-.]*)[^\\]/g,
-    nugetConfigVersion: /(?<=id="Bridge\.(Min|Core)" version=")([a-zA-Z0-9-.]*)[^"]/g,
-    assemblyInformationalVersion: /(?<=AssemblyInformationalVersion\(")([a-zA-Z0-9-.]*)[^"]/g,
-    defaultPackageVersion: /(?<=<DefaultPackageVersion>)([a-zA-Z0-9-.]*)[^<]/g,
-    nugetConfigPackagesPath: /(?<=<add key="Luna" value=")([a-zA-Z0-9-./]*)[^"]/g,
-});
-
 class Paths {
-    constructor({ lunaPath, bridgePath }) {
+    constructor( { lunaPath, bridgePath } ) {
         this.lunaPath = lunaPath;
         this.bridgePath = bridgePath;
 
         this.Bridge = {
             bridgeSln: path.join( this.bridgePath, 'Bridge.sln' ),
+            bridgeDevSln: path.join( this.bridgePath, 'Bridge.Dev.sln' ),
+            bridgeTests: path.join( this.bridgePath, './Tests/Runner' ),
             assemblyInfo: path.join( this.bridgePath, '.build/common/CommonAssemblyInfo.cs' ),
             nugetBuildPackageTargets: path.join( this.bridgePath, '.build/common/NuGet.Build.Package.targets' ),
             nugetTempDir: path.join( this.bridgePath, '.build/packages/' ),
@@ -37,7 +26,7 @@ class Paths {
             lunaCompilerSln: path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/LunaCompiler.sln' ),
             lunaCompilerPackages: path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/packages' ),
             nugetConfig: path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/nuget.config' ),
-            packagesToCleanUp: ['Bridge.Core', 'Bridge.Min'],
+            packagesToCleanUp: [ 'Bridge.Core', 'Bridge.Min' ],
             csprojs: [
                 path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Scripts/Scripts.csproj' ),
                 path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Scripts/Scripts.csproj.template' ),
@@ -75,6 +64,4 @@ class Paths {
 
 module.exports = {
     Paths,
-    Regex,
-    Messages,
 };

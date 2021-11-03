@@ -1,4 +1,5 @@
 .idea
+.vscode/
 
 # Custom
 .DS_Store
@@ -78,7 +79,7 @@ _ReSharper*
 _NCrunch_*
 .*crunch*.local.xml
 
-# Installshield output folder 
+# Installshield output folder
 [Ee]xpress
 
 # DocProject is a documentation generator add-in
@@ -185,14 +186,17 @@ AutoTest.Net/
 
 # Microsoft Fakes
 FakesAssemblies/
-*.ts
-*.d.ts
+# *.ts
+# *.d.ts
 *.nupkg
 Tests/**/App_Readme/
-/Tests/Runner/Batch2/bridge.test.qunit.js
-/Tests/Runner/Batch3/bridge.test.qunit.js
-/Tests/Runner/Batch4/bridge.test.qunit.js
-/Tests/Runner/ClientTestHelper/Bridge.Test
+/Tests/Runner/**/*.js
+/Tests/Runner/ClientTestHelper/Bridge.Test/
+/Tests/Runner/**/*.ts
+/Tests/Runner/**/*.d.ts
+!/Tests/Runner/resources
+!/Tests/Runner/resources/test.js
+!/Tests/Runner/resources/qunit/qunit.d.ts
 /Bridge.Sandbox.sln
 /.build/packages/*.nupkg
 /.build/packages/*.exe
@@ -212,6 +216,7 @@ Tests/**/App_Readme/
 # y no work?
 # !/Bridge/Bridge/Resources/.generated/System/Diagnostics/Debug/*
 /Bridge.Dev.Sandbox.sln
+
+# LunaToolbox stuff
 LunaToolbox/node_modules
 LunaToolbox/.config
-LunaToolbox/package-lock.json
