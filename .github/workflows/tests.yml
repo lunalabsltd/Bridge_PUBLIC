@@ -29,5 +29,5 @@ jobs:
         run: docker build -t tests .
 
       - name: Run Docker tests
-        run: docker run -t tests ltb test --ci -nd
+        run: docker run -t tests eba.bridge test --ci -nd
         timeout-minutes: 15

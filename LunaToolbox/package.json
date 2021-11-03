@@ -9,8 +9,10 @@
     "eslint:fix": "eslint ./ --fix"
   },
   "bin": {
-    "luna-toolbox": "./index.js",
-    "ltb": "./index.js"
+    "eba.bridge": "./lib/modules/bridge.js",
+    "eba.luna": "./lib/modules/bridge.js",
+    "eba.git": "./lib/modules/bridge.js",
+    "eba.deobfuscator": "./lib/modules/bridge.js"
   },
   "author": "Luna Labs",
   "dependencies": {
