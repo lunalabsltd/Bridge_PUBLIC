@@ -68,7 +68,7 @@ async function cleanUpOldDependencies( paths ) {
 }
 
 async function copyNugets( paths ) {
-    await updateNugetSource();
+    await updateNugetSource( paths );
 
     const copyPromises = [];
     for ( let i = 0; i < paths.Bridge.compiledNugetDirs.length; i++ ) {
@@ -92,7 +92,7 @@ async function updateNugetSource( paths ) {
         await fs.promises.access( paths.LunaCompiler.nugetConfig, fs.constants.R_OK | fs.constants.W_OK );
     } catch ( error ) {
         await fs.promises.copyFile(
-            path.resolve( __dirname, '../templates/nuget.config' ),
+            path.resolve( __dirname, '../../templates/nuget.config' ),
             paths.LunaCompiler.nugetConfig
         );
     }
@@ -148,7 +148,7 @@ async function resolveNugetsVendorLibs( paths ) {
 async function askForMissingOptions( options, paths ) {
     const defaultBridgeVersion = await getCurrentBridgeVersion( paths );
     const questions = [];
-    if ( !defaultBridgeVersion ) {
+    if ( !options.bridgeVersion ) {
         questions.push( {
             type: 'input',
             name: 'bridgeVersion',
