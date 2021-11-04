@@ -68,7 +68,7 @@ async function cleanUpOldDependencies( paths ) {
 }
 
 async function copyNugets( paths ) {
-    await updateNugetSource();
+    await updateNugetSource( paths );
 
     const copyPromises = [];
     for ( let i = 0; i < paths.Bridge.compiledNugetDirs.length; i++ ) {
@@ -92,7 +92,7 @@ async function updateNugetSource( paths ) {
         await fs.promises.access( paths.LunaCompiler.nugetConfig, fs.constants.R_OK | fs.constants.W_OK );
     } catch ( error ) {
         await fs.promises.copyFile(
-            path.resolve( __dirname, '../templates/nuget.config' ),
+            path.resolve( __dirname, '../../templates/nuget.config' ),
             paths.LunaCompiler.nugetConfig
         );
     }
@@ -148,7 +148,7 @@ async function resolveNugetsVendorLibs( paths ) {
 async function askForMissingOptions( options, paths ) {
     const defaultBridgeVersion = await getCurrentBridgeVersion( paths );
     const questions = [];
-    if ( !defaultBridgeVersion ) {
+    if ( !options.bridgeVersion ) {
         questions.push( {
             type: 'input',
             name: 'bridgeVersion',
@@ -179,35 +179,35 @@ async function build( options, config ) {
     return new Listr( [
         {
             title: 'Clean up old dependencies',
-            task: async() => cleanUpOldDependencies( paths ),
+            task: async () => cleanUpOldDependencies( paths ),
         },
         {
             title: 'Update Bridge version in Bridge solution',
-            task: async() => updateBridgeVersion( completeOptions, paths ),
+            task: async () => updateBridgeVersion( completeOptions, paths ),
         },
         {
             title: 'Compile Bridge',
-            task: async() => compile( paths ),
+            task: async () => compile( paths ),
         },
         {
             title: 'Copy nuget packages',
-            task: async() => copyNugets( paths ),
+            task: async () => copyNugets( paths ),
         },
         {
             title: 'Update Bridge version in Luna Compiler',
-            task: async() => updateVersionInConfigs( completeOptions, paths ),
+            task: async () => updateVersionInConfigs( completeOptions, paths ),
         },
         {
             title: 'Update Bridge version in Vendor libs',
-            task: async() => updateVersionInVendorConfigs( completeOptions, paths ),
+            task: async () => updateVersionInVendorConfigs( completeOptions, paths ),
         },
         {
             title: 'Resolve Nuget dependencies for Luna Compiler',
-            task: async() => resolveNugetsLunaCompiler( paths ),
+            task: async () => resolveNugetsLunaCompiler( paths ),
         },
         {
             title: 'Resolve Nuget dependencies for Vendor libs',
-            task: async() => resolveNugetsVendorLibs( paths ),
+            task: async () => resolveNugetsVendorLibs( paths ),
         },
     ] ).run();
 }
