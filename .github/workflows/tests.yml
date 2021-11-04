@@ -7,9 +7,13 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
         with:
+          clean: true
           submodules: 'recursive'
+          token: ${{ github.token }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v1
@@ -25,9 +29,12 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
         with:
+          clean: true
           submodules: 'recursive'
+          token: ${{ github.token }}
 
       - name: Build Docker container
         run: docker build -t tests .
