@@ -30,7 +30,7 @@ namespace Bridge.Translator
                     {
                         var si = model.GetSymbolInfo(arg.Expression);
                         // Added try catch to handle Mono issue
-                        // By some reason it can't find value "Discard" for enum SymbolKind
+                        // Because of the Mono bug it resolves with wrong virtual property
                         // and it fails only if si.Symbol.Kind is SymbolKind.Discard
                         try
                         {
@@ -53,7 +53,7 @@ namespace Bridge.Translator
                     {
                         var si = model.GetSymbolInfo(assignment.Left);
                         // Added try catch to handle Mono issue
-                        // By some reason it can't find value "Discard" for enum SymbolKind
+                        // Because of the Mono bug it resolves with wrong virtual property
                         // and it fails only if si.Symbol.Kind is SymbolKind.Discard
                         try
                         {

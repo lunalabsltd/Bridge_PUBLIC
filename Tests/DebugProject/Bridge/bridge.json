@@ -1,0 +1,31 @@
+﻿{
+  "output": "bin\\CompiledJS\\",
+  "cleanOutputFolderBeforeBuild": true,
+  "outputFormatting": "Formatted",
+  "fileName": "code.js",
+  "outputBy": "Project",
+  "localesOutput": "locales",
+  "locales": "ru-RU;en-US;en-GB;nb-NO;es*",
+  "combineLocales": true,
+  "fileNameCasing": "lowercase",
+  "console": true,
+  "sourceMap": false,
+  "html": {
+    "disabled": true
+  },
+  "reflection": {
+    "disabled": true,
+    "target": "Inline"
+  },
+  "test": {
+    "skipCombine": true
+  },
+  "resources": [
+    {
+      "name": "bridge.meta.js",
+      "extract": false
+    }
+  ],
+  "ignoreDuplicateTypes": true,
+  "safeStructsInGenerics": true
+}

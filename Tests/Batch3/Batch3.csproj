@@ -858,6 +858,7 @@
     <Compile Include="BridgeIssues\3900\N3970.cs" />
     <Compile Include="BridgeIssues\3900\N3958.cs" />
     <Compile Include="BridgeIssues\TestBridgeIssues.cs" />
+    <Compile Include="Bugs\EN_886.cs" />
     <Compile Include="Utilities\BrowserHelper.cs" />
   </ItemGroup>
   <ItemGroup>
