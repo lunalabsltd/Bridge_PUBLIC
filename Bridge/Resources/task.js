@@ -365,25 +365,27 @@
             }
         },
 
-        continueWith: function (continuationAction, raise) {
-            var tcs = new System.Threading.Tasks.TaskCompletionSource(),
-                me = this,
-                fn = raise ? function () {
-                    tcs.setResult(continuationAction(me));
-                } : function () {
-                    try {
-                        tcs.setResult(continuationAction(me));
-                    } catch (e) {
-                        tcs.setException(System.Exception.create(e));
-                    }
-                };
+        setSynchronous: function( _synchrounous ) {
+            this._synchrounous = _synchrounous;
+        },
 
-            if (this.isCompleted()) {
-                //System.Threading.Tasks.Task.schedule(fn);
-                System.Threading.Tasks.Task.queue.push(fn);
-                System.Threading.Tasks.Task.runQueue();
+        continueWith: function (continuationAction, raise) {
+            const tcs = new System.Threading.Tasks.TaskCompletionSource();
+            const me = this;
+            const fn = raise ? function() {
+                tcs.setResult( continuationAction( me ) );
+            } : function() {
+                try {
+                    tcs.setResult( continuationAction( me ) );
+                } catch ( e ) {
+                    tcs.setException( System.Exception.create( e ) );
+                }
+            };
+
+            if ( this.isCompleted() ) {
+                this._synchrounous ? fn() : setTimeout( fn, 0 );
             } else {
-                this.callbacks.push(fn);
+                this.callbacks.push( fn );
             }
 
             return tcs.task;

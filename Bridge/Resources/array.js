@@ -678,35 +678,63 @@
         },
 
         resize: function (arr, newSize, val, T) {
-            if (newSize < 0) {
-                throw new System.ArgumentOutOfRangeException.$ctor3("newSize", newSize, "newSize cannot be less than 0.");
+            if ( newSize < 0 ) {
+                throw new System.ArgumentOutOfRangeException.$ctor3( 'newSize', newSize, 'newSize cannot be less than 0.' );
             }
 
-            var oldSize = 0,
-                isFn = Bridge.isFunction(val),
-                ref = arr.v;
+            let oldSize = 0;
+            const isFn = Bridge.isFunction( val );
+            let isStruct = false;
+            let ref = arr.v;
 
-            if (isFn) {
-                var v = val();
+            if ( !ref ) {
+                ref = new Array( newSize );
+            } else {
+                const oldArray = ref;
+                oldSize = oldArray.length;
+                ref = new Array( newSize );
+                const s = Math.min( oldSize, newSize );
 
-                if (!v || (!v.$kind && typeof v !== "object")) {
-                    isFn = false;
-                    val = v;
+                if ( s > 0 ) {
+                    const element = oldArray[ 0 ];
+                    // eslint-disable-next-line no-proto
+                    isStruct = ( element && element.__proto__.$kind === 'struct' );
+                    if ( isStruct ) {
+                        ref[ 0 ] = element.$clone();
+                    } else {
+                        ref[ 0 ] = element;
+                    }
+                }
+
+                for ( let i = 1; i < s; i++ ) {
+                    if ( isStruct ) {
+                        ref[ i ] = oldArray[ i ].$clone();
+                    } else {
+                        ref[ i ] = oldArray[ i ];
+                    }
                 }
             }
 
-            if (!ref) {
-                ref = System.Array.init(new Array(newSize), T);
-            } else {
-                oldSize = ref.length;
-                ref.length = newSize;
+            if ( newSize > oldSize ) {
+                const element = isFn ? val() : val;
+                // eslint-disable-next-line no-proto
+                isStruct = ( element && element.__proto__.$kind === 'struct' );
+                if ( isStruct ) {
+                    ref[ oldSize ] = element.$clone();
+                } else {
+                    ref[ oldSize ] = element;
+                }
             }
 
-            for (var i = oldSize; i < newSize; i++) {
-                ref[i] = isFn ? val() : val;
-            }
+            for ( let i = oldSize + 1; i < newSize; i++ ) {
+                let element = isFn ? val() : val;
 
-            ref.$s = [ref.length];
+                if ( isStruct ) {
+                    element = element.$clone();
+                }
+
+                ref[ i ] = element;
+            }
 
             arr.v = ref;
         },
