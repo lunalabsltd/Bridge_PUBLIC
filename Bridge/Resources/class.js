@@ -124,7 +124,9 @@
 
                                         set: function (value) {
                                             this[name] = value;
-                                        }
+                                        },
+
+                                        configurable: true,
                                     };
                                     Object.defineProperty(obj, alias, descriptor);
                                     aliases.push({ alias: alias, descriptor: descriptor });
