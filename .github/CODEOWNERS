@@ -1,1 +1,7 @@
-* @ilya-shablovsky @Tokatak @MakeevAlexey
+# Luna Playable Codeowners
+# Up-to-date info can be found here
+# https://github.com/lunalabsltd/integration/blob/develop/.github/CODEOWNERS
+# Global owners
+* @Tokatak @vladimir-tikhonov @ilya-shablovsky @GachiFixer @zhemchugovstepan
+# Additional info on codeowners can be found here:
+# https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-on-github/about-code-owners#example-of-a-codeowners-file
