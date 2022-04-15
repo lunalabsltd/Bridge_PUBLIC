@@ -1,33 +1,30 @@
 {
-  "name": "luna-toolbox",
-  "version": "0.1.0",
-  "description": "Simple CLI utility to build Luna Bridge",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "eslint": "eslint ./",
-    "eslint:fix": "eslint ./ --fix"
-  },
-  "bin": {
-    "eba.bridge": "./lib/modules/bridge.js",
-    "eba.luna": "./lib/modules/bridge.js",
-    "eba.git": "./lib/modules/bridge.js",
-    "eba.deobfuscator": "./lib/modules/bridge.js"
-  },
-  "author": "Luna Labs",
-  "dependencies": {
-    "babel-eslint": "^10.1.0",
-    "chalk": "^4.1.1",
-    "commander": "^8.2.0",
-    "eslint": "^7.26.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.22.1",
-    "execa": "^5.1.1",
-    "express": "^4.17.1",
-    "inquirer": "^8.1.1",
-    "listr": "^0.14.3",
-    "puppeteer": "^10.4.0",
-    "replace-in-file": "^6.2.0"
-  },
-  "devDependencies": {}
+    "name": "luna-toolbox",
+    "version": "0.1.0",
+    "description": "Simple CLI utility to build Luna Bridge",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "eslint": "eslint ./",
+        "eslint:fix": "eslint ./ --fix"
+    },
+    "bin": {
+        "eba.bridge": "./lib/modules/bridge.js"
+    },
+    "author": "Luna Labs",
+    "dependencies": {
+        "babel-eslint": "^10.1.0",
+        "chalk": "^4.1.1",
+        "commander": "^8.2.0",
+        "eslint": "^7.26.0",
+        "eslint-config-airbnb-base": "^14.2.1",
+        "eslint-plugin-import": "^2.22.1",
+        "execa": "^5.1.1",
+        "express": "^4.17.1",
+        "inquirer": "^8.1.1",
+        "listr": "^0.14.3",
+        "puppeteer": "^10.4.0",
+        "replace-in-file": "^6.2.0"
+    },
+    "devDependencies": {}
 }
