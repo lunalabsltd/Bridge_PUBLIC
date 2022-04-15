@@ -31,7 +31,7 @@ class Paths {
                 path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Scripts/Scripts.csproj' ),
                 path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Scripts/Scripts.csproj.template' ),
                 path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/UnityEngine/UnityEngine.csproj' ),
-                path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.ui/1.2.1/1.2.1.csproj' ),
+                path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.ui/1.2.1/UnityEngine.UI 1.2.1.csproj' ),
             ],
             packagesConfigs: [
                 path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Scripts/packages.config' ),
@@ -43,9 +43,10 @@ class Paths {
             csprojs: [
                 path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.dg.tweening/1.2.235/DOTween 1.2.235.csproj' ),
                 path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.ui/1.2.1/UnityEngine.UI 1.2.1.csproj' ),
-                path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.textmeshpro/1.3.0/1.3.0.csproj' ),
-                path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.textmeshpro/2.0.0/2.0.0.csproj' ),
-                path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.textmeshpro/3.0.0/3.0.0.csproj' ),
+                path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.textmeshpro/TextMeshPro 1.3.0/TextMeshPro 1.3.0.csproj' ),
+                path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.textmeshpro/TextMeshPro 2.0.0/TextMeshPro 2.0.0.csproj' ),
+                path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.textmeshpro/TextMeshPro 3.0.0/TextMeshPro 3.0.0.csproj' ),
+                path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.textmeshpro/TextMeshPro 3.0.6/TextMeshPro 3.0.6.csproj' ),
                 path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.cinemachine/2.2.9/2.2.9.csproj' ),
                 path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.cinemachine/2.3.4/2.3.4.csproj' ),
                 path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.cinemachine/2.4.0/2.4.0.csproj' ),
@@ -55,9 +56,10 @@ class Paths {
                 path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.cinemachine/2.2.9/packages.config' ),
                 path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.cinemachine/2.3.4/packages.config' ),
                 path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.cinemachine/2.4.0/packages.config' ),
-                path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.textmeshpro/1.3.0/packages.config' ),
-                path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.textmeshpro/2.0.0/packages.config' ),
-                path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.textmeshpro/3.0.0/packages.config' ),
+                path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.textmeshpro/TextMeshPro 1.3.0/packages.config' ),
+                path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.textmeshpro/TextMeshPro 2.0.0/packages.config' ),
+                path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.textmeshpro/TextMeshPro 3.0.0/packages.config' ),
+                path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Vendor/com.unity.textmeshpro/TextMeshPro 3.0.6/packages.config' ),
             ],
         };
     }
