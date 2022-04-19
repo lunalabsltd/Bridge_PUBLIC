@@ -94,6 +94,11 @@ namespace System.IO
             this.name = name;
         }
 
+        public FileStream(string path, FileMode mode, FileAccess access, FileShare share)
+        {
+            throw new NotImplementedException();
+        }
+
         internal static Task<FileStream> FromFile(object file)
         {
             var completer = new System.Threading.Tasks.TaskCompletionSource<FileStream>();

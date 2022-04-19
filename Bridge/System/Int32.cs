@@ -58,6 +58,15 @@ namespace System
 
         [Bridge.Template("System.Int32.equals({this}, {other})")]
         public override extern bool Equals(object other);
+
+        [Bridge.Template("System.Int32.TryParseWithProvider({s}, {style}, {provider}, {result})")]
+        public static extern bool TryParse(string s, Globalization.NumberStyles style, IFormatProvider provider, out int result);
+
+        [Bridge.Template("System.Int32.ParseWithProvider({s}, {style}, {provider})")]
+        public static extern int Parse(string s, Globalization.NumberStyles style, IFormatProvider provider);
+
+        [Bridge.Template("System.Int32.ParseWithProvider({s}, 7, {provider})")]
+        public static extern int Parse(string s, IFormatProvider provider);
     }
 #pragma warning restore CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
 }

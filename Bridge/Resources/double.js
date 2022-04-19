@@ -25,6 +25,10 @@
                 return Bridge.Int.tryParseFloat(s, provider, result);
             },
 
+            tryParse4: function (s, style, provider, result ) {
+                return Bridge.Int.tryParseFloat(s, provider, result, false);
+            },
+
             format: function (number, format, provider) {
                 return Bridge.Int.format(number, format || 'G', provider, System.Double);
             },
@@ -89,6 +93,8 @@
             parse: System.Double.parse,
 
             tryParse: System.Double.tryParse,
+
+            tryParse4: System.Double.tryParse4,
 
             format: function (number, format, provider) {
                 return Bridge.Int.format(number, format || 'G', provider, System.Single);
