@@ -1373,6 +1373,12 @@
                     },
                     equalsT: function (v1, v2) {
                         return Bridge.unbox(v1, true) === Bridge.unbox(v2, true);
+                    },
+                    parseWithProvider: function (s, style, provider) {
+                        return Bridge.Int.parseWithProvider(s, style, provider);
+                    },
+                    tryParseWithProvider: function (s, style, provider, result) {
+                        return Bridge.Int.tryParseWithProvider(s, style, provider, result);
                     }
                 }
             });
