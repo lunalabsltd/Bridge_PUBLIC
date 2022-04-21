@@ -101,6 +101,6 @@ namespace System
         public override extern int GetHashCode();
 
         [Bridge.Template("System.Single.tryParse4({s}, {style}, {provider}, {result})")]
-        public static extern bool TryParse( string s, Globalization.NumberStyles style, IFormatProvider provider, out float result);
+        public static extern bool TryParse(string s, Globalization.NumberStyles style, IFormatProvider provider, out float result);
     }
 }
