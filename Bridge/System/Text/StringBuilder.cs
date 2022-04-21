@@ -41,7 +41,7 @@ namespace System.Text
             set;
         }
 
-        [Bridge.Template("{this}.append( {value}.slice( {startIndex}, {charCount} ).join() )")]
+        [Bridge.Template("{this}.append({value}.slice({startIndex}, {charCount}).join())")]
         public extern StringBuilder Append(char[] value, int startIndex, int charCount);
 
         public extern StringBuilder Append(bool value);
