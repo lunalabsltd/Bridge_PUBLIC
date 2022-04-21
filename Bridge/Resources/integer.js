@@ -880,20 +880,20 @@
                 return Bridge.Int.$mul(a, b) >>> 0;
             },
 
-            ParseWithProvider: function (s, style, provider) {
+            parseWithProvider: function (s, style, provider) {
                 var exc = { };
                 var res = { };
 
-                if (!Bridge.Int.ParseAsInMono_3_8(s, style, provider, false, res, exc)) {
+                if (!Bridge.Int.parseAsInMono_3_8(s, style, provider, false, res, exc)) {
                     throw exc.v;
                 }
 
                 return res.v;
             },
 
-            TryParseWithProvider: function (s, style, provider, result) {
+            tryParseWithProvider: function (s, style, provider, result) {
                 var exc = { };
-                if (!Bridge.Int.ParseAsInMono_3_8(s, style, provider, true, result, exc)) {
+                if (!Bridge.Int.parseAsInMono_3_8(s, style, provider, true, result, exc)) {
                     result.v = 0;
                     return false;
                 }
@@ -903,7 +903,7 @@
 
             // Base int parse method from mono 3.12
             // In newest mono microsoft use unsafe code features
-            ParseAsInMono_3_8: function (s, style, fp, tryParse, result, exc) {
+            parseAsInMono_3_8: function (s, style, fp, tryParse, result, exc) {
                 result.v = 0;
                 exc.v = null;
 
@@ -916,7 +916,7 @@
 
                 if (s.length === 0) {
                     if (!tryParse) {
-                        exc.v = Bridge.Int.GetFormatException();
+                        exc.v = Bridge.Int.getFormatException();
                     }
                     return false;
                 }
@@ -931,7 +931,7 @@
                     nfi = System.Globalization.CultureInfo.getCurrentCulture().numberFormat;
                 }
 
-                if (!Bridge.Int.CheckStyle(style, tryParse, exc)) {
+                if (!Bridge.Int.checkStyle(style, tryParse, exc)) {
                     return false;
                 }
 
@@ -948,7 +948,7 @@
 
                 var pos = { v : 0 };
 
-                if (AllowLeadingWhite && !Bridge.Int.JumpOverWhite(pos, s, true, tryParse, exc)) {
+                if (AllowLeadingWhite && !Bridge.Int.jumpOverWhite(pos, s, true, tryParse, exc)) {
                     return false;
                 }
 
@@ -964,20 +964,20 @@
                     negative.v = true; // MS always make the number negative when there parentheses
                     // even when NumberFormatInfo.NumberNegativePattern != 0!!!
                     pos.v = (pos.v + 1) | 0;
-                    if (AllowLeadingWhite && !Bridge.Int.JumpOverWhite(pos, s, true, tryParse, exc)) {
+                    if (AllowLeadingWhite && !Bridge.Int.jumpOverWhite(pos, s, true, tryParse, exc)) {
                         return false;
                     }
 
                     if (Bridge.referenceEquals(s.substr(pos.v, nfi.negativeSign.length), nfi.negativeSign)) {
                         if (!tryParse) {
-                            exc.v = Bridge.Int.GetFormatException();
+                            exc.v = Bridge.Int.getFormatException();
                         }
                         return false;
                     }
 
                     if (Bridge.referenceEquals(s.substr(pos.v, nfi.positiveSign.length), nfi.positiveSign)) {
                         if (!tryParse) {
-                            exc.v = Bridge.Int.GetFormatException();
+                            exc.v = Bridge.Int.getFormatException();
                         }
                         return false;
                     }
@@ -985,14 +985,14 @@
 
                 if (AllowLeadingSign && !foundSign.v) {
                     // Sign + Currency
-                    Bridge.Int.FindSign(pos, s, nfi, foundSign, negative);
+                    Bridge.Int.findSign(pos, s, nfi, foundSign, negative);
                     if (foundSign.v) {
-                        if (AllowLeadingWhite && !Bridge.Int.JumpOverWhite(pos, s, true, tryParse, exc)) {
+                        if (AllowLeadingWhite && !Bridge.Int.jumpOverWhite(pos, s, true, tryParse, exc)) {
                             return false;
                         }
                         if (AllowCurrencySymbol) {
-                            Bridge.Int.FindCurrency(pos, s, nfi, foundCurrency);
-                            if (foundCurrency.v && AllowLeadingWhite && !Bridge.Int.JumpOverWhite(pos, s, true, tryParse, exc)) {
+                            Bridge.Int.findCurrency(pos, s, nfi, foundCurrency);
+                            if (foundCurrency.v && AllowLeadingWhite && !Bridge.Int.jumpOverWhite(pos, s, true, tryParse, exc)) {
                                 return false;
                             }
                         }
@@ -1001,15 +1001,15 @@
 
                 if (AllowCurrencySymbol && !foundCurrency.v) {
                     // Currency + sign
-                    Bridge.Int.FindCurrency(pos, s, nfi, foundCurrency);
+                    Bridge.Int.findCurrency(pos, s, nfi, foundCurrency);
                     if (foundCurrency.v) {
-                        if (AllowLeadingWhite && !Bridge.Int.JumpOverWhite(pos, s, true, tryParse, exc)) {
+                        if (AllowLeadingWhite && !Bridge.Int.jumpOverWhite(pos, s, true, tryParse, exc)) {
                             return false;
                         }
                         if (foundCurrency.v) {
                             if (!foundSign.v && AllowLeadingSign) {
-                                Bridge.Int.FindSign(pos, s, nfi, foundSign, negative);
-                                if (foundSign.v && AllowLeadingWhite && !Bridge.Int.JumpOverWhite(pos, s, true, tryParse, exc)) {
+                                Bridge.Int.findSign(pos, s, nfi, foundSign, negative);
+                                if (foundSign.v && AllowLeadingWhite && !Bridge.Int.jumpOverWhite(pos, s, true, tryParse, exc)) {
                                     return false;
                                 }
                             }
@@ -1025,12 +1025,12 @@
 
                 // Number stuff
                 while (pos.v < s.length) {
-                    if (!Bridge.Int.ValidDigit(s.charCodeAt(pos.v), AllowHexSpecifier)) {
-                        if (AllowThousands && (Bridge.Int.FindOther(pos, s, nfi.numberGroupSeparator) || Bridge.Int.FindOther(pos, s, nfi.currencyGroupSeparator))) {
+                    if (!Bridge.Int.validDigit(s.charCodeAt(pos.v), AllowHexSpecifier)) {
+                        if (AllowThousands && (Bridge.Int.findOther(pos, s, nfi.numberGroupSeparator) || Bridge.Int.findOther(pos, s, nfi.currencyGroupSeparator))) {
                             continue;
                         }
 
-                        if (AllowDecimalPoint && decimalPointPos < 0 && (Bridge.Int.FindOther(pos, s, nfi.numberDecimalSeparator) || Bridge.Int.FindOther(pos, s, nfi.currencyDecimalSeparator))) {
+                        if (AllowDecimalPoint && decimalPointPos < 0 && (Bridge.Int.findOther(pos, s, nfi.numberDecimalSeparator) || Bridge.Int.findOther(pos, s, nfi.currencyDecimalSeparator))) {
                             decimalPointPos = nDigits;
                             continue;
                         }
@@ -1086,65 +1086,65 @@
                 // Post number stuff
                 if (nDigits === 0) {
                     if (!tryParse) {
-                        exc.v = Bridge.Int.GetFormatException();
+                        exc.v = Bridge.Int.getFormatException();
                     }
                     return false;
                 }
 
                 var exponent = { v : 0 };
                 if (AllowExponent) {
-                    if (Bridge.Int.FindExponent(pos, s, exponent, tryParse, exc) && exc.v != null) {
+                    if (Bridge.Int.findExponent(pos, s, exponent, tryParse, exc) && exc.v != null) {
                         return false;
                     }
                 }
 
                 if (AllowTrailingSign && !foundSign.v) {
                     // Sign + Currency
-                    Bridge.Int.FindSign(pos, s, nfi, foundSign, negative);
+                    Bridge.Int.findSign(pos, s, nfi, foundSign, negative);
                     if (foundSign.v && pos.v < s.length) {
-                        if (AllowTrailingWhite && !Bridge.Int.JumpOverWhite(pos, s, true, tryParse, exc)) {
+                        if (AllowTrailingWhite && !Bridge.Int.jumpOverWhite(pos, s, true, tryParse, exc)) {
                             return false;
                         }
                     }
                 }
 
                 if (AllowCurrencySymbol && !foundCurrency.v) {
-                    if (AllowTrailingWhite && pos.v < s.length && !Bridge.Int.JumpOverWhite(pos, s, false, tryParse, exc)) {
+                    if (AllowTrailingWhite && pos.v < s.length && !Bridge.Int.jumpOverWhite(pos, s, false, tryParse, exc)) {
                         return false;
                     }
 
                     // Currency + sign
-                    Bridge.Int.FindCurrency(pos, s, nfi, foundCurrency);
+                    Bridge.Int.findCurrency(pos, s, nfi, foundCurrency);
                     if (foundCurrency.v && pos.v < s.length) {
-                        if (AllowTrailingWhite && !Bridge.Int.JumpOverWhite(pos, s, true, tryParse, exc)) {
+                        if (AllowTrailingWhite && !Bridge.Int.jumpOverWhite(pos, s, true, tryParse, exc)) {
                             return false;
                         }
                         if (!foundSign.v && AllowTrailingSign) {
-                            Bridge.Int.FindSign(pos, s, nfi, foundSign, negative);
+                            Bridge.Int.findSign(pos, s, nfi, foundSign, negative);
                         }
                     }
                 }
 
-                if (AllowTrailingWhite && pos.v < s.length && !Bridge.Int.JumpOverWhite(pos, s, false, tryParse, exc)) {
+                if (AllowTrailingWhite && pos.v < s.length && !Bridge.Int.jumpOverWhite(pos, s, false, tryParse, exc)) {
                     return false;
                 }
 
                 if (foundOpenParentheses) {
                     if (pos.v >= s.length || s.charCodeAt(Bridge.identity(pos.v, ((pos.v = (pos.v + 1) | 0)))) !== 41) {
                         if (!tryParse) {
-                            exc.v = Bridge.Int.GetFormatException();
+                            exc.v = Bridge.Int.getFormatException();
                         }
                         return false;
                     }
 
-                    if (AllowTrailingWhite && pos.v < s.length && !Bridge.Int.JumpOverWhite(pos, s, false, tryParse, exc)) {
+                    if (AllowTrailingWhite && pos.v < s.length && !Bridge.Int.jumpOverWhite(pos, s, false, tryParse, exc)) {
                         return false;
                     }
                 }
 
                 if (pos.v < s.length && s.charCodeAt(pos.v) !== 0) {
                     if (!tryParse) {
-                        exc.v = Bridge.Int.GetFormatException();
+                        exc.v = Bridge.Int.getFormatException();
                     }
                     return false;
                 }
@@ -1199,7 +1199,7 @@
                 return true;
             },
 
-            CheckStyle: function (style, tryParse, exc) {
+            checkStyle: function (style, tryParse, exc) {
                 if ((style & 512) !== 0) {
                     var ne = style ^ 512;
                     if ((ne & 1) !== 0) {
@@ -1224,14 +1224,14 @@
                 return true;
             },
 
-            JumpOverWhite: function (pos, s, reportError, tryParse, exc) {
+            jumpOverWhite: function (pos, s, reportError, tryParse, exc) {
                 while (pos.v < s.length && System.Char.isWhiteSpace(String.fromCharCode(s.charCodeAt(pos.v)))) {
                     pos.v = (pos.v + 1) | 0;
                 }
 
                 if (reportError && pos.v >= s.length) {
                     if (!tryParse) {
-                        exc.v = Bridge.Int.GetFormatException();
+                        exc.v = Bridge.Int.getFormatException();
                     }
                     return false;
                 }
@@ -1239,7 +1239,7 @@
                 return true;
             },
 
-            FindSign: function (pos, s, nfi, foundSign, negative) {
+            findSign: function (pos, s, nfi, foundSign, negative) {
                 if (((pos.v + nfi.negativeSign.length) | 0) <= s.length && System.String.indexOf(s, nfi.negativeSign, pos.v, nfi.negativeSign.length) === pos.v) {
                     negative.v = true;
                     foundSign.v = true;
@@ -1251,14 +1251,14 @@
                 }
             },
 
-            FindCurrency: function (pos, s, nfi, foundCurrency) {
+            findCurrency: function (pos, s, nfi, foundCurrency) {
                 if (((pos.v + nfi.currencySymbol.length) | 0) <= s.length && Bridge.referenceEquals(s.substr(pos.v, nfi.currencySymbol.length), nfi.currencySymbol)) {
                     foundCurrency.v = true;
                     pos.v = (pos.v + nfi.currencySymbol.length) | 0;
                 }
             },
 
-            FindExponent: function (pos, s, exponent, tryParse, exc) {
+            findExponent: function (pos, s, exponent, tryParse, exc) {
                 exponent.v = 0;
                 var neg;
 
@@ -1269,7 +1269,7 @@
 
                 var i = (pos.v + 1) | 0;
                 if (i === s.length) {
-                    exc.v = tryParse ? null : Bridge.Int.GetFormatException();
+                    exc.v = tryParse ? null : Bridge.Int.getFormatException();
                     return true;
                 }
 
@@ -1279,14 +1279,14 @@
                 }
 
                 if (s.charCodeAt(i) === 43 && ((i = (i + 1) | 0)) === s.length) {
-                    exc.v = tryParse ? null : Bridge.Int.GetFormatException();
+                    exc.v = tryParse ? null : Bridge.Int.getFormatException();
                     return true;
                 }
 
                 var exp = System.Int64(0); // temp long value
                 for (; i < s.length; i = (i + 1) | 0) {
                     if (!System.Char.isDigit(s.charCodeAt(i))) {
-                        exc.v = tryParse ? null : Bridge.Int.GetFormatException();
+                        exc.v = tryParse ? null : Bridge.Int.getFormatException();
                         return true;
                     }
 
@@ -1309,7 +1309,7 @@
                 return true;
             },
 
-            FindOther: function (pos, s, other) {
+            findOther: function (pos, s, other) {
                 if (((pos.v + other.length) | 0) <= s.length && Bridge.referenceEquals(s.substr(pos.v, other.length), other)) {
                     pos.v = (pos.v + other.length) | 0;
                     return true;
@@ -1318,11 +1318,11 @@
                 return false;
             },
 
-            ValidDigit: function (e, allowHex) {
+            validDigit: function (e, allowHex) {
                 return e >= 48 && e <= 57 || allowHex && (e >= 65 && e <= 70 || e >= 97 && e <= 102);
             },
 
-            GetFormatException: function () {
+            getFormatException: function () {
                 return new System.FormatException.$ctor1("Input string was not in the correct format");
             },
         }
