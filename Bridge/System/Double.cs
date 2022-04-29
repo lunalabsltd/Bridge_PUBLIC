@@ -99,5 +99,8 @@ namespace System
 
         [Bridge.Template(Fn = "System.Double.getHashCode")]
         public override extern int GetHashCode();
+
+        [Bridge.Template("System.Double.tryParse4({s}, {style}, {provider}, {result})")]
+        public static extern bool TryParse(string s, Globalization.NumberStyles style, IFormatProvider provider, out double result);
     }
 }

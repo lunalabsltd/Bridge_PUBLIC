@@ -95,6 +95,7 @@
     <Compile Include="shared\System\Globalization\NumberStyles.cs" />
     <Compile Include="shared\System\Globalization\SortVersion.cs" />
     <Compile Include="shared\System\Globalization\UnicodeCategory.cs" />
+    <Compile Include="shared\System\IO\FileAccess.cs" />
     <Compile Include="shared\System\IO\FileOptions.cs" />
     <Compile Include="shared\System\IO\FileShare.cs" />
     <Compile Include="shared\System\IO\MemoryStream.cs" />

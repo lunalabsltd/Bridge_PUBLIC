@@ -15,6 +15,8 @@ namespace System
 
         public static extern double Abs(double x);
 
+        public static extern float Abs(float x);
+
         [Bridge.Template("{l}.abs()")]
         public static extern long Abs(long l);
 
