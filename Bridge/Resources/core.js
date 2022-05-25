@@ -526,7 +526,9 @@
                 return obj.$clone();
             }
 
-            return null;
+            var copy = Object.assign( {}, obj );
+            copy.__proto__ = obj.__proto__;
+            return copy;
         },
 
         copy: function (to, from, keys, toIf) {
