@@ -53,33 +53,40 @@
         },
 
         getMetadata: function () {
-            if (!this.$metadata && this.$genericTypeDefinition) {
-                this.$metadata = this.$genericTypeDefinition.$factoryMetadata || this.$genericTypeDefinition.$metadata;
-            }
-
-            var metadata = this.$metadata;
-
-            if (typeof (metadata) === "function") {
-                if (this.$isGenericTypeDefinition && !this.$factoryMetadata) {
-                    this.$factoryMetadata = this.$metadata;
+            if ( MODULE_reflection ) {
+                if (!this.$metadata && this.$genericTypeDefinition) {
+                    this.$metadata = this.$genericTypeDefinition.$factoryMetadata || this.$genericTypeDefinition.$metadata;
                 }
 
-                if (this.$typeArguments) {
-                    metadata = this.$metadata.apply(null, this.$typeArguments);
-                } else if (this.$isGenericTypeDefinition) {
-                    var arr = Bridge.Reflection.createTypeParams(this.$metadata);
-                    this.$typeArguments = arr;
-                    metadata = this.$metadata.apply(null, arr);
-                } else {
-                    metadata = this.$metadata();
+                var metadata = this.$metadata;
+
+                if (typeof (metadata) === "function") {
+                    if (this.$isGenericTypeDefinition && !this.$factoryMetadata) {
+                        this.$factoryMetadata = this.$metadata;
+                    }
+
+                    if (this.$typeArguments) {
+                        metadata = this.$metadata.apply(null, this.$typeArguments);
+                    } else if (this.$isGenericTypeDefinition) {
+                        var arr = Bridge.Reflection.createTypeParams(this.$metadata);
+                        this.$typeArguments = arr;
+                        metadata = this.$metadata.apply(null, arr);
+                    } else {
+                        metadata = this.$metadata();
+                    }
                 }
-            }
 
-            if (!this.$initMetaData && metadata) {
-                Bridge.Reflection.initMetaData(this, metadata);
-            }
+                if (!this.$initMetaData && metadata) {
+                    Bridge.Reflection.initMetaData(this, metadata);
+                }
 
-            return metadata;
+                if ( TRACE ) {
+                    if ( metadata ) {
+                        window.traceResults.markModuleAsUsed( window.traceResults.EngineModules.Reflection );
+                    }
+                }
+                return metadata;
+            }
         },
 
         createTypeParams: function (fn, t) {

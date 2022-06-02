@@ -445,6 +445,8 @@ namespace Bridge.Translator
                 int pos = 0;
                 if (metas.Count > 0)
                 {
+                    this.Write( "if ( MODULE_reflection ) {" );
+                    this.WriteNewLine();
                     this.Write("var $m = " + JS.Types.Bridge.SET_METADATA + ",");
                     this.WriteNewLine();
                     this.Write(Bridge.Translator.Emitter.INDENT + "$n = ");
@@ -490,6 +492,10 @@ namespace Bridge.Translator
                     this.Write(string.Format("/*{0} end.*/", name));
                     this.WriteNewLine();
                     this.WriteNewLine();
+                }
+
+                if ( metas.Count > 0 ) {
+                    this.Write( "}" );
                 }
 
                 if (pos > 0)

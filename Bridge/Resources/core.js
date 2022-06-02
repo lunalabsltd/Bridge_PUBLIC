@@ -2025,9 +2025,16 @@
         },
 
         getMetadata: function (t) {
-            var m = t.$getMetadata ? t.$getMetadata() : t.$metadata;
+            if ( MODULE_reflection ) {
+                var m = t.$getMetadata ? t.$getMetadata() : t.$metadata;
 
-            return m;
+                if ( TRACE ) {
+                    if ( m ) {
+                        window.traceResults.markModuleAsUsed( window.traceResults.EngineModules.Reflection );
+                    }
+                }
+                return m;
+            }
         },
 
         loadModule: function (config, callback) {
