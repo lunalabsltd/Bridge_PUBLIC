@@ -86,6 +86,7 @@ namespace Bridge.Translator
             this.ProjectProperties = new ProjectProperties();
             this.FileHelper = new FileHelper();
             this.Outputs = new TranslatorOutput();
+            this.TypeMapper = new TypeMapper.TypeMapper();
         }
 
         public Translator(string location, string source, bool fromTask = false) : this(location)
@@ -207,6 +208,7 @@ namespace Bridge.Translator
 
             logger.Info("After emitting...");
             this.Plugins.AfterEmit(emitter, this);
+            this.TypeMapper.Save();
             logger.Info("After emitting done");
 
             logger.Info("Translating done");

@@ -153,6 +153,12 @@ namespace Bridge.Contract
             set;
         }
 
+        TypeMapper.TypeMapper TypeMapper
+        {
+            get;
+            set;
+        }
+
         VersionContext GetVersionContext();
     }
 }

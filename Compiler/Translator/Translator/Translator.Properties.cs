@@ -200,6 +200,8 @@ namespace Bridge.Translator
             set;
         }
 
+        public TypeMapper.TypeMapper TypeMapper { get; set; }
+
         public string[] SkipPluginAssemblies
         {
             get;
