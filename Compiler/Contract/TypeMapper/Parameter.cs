@@ -1,30 +1,28 @@
+using System;
 using ICSharpCode.NRefactory.TypeSystem;
 
 namespace Bridge.TypeMapper
 {
+    [Serializable]
     public class Parameter
     {
-        public string Name
+        public string name { get; set; }
+        public string type { get; set; }
+
+        public Parameter(IParameter paramInfo)
         {
-            get;
-            set;
+            this.name = paramInfo.Name;
+            this.type = GetType(paramInfo.Type);
         }
 
-        public string Type
+        private string GetType(IType type)
         {
-            get;
-            set;
-        }
+            if (type.FullName == "System.Single")
+            {
+                return "Float";
+            }
 
-        public Parameter(IParameter parameter)
-        {
-            Name = parameter.Name;
-            Type = parameter.Type.ToString();
-        }
-
-        public string ToJson()
-        {
-            return $"{{ \"name\":\"{Name}\", \"type\":\"{Type}\" }}";
+            return type.Name;
         }
     }
 }

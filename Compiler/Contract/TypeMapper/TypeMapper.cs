@@ -1,42 +1,27 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using System.Text.Json;
 using ICSharpCode.NRefactory.Semantics;
+using ICSharpCode.NRefactory.TypeSystem.Implementation;
 
 namespace Bridge.TypeMapper
 {
     public class TypeMapper
     {
         private static List<Method> _methods = new List<Method>();
-        public void AddMethodToMap(MemberResolveResult member_rr, string jsName)
-        {
-            _methods.Add(new Method(member_rr, jsName));
-        }
 
         public void Save()
         {
-            var filename = $"{Directory.GetCurrentDirectory()}/typemap.json";
-            if (File.Exists(filename))
-            {
-                File.Delete(filename);
-            }
+            var fileName = $"{Directory.GetCurrentDirectory()}/typemap.json";
+            var data = JsonSerializer.Serialize(_methods);
+            File.WriteAllText(fileName, data);
+        }
 
-            using (StreamWriter sw = File.AppendText(filename))
-            {
-                sw.WriteLine("[");
-                for (int i = 0; i < _methods.Count; i++)
-                {
-                    var method = _methods[i];
-                    var sb = new StringBuilder();
-                    sb.Append(method.ToJson());
-                    if (i != _methods.Count - 1)
-                    {
-                        sb.Append(",");
-                    }
-                    sw.WriteLine(sb.ToString());
-                }
-                sw.WriteLine("]");
-            }
+        public void AddMethodToMap(MemberResolveResult mrr, string fullName)
+        {
+            var methodInfo = mrr.Member as DefaultResolvedMethod;
+            var method = new Method(methodInfo, fullName);
+            _methods.Add(method);
         }
     }
 }

@@ -4,6 +4,6 @@ using System.Reflection;
 [assembly: AssemblyFileVersion("17.9.0.0")]
 // Remember to update NuGet.Build.Package.targets with the same version value
 // <DefaultPackageVersion>16.7.0</DefaultPackageVersion>
-[assembly: AssemblyInformationalVersion("17.9.14-luna")]
+[assembly: AssemblyInformationalVersion("17.9.17-luna")]
 [assembly: AssemblyCompany("Object.NET, Inc.")]
 [assembly: AssemblyCopyright("Copyright 2008-2019 Object.NET, Inc.")]
