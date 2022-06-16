@@ -86,7 +86,7 @@ namespace Bridge.Translator
             this.ProjectProperties = new ProjectProperties();
             this.FileHelper = new FileHelper();
             this.Outputs = new TranslatorOutput();
-            this.TypeMapper = new TypeMapper.TypeMapper();
+            this.TypeMapper = new TypeMapper.TypeMapper(this);
         }
 
         public Translator(string location, string source, bool fromTask = false) : this(location)
