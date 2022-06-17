@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using Bridge.Contract;
+using Bridge.Contract.Constants;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using Newtonsoft.Json;
@@ -23,7 +24,8 @@ namespace Bridge.TypeMapper
         {
             var typeMapDir = _translator.AssemblyInfo.TypeMapPath;
             var fileName = Path.Combine(typeMapDir, "typemap.json");
-            var data = JsonConvert.SerializeObject(_methods, Formatting.Indented);
+            var wrapper = new Wrapper(_methods);
+            var data = JsonConvert.SerializeObject(wrapper, Formatting.Indented);
 
             if (!Directory.Exists(typeMapDir))
             {
@@ -37,6 +39,20 @@ namespace Bridge.TypeMapper
             var methodInfo = mrr.Member as DefaultResolvedMethod;
             var method = new Method(methodInfo, fullName);
             _methods.Add(method);
+        }
+
+        private class Wrapper
+        {
+            public List<Method> Methods
+            {
+                get;
+                set;
+            }
+
+            public Wrapper(List<Method> methods)
+            {
+                Methods = methods;
+            }
         }
     }
 }
