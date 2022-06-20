@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Bridge.Contract;
 using ICSharpCode.NRefactory.Semantics;
+using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using Newtonsoft.Json;
 
@@ -64,21 +65,33 @@ namespace Bridge.TypeMapper
         {
             var jsFullNameParts = jsFullName.Split('.');
             var jsClassName = jsFullNameParts[jsFullNameParts.Length - 2];
-            var className = GetOriginalClassName(mrr);
+            var originalClassName = GetOriginalClassName(mrr);
+            var simpleClassName = GetSimpleClassName(mrr);
 
-            if (!classes.ContainsKey(className))
+            if (!classes.ContainsKey(originalClassName))
             {
-                classes.Add(className, new Class(className, jsClassName));
+                classes.Add(originalClassName, new Class(originalClassName, jsClassName, simpleClassName));
             }
 
-            return classes[className];
+            return classes[originalClassName];
+        }
+
+        private string GetSimpleClassName(MemberResolveResult mrr)
+        {
+            var methodInfo = mrr.Member as DefaultResolvedMethod;
+            var typeArguments = methodInfo.DeclaringType.TypeArguments;
+            return GetClassName(methodInfo.DeclaringType.Name, typeArguments);
         }
 
         private string GetOriginalClassName(MemberResolveResult mrr)
         {
             var methodInfo = mrr.Member as DefaultResolvedMethod;
             var typeArguments = methodInfo.DeclaringType.TypeArguments;
-            var className = methodInfo.DeclaringType.FullName;
+            return GetClassName(methodInfo.DeclaringType.FullName, typeArguments);
+        }
+
+        private string GetClassName(string className, IList<IType> typeArguments)
+        {
             if (typeArguments.Count > 0)
             {
                 var sb = new StringBuilder(className);

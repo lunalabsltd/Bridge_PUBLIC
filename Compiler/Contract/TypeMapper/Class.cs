@@ -11,15 +11,19 @@ namespace Bridge.TypeMapper
         [JsonProperty("originalClassName")]
         public string OriginalClassName { get; set; }
 
+        [JsonProperty("simpleClassName")]
+        public string SimpleClassName { get; set; }
+
         [JsonProperty("constructors")]
         public List<Method> Constructors;
 
         [JsonProperty("methods")]
         public List<Method> Methods;
 
-        public Class(string className, string jsClassName)
+        public Class(string className, string jsClassName, string simpleClassName = "")
         {
             OriginalClassName = className;
+            SimpleClassName = simpleClassName;
             JsClassName = jsClassName;
             Constructors = new List<Method>();
             Methods = new List<Method>();
