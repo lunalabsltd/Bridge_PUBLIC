@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using Newtonsoft.Json;
 
@@ -7,31 +8,48 @@ namespace Bridge.TypeMapper
     [Serializable]
     public class Method
     {
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("className")]
-        public string ClassName { get; set; }
+        [JsonProperty("signature")]
+        public string Signature { get; set; }
 
         [JsonProperty("jsName")]
-        public string JSName { get; set; }
+        public string JsName { get; set; }
 
-        [JsonProperty("parameters")]
-        public Parameter[] Parameters { get; set; }
-
-        public Method(DefaultResolvedMethod methodInfo, string jsName)
+        public Method(DefaultResolvedMethod methodInfo, string jsMethodName)
         {
-            this.Name = methodInfo.Name;
-            this.ClassName = methodInfo.DeclaringType.Name;
-            this.JSName = jsName;
+            this.JsName = jsMethodName;
 
-            this.Parameters = new Parameter[methodInfo.Parameters.Count];
+            var sb = new StringBuilder();
+            if (methodInfo.IsConstructor)
+            {
+                sb.Append(methodInfo.DeclaringType.Name);
+            }
+            else
+            {
+                sb.Append(methodInfo.Name);
+            }
+            sb.Append("(");
+
             for (int i = 0; i < methodInfo.Parameters.Count; i++)
             {
                 var paramInfo = methodInfo.Parameters[i];
                 var param = new Parameter(paramInfo);
-                this.Parameters[i] = param;
+                var parameterSignature = GetParameterSignature(param);
+                sb.Append(parameterSignature);
+
+                if (i != methodInfo.Parameters.Count - 1)
+                {
+                    sb.Append(", ");
+                }
             }
+
+            sb.Append(")");
+
+            this.Signature = sb.ToString();
+        }
+
+        private string GetParameterSignature(Parameter param)
+        {
+            return $"{param.Type} {param.Name}";
         }
     }
 }

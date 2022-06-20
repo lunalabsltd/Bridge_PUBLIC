@@ -129,6 +129,7 @@
     <Compile Include="Rule\Rules.cs" />
     <Compile Include="TranslatorOutput.cs" />
     <Compile Include="TypeComparer.cs" />
+    <Compile Include="TypeMapper\Class.cs" />
     <Compile Include="TypeMapper\Method.cs" />
     <Compile Include="TypeMapper\Parameter.cs" />
     <Compile Include="TypeMapper\TypeMapper.cs" />

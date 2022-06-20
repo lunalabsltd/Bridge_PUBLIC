@@ -342,6 +342,11 @@ namespace Bridge.Translator
                     ctorName = overloads.GetOverloadName();
                 }
 
+                var member_rr = this.Emitter.Resolver.ResolveNode(ctor, this.Emitter) as MemberResolveResult;
+                var typeName = BridgeTypes.ToJsName(this.TypeInfo.Type, this.Emitter);
+                var fullName = $"{typeName}.{ctorName}";
+                this.Emitter.Translator.TypeMapper.AddMethodToMap(member_rr, fullName, isCtor: true);
+
                 XmlToJsDoc.EmitComment(this, ctor);
                 this.Write(ctorName);
 

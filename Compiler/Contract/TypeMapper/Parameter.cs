@@ -1,16 +1,13 @@
 using System;
 using ICSharpCode.NRefactory.TypeSystem;
-using Newtonsoft.Json;
 
 namespace Bridge.TypeMapper
 {
     [Serializable]
     public class Parameter
     {
-        [JsonProperty("name")]
         public string Name { get; set; }
 
-        [JsonProperty("type")]
         public string Type { get; set; }
 
         public Parameter(IParameter paramInfo)
@@ -24,7 +21,7 @@ namespace Bridge.TypeMapper
             var type = paramInfo.Type;
             if (type.FullName == "System.Single")
             {
-                return "Float";
+                return "float";
             }
 
             if (paramInfo.IsOut && type.Name.Contains("&"))
