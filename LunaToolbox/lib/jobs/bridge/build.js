@@ -172,6 +172,10 @@ async function askForMissingOptions( options, paths ) {
     };
 }
 
+async function copyBridgeTypemap( paths ) {
+    await fs.promises.copyFile( paths.Bridge.typemap, paths.LunaCompiler.typemap );
+}
+
 async function build( options, config ) {
     const paths = new Paths( config );
     const completeOptions = await askForMissingOptions( options, paths );
@@ -208,6 +212,10 @@ async function build( options, config ) {
         {
             title: 'Resolve Nuget dependencies for Vendor libs',
             task: async() => resolveNugetsVendorLibs( paths ),
+        },
+        {
+            title: 'Copy Bridge Typemap',
+            task: async() => copyBridgeTypemap( paths ),
         },
     ] ).run();
 }
