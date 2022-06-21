@@ -319,9 +319,19 @@ namespace Bridge.Translator
             {
                 var oldRules = this.Emitter.Rules;
 
+                var ctorName = JS.Funcs.CONSTRUCTOR;
+                if (this.TypeInfo.Ctors.Count > 1 && ctor.Parameters.Count > 0)
+                {
+                    var overloads = OverloadsCollection.Create(this.Emitter, ctor);
+                    ctorName = overloads.GetOverloadName();
+                }
+
                 if (ctor.Body.HasChildren)
                 {
                     var rr = this.Emitter.Resolver.ResolveNode(ctor, this.Emitter) as MemberResolveResult;
+                    var typeName = BridgeTypes.ToJsName(this.TypeInfo.Type, this.Emitter);
+                    var fullName = $"{typeName}.{ctorName}";
+                    this.Emitter.Translator.TypeMapper.AddMethodToMap(rr, fullName, isCtor: true);
                     if (rr != null)
                     {
                         this.Emitter.Rules = Rules.Get(this.Emitter, rr.Member);
@@ -333,19 +343,6 @@ namespace Bridge.Translator
                 var prevMap = this.BuildLocalsMap();
                 var prevNamesMap = this.BuildLocalsNamesMap();
                 this.AddLocals(ctor.Parameters, ctor.Body);
-
-                var ctorName = JS.Funcs.CONSTRUCTOR;
-
-                if (this.TypeInfo.Ctors.Count > 1 && ctor.Parameters.Count > 0)
-                {
-                    var overloads = OverloadsCollection.Create(this.Emitter, ctor);
-                    ctorName = overloads.GetOverloadName();
-                }
-
-                var member_rr = this.Emitter.Resolver.ResolveNode(ctor, this.Emitter) as MemberResolveResult;
-                var typeName = BridgeTypes.ToJsName(this.TypeInfo.Type, this.Emitter);
-                var fullName = $"{typeName}.{ctorName}";
-                this.Emitter.Translator.TypeMapper.AddMethodToMap(member_rr, fullName, isCtor: true);
 
                 XmlToJsDoc.EmitComment(this, ctor);
                 this.Write(ctorName);
