@@ -28,7 +28,7 @@ class Paths {
             lunaCompilerPackages: path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/packages' ),
             nugetConfig: path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/nuget.config' ),
             packagesToCleanUp: [ 'Bridge.Core', 'Bridge.Min' ],
-            typemap: path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/bin/bridge.typemap.json' ),
+            typemap: path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/packages/Bridge.Typemap/bridge.typemap.json' ),
             csprojs: [
                 path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Scripts/Scripts.csproj' ),
                 path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Scripts/Scripts.csproj.template' ),

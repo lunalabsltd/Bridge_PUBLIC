@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -53,12 +52,9 @@ namespace Bridge.TypeMapper
 
         private Method CreateMethod(MemberResolveResult mrr, string jsFullName)
         {
-            var jsFullNameParts = jsFullName.Split('.');
-            var jsMethodName = jsFullNameParts[jsFullNameParts.Length - 1];
-
             var methodInfo = mrr.Member as DefaultResolvedMethod;
 
-            return new Method(methodInfo, jsMethodName);
+            return new Method(methodInfo, jsFullName);
         }
 
         private Class UpsertClass(MemberResolveResult mrr, string jsFullName)
@@ -66,28 +62,20 @@ namespace Bridge.TypeMapper
             var jsFullNameParts = jsFullName.Split('.');
             var jsClassName = jsFullNameParts[jsFullNameParts.Length - 2];
             var originalClassName = GetOriginalClassName(mrr);
-            var simpleClassName = GetSimpleClassName(mrr);
 
             if (!classes.ContainsKey(originalClassName))
             {
-                classes.Add(originalClassName, new Class(originalClassName, jsClassName, simpleClassName));
+                classes.Add(originalClassName, new Class(originalClassName, jsClassName));
             }
 
             return classes[originalClassName];
-        }
-
-        private string GetSimpleClassName(MemberResolveResult mrr)
-        {
-            var methodInfo = mrr.Member as DefaultResolvedMethod;
-            var typeArguments = methodInfo.DeclaringType.TypeArguments;
-            return GetClassName(methodInfo.DeclaringType.Name, typeArguments);
         }
 
         private string GetOriginalClassName(MemberResolveResult mrr)
         {
             var methodInfo = mrr.Member as DefaultResolvedMethod;
             var typeArguments = methodInfo.DeclaringType.TypeArguments;
-            return GetClassName(methodInfo.DeclaringType.FullName, typeArguments);
+            return GetClassName(methodInfo.DeclaringType.Name, typeArguments);
         }
 
         private string GetClassName(string className, IList<IType> typeArguments)
