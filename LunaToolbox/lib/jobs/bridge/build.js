@@ -173,6 +173,11 @@ async function askForMissingOptions( options, paths ) {
 }
 
 async function copyBridgeTypemap( paths ) {
+    const dirname = path.dirname( paths.LunaCompiler.typemap );
+    const exist = fs.existsSync( dirname );
+    if ( !exist ) {
+        await fs.promises.mkdir( dirname, { recursive: true } );
+    }
     await fs.promises.copyFile( paths.Bridge.typemap, paths.LunaCompiler.typemap );
 }
 

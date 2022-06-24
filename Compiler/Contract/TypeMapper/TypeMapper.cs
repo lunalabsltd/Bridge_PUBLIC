@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Bridge.Contract;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
@@ -53,15 +54,29 @@ namespace Bridge.TypeMapper
         private Method CreateMethod(MemberResolveResult mrr, string jsFullName)
         {
             var methodInfo = mrr.Member as DefaultResolvedMethod;
+            var jsMethodName = jsFullName.Split('.').Last();
+            var pattern = @"\:static";
+            var regex = new Regex(pattern);
+            jsMethodName = regex.Replace(jsMethodName, "");
 
-            return new Method(methodInfo, jsFullName);
+            return new Method(methodInfo, jsMethodName);
         }
 
         private Class UpsertClass(MemberResolveResult mrr, string jsFullName)
         {
-            var jsFullNameParts = jsFullName.Split('.');
-            var jsClassName = jsFullNameParts[jsFullNameParts.Length - 2];
             var originalClassName = GetOriginalClassName(mrr);
+            var jsFullNameParts = jsFullName.Split('.');
+            var jsClassNameWordsCount = jsFullNameParts.Length - 1;
+            var jsClassNameBuilder = new StringBuilder(jsFullNameParts[0]);
+            for (int i = 1; i < jsClassNameWordsCount; i++)
+            {
+                jsClassNameBuilder.Append($".{jsFullNameParts[i]}");
+            }
+
+            var jsClassName = jsClassNameBuilder.ToString();
+            var pattern = @"\(.*\)";
+            var regex = new Regex(pattern);
+            jsClassName = regex.Replace(jsClassName, "");
 
             if (!classes.ContainsKey(originalClassName))
             {
