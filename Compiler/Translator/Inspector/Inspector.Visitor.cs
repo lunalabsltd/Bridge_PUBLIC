@@ -79,6 +79,17 @@ namespace Bridge.Translator
                 if (!ignored)
                 {
                     this.IgnoredTypes.Add(fullName);
+
+                    var typeInfo = new TypeInfo()
+                    {
+                        Key = rr.Type.ReflectionName,
+                        TypeDeclaration = typeDeclaration,
+                        Name = typeDeclaration.Name,
+                        ClassType = typeDeclaration.ClassType,
+                        Namespace = this.Namespace,
+                        Type = rr.Type
+                    };
+                    this.ExternalTypes.Add(typeInfo);
                 }
 
                 return;
@@ -846,9 +857,9 @@ namespace Bridge.Translator
                 (resolveResult != null && resolveResult.Type != null && resolveResult.Type.FullName == (Translator.Bridge_ASSEMBLY + ".ModuleAttribute")))
             {
                 Module module = null;
-                var args = ((InvocationResolveResult) resolveResult).Arguments.Select(a=> a.ConstantValue).ToList();
+                var args = ((InvocationResolveResult)resolveResult).Arguments.Select(a => a.ConstantValue).ToList();
                 var positionArgs =
-                    ((InvocationResolveResult) resolveResult).InitializerStatements.Select(s => new
+                    ((InvocationResolveResult)resolveResult).InitializerStatements.Select(s => new
                     {
                         Name = ((MemberResolveResult)((OperatorResolveResult)s).Operands[0]).Member.Name,
                         Value = ((OperatorResolveResult)s).Operands[1].ConstantValue

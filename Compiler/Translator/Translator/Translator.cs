@@ -203,6 +203,12 @@ namespace Bridge.Translator
             this.BridgeTypes.BuildDependenciesGraph();
             logger.Info("Before emitting done");
 
+            foreach (var externalType in this.ExternalTypes)
+            {
+                externalType.JsName = BridgeTypes.ToJsName(externalType.Type, emitter, skipNonScriptableCheck: true);
+                this.TypeMapper.AddClassToMap(externalType);
+            }
+
             this.AddMainOutputs(emitter.Emit());
             this.EmitterOutputs = emitter.Outputs;
 

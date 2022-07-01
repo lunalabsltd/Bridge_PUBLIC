@@ -125,6 +125,12 @@ namespace Bridge.Translator
             protected set;
         }
 
+        public List<ITypeInfo> ExternalTypes
+        {
+            get;
+            protected set;
+        }
+
         public TranslatorOutput Outputs
         {
             get;

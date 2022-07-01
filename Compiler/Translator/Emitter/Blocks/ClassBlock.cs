@@ -86,6 +86,8 @@ namespace Bridge.Translator
                     return;
                 }
 
+                this.Emitter.Translator.TypeMapper.AddClassToMap(this.TypeInfo);
+
                 this.EnsureNewLine();
                 this.Write(string.Format("/*{0} start.*/", name));
                 this.WriteNewLine();

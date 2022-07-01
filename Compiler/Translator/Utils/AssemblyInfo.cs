@@ -7,7 +7,7 @@ namespace Bridge.Translator
     {
         public const string DEFAULT_FILENAME = "---";
         public const string DEFAULT_OUTPUT = "$(OutDir)/bridge/";
-        public const string DEFAULT_TYPE_MAP_PATH = "$(OutDir)/bridge/";
+        public const string DEFAULT_TYPE_MAP_PATH = "$(OutDir)/bridge/typemap.json";
 
         public AssemblyInfo()
         {

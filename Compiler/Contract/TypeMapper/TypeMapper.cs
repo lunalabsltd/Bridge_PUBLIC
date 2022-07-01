@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Bridge.Contract;
+using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
@@ -25,8 +27,8 @@ namespace Bridge.TypeMapper
 
         public void Save()
         {
-            var typeMapDir = _translator.AssemblyInfo.TypeMapPath;
-            var fileName = Path.Combine(typeMapDir, "typemap.json");
+            var typeMapPath = _translator.AssemblyInfo.TypeMapPath;
+            var typeMapDir = Path.GetDirectoryName(_translator.AssemblyInfo.TypeMapPath);
             var wrapper = new Wrapper(classes.Values.ToList());
             var data = JsonConvert.SerializeObject(wrapper, Formatting.None);
 
@@ -34,7 +36,27 @@ namespace Bridge.TypeMapper
             {
                 Directory.CreateDirectory(typeMapDir);
             }
-            File.WriteAllText(fileName, data);
+            File.WriteAllText(typeMapPath, data);
+        }
+
+        public void AddClassToMap(ITypeInfo typeInfo)
+        {
+            if (!typeInfo.JsName.Contains("$"))
+            {
+                return;
+            }
+
+            var typeArguments = typeInfo.Type.TypeArguments;
+            var className = GetClassName(typeInfo.Name, typeArguments);
+            var jsClassName = typeInfo.JsName;
+            var regex = new Regex(@"\(.*\)");
+            jsClassName = regex.Replace(jsClassName, "");
+            var c = new Class(className, jsClassName);
+
+            if (!classes.ContainsKey(className))
+            {
+                classes.Add(className, c);
+            }
         }
 
         public void AddMethodToMap(MemberResolveResult mrr, string jsFullName, bool isCtor = false)
@@ -65,6 +87,7 @@ namespace Bridge.TypeMapper
         private Class UpsertClass(MemberResolveResult mrr, string jsFullName)
         {
             var originalClassName = GetOriginalClassName(mrr);
+            var fullClassName = GetFullClassName(mrr);
             var jsFullNameParts = jsFullName.Split('.');
             var jsClassNameWordsCount = jsFullNameParts.Length - 1;
             var jsClassNameBuilder = new StringBuilder(jsFullNameParts[0]);
@@ -78,12 +101,12 @@ namespace Bridge.TypeMapper
             var regex = new Regex(pattern);
             jsClassName = regex.Replace(jsClassName, "");
 
-            if (!classes.ContainsKey(originalClassName))
+            if (!classes.ContainsKey(fullClassName))
             {
-                classes.Add(originalClassName, new Class(originalClassName, jsClassName));
+                classes.Add(fullClassName, new Class(originalClassName, jsClassName));
             }
 
-            return classes[originalClassName];
+            return classes[fullClassName];
         }
 
         private string GetOriginalClassName(MemberResolveResult mrr)
@@ -91,6 +114,13 @@ namespace Bridge.TypeMapper
             var methodInfo = mrr.Member as DefaultResolvedMethod;
             var typeArguments = methodInfo.DeclaringType.TypeArguments;
             return GetClassName(methodInfo.DeclaringType.Name, typeArguments);
+        }
+
+        private string GetFullClassName(MemberResolveResult mrr)
+        {
+            var methodInfo = mrr.Member as DefaultResolvedMethod;
+            var typeArguments = methodInfo.DeclaringType.TypeArguments;
+            return GetClassName(methodInfo.DeclaringType.FullName, typeArguments);
         }
 
         private string GetClassName(string className, IList<IType> typeArguments)
