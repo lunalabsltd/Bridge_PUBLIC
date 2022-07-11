@@ -86,6 +86,7 @@ namespace Bridge.Translator
             this.ProjectProperties = new ProjectProperties();
             this.FileHelper = new FileHelper();
             this.Outputs = new TranslatorOutput();
+            this.TypeMapper = new TypeMapper.TypeMapper(this);
         }
 
         public Translator(string location, string source, bool fromTask = false) : this(location)
@@ -202,11 +203,18 @@ namespace Bridge.Translator
             this.BridgeTypes.BuildDependenciesGraph();
             logger.Info("Before emitting done");
 
+            foreach (var externalType in this.ExternalTypes)
+            {
+                externalType.JsName = BridgeTypes.ToJsName(externalType.Type, emitter, skipNonScriptableCheck: true);
+                this.TypeMapper.AddClassToMap(externalType);
+            }
+
             this.AddMainOutputs(emitter.Emit());
             this.EmitterOutputs = emitter.Outputs;
 
             logger.Info("After emitting...");
             this.Plugins.AfterEmit(emitter, this);
+            this.TypeMapper.Save();
             logger.Info("After emitting done");
 
             logger.Info("Translating done");

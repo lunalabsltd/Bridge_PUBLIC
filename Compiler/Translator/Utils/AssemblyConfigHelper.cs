@@ -98,6 +98,7 @@ namespace Bridge.Translator.Utils
             config.Locales = helper.ApplyTokens(tokens, config.Locales);
             config.LocalesOutput = helper.ApplyTokens(tokens, config.LocalesOutput);
             config.LocalesFileName = helper.ApplyPathTokens(tokens, config.LocalesFileName);
+            config.TypeMapPath = helper.ApplyPathTokens(tokens, config.TypeMapPath);
 
             if (config.Logging != null)
             {
@@ -154,6 +155,7 @@ namespace Bridge.Translator.Utils
             assemblyInfo.Output = helper.ConvertPath(assemblyInfo.Output);
             assemblyInfo.PluginsPath = helper.ConvertPath(assemblyInfo.PluginsPath);
             assemblyInfo.LocalesOutput = helper.ConvertPath(assemblyInfo.LocalesOutput);
+            assemblyInfo.TypeMapPath = helper.ConvertPath(assemblyInfo.TypeMapPath);
 
             if (assemblyInfo.Logging != null)
             {

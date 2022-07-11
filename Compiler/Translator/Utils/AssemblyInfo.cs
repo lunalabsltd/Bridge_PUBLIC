@@ -7,6 +7,7 @@ namespace Bridge.Translator
     {
         public const string DEFAULT_FILENAME = "---";
         public const string DEFAULT_OUTPUT = "$(OutDir)/bridge/";
+        public const string DEFAULT_TYPE_MAP_PATH = "$(OutDir)/bridge/typemap.json";
 
         public AssemblyInfo()
         {
@@ -27,6 +28,7 @@ namespace Bridge.Translator
             this.IgnoreDuplicateTypes = false;
             this.DeadCode = new DeadCodeConfig();
             this.SafeStructsInGenerics = false;
+            this.TypeMapPath = DEFAULT_TYPE_MAP_PATH;
         }
 
         /// <summary>
@@ -366,6 +368,12 @@ namespace Bridge.Translator
         /// If false value types are never cloned (i.e. treated as reference types) when used as parameters in generic types.
         /// </summary>
         public bool SafeStructsInGenerics
+        {
+            get;
+            set;
+        }
+
+        public string TypeMapPath
         {
             get;
             set;

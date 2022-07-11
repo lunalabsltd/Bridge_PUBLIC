@@ -14,6 +14,7 @@ class Paths {
             assemblyInfo: path.join( this.bridgePath, '.build/common/CommonAssemblyInfo.cs' ),
             nugetBuildPackageTargets: path.join( this.bridgePath, '.build/common/NuGet.Build.Package.targets' ),
             nugetTempDir: path.join( this.bridgePath, '.build/packages/' ),
+            typemap: path.join( this.bridgePath, '/PostBuild/bin/Release/bin/Release/bridge/typemap.json' ),
             compiledNugetDirs: [
                 path.join( this.bridgePath, 'Compiler/Build/bin/Release/' ),
                 path.join( this.bridgePath, 'Compiler/Contract/bin/Release/' ),
@@ -27,6 +28,7 @@ class Paths {
             lunaCompilerPackages: path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/packages' ),
             nugetConfig: path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/nuget.config' ),
             packagesToCleanUp: [ 'Bridge.Core', 'Bridge.Min' ],
+            typemap: path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/typemaps/bridge.typemap.json' ),
             csprojs: [
                 path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Scripts/Scripts.csproj' ),
                 path.join( this.lunaPath, 'pipeline/templates/LunaCompiler/Scripts/Scripts.csproj.template' ),

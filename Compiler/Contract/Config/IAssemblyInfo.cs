@@ -244,5 +244,11 @@ namespace Bridge.Contract
             get;
             set;
         }
+
+        string TypeMapPath
+        {
+            get;
+            set;
+        }
     }
  }

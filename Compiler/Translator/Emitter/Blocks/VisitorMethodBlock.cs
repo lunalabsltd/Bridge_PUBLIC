@@ -1,11 +1,8 @@
-using System;
 using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using System.Linq;
-using System.Xml.Schema;
 using Bridge.Contract.Constants;
 using ICSharpCode.NRefactory.Semantics;
-using ICSharpCode.NRefactory.TypeSystem;
 
 namespace Bridge.Translator
 {
@@ -101,6 +98,8 @@ namespace Bridge.Translator
             var name = overloads.GetOverloadName(false, null, excludeTypeOnly: OverloadsCollection.ExcludeTypeParameterForDefinition(member_rr));
             var fullName = Helpers.GetMemberName(member_rr.Member, this.Emitter.GetTypeDefinition(), this.Emitter);
             this.Write(string.Format("/*{0} start.*/", fullName));
+
+            this.Emitter.Translator.TypeMapper.AddMethodToMap(member_rr, fullName);
 
             this.WriteNewLine();
 

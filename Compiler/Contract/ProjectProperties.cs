@@ -51,6 +51,11 @@ namespace Bridge.Contract
             get; set;
         }
 
+        public string TypeMapPath
+        {
+            get; set;
+        }
+
         public override string ToString()
         {
             return string.Join(", ", GetValues().Select(x => x.Key + ":" + x.Value));
@@ -74,6 +79,7 @@ namespace Bridge.Contract
                { WrapProperty("OutputType"), GetString(this.OutputType) },
                { WrapProperty("Platform"), GetString(this.Platform) },
                { WrapProperty("RootNamespace"), GetString(this.RootNamespace) },
+               { WrapProperty("TypeMapPath"), GetString(this.TypeMapPath) },
             };
 
             return r;
@@ -116,6 +122,9 @@ namespace Bridge.Contract
                         break;
                     case "rootnamespace":
                         this.RootNamespace = pair.Value;
+                        break;
+                    case "typemappath":
+                        this.TypeMapPath = pair.Value;
                         break;
                     default:
                         break;

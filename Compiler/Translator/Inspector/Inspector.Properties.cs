@@ -2,6 +2,7 @@ using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using System;
 using System.Collections.Generic;
+using ICSharpCode.NRefactory.TypeSystem;
 
 namespace Bridge.Translator
 {
@@ -32,6 +33,12 @@ namespace Bridge.Translator
         }
 
         public List<ITypeInfo> Types
+        {
+            get;
+            protected set;
+        }
+
+        public List<ITypeInfo> ExternalTypes
         {
             get;
             protected set;
