@@ -1257,7 +1257,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or predicate is null.
         /// </exception>
-        [Bridge.Template("System.Linq.Enumerable.from({source}, {TSource}).firstOrDefault({predicate}, {TSource:default})")]
+        [Bridge.Template("System.Linq.Enumerable.from({source}, {TSource}).firstOrDefault(Bridge.fn.bind(this, {predicate}), {TSource:default})")]
         public static extern TSource FirstOrDefault<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate);
 
         /// <summary>
