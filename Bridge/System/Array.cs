@@ -53,6 +53,11 @@ namespace System
         [Bridge.Template("(System.Array.findIndex({array}, {match}) !== -1)")]
         public static extern bool Exists<T>(T[] array, Predicate<T> match);
 
+        public static Array Empty<T>()
+        {
+            return CreateInstance(typeof(T), 0);
+        }
+
         [Bridge.Template("System.Array.find({T}, {array}, {match})")]
         public static extern T Find<T>(T[] array, Predicate<T> match);
 
