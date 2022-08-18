@@ -332,6 +332,7 @@ namespace Bridge.Translator
 
             this.AssemblyInfo = inspector.AssemblyInfo;
             this.Types = inspector.Types;
+            this.ExternalTypes = inspector.ExternalTypes;
 
             this.Log.Info("Inspecting types done");
         }
