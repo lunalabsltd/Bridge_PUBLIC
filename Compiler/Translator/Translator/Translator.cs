@@ -168,10 +168,11 @@ namespace Bridge.Translator
                 var exceptions = ex.InnerExceptions;
                 foreach (var exception in exceptions)
                 {
-                    logger.Error(exception.ToString());
+                    var error = $"{exception.Message}\n";
+                    logger.Error(error);
                 }
 
-                throw new Exception("Build error! For details see errors above.");
+                throw new Exception("Compilation error! For details see errors above.", ex);
             }
 
             var resolver = new MemberResolver(this.ParsedSourceFiles, Emitter.ToAssemblyReferences(references, logger), this.AssemblyDefinition);

@@ -59,7 +59,7 @@ namespace Bridge.Builder
                 }
                 else
                 {
-                    logger.Error(string.Format("Bridge.NET Compiler error: {0}", ex.ToString()));
+                    logger.Error(string.Format("Bridge.NET Compiler error: {0}", ex.Message));
                 }
 
                 return 1;
