@@ -55,11 +55,11 @@ namespace Bridge.Builder
 
                 if (ee != null)
                 {
-                    logger.Error(string.Format("Bridge.NET Compiler error: {1} ({2}, {3}) {0}", ee.ToString(), ee.FileName, ee.StartLine, ee.StartColumn));
+                    logger.Error(string.Format("Bridge.NET Compiler error: \n{1} ({2}, {3}) {0}", ee.ToString(), ee.FileName, ee.StartLine, ee.StartColumn));
                 }
                 else
                 {
-                    logger.Error(string.Format("Bridge.NET Compiler error: {0}", ex.Message));
+                    logger.Error($"Bridge.NET Compiler error: \n{ex.Message}");
                 }
 
                 return 1;

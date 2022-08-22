@@ -409,7 +409,7 @@ namespace Bridge.Translator
                 var errors = new List<string>();
                 foreach (var error in parser.Errors)
                 {
-                    errors.Add("[ErrorMessage]" + fileName + ":" + error.Region.BeginLine + "," + error.Region.BeginColumn + ": " + error.Message);
+                    errors.Add($"[ErrorMessage] {fileName}:{error.Region.BeginLine},{error.Region.BeginColumn} - {error.Message}");
                 }
 
                 throw new EmitterException(syntaxTree, String.Join(Environment.NewLine, errors));
