@@ -172,7 +172,7 @@ namespace Bridge.Translator
                     logger.Error(error);
                 }
 
-                throw new Exception("Compilation error! For details see errors above.", ex);
+                throw new Exception("Compilation Error! For details see errors above.", ex);
             }
 
             var resolver = new MemberResolver(this.ParsedSourceFiles, Emitter.ToAssemblyReferences(references, logger), this.AssemblyDefinition);
