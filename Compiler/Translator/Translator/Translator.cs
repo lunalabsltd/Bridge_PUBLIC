@@ -159,8 +159,21 @@ namespace Bridge.Translator
                 }
             }
 
-            this.BuildSyntaxTree();
+            try
+            {
+                this.BuildSyntaxTree();
+            }
+            catch (AggregateException ex)
+            {
+                var exceptions = ex.InnerExceptions;
+                foreach (var exception in exceptions)
+                {
+                    var error = $"{exception.Message}\n";
+                    logger.Error(error);
+                }
 
+                throw new Exception("Compilation Error! For details see errors above.", ex);
+            }
 
             var resolver = new MemberResolver(this.ParsedSourceFiles, Emitter.ToAssemblyReferences(references, logger), this.AssemblyDefinition);
             resolver = this.Preconvert(resolver, config);

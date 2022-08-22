@@ -409,10 +409,10 @@ namespace Bridge.Translator
                 var errors = new List<string>();
                 foreach (var error in parser.Errors)
                 {
-                    errors.Add(fileName + ":" + error.Region.BeginLine + "," + error.Region.BeginColumn + ": " + error.Message);
+                    errors.Add($"[ErrorMessage] {fileName}:{error.Region.BeginLine},{error.Region.BeginColumn} - {error.Message}");
                 }
 
-                throw new EmitterException(syntaxTree, "Error parsing code." + Environment.NewLine + String.Join(Environment.NewLine, errors));
+                throw new EmitterException(syntaxTree, String.Join(Environment.NewLine, errors));
             }
 
             var expandResult = new QueryExpressionExpander().ExpandQueryExpressions(syntaxTree);
