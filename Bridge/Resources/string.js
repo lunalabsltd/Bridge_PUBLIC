@@ -251,7 +251,7 @@
                     value = "";
                 }
 
-                if (formatStr && value.$boxed && value.type.$kind === "enum") {
+                if (formatStr && value.$boxed && value.type.$kind === Bridge.Typemarkers.Enum) {
                     value = System.Enum.format(value.type, value.v, formatStr);
                 } else if (formatStr && value.$boxed && value.type.format) {
                     value = value.type.format(Bridge.unbox(value, true), formatStr, provider);

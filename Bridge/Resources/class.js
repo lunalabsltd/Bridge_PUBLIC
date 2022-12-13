@@ -243,16 +243,16 @@
 
         definei: function (className, gscope, prop) {
             if ((prop === true || !prop) && gscope) {
-                gscope.$kind = "interface";
+                gscope.$kind = Bridge.Typemarkers.Interface;
             } else if (prop) {
-                prop.$kind = "interface";
+                prop.$kind = Bridge.Typemarkers.Interface;
             } else {
-                gscope = { $kind: "interface" };
+                gscope = { $kind: Bridge.Typemarkers.Interface };
             }
 
             var c = Bridge.define(className, gscope, prop);
 
-            c.$kind = "interface";
+            c.$kind = Bridge.Typemarkers.Interface;
             c.$isInterface = true;
 
             return c;
@@ -310,16 +310,16 @@
             }
 
             prop = prop || {};
-            prop.$kind = prop.$kind || "class";
+            prop.$kind = prop.$kind || Bridge.Typemarkers.Class;
 
             var isNested = false;
 
-            if (prop.$kind.substring(0, 7) === "nested ") {
+            if (prop.$kind / Bridge.Typemarkers.NestedOffset > 0) {
                 isNested = true;
-                prop.$kind = prop.$kind.substr(7);
+                prop.$kind = prop.$kind % Bridge.Typemarkers.NestedOffset;
             }
 
-            if (prop.$kind === "enum" && !prop.inherits) {
+            if (prop.$kind === Bridge.Typemarkers.Enum && !prop.inherits) {
                 prop.inherits = [System.IComparable, System.IFormattable];
             }
 
@@ -374,7 +374,7 @@
                 name,
                 registerT = true;
 
-            if (prop.$kind === "enum") {
+            if (prop.$kind === Bridge.Typemarkers.Enum) {
                 extend = [System.Enum];
             }
 
@@ -500,7 +500,7 @@
 
             Bridge.Class.createInheritors(Class, extend);
 
-            var noBase = extend ? extend[0].$kind === "interface" : true;
+            var noBase = extend ? extend[0].$kind === Bridge.Typemarkers.Interface : true;
 
             if (noBase) {
                 extend = null;
@@ -591,7 +591,7 @@
                     if (name === "ctor") {
                         Class["$ctor"] = member;
                     } else {
-                        if (prop.$kind === "enum" && !Bridge.isFunction(member) && name.charAt(0) !== "$") {
+                        if (prop.$kind === Bridge.Typemarkers.Enum && !Bridge.isFunction(member) && name.charAt(0) !== "$") {
                             Class.$names = Class.$names || [];
                             const aliases = ( prototype.statics && prototype.statics.$config && prototype.statics.$config.alias ) || [];
                             const currentNamePosition = aliases.indexOf( name );
@@ -608,7 +608,7 @@
                     }
                 }
 
-                if (prop.$kind === "enum" && Class.$names) {
+                if (prop.$kind === Bridge.Typemarkers.Enum && Class.$names) {
                     Class.$names = Class.$names.sort(function (i1, i2) {
                         if (Bridge.isFunction(i1.value.eq)) {
                             return i1.value.sub(i2.value).sign();
@@ -663,7 +663,7 @@
                 Class.$getMetadata = Bridge.Reflection.getMetadata;
             }
 
-            if (Class.$kind === "enum") {
+            if (Class.$kind === Bridge.Typemarkers.Enum) {
                 if (!Class.prototype.$utype) {
                     Class.prototype.$utype = System.Int32;
                 }
@@ -692,7 +692,7 @@
                 };
             }
 
-            if (Class.$kind === "interface") {
+            if (Class.$kind === Bridge.Typemarkers.Interface) {
                 if (Class.prototype.$variance) {
                     Class.isAssignableFrom = Bridge.Class.varianceAssignable;
                 }
@@ -740,7 +740,7 @@
                         }
                     }
 
-                    if (baseType.$kind === "interface") {
+                    if (baseType.$kind === Bridge.Typemarkers.Interface) {
                         interfaces.push(baseType);
                     }
                 }
@@ -822,7 +822,7 @@
                 return false;
             };
 
-            if (source.$kind === "interface" && check(this, source)) {
+            if (source.$kind === Bridge.Typemarkers.Interface && check(this, source)) {
                 return true;
             }
 
@@ -871,7 +871,7 @@
                     }
                 }
 
-                if (scope.$kind === "interface") {
+                if (scope.$kind === Bridge.Typemarkers.Interface) {
                     cls.$interfaces.push(scope);
                 }
             }
@@ -1016,7 +1016,7 @@
 
         generic: function (className, scope, fn, prop) {
             fn.$$name = className;
-            fn.$kind = "class";
+            fn.$kind = Bridge.Typemarkers.Class;
 
             Bridge.Class.set(scope, className, fn, true);
             Bridge.Class.registerType(className, fn);
@@ -1058,7 +1058,7 @@
 
                 fn.prototype = prototype;
                 fn.prototype.constructor = fn;
-                fn.$kind = cfg.$kind || "class";
+                fn.$kind = cfg.$kind || Bridge.Typemarkers.Class;
 
                 if (cfg.$module) {
                     fn.$module = cfg.$module;

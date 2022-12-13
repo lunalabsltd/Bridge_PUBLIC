@@ -66,8 +66,8 @@
 
     System.Int64.$$name = "System.Int64";
     System.Int64.prototype.$$name = "System.Int64";
-    System.Int64.$kind = "struct";
-    System.Int64.prototype.$kind = "struct";
+    System.Int64.$kind = Bridge.Typemarkers.Struct;
+    System.Int64.prototype.$kind = Bridge.Typemarkers.Struct;
 
     System.Int64.$$inherits = [];
     Bridge.Class.addExtend(System.Int64, [System.IComparable, System.IFormattable, System.IComparable$1(System.Int64), System.IEquatable$1(System.Int64)]);
@@ -609,8 +609,8 @@
     System.UInt64.$number = true;
     System.UInt64.$$name = "System.UInt64";
     System.UInt64.prototype.$$name = "System.UInt64";
-    System.UInt64.$kind = "struct";
-    System.UInt64.prototype.$kind = "struct";
+    System.UInt64.$kind = Bridge.Typemarkers.Struct;
+    System.UInt64.prototype.$kind = Bridge.Typemarkers.Struct;
     System.UInt64.$$inherits = [];
     Bridge.Class.addExtend(System.UInt64, [System.IComparable, System.IFormattable, System.IComparable$1(System.UInt64), System.IEquatable$1(System.UInt64)]);
 

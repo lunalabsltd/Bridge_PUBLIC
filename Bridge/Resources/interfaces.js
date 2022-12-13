@@ -1,5 +1,5 @@
     Bridge.define("System.IFormattable", {
-        $kind: "interface",
+        $kind: Bridge.Typemarkers.Interface,
         statics: {
             $is: function (obj) {
                 if (Bridge.isNumber(obj) || Bridge.isDate(obj)) {
@@ -12,7 +12,7 @@
     });
 
     Bridge.define("System.IComparable", {
-        $kind: "interface",
+        $kind: Bridge.Typemarkers.Interface,
 
         statics: {
             $is: function (obj) {
@@ -26,16 +26,16 @@
     });
 
     Bridge.define("System.IFormatProvider", {
-        $kind: "interface"
+        $kind: Bridge.Typemarkers.Interface
     });
 
     Bridge.define("System.ICloneable", {
-        $kind: "interface"
+        $kind: Bridge.Typemarkers.Interface
     });
 
     Bridge.define("System.IComparable$1", function (T) {
         return {
-            $kind: "interface",
+            $kind: Bridge.Typemarkers.Interface,
 
             statics: {
                 $is: function (obj) {
@@ -59,7 +59,7 @@
 
     Bridge.define("System.IEquatable$1", function (T) {
         return {
-            $kind: "interface",
+            $kind: Bridge.Typemarkers.Interface,
 
             statics: {
                 $is: function (obj) {
@@ -82,13 +82,13 @@
     });
 
     Bridge.define("Bridge.IPromise", {
-        $kind: "interface"
+        $kind: Bridge.Typemarkers.Interface
     });
 
     Bridge.define("System.IDisposable", {
-        $kind: "interface"
+        $kind: Bridge.Typemarkers.Interface
     });
 
     Bridge.define("System.IAsyncResult", {
-        $kind: "interface"
+        $kind: Bridge.Typemarkers.Interface
     });

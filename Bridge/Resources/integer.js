@@ -1328,7 +1328,7 @@
         }
     });
 
-    Bridge.Int.$kind = "";
+    Bridge.Int.$kind = Bridge.Typemarkers.None;
     Bridge.Class.addExtend(Bridge.Int, [System.IComparable$1(Bridge.Int), System.IEquatable$1(Bridge.Int)]);
 
     (function () {
@@ -1383,7 +1383,7 @@
                 }
             });
 
-            type.$kind = "";
+            type.$kind = Bridge.Typemarkers.None;
             Bridge.Class.addExtend(type, [System.IComparable$1(type), System.IEquatable$1(type)]);
         };
 

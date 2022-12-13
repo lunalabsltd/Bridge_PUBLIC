@@ -1,6 +1,6 @@
     Bridge.define("System.DateTime", {
         inherits: function () { return [System.IComparable, System.IComparable$1(System.DateTime), System.IEquatable$1(System.DateTime), System.IFormattable]; },
-        $kind: "struct",
+        $kind: Bridge.Typemarkers.Struct,
         fields: {
             kind: 0
         },

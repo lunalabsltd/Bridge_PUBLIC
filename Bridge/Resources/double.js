@@ -72,7 +72,7 @@
         }
     });
 
-    System.Double.$kind = "";
+    System.Double.$kind = Bridge.Typemarkers.None;
     Bridge.Class.addExtend(System.Double, [System.IComparable$1(System.Double), System.IEquatable$1(System.Double)]);
 
     Bridge.define("System.Single", {
@@ -123,5 +123,5 @@
         }
     });
 
-    System.Single.$kind = "";
+    System.Single.$kind = Bridge.Typemarkers.None;
     Bridge.Class.addExtend(System.Single, [System.IComparable$1(System.Single), System.IEquatable$1(System.Single)]);

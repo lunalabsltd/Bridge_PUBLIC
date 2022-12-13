@@ -92,5 +92,5 @@
         }
     });
 
-    System.Boolean.$kind = "";
+    System.Boolean.$kind = Bridge.Typemarkers.None;
     Bridge.Class.addExtend(System.Boolean, [System.IComparable$1(System.Boolean), System.IEquatable$1(System.Boolean)]);

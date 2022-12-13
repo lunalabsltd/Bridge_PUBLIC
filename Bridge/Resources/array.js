@@ -130,7 +130,7 @@
             if (isFn) {
                 var v = defvalue();
 
-                if (!v || (!v.$kind && typeof v !== "object")) {
+                if (!v || (!v.$kind || v.$kind === Bridge.Typemarkers.None && typeof v !== "object")) {
                     isFn = false;
                     defvalue = v;
                 }
@@ -190,7 +190,7 @@
             if (isFn) {
                 var v = value();
 
-                if (!v || (!v.$kind && typeof v !== "object")) {
+                if (!v || (!v.$kind || v.$kind === Bridge.Typemarkers.None && typeof v !== "object")) {
                     isFn = false;
                     value = v;
                 }
@@ -433,7 +433,7 @@
             if (isFn) {
                 var v = val();
 
-                if (!v || (!v.$kind && typeof v !== "object")) {
+                if (!v || (!v.$kind || v.$kind === Bridge.Typemarkers.None && typeof v !== "object")) {
                     isFn = false;
                     val = v;
                 }
@@ -698,7 +698,7 @@
                 if ( s > 0 ) {
                     const element = oldArray[ 0 ];
                     // eslint-disable-next-line no-proto
-                    isStruct = ( element && element.__proto__.$kind === 'struct' );
+                    isStruct = ( element && element.__proto__.$kind === Bridge.Typemarkers.Struct );
                     if ( isStruct ) {
                         ref[ 0 ] = element.$clone();
                     } else {
@@ -718,7 +718,7 @@
             if ( newSize > oldSize ) {
                 const element = isFn ? val() : val;
                 // eslint-disable-next-line no-proto
-                isStruct = ( element && element.__proto__.$kind === 'struct' );
+                isStruct = ( element && element.__proto__.$kind === Bridge.Typemarkers.Struct );
                 if ( isStruct ) {
                     ref[ oldSize ] = element.$clone();
                 } else {

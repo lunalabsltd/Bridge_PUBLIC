@@ -28,6 +28,7 @@
       "files": [
         "Resources/.auxiliary/init.js",
         "Resources/core.js",
+        "Resources/typemarkers.js",
         "Resources/browser.js",
         "Resources/class.js",
         "Resources/.generated/system/reflection/assemblyname.js",

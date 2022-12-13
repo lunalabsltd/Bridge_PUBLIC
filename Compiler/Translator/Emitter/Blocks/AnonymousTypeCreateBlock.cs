@@ -157,7 +157,7 @@ namespace Bridge.Translator
             this.EnsureComma();
             this.Write(JS.Fields.KIND);
             this.WriteColon();
-            this.WriteScript(TypeKind.Anonymous.ToString().ToLowerInvariant());
+            this.WriteScript((int)TypeKind.Anonymous);
             this.WriteComma(true);
             this.Write(JS.Fields.CTORS);
             this.WriteColon();

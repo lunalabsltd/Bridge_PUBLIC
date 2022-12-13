@@ -77,8 +77,8 @@
     System.Decimal.$number = true;
     System.Decimal.$$name = "System.Decimal";
     System.Decimal.prototype.$$name = "System.Decimal";
-    System.Decimal.$kind = "struct";
-    System.Decimal.prototype.$kind = "struct";
+    System.Decimal.$kind = Bridge.Typemarkers.Struct;
+    System.Decimal.prototype.$kind = Bridge.Typemarkers.Struct;
     System.Decimal.$$inherits = [];
     Bridge.Class.addExtend(System.Decimal, [System.IComparable, System.IFormattable, System.IComparable$1(System.Decimal), System.IEquatable$1(System.Decimal)]);
 

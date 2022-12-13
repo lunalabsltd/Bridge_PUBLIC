@@ -481,11 +481,11 @@
         },
 
         isClass: function (type) {
-            return (type.$kind === "class" || type.$kind === "nested class" || type === Array || type === Function || type === RegExp || type === String || type === Error || type === Object);
+            return (type.$kind === Bridge.Typemarkers.Class || type.$kind % Bridge.Typemarkers.NestedOffset === Bridge.Typemarkers.Class || type === Array || type === Function || type === RegExp || type === String || type === Error || type === Object);
         },
 
         isEnum: function (type) {
-            return type.$kind === "enum";
+            return type.$kind === Bridge.Typemarkers.Enum;
         },
 
         isFlags: function (type) {
@@ -493,7 +493,7 @@
         },
 
         isInterface: function (type) {
-            return type.$kind === "interface" || type.$kind === "nested interface";
+            return type.$kind % Bridge.Typemarkers.NestedOffset === Bridge.Typemarkers.Interface;
         },
 
         isAbstract: function (type) {
@@ -675,8 +675,8 @@
         },
 
         canAcceptNull: function (type) {
-            if (type.$kind === "struct" ||
-                type.$kind === "enum" ||
+            if (type.$kind === Bridge.Typemarkers.Struct ||
+                type.$kind === Bridge.Typemarkers.Enum ||
                 type === System.Decimal ||
                 type === System.Int64 ||
                 type === System.UInt64 ||
@@ -705,7 +705,7 @@
                 return new constructor();
             }
 
-            if (constructor.$$initCtor && constructor.$kind !== "anonymous") {
+            if (constructor.$$initCtor && constructor.$kind !== Bridge.Typemarkers.Anonymous) {
                 var md = Bridge.getMetadata(constructor),
                     count = 0;
 

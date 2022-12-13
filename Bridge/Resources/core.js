@@ -122,7 +122,7 @@
                     T = T.$nullableType;
                 }
 
-                if (T && T.$kind === "enum") {
+                if (T && T.$kind === Bridge.Typemarkers.Enum) {
                     T = System.Enum.getUnderlyingType(T);
                 }
 
@@ -130,7 +130,7 @@
                     t = t.$nullableType;
                 }
 
-                if (t.$kind === "enum") {
+                if (t.$kind === Bridge.Typemarkers.Enum) {
                     t = System.Enum.getUnderlyingType(t);
                 }
 
@@ -470,7 +470,7 @@
                 return Bridge.Reflection.applyConstructor(type, args);
             }
 
-            if (type.$kind === 'interface') {
+            if (type.$kind === Bridge.Typemarkers.Interface) {
                 throw new System.MissingMethodException.$ctor1('Default constructor not found for type ' + Bridge.getTypeName(type));
             }
 
@@ -873,7 +873,7 @@
             }
 
             if (obj.$boxed) {
-                if (obj.type.$kind === "enum" && (obj.type.prototype.$utype === type || type === System.Enum || type === System.IFormattable || type === System.IComparable)) {
+                if (obj.type.$kind === Bridge.Typemarkers.Enum && (obj.type.prototype.$utype === type || type === System.Enum || type === System.IFormattable || type === System.IComparable)) {
                     return true;
                 } else if (!Bridge.Reflection.isInterface(type) && !type.$nullable) {
                     return obj.type === type || Bridge.isObject(type) || type === System.ValueType && Bridge.Reflection.isValueType(obj.type);
@@ -1398,7 +1398,7 @@
 
                 var eq = a === b;
 
-                if (!eq && typeof a === "object" && typeof b === "object" && a !== null && b !== null && a.$kind === "struct" && b.$kind === "struct" && a.$$name === b.$$name) {
+                if (!eq && typeof a === "object" && typeof b === "object" && a !== null && b !== null && a.$kind === Bridge.Typemarkers.Struct && b.$kind === Bridge.Typemarkers.Struct && a.$$name === b.$$name) {
                     return Bridge.getHashCode(a) === Bridge.getHashCode(b) && Bridge.objectEquals(a, b);
                 }
 
@@ -1615,7 +1615,7 @@
 
         format: function (obj, formatString, provider) {
             if (obj && obj.$boxed) {
-                if (obj.type.$kind === "enum") {
+                if (obj.type.$kind === Bridge.Typemarkers.Enum) {
                     return System.Enum.format(obj.type, obj.v, formatString);
                 } else if (obj.type === System.Char) {
                     return System.Char.format(Bridge.unbox(obj, true), formatString, provider);

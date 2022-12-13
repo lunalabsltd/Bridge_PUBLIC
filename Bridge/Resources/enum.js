@@ -15,7 +15,7 @@
                         throw new System.ArgumentNullException.$ctor1("enumType");
                     }
 
-                    if (enumType.prototype && enumType.$kind !== "enum") {
+                    if (enumType.prototype && enumType.$kind !== Bridge.Typemarkers.Enum) {
                         throw new System.ArgumentException.$ctor1("", "enumType");
                     }
                 },
