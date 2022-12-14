@@ -314,7 +314,7 @@
 
             var isNested = false;
 
-            if (prop.$kind / Bridge.Typemarkers.NestedOffset > 0) {
+            if (Math.floor(prop.$kind / Bridge.Typemarkers.NestedOffset) > 0) {
                 isNested = true;
                 prop.$kind = prop.$kind % Bridge.Typemarkers.NestedOffset;
             }

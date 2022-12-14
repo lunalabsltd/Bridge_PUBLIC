@@ -481,7 +481,7 @@
         },
 
         isClass: function (type) {
-            return (type.$kind === Bridge.Typemarkers.Class || type.$kind % Bridge.Typemarkers.NestedOffset === Bridge.Typemarkers.Class || type === Array || type === Function || type === RegExp || type === String || type === Error || type === Object);
+            return (type.$kind % Bridge.Typemarkers.NestedOffset === Bridge.Typemarkers.Class || type === Array || type === Function || type === RegExp || type === String || type === Error || type === Object);
         },
 
         isEnum: function (type) {

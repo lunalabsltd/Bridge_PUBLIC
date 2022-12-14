@@ -27,12 +27,10 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         [Test]
         public void TestStringIsNullOrWhiteSpaceCase()
         {
-        // ( s === ' ' ) || ( s === '\x09' ) || ( s === '\x0A' ) || ( s === '\x0B' ) || ( s === '\x0C' ) || ( s === '\x0D' ) || ( s === '\x85' ) || ( s === '\xA0' );
             var p = new string[]
                 {
                     null,
                     "",
-                    // " ",
                     ((char)0x0009).ToString(), // Horizontal Tab
                     ((char)0x000A).ToString(), // Line Feed
                     ((char)0x000B).ToString(), // Vertical Tab
