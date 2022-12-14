@@ -364,7 +364,12 @@ namespace Bridge.Translator
             this.EnsureComma();
             this.Write(JS.Fields.KIND);
             this.WriteColon();
-            this.WriteScript( isNested ? 1000 : 0 + (int)this.TypeInfo.Type.Kind);
+            var kindMarker = (int)this.TypeInfo.Type.Kind + 1;
+            if (isNested)
+            {
+                kindMarker += 1000;
+            }
+            this.WriteScript( kindMarker );
             this.Emitter.Comma = true;
         }
 

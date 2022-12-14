@@ -130,7 +130,8 @@
             if (isFn) {
                 var v = defvalue();
 
-                if (!v || (!v.$kind || v.$kind === Bridge.Typemarkers.None && typeof v !== "object")) {
+                // if (!v || ((!v.$kind || v.$kind === Bridge.Typemarkers.None) && typeof v !== "object")) {
+                if (!v || (!v.$kind  && typeof v !== "object")) {
                     isFn = false;
                     defvalue = v;
                 }
@@ -190,7 +191,8 @@
             if (isFn) {
                 var v = value();
 
-                if (!v || (!v.$kind || v.$kind === Bridge.Typemarkers.None && typeof v !== "object")) {
+                // if (!v || ((!v.$kind || v.$kind === Bridge.Typemarkers.None) && typeof v !== "object")) {
+                if (!v || (!v.$kind && typeof v !== "object")) {
                     isFn = false;
                     value = v;
                 }
@@ -433,7 +435,7 @@
             if (isFn) {
                 var v = val();
 
-                if (!v || (!v.$kind || v.$kind === Bridge.Typemarkers.None && typeof v !== "object")) {
+                if (!v || (!v.$kind && typeof v !== "object")) {
                     isFn = false;
                     val = v;
                 }
