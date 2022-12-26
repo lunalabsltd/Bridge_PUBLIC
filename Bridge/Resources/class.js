@@ -1,3 +1,5 @@
+        const rNames = ["fields", "events", "props", "ctors", "methods"];
+
         var base = {
         _initialize: function () {
             if (this.$init) {
@@ -314,32 +316,39 @@
 
             var isNested = false;
 
-            if (Math.floor(prop.$kind / Bridge.Typemarkers.NestedOffset) > 0) {
+            if (prop.$kind >= Bridge.Typemarkers.NestedOffset) {
                 isNested = true;
-                prop.$kind = prop.$kind % Bridge.Typemarkers.NestedOffset;
+                prop.$kind = prop.$kind - Bridge.Typemarkers.NestedOffset;
             }
+            // if (Math.floor(prop.$kind / Bridge.Typemarkers.NestedOffset) > 0) {
+            //     isNested = true;
+            //     prop.$kind = prop.$kind % Bridge.Typemarkers.NestedOffset;
+            // }
 
-            if (prop.$kind === Bridge.Typemarkers.Enum && !prop.inherits) {
+
+                if (prop.$kind === Bridge.Typemarkers.Enum && !prop.inherits) {
                 prop.inherits = [System.IComparable, System.IFormattable];
             }
 
-            var rNames = ["fields", "events", "props", "ctors", "methods"],
-                defaultScheme = Bridge.isFunction(prop.main) ? 0 : 1,
+            // var rNames = ["fields", "events", "props", "ctors", "methods"],
+            //     defaultScheme = Bridge.isFunction(prop.main) ? 0 : 1,
+                var defaultScheme = Bridge.isFunction(prop.main) ? 0 : 1,
                 check = function (scope) {
-                    if (scope.config && Bridge.isPlainObject(scope.config) ||
-                        scope.$main && Bridge.isFunction(scope.$main) ||
+                    if (Bridge.isPlainObject(scope.config) ||
+                        Bridge.isFunction(scope.$main) ||
                         scope.hasOwnProperty("ctor") && Bridge.isFunction(scope.ctor)) {
                         defaultScheme = 1;
 
                         return false;
                     }
 
-                    if (scope.alias && Bridge.isArray(scope.alias) && scope.alias.length > 0 && scope.alias.length % 2 === 0) {
+                    if (Bridge.isArray(scope.alias) && scope.alias.length > 0 && scope.alias.length % 2 === 0) {
                         return true;
                     }
 
                     for (var j = 0; j < rNames.length; j++) {
-                        if (scope[rNames[j]] && Bridge.isPlainObject(scope[rNames[j]])) {
+                        const rName = scope[rNames[j]];
+                        if (Bridge.isPlainObject(rName)) {
                             return true;
                         }
                     }
@@ -494,7 +503,7 @@
                 Class.$$fullname = Class.$$name;
             }
 
-            if (extend && Bridge.isFunction(extend)) {
+            if (Bridge.isFunction(extend)) {
                 extend = extend();
             }
 
@@ -1134,6 +1143,32 @@
     Bridge.Class = base;
     Bridge.Class.$queue = [];
     Bridge.Class.$queueEntry = [];
-    Bridge.define = Bridge.Class.define;
-    Bridge.definei = Bridge.Class.definei;
-    Bridge.init = Bridge.Class.init;
+    // Bridge.define = Bridge.Class.define;
+    // Bridge.definei = Bridge.Class.definei;
+    // Bridge.init = Bridge.Class.init;
+
+        window.__defineTime = 0;
+        window.__defineiTime = 0;
+        window.__initTime = 0;
+
+        Bridge.define = function(...args){
+            const st = performance.now();
+            const r = Bridge.Class.define(...args);
+            window.__defineTime += performance.now() - st;
+
+            return r;
+        };
+        Bridge.definei = function(...args){
+            const st = performance.now();
+            const r = Bridge.Class.definei(...args);
+            window.__defineiTime += performance.now() - st;
+
+            return r;
+        };
+        Bridge.init = function(...args){
+            const st = performance.now();
+            const r = Bridge.Class.init(...args);
+            window.__initTime += performance.now() - st;
+
+            return r;
+        };
