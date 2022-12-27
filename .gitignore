@@ -1,4 +1,6 @@
 .idea
+# We want to share startup config across the team
+!.idea/.idea.Bridge.Dev/.idea/workspace.xml
 .vscode/
 
 # Custom
@@ -191,6 +193,7 @@ FakesAssemblies/
 *.nupkg
 /Bridge/Resources/.generated/**/*.js
 Tests/**/App_Readme/
+/Tests/DebugProject/
 /Tests/Runner/**/*.js
 /Tests/Runner/ClientTestHelper/Bridge.Test/
 /Tests/Runner/**/*.ts
