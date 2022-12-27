@@ -1135,32 +1135,6 @@
     Bridge.Class = base;
     Bridge.Class.$queue = [];
     Bridge.Class.$queueEntry = [];
-    // Bridge.define = Bridge.Class.define;
-    // Bridge.definei = Bridge.Class.definei;
-    // Bridge.init = Bridge.Class.init;
-
-        window.__defineTime = 0;
-        window.__defineiTime = 0;
-        window.__initTime = 0;
-
-        Bridge.define = function(...args){
-            const st = performance.now();
-            const r = Bridge.Class.define(...args);
-            window.__defineTime += performance.now() - st;
-
-            return r;
-        };
-        Bridge.definei = function(...args){
-            const st = performance.now();
-            const r = Bridge.Class.definei(...args);
-            window.__defineiTime += performance.now() - st;
-
-            return r;
-        };
-        Bridge.init = function(...args){
-            const st = performance.now();
-            const r = Bridge.Class.init(...args);
-            window.__initTime += performance.now() - st;
-
-            return r;
-        };
+    Bridge.define = Bridge.Class.define;
+    Bridge.definei = Bridge.Class.definei;
+    Bridge.init = Bridge.Class.init;

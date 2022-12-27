@@ -130,7 +130,7 @@
             if (isFn) {
                 var v = defvalue();
 
-                if (!v || (!v.$kind  && typeof v !== "object")) {
+                if (!v || (!v.$kind && typeof v !== "object")) {
                     isFn = false;
                     defvalue = v;
                 }
