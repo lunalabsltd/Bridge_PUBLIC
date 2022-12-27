@@ -1,4 +1,5 @@
-        const rNames = ["fields", "events", "props", "ctors", "methods"];
+        const defineRNames = ["fields", "events", "props", "ctors", "methods"];
+        const convertSchemeReserved = ["fields", "methods", "events", "props", "properties", "alias", "ctors"];
 
         var base = {
         _initialize: function () {
@@ -165,13 +166,12 @@
             var result = {},
                 copy = function (obj, to) {
 
-                var reserved = ["fields", "methods", "events", "props", "properties", "alias", "ctors"],
-                    keys = Object.keys(obj);
+                var keys = Object.keys(obj);
 
                 for (var i = 0; i < keys.length; i++) {
                     var name = keys[i];
 
-                    if (reserved.indexOf(name) === -1) {
+                    if (convertSchemeReserved.indexOf(name) === -1) {
                         to[name] = obj[name];
                     }
                 }
@@ -320,19 +320,12 @@
                 isNested = true;
                 prop.$kind = prop.$kind - Bridge.Typemarkers.NestedOffset;
             }
-            // if (Math.floor(prop.$kind / Bridge.Typemarkers.NestedOffset) > 0) {
-            //     isNested = true;
-            //     prop.$kind = prop.$kind % Bridge.Typemarkers.NestedOffset;
-            // }
 
-
-                if (prop.$kind === Bridge.Typemarkers.Enum && !prop.inherits) {
+            if (prop.$kind === Bridge.Typemarkers.Enum && !prop.inherits) {
                 prop.inherits = [System.IComparable, System.IFormattable];
             }
 
-            // var rNames = ["fields", "events", "props", "ctors", "methods"],
-            //     defaultScheme = Bridge.isFunction(prop.main) ? 0 : 1,
-                var defaultScheme = Bridge.isFunction(prop.main) ? 0 : 1,
+            var defaultScheme = Bridge.isFunction(prop.main) ? 0 : 1,
                 check = function (scope) {
                     if (Bridge.isPlainObject(scope.config) ||
                         Bridge.isFunction(scope.$main) ||
@@ -346,9 +339,8 @@
                         return true;
                     }
 
-                    for (var j = 0; j < rNames.length; j++) {
-                        const rName = scope[rNames[j]];
-                        if (Bridge.isPlainObject(rName)) {
+                    for (var j = 0; j < defineRNames.length; j++) {
+                        if (Bridge.isPlainObject(scope[defineRNames[j]])) {
                             return true;
                         }
                     }
