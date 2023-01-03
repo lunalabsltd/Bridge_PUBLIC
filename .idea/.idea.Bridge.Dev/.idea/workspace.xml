@@ -6,8 +6,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ee90b56-dfc1-414d-9efe-31234a2ef7b1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Bridge/Resources/array.js" beforeDir="false" afterPath="$PROJECT_DIR$/Bridge/Resources/array.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bridge/Resources/class.js" beforeDir="false" afterPath="$PROJECT_DIR$/Bridge/Resources/class.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Compiler/Translator/Constants/BridgeTypemarkersConstants.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Bridge.Dev/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Bridge.Dev/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Compiler/Translator/Bridge.Translator.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler/Translator/Bridge.Translator.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Compiler/Translator/Emitter/Blocks/AnonymousTypeCreateBlock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler/Translator/Emitter/Blocks/AnonymousTypeCreateBlock.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Compiler/Translator/Emitter/Blocks/ClassBlock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler/Translator/Emitter/Blocks/ClassBlock.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tests/DebugProject/TestClass.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Tests/DebugProject/TestClass.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +61,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected=".NET Project.DebugBatch1">
+  <component name="RunManager" selected=".NET Project.Debug_Batch1">
     <configuration name="Batch1" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="/Library/Frameworks/Mono.framework/Versions/6.12.0/lib/mono/4.5/xsp4.exe" />
       <option name="PROGRAM_PARAMETERS" value="--address=127.0.0.1 --port=5000" />
@@ -157,9 +161,9 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue=".NET Project.DebugBatch1" />
-      <item itemvalue=".NET Project.DebugProject" />
-      <item itemvalue=".NET Project.DebugBridgeLib" />
+      <item itemvalue=".NET Project.Debug_Batch1" />
+      <item itemvalue=".NET Project.Debug_BridgeLib" />
+      <item itemvalue=".NET Project.Debug_DebugProject" />
       <item itemvalue=".NET Project.Batch1" />
       <item itemvalue=".NET Project.Bridge.Builder" />
     </list>
@@ -183,6 +187,10 @@
       <workItem from="1671811239048" duration="5524000" />
       <workItem from="1672038184048" duration="10397000" />
       <workItem from="1672152377951" duration="236000" />
+      <workItem from="1672154656876" duration="464000" />
+      <workItem from="1672237911301" duration="274000" />
+      <workItem from="1672322833789" duration="613000" />
+      <workItem from="1672742129624" duration="3719000" />
     </task>
     <servers />
   </component>

@@ -1,5 +1,6 @@
 using Bridge.Contract;
 using Bridge.Contract.Constants;
+using Bridge.Translator.Constants;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
@@ -157,7 +158,7 @@ namespace Bridge.Translator
             this.EnsureComma();
             this.Write(JS.Fields.KIND);
             this.WriteColon();
-            this.WriteScript((int)TypeKind.Anonymous + 1);
+            this.WriteScript((int)TypeKind.Anonymous + BridgeTypemarkersConstants.JSOffset);
             this.WriteComma(true);
             this.Write(JS.Fields.CTORS);
             this.WriteColon();

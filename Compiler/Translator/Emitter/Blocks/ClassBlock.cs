@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Bridge.Translator.Constants;
 
 namespace Bridge.Translator
 {
@@ -364,11 +365,7 @@ namespace Bridge.Translator
             this.EnsureComma();
             this.Write(JS.Fields.KIND);
             this.WriteColon();
-            var kindMarker = (int)this.TypeInfo.Type.Kind + 1;
-            if (isNested)
-            {
-                kindMarker += 1000;
-            }
+            var kindMarker = (int)this.TypeInfo.Type.Kind + BridgeTypemarkersConstants.JSOffset + (isNested ? BridgeTypemarkersConstants.NestedOffset : 0);
             this.WriteScript( kindMarker );
             this.Emitter.Comma = true;
         }
