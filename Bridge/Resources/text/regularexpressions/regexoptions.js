@@ -12,6 +12,6 @@
             CultureInvariant: 0x0200
         },
 
-        $kind: Bridge.Typemarkers.Enum,
+        $kind: 6,
         $flags: true
     });

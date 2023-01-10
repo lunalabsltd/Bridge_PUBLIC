@@ -516,7 +516,7 @@
     });
 
     Bridge.define("System.Threading.Tasks.TaskStatus", {
-        $kind: Bridge.Typemarkers.Enum,
+        $kind: 6,
         $statics: {
             created: 0,
             waitingForActivation: 1,
@@ -700,7 +700,7 @@
     });
 
     Bridge.define("System.Threading.CancellationToken", {
-         $kind: Bridge.Typemarkers.Struct,
+         $kind: 4,
 
         ctor: function (source) {
             this.$initialize();
@@ -775,7 +775,7 @@
             return [System.IDisposable, System.IEquatable$1(System.Threading.CancellationTokenRegistration)];
         },
 
-        $kind: Bridge.Typemarkers.Struct,
+        $kind: 4,
 
         config: {
             alias: [

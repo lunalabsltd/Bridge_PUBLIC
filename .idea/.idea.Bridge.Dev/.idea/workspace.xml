@@ -6,11 +6,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ee90b56-dfc1-414d-9efe-31234a2ef7b1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Compiler/Translator/Constants/BridgeTypemarkersConstants.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Bridge.Dev/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Bridge.Dev/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Compiler/Translator/Bridge.Translator.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler/Translator/Bridge.Translator.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Compiler/Translator/Emitter/Blocks/AnonymousTypeCreateBlock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler/Translator/Emitter/Blocks/AnonymousTypeCreateBlock.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Compiler/Translator/Emitter/Blocks/ClassBlock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler/Translator/Emitter/Blocks/ClassBlock.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Tests/DebugProject/TestClass.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Tests/DebugProject/TestClass.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -190,7 +186,8 @@
       <workItem from="1672154656876" duration="464000" />
       <workItem from="1672237911301" duration="274000" />
       <workItem from="1672322833789" duration="613000" />
-      <workItem from="1672742129624" duration="3719000" />
+      <workItem from="1672742129624" duration="3870000" />
+      <workItem from="1672826347183" duration="839000" />
     </task>
     <servers />
   </component>

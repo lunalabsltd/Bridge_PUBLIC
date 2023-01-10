@@ -1,5 +1,5 @@
     Bridge.define("System.ArraySegment", {
-        $kind: Bridge.Typemarkers.Struct,
+        $kind: 4,
 
         statics: {
             getDefaultValue: function () {

@@ -7,7 +7,7 @@
             ]
         },
 
-        $kind: Bridge.Typemarkers.Struct,
+        $kind: 4,
         statics: {
             fromDays: function (value) {
                 return new System.TimeSpan(value * 864e9);

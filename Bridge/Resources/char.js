@@ -1,6 +1,6 @@
     Bridge.define("System.Char", {
         inherits: [System.IComparable, System.IFormattable],
-        $kind: Bridge.Typemarkers.Struct,
+        $kind: 4,
         statics: {
             min: 0,
 

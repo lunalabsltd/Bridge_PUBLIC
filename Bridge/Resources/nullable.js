@@ -225,7 +225,7 @@
 
     Bridge.define("System.Nullable$1", function (T) {
         return {
-            $kind: Bridge.Typemarkers.Struct,
+            $kind: 4,
 
             statics: {
                 $nullable: true,

@@ -191,7 +191,7 @@ if (typeof window !== 'undefined' && window.performance && window.performance.no
     };
 
     Bridge.define("System.Diagnostics.Contracts.ContractFailureKind", {
-        $kind: Bridge.Typemarkers.Enum,
+        $kind: 6,
         $statics: {
             precondition: 0,
             postcondition: 1,
